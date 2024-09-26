@@ -4,6 +4,6 @@ laptops:
     t480:
       ansible_user: hbuyse
       ansible_host: 192.168.1.40
-    work:
+    latitude5400:
       ansible_user: henrib
       ansible_host: 192.168.1.6
