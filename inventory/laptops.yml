@@ -1,5 +1,5 @@
 ---
-myhosts:
+laptops:
   hosts:
     t480:
       ansible_user: hbuyse
