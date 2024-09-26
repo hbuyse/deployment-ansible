@@ -1,0 +1,7 @@
+---
+- name: Install cargo executables
+  hosts: laptops
+  tasks:
+    - name: Install "ripgrep" Rust package
+      community.general.cargo:
+        name: ripgrep

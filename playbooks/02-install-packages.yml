@@ -1,0 +1,104 @@
+---
+- name: Install packages
+  hosts: laptops
+  tasks:
+    - name: Install shell utilities
+      become: true
+      ansible.builtin.package:
+        name:
+          - zsh
+          - tmux
+          - fzf
+          - direnv
+          - fastfetch
+          - envsubst
+        state: present
+    - name: Install chezmoi
+      become: true
+      ansible.builtin.package:
+        name:
+          - chezmoi
+          - age
+        state: present
+    - name: Install web browsers
+      become: true
+      ansible.builtin.package:
+        name:
+          - MozillaFirefox
+        state: present
+    - name: Install nextcloud, bitwarden
+      become: true
+      ansible.builtin.package:
+        name:
+          - nextcloud-desktop
+          - bitwarden
+        state: present
+    - name: Install neovim
+      become: true
+      ansible.builtin.package:
+        name: neovim
+        state: present
+    - name: Install development tools
+      become: true
+      ansible.builtin.package:
+        name:
+          - clang
+          - cmake
+          - cmake-man
+          - curl
+          - htop
+          - rustup
+          - strace
+        state: present
+    - name: Install pyenv dependencies
+      become: true
+      ansible.builtin.package:
+        name:
+          - automake
+          - bzip2
+          - ccache
+          - clang
+          - cmake
+          - curl
+          - findutils
+          - gcc
+          - gdbm-devel
+          - htop
+          - libbz2-devel
+          - libffi-devel
+          - make
+          - ncurses-devel
+          - openssl-devel
+          - readline-devel
+          - sqlite3-devel
+          - tk-devel
+          - xz
+          - xz-devel
+          - zlib-devel
+        state: present
+    - name: Install Sway and dependencies
+      become: true
+      ansible.builtin.package:
+        name:
+          - kanshi
+          - lxsession
+          - sway
+          - swayidle
+          - swaylock
+          - waybar
+          - wofi
+        state: present
+    - name: Install i3 and dependencies
+      become: true
+      ansible.builtin.package:
+        name:
+          - autorandr
+          - feh
+          - i3
+          - lxsession
+          - npm
+          - picom
+          - polybar
+          - rofi
+          - xautolock
+        state: present
