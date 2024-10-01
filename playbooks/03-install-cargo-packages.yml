@@ -2,6 +2,17 @@
 - name: Install cargo executables
   hosts: localhost
   tasks:
-    - name: Install "ripgrep" Rust package
+    - name: Install Rust packages
       community.general.cargo:
-        name: ripgrep
+        name:
+          - ripgrep
+          - bottom
+          - fd-find
+          - stylua
+          - du-dust
+          - git-delta
+          - alacritty
+          - zoxide
+          - gitui
+          - eza
+          - bat
