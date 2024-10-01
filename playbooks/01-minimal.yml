@@ -1,6 +1,9 @@
 ---
 - name: My first play
-  hosts: myhosts
+  hosts: all
   tasks:
     - name: Ping my hosts
       ansible.builtin.ping:
+    - name: Print all available facts
+      ansible.builtin.debug:
+        var: ansible_facts
