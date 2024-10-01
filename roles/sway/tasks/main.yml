@@ -1,2 +1,31 @@
 ---
 # tasks file for sway
+- name: Install required packages
+  ansible.builtin.include_tasks:
+    file: suse.yml
+  when: ansible_os_family == "Suse"
+
+- name: Copy sway service file
+  copy:
+    src: sway.service
+    dest: /usr/local/lib/systemd/user/
+  become: yes
+  tags:
+    - configure_files
+
+- name: Copy sway-session target file
+  copy:
+    src: sway-session.target
+    dest: /usr/local/lib/systemd/user/
+  become: yes
+  tags:
+    - configure_files
+
+- name: Copy sway-wrapper shell script
+  copy:
+    src: sway-wrapper.sh
+    dest: /usr/local/bin
+    mode: 0755
+  become: yes
+  tags:
+    - configure_files
