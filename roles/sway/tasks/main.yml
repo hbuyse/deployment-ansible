@@ -1,6 +1,6 @@
 ---
 # tasks file for sway
-- name: Install required packages
+- name: Install required packages [Suse]
   ansible.builtin.include_tasks:
     file: suse.yml
   when: ansible_os_family == "Suse"

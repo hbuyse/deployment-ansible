@@ -10,4 +10,4 @@
       - swayidle
       - swaylock
       - openSUSEway
-    state: "present"
+    state: present
