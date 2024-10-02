@@ -13,6 +13,14 @@
   tags:
     - configure_files
 
+- name: Copy wayland-session file for sway
+  copy:
+    src: sway.desktop
+    dest: /usr/local/share/wayland-sessions
+  become: true
+  tags:
+    - configure_files
+
 - name: Copy sway-session target file
   copy:
     src: sway-session.target
