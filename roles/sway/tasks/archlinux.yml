@@ -1,0 +1,12 @@
+---
+- name: Ensure sway packages are installed.
+  become: true
+  ansible.builtin.package:
+    name:
+      - sway
+      - kanshi
+      - wofi
+      - waybar
+      - swayidle
+      - swaylock
+    state: present
