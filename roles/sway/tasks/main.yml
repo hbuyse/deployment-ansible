@@ -5,6 +5,11 @@
     file: suse.yml
   when: ansible_os_family == "Suse"
 
+- name: Install required packages [Archlinux]
+  ansible.builtin.include_tasks:
+    file: archlinux.yml
+  when: ansible_os_family == "Archlinux"
+
 - name: Copy sway service file
   copy:
     src: sway.service
