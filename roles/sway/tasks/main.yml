@@ -14,7 +14,7 @@
   copy:
     src: sway.service
     dest: /usr/local/lib/systemd/user/
-  become: yes
+  become: true
   tags:
     - configure_files
 
@@ -30,7 +30,7 @@
   copy:
     src: sway-session.target
     dest: /usr/local/lib/systemd/user/
-  become: yes
+  become: true
   tags:
     - configure_files
 
@@ -39,6 +39,6 @@
     src: sway-wrapper.sh
     dest: /usr/local/bin
     mode: 0755
-  become: yes
+  become: true
   tags:
     - configure_files
