@@ -1,0 +1,19 @@
+---
+# tasks file for nerdfonts
+- name: "nerdfonts | Ensure fonts directory exists"
+  file:
+    path: "{{ nerdfonts_font_dir_prefix }}"
+    state: directory
+  become: true
+
+- include_tasks: font-download.yml
+  loop:
+    - "Hack"
+    - "Iosevka"
+    - "Meslo"
+    - "Ubuntu"
+    - "UbuntuMono"
+
+- name: "nerdfonts | Build font information caches"
+  command: fc-cache --force --verbose
+  become: true
