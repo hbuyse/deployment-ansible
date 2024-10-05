@@ -5,3 +5,4 @@
     - name: nerdfonts
       vars:
         nerdfonts_font_dir_prefix: "{{ lookup('env', 'HOME') }}/.local/share/fonts"
+    - name: direnv
