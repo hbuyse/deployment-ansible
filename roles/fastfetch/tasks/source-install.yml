@@ -1,0 +1,9 @@
+---
+- name: "fastfetch | Get dpkg architecture"
+  shell: dpkg --print-architecture
+  register: deb_arch
+
+- name: "fastfetch | Install fastfetch from deb file"
+  become: true
+  ansible.builtin.apt:
+    deb: "https://github.com/fastfetch-cli/fastfetch/releases/download/{{ fastfetch_version }}/fastfetch-{{ ansible_system | lower }}-{{ deb_arch.stdout }}.deb"
