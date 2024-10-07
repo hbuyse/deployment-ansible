@@ -24,3 +24,4 @@
     - name: direnv
     - name: fastfetch
     - name: tmux
+    - name: fzf
