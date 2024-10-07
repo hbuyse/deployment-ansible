@@ -29,3 +29,4 @@
     - name: tmux
     - name: fzf
     - name: clang
+    - name: lsp_servers
