@@ -1,0 +1,12 @@
+---
+lsp_server_package:
+  - lua-language-server
+  - bash-language-server
+  - pyright
+  - texlab
+  - typescript-language-server
+  - vscode-css-languageserver
+  - vscode-html-languageserver
+  - vscode-json-languageserver
+  - yaml-language-server
+  - rust-analyzer

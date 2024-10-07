@@ -1,0 +1,28 @@
+---
+- name: "LSP servers | Set distro-specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_os_family | lower }}.yml"
+    - "main.yml"
+
+- name: "LSP servers | Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ lsp_server_package }}"
+    state: present
+
+- name: "LSP servers | Install from Node Package Manager"
+  become: true
+  community.general.npm:
+    name: "{{ item }}"
+    global: true
+  loop: "{{ lsp_server_npm + [ '@microsoft/compose-language-service' , 'vscode-markdown-languageserver' ] }}"
+
+- name: "LSP Servers | Add rust-analyzer to list of Rustup component"
+  when: ansible_system == 'Linux'
+  ansible.builtin.command:
+    cmd: rustup component add rust-analyzer
+  environment:
+    RUSTUP_HOME: "{{ ansible_user_dir }}/.rustup"
+    CARGO_HOME: "{{ ansible_user_dir }}/.cargo"
+    PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"

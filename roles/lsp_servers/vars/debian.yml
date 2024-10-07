@@ -1,0 +1,9 @@
+---
+lsp_server_package:
+lsp_server_npm:
+  - "bash-language-server"
+  - "pyright"
+  - "typescript-language-server"
+  - "vscode-langservers-extracted"
+  - "yaml-language-server"
+  - "@ansible/ansible-language-server"
