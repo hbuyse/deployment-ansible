@@ -3,3 +3,4 @@ dependencies:
   - role: direnv
   - role: fastfetch
   - role: tmux
+  - role: fzf

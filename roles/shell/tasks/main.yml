@@ -5,6 +5,5 @@
   ansible.builtin.package:
     name:
       - zsh
-      - fzf
       - envsubst
     state: present
