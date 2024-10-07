@@ -1,0 +1,46 @@
+---
+- name: "TMux | Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: tmux
+    state: present
+
+- name: "TMux | Ensure config directories exists"
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - "{{ ansible_user_dir }}/.config/tmux"
+    - "{{ ansible_user_dir }}/.config/tmux/plugins"
+
+- name: "TMux | Copy static files in configuration directory"
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/"
+    dest: "{{ ansible_user_dir }}/.config/tmux"
+
+- name: "TMux | Download TMux plugins manager"
+  ansible.builtin.git:
+    repo: "{{ item.repo }}"
+    dest: "{{ ansible_user_dir }}/.config/tmux/plugins/{{ item.plugin_dir }}"
+    version: "{{ item.version }}"
+  loop:
+    - {
+        repo: "https://github.com/tmux-plugins/tpm",
+        plugin_dir: "tpm",
+        version: "v3.1.0",
+      }
+    - {
+        repo: "https://github.com/catppuccin/tmux",
+        plugin_dir: "tmux",
+        version: "v1.0.1",
+      }
+    - {
+        repo: "https://github.com/tmux-plugins/tmux-sensible",
+        plugin_dir: "tmux-sensible",
+        version: "master",
+      }
+    - {
+        repo: "https://github.com/tmux-plugins/tmux-yank",
+        plugin_dir: "tmux-yank",
+        version: "master",
+      }
