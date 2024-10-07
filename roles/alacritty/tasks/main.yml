@@ -1,0 +1,30 @@
+---
+- name: "alacritty | Install Rust package with locked dependencies"
+  become: true
+  community.general.cargo:
+    name: alacritty
+    version: "0.13.2"
+    locked: true
+    path: "/usr/local"
+  when: ansible_os_family not in ['Archlinux', 'Suse']
+
+- name: "alacritty | Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: alacritty
+  when: ansible_os_family in ['Archlinux', 'Suse']
+
+- name: "alacritty | Ensure config directory exists"
+  file:
+    path: "{{ ansible_user_dir }}/.config/alacritty"
+    state: directory
+
+- name: "alacritty | Copy static files in configuration directory"
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/"
+    dest: "{{ ansible_user_dir }}/.config/alacritty"
+
+- name: "alacritty | Install catppuccin themes"
+  ansible.builtin.git:
+    repo: "https://github.com/alacritty/alacritty-theme"
+    dest: "{{ ansible_user_dir }}/.config/alacritty/themes"
