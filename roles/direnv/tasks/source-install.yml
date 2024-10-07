@@ -2,7 +2,7 @@
 - name: "direnv | Install binary into {{ direnv_bin_install_dir }}"
   become: true
   ansible.builtin.get_url:
-    url: "https://github.com/direnv/direnv/releases/download/v{{ direnv_version }}/direnv.{{ ansible_system | lower }}-{{ 'amd64' if ansible_architecture == 'x86_64' else ansible_architecture }}"
+    url: "https://github.com/direnv/direnv/releases/download/v{{ direnv_version }}/direnv.{{ ansible_system | lower }}-{{ alt_arch }}"
     dest: "{{ direnv_bin_install_dir }}/direnv"
     mode: 0755
 
