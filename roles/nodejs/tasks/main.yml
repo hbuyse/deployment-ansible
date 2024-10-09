@@ -1,0 +1,6 @@
+---
+- import_tasks: setup-debian.yml
+  when: ansible_os_family in [ "Debian" ]
+
+- import_tasks: setup-rolling-release.yml
+  when: ansible_os_family not in [ "Debian" ]
