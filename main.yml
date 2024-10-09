@@ -18,13 +18,13 @@
 
   roles:
     - name: git
-    - name: nvim
+    - name: alacritty
+    - name: nodejs
     - name: nerdfonts
       vars:
         nerdfonts_font_dir_prefix: "{{ lookup('env', 'HOME') }}/.local/share/fonts"
+    - name: nvim
     - name: direnv
     - name: fastfetch
     - name: tmux
     - name: fzf
-    - name: alacritty
-    - name: nodejs
