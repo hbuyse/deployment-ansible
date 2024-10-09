@@ -28,3 +28,4 @@
     - name: fastfetch
     - name: tmux
     - name: fzf
+    - name: clang
