@@ -1,0 +1,51 @@
+---
+- name: "Clang | Install dependencies [{{ ansible_os_family }}]"
+  become: true
+  ansible.builtin.package:
+    state: present
+    name:
+      - lsb-release
+      - wget
+      - software-properties-common
+      - gnupg
+
+- name: "Clang | Install source repository [{{ ansible_os_family }}]"
+  become: true
+  ansible.builtin.apt_repository:
+    repo: "deb http://apt.llvm.org/{{ ansible_distribution_release }}/ llvm-toolchain-{{ ansible_distribution_release }}-{{ llvm_stable_version }} main"
+    state: present
+    filename: llvm
+    update_cache: true
+
+- name: "Clang | Install LLVM {{ llvm_stable_version }} packages [{{ ansible_os_family }}]"
+  become: true
+  ansible.builtin.package:
+    state: present
+    name:
+      # LLVM
+      - "libllvm{{ llvm_stable_version }}"
+      - "llvm-{{ llvm_stable_version }}"
+      - "llvm-{{ llvm_stable_version }}-dev"
+      - "llvm-{{ llvm_stable_version }}-doc"
+      - "llvm-{{ llvm_stable_version }}-examples"
+      - "llvm-{{ llvm_stable_version }}-runtime"
+      # Clang and co
+      - "clang-{{ llvm_stable_version }}"
+      - "clang-tools-{{ llvm_stable_version }}"
+      - "clang-{{ llvm_stable_version }}-doc"
+      - "libclang-common-{{ llvm_stable_version }}-dev"
+      - "libclang-{{ llvm_stable_version }}-dev"
+      - "libclang1-{{ llvm_stable_version }}"
+      - "clang-format-{{ llvm_stable_version }}"
+      - "python3-clang-{{ llvm_stable_version }}"
+      - "clangd-{{ llvm_stable_version }}"
+      - "clang-tidy-{{ llvm_stable_version }}"
+      # compiler-rt
+      - "libclang-rt-{{ llvm_stable_version }}-dev"
+      # lldb
+      - "lldb-{{ llvm_stable_version }}"
+      # lld (linker)
+      - "lld-{{ llvm_stable_version }}"
+      # libc++
+      - "libc++-{{ llvm_stable_version }}-dev"
+      - "libc++abi-{{ llvm_stable_version }}-dev"
