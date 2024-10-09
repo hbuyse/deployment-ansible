@@ -1,0 +1,11 @@
+---
+- import_tasks: debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: "Git | Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name:
+      - git
+      - gitk
+    state: present
