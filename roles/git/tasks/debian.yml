@@ -1,0 +1,8 @@
+---
+- name: "Git | Add PPA for debian"
+  become: true
+  ansible.builtin.apt_repository:
+    repo: "ppa:git-core/ppa"
+    codename: "{{ ansible_distribution_release }}"
+    state: present
+    update_cache: true

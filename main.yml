@@ -17,6 +17,7 @@
             deb_arch: "{{ deb_arch_tmp.stdout }}"
 
   roles:
+    - name: git
     - name: nvim
     - name: nerdfonts
       vars:
