@@ -1,0 +1,6 @@
+---
+- name: "alacritty | Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: alacritty
+  when: ansible_os_family in ['Archlinux', 'Suse']
