@@ -1,0 +1,27 @@
+---
+- name: "Rustup | Check if cargo is installed"
+  ansible.builtin.shell: command -v cargo
+  register: cargo_exists
+  ignore_errors: true
+
+- name: "Rustup | Install Rustup and Cargo"
+  when: cargo_exists is failed
+  tags:
+    - rust
+  block:
+    - name: "Rustup | Download Installer"
+      ansible.builtin.get_url:
+        url: https://sh.rustup.rs
+        dest: /tmp/sh.rustup.rs
+        mode: "0755"
+        force: "yes"
+
+    - name: "Rustup | Install Rust and Cargo from script"
+      when: cargo_exists is failed
+      ansible.builtin.shell: /tmp/sh.rustup.rs -y
+      args:
+        creates: "{{ ansible_user_dir }}/.cargo/bin/rustup"
+        executable: /bin/bash
+      environment:
+        RUSTUP_HOME: "{{ ansible_user_dir }}/.rustup"
+        CARGO_HOME: "{{ ansible_user_dir }}/.cargo"

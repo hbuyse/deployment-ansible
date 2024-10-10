@@ -1,0 +1,33 @@
+---
+- name: "Rustup | Get active toolchain version"
+  ansible.builtin.shell:
+    cmd: |
+      rustup default | sed -n 's#\([^-]\+\).*#\1#p'
+  register: rustup_default_output
+  environment:
+    RUSTUP_HOME: "{{ ansible_user_dir }}/.rustup"
+    CARGO_HOME: "{{ ansible_user_dir }}/.cargo"
+    PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"
+  changed_when: false
+  ignore_errors: true
+
+- name: "Rustup | Get currently active toolchain if installed and set"
+  when:
+    - not rustup_default_output.failed
+  block:
+    - name: "Rustup | Print current / active toolchain version"
+      ansible.builtin.debug:
+        msg: "{{ rustup_default_output.stdout_lines[0] }}"
+
+    - name: "Rustup | Set active_rustup_toolchain_version as fact"
+      ansible.builtin.set_fact:
+        active_rustup_toolchain_version: "{{ rustup_default_output.stdout_lines[0] }}"
+
+- name: "Rustup | Set default toolchain version"
+  when: (active_rustup_toolchain_version is undefined) or (active_rustup_toolchain_version != rustup_default_version)
+  ansible.builtin.command:
+    cmd: rustup default "{{ rustup_default_version }}"
+  environment:
+    RUSTUP_HOME: "{{ ansible_user_dir }}/.rustup"
+    CARGO_HOME: "{{ ansible_user_dir }}/.cargo"
+    PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"
