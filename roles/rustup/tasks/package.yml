@@ -1,0 +1,6 @@
+---
+- name: "Rustup | Install from package manager"
+  ansible.builtin.package:
+    name:
+      - rustup
+    state: present
