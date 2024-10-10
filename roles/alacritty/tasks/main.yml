@@ -1,17 +1,8 @@
 ---
-- name: "alacritty | Install Rust package with locked dependencies"
-  become: true
-  community.general.cargo:
-    name: alacritty
-    version: "0.13.2"
-    locked: true
-    path: "/usr/local"
+- import_tasks: source.yml
   when: ansible_os_family not in ['Archlinux', 'Suse']
 
-- name: "alacritty | Install from package manager"
-  become: true
-  ansible.builtin.package:
-    name: alacritty
+- import_tasks: package.yml
   when: ansible_os_family in ['Archlinux', 'Suse']
 
 - name: "alacritty | Ensure config directory exists"

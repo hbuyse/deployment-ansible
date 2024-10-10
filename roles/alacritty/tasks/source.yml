@@ -1,0 +1,25 @@
+---
+- name: "alacritty | Get latest version number"
+  register: latest_json
+  uri:
+    url: "https://api.github.com/repos/alacritty/alacritty/releases/latest"
+    method: GET
+    return_content: true
+    status_code: 200
+    body_format: json
+
+- name: "alacritty | Set facts"
+  set_fact:
+    alacritty_latest_version: "{{ latest_json.json.tag_name[1:] }}"
+
+- name: "alacritty | Install Rust package with locked dependencies (v{{ alacritty_latest_version }})"
+  become: true
+  community.general.cargo:
+    name: alacritty
+    version: "{{ alacritty_latest_version }}"
+    locked: true
+    path: "/usr/local"
+  environment:
+    RUSTUP_HOME: "{{ ansible_user_dir }}/.rustup"
+    CARGO_HOME: "{{ ansible_user_dir }}/.cargo"
+    PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"
