@@ -1,4 +1,17 @@
 ---
+- name: "alacritty | Install dependencies"
+  become: true
+  ansible.builtin.package:
+    name:
+      - cmake
+      - pkg-config
+      - libfreetype6-dev
+      - libfontconfig1-dev
+      - libxcb-xfixes0-dev
+      - libxkbcommon-dev
+      - python3
+    state: present
+
 - name: "alacritty | Get latest version number"
   register: latest_json
   uri:

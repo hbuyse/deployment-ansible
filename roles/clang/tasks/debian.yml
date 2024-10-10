@@ -11,15 +11,19 @@
 
 - name: "Clang | Install source repository [{{ ansible_os_family }}]"
   become: true
-  ansible.builtin.apt_repository:
-    repo: "deb http://apt.llvm.org/{{ ansible_distribution_release }}/ llvm-toolchain-{{ ansible_distribution_release }}-{{ llvm_stable_version }} main"
+  ansible.builtin.deb822_repository:
+    name: "apt.llvm.org"
+    types: deb
+    uris: "http://apt.llvm.org/{{ ansible_distribution_release }}"
+    suites: "llvm-toolchain-{{ ansible_distribution_release }}-{{ llvm_stable_version }}"
+    components: main
     state: present
-    filename: llvm
-    update_cache: true
+    signed_by: "https://apt.llvm.org/llvm-snapshot.gpg.key"
 
 - name: "Clang | Install LLVM {{ llvm_stable_version }} packages [{{ ansible_os_family }}]"
   become: true
   ansible.builtin.package:
+    update_cache: true
     state: present
     name:
       # LLVM
