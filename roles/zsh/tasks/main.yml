@@ -1,10 +1,12 @@
 ---
-- import_tasks: zsh.yml
+- name: "ZSH | Install shell"
+  ansible.builtin.import_tasks: zsh.yml
   tags:
     - shell
     - zsh
 
-- import_tasks: oh-my-zsh.yml
+- name: "ZSH | Install oh-my-zsh, its plugins and themes"
+  ansible.builtin.import_tasks: oh-my-zsh.yml
   tags:
     - shell
     - omz
@@ -14,7 +16,7 @@
   ansible.builtin.copy:
     src: "{{ role_path }}/files/{{ item }}"
     dest: "{{ ansible_user_dir }}/.{{ item }}"
-    mode: 0644
+    mode: "0644"
     owner: "{{ ansible_user_uid }}"
     group: "{{ ansible_user_gid }}"
   loop:

@@ -1,5 +1,5 @@
 ---
-- name: "direnv | Install from package manager"
+- name: "Direnv | Install from package manager"
   become: true
   ansible.builtin.package:
     name:

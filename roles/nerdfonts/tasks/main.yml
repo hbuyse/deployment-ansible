@@ -1,12 +1,13 @@
 ---
-# tasks file for nerdfonts
-- name: "nerdfonts | Ensure fonts directory exists"
-  file:
+- name: "Nerdfonts | Ensure fonts directory exists"
+  become: true
+  ansible.builtin.file:
     path: "{{ nerdfonts_font_dir_prefix }}"
     state: directory
-  become: true
+    mode: "0755"
 
-- include_tasks: font-download.yml
+- name: "Nerdfonst | Download fonts if necessary"
+  ansible.builtin.include_tasks: font-download.yml
   loop:
     - "Hack"
     - "Iosevka"
@@ -14,6 +15,7 @@
     - "Ubuntu"
     - "UbuntuMono"
 
-- name: "nerdfonts | Build font information caches"
-  command: fc-cache --force --verbose
+- name: "Nerdfonts | Build font information caches"
+  ansible.builtin.command: fc-cache --force --verbose
   become: true
+  changed_when: false

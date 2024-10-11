@@ -1,7 +1,9 @@
 ---
 - name: "Rustup | Check if cargo is installed"
-  ansible.builtin.shell: command -v cargo
+  ansible.builtin.command:
+    cmd: command -v cargo
   register: cargo_exists
+  changed_when: false
   ignore_errors: true
 
 - name: "Rustup | Install Rustup and Cargo"

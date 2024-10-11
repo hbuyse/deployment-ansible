@@ -1,5 +1,5 @@
 ---
-- name: "fzf | Install from package manager"
+- name: "FZF | Install from package manager"
   become: true
   ansible.builtin.package:
     name:

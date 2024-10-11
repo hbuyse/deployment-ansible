@@ -28,14 +28,17 @@
   ansible.builtin.copy:
     src: "{{ role_path }}/files/"
     dest: "{{ nvim_config_dir }}"
+    mode: "0644"
 
 - name: "Neovim | Copy templates files in configuration directory"
   ansible.builtin.template:
     src: "{{ item }}.j2"
     dest: "{{ nvim_config_dir }}/{{ item }}"
+    mode: "0644"
   loop:
     - "lua/hbuyse/plugins/formatter.lua"
     - "lua/hbuyse/init.lua"
 
 - name: "Neovim | Sync plugins"
   ansible.builtin.command: nvim --headless "+Lazy! sync" +qa
+  changed_when: false

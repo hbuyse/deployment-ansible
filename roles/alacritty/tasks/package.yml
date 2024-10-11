@@ -1,5 +1,5 @@
 ---
-- name: "alacritty | Install from package manager"
+- name: "Alacritty | Install from package manager"
   become: true
   ansible.builtin.package:
     name: alacritty

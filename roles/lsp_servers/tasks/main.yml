@@ -8,7 +8,7 @@
 - name: "LSP servers | Install from package manager"
   become: true
   ansible.builtin.package:
-    name: "{{ lsp_server_package }}"
+    name: "{{ lsp_servers_package }}"
     state: present
 
 - name: "LSP servers | Install from Node Package Manager"
@@ -17,7 +17,7 @@
     name: "{{ item }}"
     global: true
   with_items:
-    - "{{ lsp_server_npm }}"
+    - "{{ lsp_servers_npm }}"
     - "@microsoft/compose-language-service"
     - "vscode-markdown-languageserver"
 
@@ -30,3 +30,4 @@
     RUSTUP_HOME: "{{ ansible_user_dir }}/.rustup"
     CARGO_HOME: "{{ ansible_user_dir }}/.cargo"
     PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"
+  changed_when: false
