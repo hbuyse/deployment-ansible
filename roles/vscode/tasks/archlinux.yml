@@ -1,0 +1,7 @@
+---
+- name: "VSCode | Install from AUR"
+  become: true
+  become_user: aur_builder
+  kewlfft.aur.aur:
+    name: visual-studio-code-bin
+    state: present

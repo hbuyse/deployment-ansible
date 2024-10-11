@@ -1,0 +1,32 @@
+---
+- name: "VSCode | Install dependencies"
+  become: true
+  ansible.builtin.package:
+    state: present
+    name:
+      - wget
+      - gpg
+      - apt-transport-https
+
+- name: "VSCode | Install repository"
+  become: true
+  ansible.builtin.deb822_repository:
+    name: vscode
+    types: deb
+    uris: "https://packages.microsoft.com/repos/code"
+    suites: "stable"
+    components:
+      - main
+    architectures:
+      - amd64
+      - arm64
+      - armhf
+    signed_by: "https://packages.microsoft.com/keys/microsoft.asc"
+
+- name: "VSCode | Install package"
+  become: true
+  ansible.builtin.package:
+    update_cache: true
+    state: present
+    name:
+      - code
