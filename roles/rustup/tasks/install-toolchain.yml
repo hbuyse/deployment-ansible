@@ -13,7 +13,7 @@
 
 - name: "Rustup | Get currently active toolchain if installed and set"
   when:
-    - not rustup_default_output.failed
+    - rustup_default_output is failed
   block:
     - name: "Rustup | Print current / active toolchain version"
       ansible.builtin.debug:
