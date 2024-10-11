@@ -1,0 +1,4 @@
+---
+git_package:
+  - git
+  - gitk

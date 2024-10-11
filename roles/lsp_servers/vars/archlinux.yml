@@ -9,4 +9,4 @@ lsp_server_package:
   - vscode-html-languageserver
   - vscode-json-languageserver
   - yaml-language-server
-  - rust-analyzer
+lsp_server_npm:
