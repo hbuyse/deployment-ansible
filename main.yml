@@ -1,21 +1,24 @@
 ---
-- hosts: localhost
+- name: "Dotfiles | Installation"
+  hosts: localhost
   pre_tasks:
-    - import_tasks: pre_tasks/main.yml
-
+    - name: "Dotfiles | Prepare installation"
+      ansible.builtin.import_tasks: pre_tasks/main.yml
   roles:
-    - name: git
-    - name: alacritty
-    - name: nodejs
-    - name: nerdfonts
+    - role: "git"
+    - role: "alacritty"
+    - role: "nodejs"
+    - role: "nerdfonts"
       vars:
         nerdfonts_font_dir_prefix: "{{ lookup('env', 'HOME') }}/.local/share/fonts"
-    - name: nvim
-    - name: direnv
-    - name: fastfetch
-    - name: tmux
-    - name: fzf
-    - name: clang
-    - name: lsp_servers
-    - name: vscode
-    - name: zsh
+    - role: "nvim"
+    - role: "direnv"
+    - role: "fastfetch"
+    - role: "tmux"
+      tags:
+        - tmux
+    - role: "fzf"
+    - role: "clang"
+    - role: "lsp_servers"
+    - role: "vscode"
+    - role: "zsh"

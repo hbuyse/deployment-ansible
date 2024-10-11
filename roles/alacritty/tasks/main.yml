@@ -1,31 +1,36 @@
 ---
-- import_tasks: source.yml
+- name: "Alacritty | Install from source"
+  ansible.builtin.import_tasks: source.yml
   when: ansible_os_family not in ['Archlinux', 'Suse']
   tags:
     - alacritty
 
-- import_tasks: package.yml
+- name: "Alacritty | Install from package manager"
+  ansible.builtin.import_tasks: package.yml
   when: ansible_os_family in ['Archlinux', 'Suse']
   tags:
     - alacritty
 
-- name: "alacritty | Ensure config directory exists"
+- name: "Alacritty | Ensure config directory exists"
   ansible.builtin.file:
     path: "{{ ansible_user_dir }}/.config/alacritty"
     state: directory
+    mode: "0755"
   tags:
     - alacritty
 
-- name: "alacritty | Copy static files in configuration directory"
+- name: "Alacritty | Copy static files in configuration directory"
   ansible.builtin.copy:
     src: "{{ role_path }}/files/"
     dest: "{{ ansible_user_dir }}/.config/alacritty"
+    mode: "0644"
   tags:
     - alacritty
 
-- name: "alacritty | Install catppuccin themes"
+- name: "Alacritty | Install catppuccin themes"
   ansible.builtin.git:
     repo: "https://github.com/alacritty/alacritty-theme"
     dest: "{{ ansible_user_dir }}/.config/alacritty/themes"
+    version: "master"
   tags:
     - alacritty

@@ -15,41 +15,41 @@
     name: "apt.llvm.org"
     types: deb
     uris: "http://apt.llvm.org/{{ ansible_distribution_release }}"
-    suites: "llvm-toolchain-{{ ansible_distribution_release }}-{{ llvm_stable_version }}"
+    suites: "llvm-toolchain-{{ ansible_distribution_release }}-{{ clang_llvm_stable_version }}"
     components: main
     state: present
     signed_by: "https://apt.llvm.org/llvm-snapshot.gpg.key"
 
-- name: "Clang | Install LLVM {{ llvm_stable_version }} packages [{{ ansible_os_family }}]"
+- name: "Clang | Install LLVM packages in version {{ clang_llvm_stable_version }}"
   become: true
   ansible.builtin.package:
     update_cache: true
     state: present
     name:
       # LLVM
-      - "libllvm{{ llvm_stable_version }}"
-      - "llvm-{{ llvm_stable_version }}"
-      - "llvm-{{ llvm_stable_version }}-dev"
-      - "llvm-{{ llvm_stable_version }}-doc"
-      - "llvm-{{ llvm_stable_version }}-examples"
-      - "llvm-{{ llvm_stable_version }}-runtime"
+      - "libllvm{{ clang_llvm_stable_version }}"
+      - "llvm-{{ clang_llvm_stable_version }}"
+      - "llvm-{{ clang_llvm_stable_version }}-dev"
+      - "llvm-{{ clang_llvm_stable_version }}-doc"
+      - "llvm-{{ clang_llvm_stable_version }}-examples"
+      - "llvm-{{ clang_llvm_stable_version }}-runtime"
       # Clang and co
-      - "clang-{{ llvm_stable_version }}"
-      - "clang-tools-{{ llvm_stable_version }}"
-      - "clang-{{ llvm_stable_version }}-doc"
-      - "libclang-common-{{ llvm_stable_version }}-dev"
-      - "libclang-{{ llvm_stable_version }}-dev"
-      - "libclang1-{{ llvm_stable_version }}"
-      - "clang-format-{{ llvm_stable_version }}"
-      - "python3-clang-{{ llvm_stable_version }}"
-      - "clangd-{{ llvm_stable_version }}"
-      - "clang-tidy-{{ llvm_stable_version }}"
+      - "clang-{{ clang_llvm_stable_version }}"
+      - "clang-tools-{{ clang_llvm_stable_version }}"
+      - "clang-{{ clang_llvm_stable_version }}-doc"
+      - "libclang-common-{{ clang_llvm_stable_version }}-dev"
+      - "libclang-{{ clang_llvm_stable_version }}-dev"
+      - "libclang1-{{ clang_llvm_stable_version }}"
+      - "clang-format-{{ clang_llvm_stable_version }}"
+      - "python3-clang-{{ clang_llvm_stable_version }}"
+      - "clangd-{{ clang_llvm_stable_version }}"
+      - "clang-tidy-{{ clang_llvm_stable_version }}"
       # compiler-rt
-      - "libclang-rt-{{ llvm_stable_version }}-dev"
+      - "libclang-rt-{{ clang_llvm_stable_version }}-dev"
       # lldb
-      - "lldb-{{ llvm_stable_version }}"
+      - "lldb-{{ clang_llvm_stable_version }}"
       # lld (linker)
-      - "lld-{{ llvm_stable_version }}"
+      - "lld-{{ clang_llvm_stable_version }}"
       # libc++
-      - "libc++-{{ llvm_stable_version }}-dev"
-      - "libc++abi-{{ llvm_stable_version }}-dev"
+      - "libc++-{{ clang_llvm_stable_version }}-dev"
+      - "libc++abi-{{ clang_llvm_stable_version }}-dev"

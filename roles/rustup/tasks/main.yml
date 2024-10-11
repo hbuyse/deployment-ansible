@@ -1,8 +1,11 @@
 ---
-- import_tasks: package.yml
+- name: "Rustup | Install from package manager"
+  ansible.builtin.import_tasks: package.yml
   when: ansible_os_family in ['Archlinux', 'Suse']
 
-- import_tasks: install.yml
+- name: "Rustup | Install from script"
+  ansible.builtin.import_tasks: install.yml
   when: ansible_os_family not in ['Archlinux', 'Suse']
 
-- import_tasks: install-toolchain.yml
+- name: "Rustup | Install toolchain"
+  ansible.builtin.import_tasks: install-toolchain.yml

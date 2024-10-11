@@ -1,4 +1,4 @@
-- name: "nodejs | Install from package manager"
+- name: "Nodejs | Install from package manager"
   become: true
   ansible.builtin.package:
     name:

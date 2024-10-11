@@ -1,12 +1,14 @@
 ---
 # tasks file for direnv
-- import_tasks: source-install.yml
-  when: ansible_distribution == "Ubuntu"
+- name: "Direnv | Install from sources"
+  ansible.builtin.import_tasks: source-install.yml
+  when: ansible_os_family == "Debian"
 
-- import_tasks: package-install.yml
-  when: ansible_distribution != "Ubuntu"
+- name: "Direnv | Install from package manager"
+  ansible.builtin.import_tasks: package-install.yml
+  when: ansible_os_family != "Debian"
 
-- name: "direnv | Create symlink to config"
+- name: "Direnv | Create symlink to config"
   ansible.builtin.file:
     src: "{{ role_path }}/files"
     dest: "{{ ansible_user_dir }}/.config/direnv"

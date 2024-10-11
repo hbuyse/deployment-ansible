@@ -1,6 +1,6 @@
 ---
-lsp_server_package:
-lsp_server_npm:
+lsp_servers_package:
+lsp_servers_npm:
   - "bash-language-server"
   - "pyright"
   - "typescript-language-server"

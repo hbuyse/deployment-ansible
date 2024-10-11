@@ -1,9 +1,9 @@
 ---
-lsp_server_package:
+lsp_servers_package:
   - rust-analyzer
   - texlab
 
-lsp_server_npm:
+lsp_servers_npm:
   - "bash-language-server"
   - "pyright"
   - "typescript-language-server"

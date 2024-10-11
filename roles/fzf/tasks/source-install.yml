@@ -1,12 +1,12 @@
 ---
-- name: "fzf | Install binary file into {{ direnv_bin_install_dir }}"
+- name: "FZF | Install binary file into {{ direnv_bin_install_dir }}"
   become: true
   ansible.builtin.unarchive:
     src: "https://github.com/junegunn/fzf/releases/download/v{{ fzf_version }}/fzf-{{ fzf_version }}-{{ ansible_system | lower }}_{{ alt_arch }}.tar.gz"
     dest: "{{ fzf_bin_install_dir }}"
     remote_src: true
 
-- name: "fzf | Install man pages into {{ direnv_man_install_dir }}"
+- name: "FZF | Install man pages into {{ direnv_man_install_dir }}"
   become: true
   ansible.builtin.unarchive:
     src: "https://github.com/junegunn/fzf/archive/refs/tags/v{{ fzf_version }}.tar.gz"

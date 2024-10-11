@@ -24,6 +24,7 @@
         active_rustup_toolchain_version: "{{ rustup_default_output.stdout_lines[0] }}"
 
 - name: "Rustup | Set default toolchain version"
+  changed_when: false
   when: (active_rustup_toolchain_version is undefined) or (active_rustup_toolchain_version != rustup_default_version)
   ansible.builtin.command:
     cmd: rustup default "{{ rustup_default_version }}"

@@ -1,15 +1,16 @@
 ---
-- import_tasks: debian.yml
+- name: "Clang | Add LLVM repository [Debian]"
+  ansible.builtin.import_tasks: debian.yml
   when: ansible_os_family == 'Debian'
 
-- name: "Clang | Install LLVM packages [{{ ansible_os_family }}]"
+- name: "Clang | Install LLVM packages [Archlinux]"
   become: true
   ansible.builtin.package:
     name:
       - clang
   when: ansible_os_family == 'Archlinux'
 
-- name: "Clang | Install LLVM packages [{{ ansible_os_family }}]"
+- name: "Clang | Install LLVM packages [Suse, FreeBSD]"
   become: true
   ansible.builtin.package:
     name:

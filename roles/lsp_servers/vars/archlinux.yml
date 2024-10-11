@@ -1,5 +1,5 @@
 ---
-lsp_server_package:
+lsp_servers_package:
   - lua-language-server
   - bash-language-server
   - pyright
@@ -9,4 +9,4 @@ lsp_server_package:
   - vscode-html-languageserver
   - vscode-json-languageserver
   - yaml-language-server
-lsp_server_npm:
+lsp_servers_npm:

@@ -5,7 +5,8 @@
     - "{{ ansible_os_family | lower }}.yml"
     - "main.yml"
 
-- import_tasks: debian.yml
+- name: "Git | Install repository [Debian]"
+  ansible.builtin.import_tasks: debian.yml
   when: ansible_os_family == 'Debian'
 
 - name: "Git | Install from package manager"
