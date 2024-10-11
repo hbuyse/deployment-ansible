@@ -1,0 +1,26 @@
+---
+- import_tasks: zsh.yml
+  tags:
+    - shell
+    - zsh
+
+- import_tasks: oh-my-zsh.yml
+  tags:
+    - shell
+    - omz
+    - p10k
+
+- name: "Shell | Copy configuration file"
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/{{ item }}"
+    dest: "{{ ansible_user_dir }}/.{{ item }}"
+    mode: 0644
+    owner: "{{ ansible_user_uid }}"
+    group: "{{ ansible_user_gid }}"
+  loop:
+    - zshrc
+    - p10k.zsh
+  tags:
+    - shell
+    - omz
+    - p10k
