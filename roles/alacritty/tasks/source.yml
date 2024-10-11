@@ -25,7 +25,7 @@
   ansible.builtin.set_fact:
     alacritty_latest_version: "{{ latest_json.json.tag_name[1:] }}"
 
-- name: "Alacritty | Install Rust package with locked dependencies (v{{ alacritty_latest_version }})"
+- name: "Alacritty | Install Rust package with locked dependencies"
   become: true
   community.general.cargo:
     name: alacritty
