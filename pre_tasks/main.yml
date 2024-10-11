@@ -1,0 +1,10 @@
+---
+- name: "Common | Define alternative architecture naming"
+  ansible.builtin.set_fact:
+    alt_arch: "{{ ansible_machine | replace('x86_64', 'amd64') | replace('aarch64', 'arm64') }}"
+
+- include_tasks: debian.yml
+  when: ansible_os_family == 'Debian'
+
+- include_tasks: archlinux.yml
+  when: ansible_os_family == 'archlinux'
