@@ -18,3 +18,4 @@
     - name: clang
     - name: lsp_servers
     - name: vscode
+    - name: zsh
