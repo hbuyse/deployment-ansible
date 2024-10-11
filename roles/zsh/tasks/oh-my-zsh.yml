@@ -26,7 +26,7 @@
 
 - name: "Oh My Zsh | Install powerlevel10k theme"
   ansible.builtin.git:
-    repo: "https://gitee.com/romkatv/powerlevel10k.git"
-    dest: "{{ omz_custom_dir }}/themes/powerlevel10k"
+    repo: "https://github.com/romkatv/powerlevel10k"
+    dest: "{{ zsh_omz_custom_dir }}/themes/powerlevel10k"
     version: "master"
     update: true
