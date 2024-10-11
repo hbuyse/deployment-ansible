@@ -1,0 +1,10 @@
+---
+- name: "Docker | Install from package manager [Suse]"
+  become: true
+  ansible.builtin.package:
+    state: present
+    name:
+      - docker
+      - docker-compose
+      - docker-compose-switch
+  notify: "Docker | Restart docker service"

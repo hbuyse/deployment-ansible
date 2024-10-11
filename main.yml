@@ -22,3 +22,4 @@
     - role: "lsp_servers"
     - role: "vscode"
     - role: "zsh"
+    - role: "docker"
