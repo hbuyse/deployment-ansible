@@ -1,0 +1,12 @@
+---
+- name: "alacritty | Ensure {{ item.dest | basename }} directory exists"
+  become: true
+  ansible.builtin.file:
+    path: "{{ item.dest }}"
+    state: directory
+
+- name: "alacritty | Install {{ item.url | basename }} page"
+  become: true
+  ansible.builtin.get_url:
+    url: "{{ item.url }}"
+    dest: "{{ item.dest }}"

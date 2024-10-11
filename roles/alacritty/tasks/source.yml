@@ -36,3 +36,39 @@
     RUSTUP_HOME: "{{ ansible_user_dir }}/.rustup"
     CARGO_HOME: "{{ ansible_user_dir }}/.cargo"
     PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"
+
+- name: "alacritty | Install desktop files and man pages"
+  include_tasks: source-external.yml
+  loop:
+    - {
+        url: "https://github.com/alacritty/alacritty/releases/download/v{{ alacritty_latest_version }}/Alacritty.desktop",
+        dest: "/usr/local/share/applications",
+      }
+    - {
+        url: "https://github.com/alacritty/alacritty/releases/download/v{{ alacritty_latest_version }}/alacritty.1.gz",
+        dest: "/usr/local/share/man/man1",
+      }
+    - {
+        url: "https://github.com/alacritty/alacritty/releases/download/v{{ alacritty_latest_version }}/alacritty.5.gz",
+        dest: "/usr/local/share/man/man5",
+      }
+    - {
+        url: "https://github.com/alacritty/alacritty/releases/download/v{{ alacritty_latest_version }}/alacritty-msg.1.gz",
+        dest: "/usr/local/share/man/man1",
+      }
+    - {
+        url: "https://github.com/alacritty/alacritty/releases/download/v{{ alacritty_latest_version }}/alacritty-bindings.5.gz",
+        dest: "/usr/local/share/man/man5",
+      }
+    - {
+        url: "https://github.com/alacritty/alacritty/releases/download/v{{ alacritty_latest_version }}/_alacritty",
+        dest: "/usr/local/share/zsh/site-functions",
+      }
+    - {
+        url: "https://github.com/alacritty/alacritty/releases/download/v{{ alacritty_latest_version }}/alacritty.bash",
+        dest: "/usr/local/share/bash-completion/completions",
+      }
+    - {
+        url: "https://github.com/alacritty/alacritty/releases/download/v{{ alacritty_latest_version }}/alacritty.fish",
+        dest: "/usr/local/share/fish/vendor_completions.d",
+      }
