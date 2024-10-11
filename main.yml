@@ -1,20 +1,7 @@
 ---
 - hosts: localhost
   pre_tasks:
-    - name: "Common | Define alternative architecture naming"
-      ansible.builtin.set_fact:
-        alt_arch: "{{ ansible_machine | replace('x86_64', 'amd64') | replace('aarch64', 'arm64') }}"
-
-    - name: "Debian Family"
-      when: ansible_os_family == 'Debian'
-      block:
-        - name: "Debian Family | Get dpkg architecture"
-          shell: dpkg --print-architecture
-          register: deb_arch_tmp
-
-        - name: "Debian Family | Store DPKG architecture as fact"
-          ansible.builtin.set_fact:
-            deb_arch: "{{ deb_arch_tmp.stdout }}"
+    - import_tasks: pre_tasks/main.yml
 
   roles:
     - name: git
