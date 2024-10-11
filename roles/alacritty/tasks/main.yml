@@ -6,7 +6,7 @@
   when: ansible_os_family in ['Archlinux', 'Suse']
 
 - name: "alacritty | Ensure config directory exists"
-  file:
+  ansible.builtin.file:
     path: "{{ ansible_user_dir }}/.config/alacritty"
     state: directory
 
