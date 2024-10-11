@@ -1,21 +1,31 @@
 ---
 - import_tasks: source.yml
   when: ansible_os_family not in ['Archlinux', 'Suse']
+  tags:
+    - alacritty
 
 - import_tasks: package.yml
   when: ansible_os_family in ['Archlinux', 'Suse']
+  tags:
+    - alacritty
 
 - name: "alacritty | Ensure config directory exists"
   ansible.builtin.file:
     path: "{{ ansible_user_dir }}/.config/alacritty"
     state: directory
+  tags:
+    - alacritty
 
 - name: "alacritty | Copy static files in configuration directory"
   ansible.builtin.copy:
     src: "{{ role_path }}/files/"
     dest: "{{ ansible_user_dir }}/.config/alacritty"
+  tags:
+    - alacritty
 
 - name: "alacritty | Install catppuccin themes"
   ansible.builtin.git:
     repo: "https://github.com/alacritty/alacritty-theme"
     dest: "{{ ansible_user_dir }}/.config/alacritty/themes"
+  tags:
+    - alacritty
