@@ -1,0 +1,268 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+
+palettes:
+  template: catppuccin-mocha
+  list:
+    catppuccin-mocha:
+      rosewater: "#f5e0dc"
+      flamingo: "#f2cdcd"
+      pink: "#f5c2e7"
+      mauve: "#cba6f7"
+      red: "#f38ba8"
+      maroon: "#eba0ac"
+      peach: "#fab387"
+      yellow: "#f9e2af"
+      green: "#a6e3a1"
+      teal: "#94e2d5"
+      sky: "#89dceb"
+      sapphire: "#74c7ec"
+      blue: "#89b4fa"
+      lavender: "#b4befe"
+      text: "#cdd6f4"
+      subtext1: "#bac2de"
+      subtext0: "#a6adc8"
+      overlay2: "#9399b2"
+      overlay1: "#7f849c"
+      overlay0: "#6c7086"
+      surface2: "#585b70"
+      surface1: "#45475a"
+      surface0: "#313244"
+      base: "#1e1e2e"
+      mantle: "#181825"
+      crust: "#11111b"
+    catppuccin-macchiato:
+      rosewater: "#f4dbd6"
+      flamingo: "#f0c6c6"
+      pink: "#f5bde6"
+      mauve: "#c6a0f6"
+      red: "#ed8796"
+      maroon: "#ee99a0"
+      peach: "#f5a97f"
+      yellow: "#eed49f"
+      green: "#a6da95"
+      teal: "#8bd5ca"
+      sky: "#91d7e3"
+      sapphire: "#7dc4e4"
+      blue: "#8aadf4"
+      lavender: "#b7bdf8"
+      text: "#cad3f5"
+      subtext1: "#b8c0e0"
+      subtext0: "#a5adcb"
+      overlay2: "#939ab7"
+      overlay1: "#8087a2"
+      overlay0: "#6e738d"
+      surface2: "#5b6078"
+      surface1: "#494d64"
+      surface0: "#363a4f"
+      base: "#24273a"
+      mantle: "#1e2030"
+      crust: "#181926"
+    catppuccin-frappe:
+      rosewater: "#f2d5cf"
+      flamingo: "#eebebe"
+      pink: "#f4b8e4"
+      mauve: "#ca9ee6"
+      red: "#e78284"
+      maroon: "#ea999c"
+      peach: "#ef9f76"
+      yellow: "#e5c890"
+      green: "#a6d189"
+      teal: "#81c8be"
+      sky: "#99d1db"
+      sapphire: "#85c1dc"
+      blue: "#8caaee"
+      lavender: "#babbf1"
+      text: "#c6d0f5"
+      subtext1: "#b5bfe2"
+      subtext0: "#a5adce"
+      overlay2: "#949cbb"
+      overlay1: "#838ba7"
+      overlay0: "#737994"
+      surface2: "#626880"
+      surface1: "#51576d"
+      surface0: "#414559"
+      base: "#303446"
+      mantle: "#292c3c"
+      crust: "#232634"
+
+palette:
+  status-fg-success: "#5faf00"
+  status-fg-error: "#FF5252"
+
+common:
+  element: &element
+    style: plain
+    background: p:surface0
+  project: &project
+    <<: *element
+    foreground: p:sky
+
+blocks:
+  - alignment: left
+    segments:
+      - foreground: p:text
+        <<: *element
+        template: " {{ if .WSL }}WSL at {{ end }}{{.Icon}} "
+        type: os
+      - foreground: p:red
+        <<: *element
+        template: "  <#bac2de></>"
+        type: root
+        comment: Show when the current user is root or when in an elevated shell (Windows)
+      - foreground: p:sapphire
+        <<: *element
+        properties:
+          style: full
+          edge_format: "<b>%s</b>"
+          max_width: 80
+        templates:
+          - "  "
+          - "{{ .Path }} "
+          - "{{ if not .Writable }} {{ end }}"
+        type: path
+      - foreground: p:green
+        <<: *element
+        templates:
+          - "<#bac2de></> {{ .HEAD }}"
+          - "{{ if .BranchStatus }} {{ .BranchStatus }} {{ end }}"
+          - "{{ if .Staging.Changed }}  {{ .Staging.String }} {{ end }}"
+          - "{{ if .Working.Changed }}  {{ .Working.String }} {{ end }}"
+          - "{{ if gt .StashCount 0 }}  {{ .StashCount }} {{ end }}"
+        properties:
+          branch_max_length: 0
+          branch_icon: " "
+          branch_identical_icon: ""
+          branch_gone_icon: ""
+          branch_behind_icon: ""
+          branch_ahead_icon: ""
+          fetch_stash_count: true
+          fetch_status: true
+          fetch_upstream_icon: true
+          mapped_branches:
+            feature/*: " "
+            feat/*: " "
+            work/*: " "
+          tag_icon: " "
+          rebase_icon: " "
+          git_icon: " "
+          merge_icon: " "
+          commit_icon: " "
+          revert_icon: " "
+          no_commits_icon: " "
+          cherry_pick_icon: " "
+          full_branch_path: true
+        type: git
+      - background: transparent
+        foreground: p:surface0
+        style: plain
+        template: ""
+        type: text
+    type: prompt
+  - alignment: right
+    filler: "<#313244,transparent>·</>"
+    segments:
+      - foreground: p:surface0
+        background: transparent
+        style: plain
+        template: ""
+        type: text
+      - foreground: p:green
+        <<: *element
+        foreground_templates:
+          - "{{ if .Error }}p:red{{ end }}"
+        templates:
+          - "{{ if .Error }} {{ .String }}  {{ end }}"
+          - "<#bac2de></>"
+        properties:
+          status_template: "{{ reason .Code }}"
+        type: status
+      - foreground: p:subtext0
+        <<: *element
+        type: executiontime
+        templates:
+          - " {{ .FormattedMs }}"
+          - " 󱦟"
+          - " <#bac2de></>"
+        properties:
+          threshold: 500
+          style: austin
+      - type: text
+        <<: *element
+        foreground: p:yellow
+        template: "{{ if .Env.DIRENV_FILE }}  <#bac2de></>{{ end }}"
+      - type: project
+        <<: *project
+        templates:
+          - " {{ if .Error }}{{ .Error }}{{ else }}{{ if .Name }}{{ .Name }}{{ end }} {{ if .Version }}{{.Version}} {{ end }}{{ end }}"
+          - " <#bac2de></>"
+      - type: cmake
+        <<: *project
+        templates:
+          - " {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
+          - "  "
+          - " <#bac2de></>"
+        properties:
+          extensions:
+            - "*.cmake"
+            - "CMakeLists.txt"
+            - "CMakeCache.txt"
+      - type: python
+        <<: *project
+        templates:
+          - " {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }}"
+          - " "
+          - " <#bac2de></>"
+      - type: rust
+        <<: *project
+        templates:
+          - " {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
+          - " "
+          - " <#bac2de></>"
+      - type: lua
+        <<: *project
+        templates:
+          - " {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
+          - " "
+          - " <#bac2de></>"
+      - type: perl
+        <<: *project
+        templates:
+          - " {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
+          - " "
+          - " <#bac2de></>"
+      - type: go
+        <<: *project
+        templates:
+          - " {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
+          - " "
+          - " <#bac2de></>"
+      - foreground: p:yellow
+        <<: *element
+        templates:
+          - " {{ .UserName }}@{{ .HostName }}"
+          - " {{ if .SSHSession }}{{ else if .Root }}{{ else }}{{ end }}"
+          - " <#bac2de></>"
+        type: session
+      - foreground: p:subtext1
+        <<: *element
+        properties:
+          time_format: "15:04:05"
+        template: " {{ .CurrentDate | date .Format }}  "
+        type: time
+    type: prompt
+    overflow: hide
+  - alignment: left
+    newline: true
+    segments:
+      - foreground: p:green
+        foreground_templates:
+          - "{{ if .Error }}p:red{{ end }}"
+        background: transparent
+        properties:
+          always_enabled: true
+        style: plain
+        template: "❯ "
+        type: status
+    type: prompt
+version: 2
