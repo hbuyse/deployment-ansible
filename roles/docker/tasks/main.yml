@@ -1,18 +1,24 @@
 ---
-- name: "Docker | Install [{{ ansible_distribution }}]"
-  ansible.builtin.import_tasks: debian.yml
-  when: ansible_os_family == 'Debian'
-  tags:
-    - docker
+- name: "Docker | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_os_family | lower }}.yml"
+    - main.yml
+  tags: docker
 
-- name: "Docker | Install [{{ ansible_distribution }}]"
-  ansible.builtin.import_tasks: archlinux.yml
-  when: ansible_os_family == 'Archlinux'
-  tags:
-    - docker
+- name: "Docker | Add repository [Debian]"
+  ansible.builtin.include_tasks:
+    file: debian.yml
+    apply:
+      tags: docker
+  when: ansible_os_family == "Debian"
+  tags: docker
 
-- name: "Docker | Install [{{ ansible_distribution }}]"
-  ansible.builtin.import_tasks: suse.yml
-  when: ansible_os_family == 'Suse'
-  tags:
-    - docker
+- name: "Docker | Install packages"
+  become: true
+  ansible.builtin.package:
+    update_cache: true
+    state: present
+    name: "{{ docker_packages }}"
+  notify: "Docker | Restart docker service"
+  tags: docker

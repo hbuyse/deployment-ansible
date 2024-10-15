@@ -3,8 +3,7 @@
   become: true
   ansible.builtin.package:
     state: present
-    name:
-      - ca-certificates
+    name: "{{ docker_dependencies }}"
 
 - name: "Docker | Install repository [Debian]"
   become: true
@@ -18,16 +17,3 @@
     architectures:
       - amd64
     signed_by: "https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg"
-
-- name: "Docker | Install packages [Debian]"
-  become: true
-  ansible.builtin.package:
-    update_cache: true
-    state: present
-    name:
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
-      - docker-buildx-plugin
-      - docker-compose-plugin
-  notify: "Docker | Restart docker service"
