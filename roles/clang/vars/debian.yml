@@ -1,0 +1,37 @@
+---
+clang_llvm_stable_version: 18
+
+clang_dependencies:
+  - lsb-release
+  - wget
+  - software-properties-common
+  - gnupg
+
+clang_packages:
+  # LLVM
+  - "libllvm{{ clang_llvm_stable_version }}"
+  - "llvm-{{ clang_llvm_stable_version }}"
+  - "llvm-{{ clang_llvm_stable_version }}-dev"
+  - "llvm-{{ clang_llvm_stable_version }}-doc"
+  - "llvm-{{ clang_llvm_stable_version }}-examples"
+  - "llvm-{{ clang_llvm_stable_version }}-runtime"
+  # Clang and co
+  - "clang-{{ clang_llvm_stable_version }}"
+  - "clang-tools-{{ clang_llvm_stable_version }}"
+  - "clang-{{ clang_llvm_stable_version }}-doc"
+  - "libclang-common-{{ clang_llvm_stable_version }}-dev"
+  - "libclang-{{ clang_llvm_stable_version }}-dev"
+  - "libclang1-{{ clang_llvm_stable_version }}"
+  - "clang-format-{{ clang_llvm_stable_version }}"
+  - "python3-clang-{{ clang_llvm_stable_version }}"
+  - "clangd-{{ clang_llvm_stable_version }}"
+  - "clang-tidy-{{ clang_llvm_stable_version }}"
+  # compiler-rt
+  - "libclang-rt-{{ clang_llvm_stable_version }}-dev"
+  # lldb
+  - "lldb-{{ clang_llvm_stable_version }}"
+  # lld (linker)
+  - "lld-{{ clang_llvm_stable_version }}"
+  # libc++
+  - "libc++-{{ clang_llvm_stable_version }}-dev"
+  - "libc++abi-{{ clang_llvm_stable_version }}-dev"
