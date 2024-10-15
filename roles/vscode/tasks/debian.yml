@@ -1,5 +1,5 @@
 ---
-- name: "VSCode | Install dependencies"
+- name: "VSCode | Install dependencies [{{ ansible_os_family }}]"
   become: true
   ansible.builtin.package:
     state: present
@@ -8,7 +8,7 @@
       - gpg
       - apt-transport-https
 
-- name: "VSCode | Install repository"
+- name: "VSCode | Install repository [{{ ansible_os_family }}]"
   become: true
   ansible.builtin.deb822_repository:
     name: vscode
@@ -23,7 +23,7 @@
       - armhf
     signed_by: "https://packages.microsoft.com/keys/microsoft.asc"
 
-- name: "VSCode | Install package"
+- name: "VSCode | Install package [{{ ansible_os_family }}]"
   become: true
   ansible.builtin.package:
     update_cache: true
