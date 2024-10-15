@@ -1,9 +1,0 @@
----
-- name: "Docker | Install from package manager [Archlinux]"
-  become: true
-  ansible.builtin.package:
-    name:
-      - docker
-      - docker-compose
-    state: present
-  notify: "Docker | Restart docker service"
