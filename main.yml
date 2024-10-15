@@ -3,10 +3,10 @@
   hosts: localhost
   pre_tasks:
     - name: "Dotfiles | Prepare installation"
-      ansible.builtin.import_tasks: pre_tasks/main.yml
+      ansible.builtin.include_tasks: pre_tasks/main.yml
   post_tasks:
     - name: "Dotfiles | Finalize installation"
-      ansible.builtin.import_tasks: post_tasks/main.yml
+      ansible.builtin.include_tasks: post_tasks/main.yml
   roles:
     - role: "git"
     - role: "alacritty"

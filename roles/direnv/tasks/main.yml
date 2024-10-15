@@ -1,11 +1,11 @@
 ---
 # tasks file for direnv
 - name: "Direnv | Install from sources"
-  ansible.builtin.import_tasks: source-install.yml
+  ansible.builtin.include_tasks: source-install.yml
   when: ansible_os_family == "Debian"
 
 - name: "Direnv | Install from package manager"
-  ansible.builtin.import_tasks: package-install.yml
+  ansible.builtin.include_tasks: package-install.yml
   when: ansible_os_family != "Debian"
 
 - name: "Direnv | Create symlink to config"

@@ -1,12 +1,12 @@
 ---
 - name: "ZSH | Install shell"
-  ansible.builtin.import_tasks: zsh.yml
+  ansible.builtin.include_tasks: zsh.yml
   tags:
     - shell
     - zsh
 
 - name: "ZSH | Install oh-my-zsh, its plugins and themes"
-  ansible.builtin.import_tasks: oh-my-zsh.yml
+  ansible.builtin.include_tasks: oh-my-zsh.yml
   tags:
     - shell
     - omz

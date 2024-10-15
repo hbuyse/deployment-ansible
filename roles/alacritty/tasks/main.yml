@@ -1,12 +1,12 @@
 ---
 - name: "Alacritty | Install from source"
-  ansible.builtin.import_tasks: source.yml
+  ansible.builtin.include_tasks: source.yml
   when: ansible_os_family not in ['Archlinux', 'Suse']
   tags:
     - alacritty
 
 - name: "Alacritty | Install from package manager"
-  ansible.builtin.import_tasks: package.yml
+  ansible.builtin.include_tasks: package.yml
   when: ansible_os_family in ['Archlinux', 'Suse']
   tags:
     - alacritty
