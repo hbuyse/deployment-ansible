@@ -3,7 +3,7 @@
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
-      - "{{ ansible_os_family | lower }}.yml"
+        - "{{ ansible_os_family | lower }}.yml"
       skip: true
   tags: docker
 
