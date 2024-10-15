@@ -28,3 +28,6 @@
     - role: "docker"
     - role: "oh_my_posh"
     - role: "web_browsers"
+    - role: "wallpapers"
+      vars:
+        wallpapers_install_prefix: "{{ lookup('env', 'HOME') }}/.local"
