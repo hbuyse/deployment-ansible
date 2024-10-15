@@ -1,5 +1,11 @@
 ---
-- name: "Post-tasks | Update packages to their latest version"
-  ansible.builtin.package:
-    state: latest
+- name: "Post-tasks | Always run tasks that are OS specific"
+  ansible.builtin.include_tasks:
+    file: "{{ item }}"
+    apply:
+      tags: always
+  with_first_found:
+    - files:
+      - "{{ ansible_os_family | lower }}.yml"
+      skip: true
   tags: always

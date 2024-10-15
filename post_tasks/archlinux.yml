@@ -1,0 +1,7 @@
+---
+- name: "Post-tasks | Upgrade packages to latest version [{{ ansible_os_family }}]"
+  become: true
+  community.general.pacman:
+    upgrade: true
+    state: "latest"
+    update_cache: true
