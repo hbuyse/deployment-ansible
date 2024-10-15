@@ -1,7 +1,10 @@
 ---
 - name: "NodeJS | Include OS specific vars"
-  ansible.builtin.include_vars: "{{ ansible_os_family | lower }}.yml"
-  when: ansible_os_family == "Debian"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+      - "{{ ansible_os_family | lower }}.yml"
+      skip: true
   tags:
     - nodejs
 

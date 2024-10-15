@@ -2,8 +2,9 @@
 - name: "LSP servers | Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
-    - "{{ ansible_os_family | lower }}.yml"
-    - "main.yml"
+    - files:
+      - "{{ ansible_os_family | lower }}.yml"
+      skip: true
   tags: lsp_servers
 
 - name: "LSP servers | Install from package manager"
