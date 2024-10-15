@@ -1,11 +1,11 @@
 ---
 # tasks file for shell
 - name: "Fastfetch | Install from sources"
-  ansible.builtin.import_tasks: source-install.yml
+  ansible.builtin.include_tasks: source-install.yml
   when: ansible_os_family == "Debian"
 
 - name: "Fastfetch | Install from package manager"
-  ansible.builtin.import_tasks: package-install.yml
+  ansible.builtin.include_tasks: package-install.yml
   when: ansible_os_family != "Debian"
 
 - name: "Fastfetch | Create symlink to config"
