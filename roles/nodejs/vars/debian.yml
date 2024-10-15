@@ -1,0 +1,7 @@
+---
+nodejs_version: 20
+nodejs_dependencies:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - gnupg
