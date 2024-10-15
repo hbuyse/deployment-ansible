@@ -2,8 +2,9 @@
 - name: "Clang | Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
-    - "{{ ansible_os_family | lower }}.yml"
-    - main.yml
+    - files:
+      - "{{ ansible_os_family | lower }}.yml"
+      skip: true
 
 - name: "Clang | Add LLVM repository [Debian]"
   ansible.builtin.include_tasks: debian.yml
