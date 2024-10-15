@@ -1,0 +1,4 @@
+---
+web_browsers_packages:
+  - chromium
+  - firefox
