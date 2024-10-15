@@ -1,0 +1,6 @@
+---
+- name: "Waybar | Install package [Suse]"
+  ansible.builtin.package:
+    name:
+      - waybar
+    state: present
