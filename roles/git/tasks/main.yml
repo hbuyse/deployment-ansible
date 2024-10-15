@@ -4,13 +4,19 @@
   with_first_found:
     - "{{ ansible_os_family | lower }}.yml"
     - "main.yml"
+  tags: git
 
 - name: "Git | Install repository [Debian]"
-  ansible.builtin.import_tasks: debian.yml
+  ansible.builtin.include_tasks:
+    file: debian.yml
+    apply:
+      tags: git
   when: ansible_os_family == 'Debian'
+  tags: git
 
 - name: "Git | Install from package manager"
   become: true
   ansible.builtin.package:
-    name: "{{ git_package }}"
+    name: "{{ git_packages }}"
     state: present
+  tags: git
