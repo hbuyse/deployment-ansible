@@ -1,8 +1,18 @@
 ---
+- name: "NodeJS | Include OS specific vars"
+  ansible.builtin.include_vars: "{{ ansible_os_family | lower }}.yml"
+  when: ansible_os_family == "Debian"
+  tags:
+    - nodejs
+
 - name: "NodeJS | Install [Debian]"
-  ansible.builtin.import_tasks: setup-debian.yml
-  when: ansible_os_family in [ "Debian" ]
+  ansible.builtin.include_tasks: setup-debian.yml
+  when: ansible_os_family == "Debian"
+  tags:
+    - nodejs
 
 - name: "NodeJS | Install [Rolling Release]"
-  ansible.builtin.import_tasks: setup-rolling-release.yml
-  when: ansible_os_family not in [ "Debian" ]
+  ansible.builtin.include_tasks: setup-rolling-release.yml
+  when: ansible_os_family in ["Archlinux", "Suse"]
+  tags:
+    - nodejs
