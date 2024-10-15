@@ -1,5 +1,5 @@
 ---
 nodejs_packages:
-  # Provides: nodejs=20.18.0
-  - nodejs-lts-iron
+  # Install latest release in order to NOT break the other packages dependencies
+  - nodejs
   - npm
