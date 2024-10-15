@@ -1,0 +1,8 @@
+---
+- name: "Post-tasks | Upgrade packages to latest version [{{ ansible_os_family }}]"
+  become: true
+  ansible.builtin.apt:
+    force_apt_get: true
+    state: "latest"
+    upgrade: "safe"
+    update_cache: true
