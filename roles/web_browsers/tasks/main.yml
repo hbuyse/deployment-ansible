@@ -1,0 +1,11 @@
+---
+- name: "Web Browsers | Import OS specific vars [{{ ansible_os_family }}]"
+  ansible.builtin.include_vars: "{{ ansible_os_family | lower }}.yml"
+  tags: [web, browser, browsers]
+
+- name: "Web Browsers | Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ web_browsers_packages }}"
+    state: present
+  tags: [web, browser, browsers]
