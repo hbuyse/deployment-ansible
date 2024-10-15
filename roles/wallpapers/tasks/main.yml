@@ -1,0 +1,40 @@
+---
+- name: "Wallpapers | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: wallpapers
+
+- name: "Wallpapers | Install dependencies"
+  become: true
+  ansible.builtin.package:
+    name: "{{ wallpapers_dependencies }}"
+    state: present
+  tags: wallpapers
+
+- name: "Wallpapers | Ensure wallpaper directory exists"
+  become: "{{ (wallpapers_user == 'root') | bool }}"
+  ansible.builtin.file:
+    path: "{{ wallpapers_install_dir }}"
+    state: directory
+    mode: "0755"
+    recurse: true
+  tags: wallpapers
+
+- name: "Wallpapers | Install wallpaper files"
+  become: "{{ (wallpapers_user == 'root') | bool }}"
+  ansible.builtin.copy:
+    src: "coding.svg"
+    dest: "{{ wallpapers_install_dir }}"
+    mode: "0644"
+  tags: wallpapers
+
+- name: "Wallpapers | Install wallpaper customizer script"
+  become: "{{ (wallpapers_user == 'root') | bool }}"
+  ansible.builtin.copy:
+    src: "generate-bg.sh"
+    dest: "{{ wallpapers_install_bin }}"
+    mode: "0755"
+  tags: wallpapers
