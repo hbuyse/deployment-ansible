@@ -1,12 +1,12 @@
 ---
-- name: "Pre-tasks | Create the 'aur_builder' user [Archlinux]"
+- name: "Pre-tasks | Create the 'aur_builder' user [{{ ansible_os_family }}]"
   become: true
   ansible.builtin.user:
     name: aur_builder
     create_home: true
     group: wheel
 
-- name: "Pre-tasks | Allow the `aur_builder` user to run `sudo pacman` without a password [Archlinux]"
+- name: "Pre-tasks | Allow the `aur_builder` user to run `sudo pacman` without a password [{{ ansible_os_family }}]"
   become: true
   ansible.builtin.lineinfile:
     path: /etc/sudoers.d/11-install-aur_builder
