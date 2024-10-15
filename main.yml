@@ -27,3 +27,4 @@
     - role: "zsh"
     - role: "docker"
     - role: "oh_my_posh"
+    - role: "web_browsers"

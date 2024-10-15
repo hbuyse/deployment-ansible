@@ -1,0 +1,6 @@
+---
+web_browsers_packages:
+  - chromium
+  - firefox
+  - firefox-i18n-en
+  - firefox-i18n-fr
