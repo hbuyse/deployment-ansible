@@ -3,19 +3,16 @@
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
-      - "{{ ansible_os_family | lower }}.yml"
+        - "{{ ansible_os_family | lower }}.yml"
       skip: true
-  tags:
-    - nodejs
+  tags: nodejs
 
 - name: "NodeJS | Install [Debian]"
   ansible.builtin.include_tasks: setup-debian.yml
   when: ansible_os_family == "Debian"
-  tags:
-    - nodejs
+  tags: nodejs
 
 - name: "NodeJS | Install [Rolling Release]"
   ansible.builtin.include_tasks: setup-rolling-release.yml
   when: ansible_os_family in ["Archlinux", "Suse"]
-  tags:
-    - nodejs
+  tags: nodejs
