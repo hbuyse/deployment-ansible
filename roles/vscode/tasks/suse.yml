@@ -1,20 +1,20 @@
 ---
-- name: "VSCode | Install key"
+- name: "VSCode | Install key [{{ ansible_os_family }}]"
   become: true
   ansible.builtin.rpm_key:
     state: present
     key: "https://packages.microsoft.com/keys/microsoft.asc"
 
-- name: "VSCode | Add repository configuration"
+- name: "VSCode | Add repository configuration [{{ ansible_os_family }}]"
   become: true
   ansible.builtin.copy:
-    src: "{{ role_path }}/files/vscode.repo"
+    src: "vscode.repo"
     dest: "/etc/zypp/repos.d/vscode.repo"
     mode: "0600"
     owner: root
     group: root
 
-- name: "VSCode | Install package"
+- name: "VSCode | Install package [{{ ansible_os_family }}]"
   become: true
   ansible.builtin.package:
     name:

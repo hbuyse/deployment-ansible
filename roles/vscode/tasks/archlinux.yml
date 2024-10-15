@@ -1,5 +1,5 @@
 ---
-- name: "VSCode | Install from AUR"
+- name: "VSCode | Install from AUR [{{ ansible_os_family }}]"
   become: true
   become_user: aur_builder
   kewlfft.aur.aur:
