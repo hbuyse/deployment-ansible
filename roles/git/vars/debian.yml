@@ -1,4 +1,4 @@
 ---
-git_package:
+git_packages:
   - git
   - gitk

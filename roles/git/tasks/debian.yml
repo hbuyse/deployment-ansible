@@ -1,5 +1,5 @@
 ---
-- name: "Git | Add PPA for debian"
+- name: "Git | Add PPA [{{ ansible_os_family }}]"
   become: true
   ansible.builtin.apt_repository:
     repo: "ppa:git-core/ppa"
