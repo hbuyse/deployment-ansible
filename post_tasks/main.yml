@@ -1,0 +1,5 @@
+---
+- name: "Post-tasks | Update packages to their latest version"
+  ansible.builtin.package:
+    state: latest
+  tags: always
