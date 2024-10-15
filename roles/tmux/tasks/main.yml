@@ -25,6 +25,7 @@
     repo: "{{ item.repo }}"
     dest: "{{ ansible_user_dir }}/.config/tmux/plugins/{{ item.plugin_dir }}"
     version: "{{ item.version }}"
+    force: true
   loop:
     - repo: "https://github.com/tmux-plugins/tpm"
       plugin_dir: "tpm"
