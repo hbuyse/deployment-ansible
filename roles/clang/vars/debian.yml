@@ -35,3 +35,44 @@ clang_packages:
   # libc++
   - "libc++-{{ clang_llvm_stable_version }}-dev"
   - "libc++abi-{{ clang_llvm_stable_version }}-dev"
+
+clang_alternatives_llvm_config:
+  - llvm-ar
+  - llvm-as
+  - llvm-bcanalyzer
+  - llvm-cov
+  - llvm-diff
+  - llvm-dis
+  - llvm-dwarfdump
+  - llvm-extract
+  - llvm-link
+  - llvm-mc
+  - llvm-mcmarkup
+  - llvm-nm
+  - llvm-objdump
+  - llvm-ranlib
+  - llvm-readobj
+  - llvm-rtdyld
+  - llvm-size
+  - llvm-stress
+  - llvm-symbolizer
+  - llvm-tblgen
+
+clang_alternatives_clang:
+  - clang++
+  - asan_symbolize
+  - c-index-test
+  - clang-check
+  - clang-cl
+  - clang-cpp
+  - clang-format
+  - clang-format-diff
+  - clang-import-test
+  - clang-include-fixer
+  - clang-offload-bundler
+  - clang-query
+  - clang-rename
+  - clang-reorder-fields
+  - clang-tidy
+  - lldb
+  - lldb-server
