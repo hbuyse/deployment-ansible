@@ -1,0 +1,130 @@
+---
+- name: "Clang | Update Clang and LLVM alternatives [{{ ansible_os_family }}]"
+  become: true
+  block:
+    - name: "Clang | Update LLVM alternatives [{{ ansible_os_family }}]"
+      community.general.alternatives:
+        name: llvm-config
+        link: /usr/bin/llvm-config
+        path: "/usr/bin/llvm-config-{{ clang_llvm_stable_version }}"
+        priority: 100
+        subcommands:
+          - name: llvm-ar
+            link: /usr/bin/llvm-ar
+            path: "/usr/bin/llvm-ar-{{ clang_llvm_stable_version }}"
+          - name: llvm-as
+            link: /usr/bin/llvm-as
+            path: "/usr/bin/llvm-as-{{ clang_llvm_stable_version }}"
+          - name: llvm-bcanalyzer
+            link: /usr/bin/llvm-bcanalyzer
+            path: "/usr/bin/llvm-bcanalyzer-{{ clang_llvm_stable_version }}"
+          - name: llvm-cov
+            link: /usr/bin/llvm-cov
+            path: "/usr/bin/llvm-cov-{{ clang_llvm_stable_version }}"
+          - name: llvm-diff
+            link: /usr/bin/llvm-diff
+            path: "/usr/bin/llvm-diff-{{ clang_llvm_stable_version }}"
+          - name: llvm-dis
+            link: /usr/bin/llvm-dis
+            path: "/usr/bin/llvm-dis-{{ clang_llvm_stable_version }}"
+          - name: llvm-dwarfdump
+            link: /usr/bin/llvm-dwarfdump
+            path: "/usr/bin/llvm-dwarfdump-{{ clang_llvm_stable_version }}"
+          - name: llvm-extract
+            link: /usr/bin/llvm-extract
+            path: "/usr/bin/llvm-extract-{{ clang_llvm_stable_version }}"
+          - name: llvm-link
+            link: /usr/bin/llvm-link
+            path: "/usr/bin/llvm-link-{{ clang_llvm_stable_version }}"
+          - name: llvm-mc
+            link: /usr/bin/llvm-mc
+            path: "/usr/bin/llvm-mc-{{ clang_llvm_stable_version }}"
+          - name: llvm-mcmarkup
+            link: /usr/bin/llvm-mcmarkup
+            path: "/usr/bin/llvm-mcmarkup-{{ clang_llvm_stable_version }}"
+          - name: llvm-nm
+            link: /usr/bin/llvm-nm
+            path: "/usr/bin/llvm-nm-{{ clang_llvm_stable_version }}"
+          - name: llvm-objdump
+            link: /usr/bin/llvm-objdump
+            path: "/usr/bin/llvm-objdump-{{ clang_llvm_stable_version }}"
+          - name: llvm-ranlib
+            link: /usr/bin/llvm-ranlib
+            path: "/usr/bin/llvm-ranlib-{{ clang_llvm_stable_version }}"
+          - name: llvm-readobj
+            link: /usr/bin/llvm-readobj
+            path: "/usr/bin/llvm-readobj-{{ clang_llvm_stable_version }}"
+          - name: llvm-rtdyld
+            link: /usr/bin/llvm-rtdyld
+            path: "/usr/bin/llvm-rtdyld-{{ clang_llvm_stable_version }}"
+          - name: llvm-size
+            link: /usr/bin/llvm-size
+            path: "/usr/bin/llvm-size-{{ clang_llvm_stable_version }}"
+          - name: llvm-stress
+            link: /usr/bin/llvm-stress
+            path: "/usr/bin/llvm-stress-{{ clang_llvm_stable_version }}"
+          - name: llvm-symbolizer
+            link: /usr/bin/llvm-symbolizer
+            path: "/usr/bin/llvm-symbolizer-{{ clang_llvm_stable_version }}"
+          - name: llvm-tblgen
+            link: /usr/bin/llvm-tblgen
+            path: "/usr/bin/llvm-tblgen-{{ clang_llvm_stable_version }}"
+
+    - name: "Clang | Update Clang alternatives [{{ ansible_os_family }}]"
+      community.general.alternatives:
+        name: clang
+        link: /usr/bin/clang
+        path: "/usr/bin/clang-{{ clang_llvm_stable_version }}"
+        priority: 100
+        subcommands:
+          - name: clang++
+            link: /usr/bin/clang++
+            path: "/usr/bin/clang++-{{ clang_llvm_stable_version }}"
+          - name: asan_symbolize
+            link: /usr/bin/asan_symbolize
+            path: "/usr/bin/asan_symbolize-{{ clang_llvm_stable_version }}"
+          - name: c-index-test
+            link: /usr/bin/c-index-test
+            path: "/usr/bin/c-index-test-{{ clang_llvm_stable_version }}"
+          - name: clang-check
+            link: /usr/bin/clang-check
+            path: "/usr/bin/clang-check-{{ clang_llvm_stable_version }}"
+          - name: clang-cl
+            link: /usr/bin/clang-cl
+            path: "/usr/bin/clang-cl-{{ clang_llvm_stable_version }}"
+          - name: clang-cpp
+            link: /usr/bin/clang-cpp
+            path: "/usr/bin/clang-cpp-{{ clang_llvm_stable_version }}"
+          - name: clang-format
+            link: /usr/bin/clang-format
+            path: "/usr/bin/clang-format-{{ clang_llvm_stable_version }}"
+          - name: clang-format-diff
+            link: /usr/bin/clang-format-diff
+            path: "/usr/bin/clang-format-diff-{{ clang_llvm_stable_version }}"
+          - name: clang-import-test
+            link: /usr/bin/clang-import-test
+            path: "/usr/bin/clang-import-test-{{ clang_llvm_stable_version }}"
+          - name: clang-include-fixer
+            link: /usr/bin/clang-include-fixer
+            path: "/usr/bin/clang-include-fixer-{{ clang_llvm_stable_version }}"
+          - name: clang-offload-bundler
+            link: /usr/bin/clang-offload-bundler
+            path: "/usr/bin/clang-offload-bundler-{{ clang_llvm_stable_version }}"
+          - name: clang-query
+            link: /usr/bin/clang-query
+            path: "/usr/bin/clang-query-{{ clang_llvm_stable_version }}"
+          - name: clang-rename
+            link: /usr/bin/clang-rename
+            path: "/usr/bin/clang-rename-{{ clang_llvm_stable_version }}"
+          - name: clang-reorder-fields
+            link: /usr/bin/clang-reorder-fields
+            path: "/usr/bin/clang-reorder-fields-{{ clang_llvm_stable_version }}"
+          - name: clang-tidy
+            link: /usr/bin/clang-tidy
+            path: "/usr/bin/clang-tidy-{{ clang_llvm_stable_version }}"
+          - name: lldb
+            link: /usr/bin/lldb
+            path: "/usr/bin/lldb-{{ clang_llvm_stable_version }}"
+          - name: lldb-server
+            link: /usr/bin/lldb-server
+            path: "/usr/bin/lldb-server-{{ clang_llvm_stable_version }}"

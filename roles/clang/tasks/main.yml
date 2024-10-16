@@ -5,10 +5,15 @@
     - files:
         - "{{ ansible_os_family | lower }}.yml"
       skip: true
+  tags: clang
 
 - name: "Clang | Add LLVM repository [Debian]"
-  ansible.builtin.include_tasks: debian.yml
+  ansible.builtin.include_tasks:
+    file: debian.yml
+    apply:
+      tags: clang
   when: ansible_os_family == 'Debian'
+  tags: clang
 
 - name: "Clang | Install LLVM packages"
   become: true
@@ -16,3 +21,12 @@
     update_cache: true
     state: present
     name: "{{ clang_packages }}"
+  tags: clang
+
+- name: "Clang | Update Clang and LLVM alternatives [Debian]"
+  when: ansible_os_family == 'Debian'
+  ansible.builtin.include_tasks:
+    file: alternatives.yml
+    apply:
+      tags: clang
+  tags: clang
