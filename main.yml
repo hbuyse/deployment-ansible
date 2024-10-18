@@ -35,3 +35,4 @@
     - role: "discord"
     - role: "icons"
     - role: "xfce4"
+    - role: "user"
