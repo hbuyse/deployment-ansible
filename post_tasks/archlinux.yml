@@ -5,3 +5,8 @@
     upgrade: true
     state: "latest"
     update_cache: true
+
+- name: "Post-tasks | Clean cache of downloaded packages [{{ ansible_os_family }}]"
+  become: true
+  ansible.builtin.shell:
+    cmd: "pacman -Scc"
