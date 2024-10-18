@@ -1,0 +1,6 @@
+---
+- name: "User | Copy the face image"
+  ansible.builtin.copy:
+    src: "face.png"
+    dest: "{{ ansible_user_dir }}/.face"
+    mode: "0644"
