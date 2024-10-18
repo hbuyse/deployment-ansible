@@ -33,3 +33,4 @@
       vars:
         wallpapers_install_prefix: "{{ lookup('env', 'HOME') }}/.local"
     - role: "discord"
+    - role: "xfce4"
