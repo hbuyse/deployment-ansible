@@ -1,0 +1,24 @@
+---
+- name: "Discord | Include OS specific vars"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: discord
+
+- name: "Discord | Install package [Debian]"
+  become: true
+  ansible.builtin.apt:
+    deb: "{{ discord_deb_version }}"
+    state: present
+  when: ansible_os_family == "Debian"
+  tags: discord
+
+- name: "Discord | Install package [Rolling Release]"
+  become: true
+  ansible.builtin.package:
+    name: "{{ discord_package }}"
+    state: present
+  when: ansible_os_family != "Debian"
+  tags: discord
