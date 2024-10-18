@@ -1,0 +1,31 @@
+---
+- name: "Git Delta | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_os_family | lower }}.yml"
+    - "main.yml"
+  tags:
+    - git
+    - git-delta
+
+- name: "Git Delta | Install package [Debian]"
+  become: true
+  community.general.cargo:
+    name: alacritty
+    version: "{{ git_delta_latest_version }}"
+    locked: true
+    path: "/usr/local"
+  when: ansible_os_family == "Debian"
+  tags:
+    - git
+    - git-delta
+
+- name: "Git Delta | Install package [Rolling Release]"
+  become: true
+  ansible.builtin.package:
+    name: "{{ git_delta_packages }}"
+    state: present
+  when: ansible_os_family != "Debian"
+  tags:
+    - git
+    - git-delta

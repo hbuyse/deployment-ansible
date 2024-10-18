@@ -10,6 +10,7 @@
   roles:
     - role: "git"
     - role: "alacritty"
+    - role: "git_delta"
     - role: "nodejs"
     - role: "nerdfonts"
       vars:
