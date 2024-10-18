@@ -89,8 +89,6 @@ if ! in_chroot; then
 	plugins+=(virtualenvwrapper)
 	plugins+=(poetry)
 	plugins+=(rust)
-	ZOXIDE_CMD_OVERRIDE="cd"
-	plugins+=(zoxide)
 	plugins+=(eza)
 fi
 
