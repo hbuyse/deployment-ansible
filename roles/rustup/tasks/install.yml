@@ -11,6 +11,12 @@
   tags:
     - rust
   block:
+    - name: "Rustup | Install dependencies"
+      become: true
+      ansible.builtin.package:
+        name: curl
+        state: present
+
     - name: "Rustup | Download Installer"
       ansible.builtin.get_url:
         url: https://sh.rustup.rs
