@@ -1,0 +1,16 @@
+---
+- name: "Eza | Install from source"
+  ansible.builtin.include_tasks:
+    file: source.yml
+    apply:
+      tags: eza
+  when: ansible_os_family not in ['Archlinux', 'Suse']
+  tags: eza
+
+- name: "Eza | Install from package manager"
+  ansible.builtin.include_tasks:
+    file: package.yml
+    apply:
+      tags: eza
+  when: ansible_os_family in ['Archlinux', 'Suse']
+  tags: eza
