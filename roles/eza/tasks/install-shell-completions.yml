@@ -1,0 +1,18 @@
+---
+- name: "Eza | Ensure that shell completion directory exists [{{ item.shell }}]"
+  become: true
+  ansible.builtin.file:
+    path: "/usr/local/share/{{ item.shell }}-completions"
+    state: "directory"
+    mode: "0755"
+    recurse: true
+
+- name: "Eza | Install shell completion file [{{ item.shell }}]"
+  become: true
+  ansible.builtin.unarchive:
+    src: "/tmp/completions-{{ eza_latest_version }}.tar.gz"
+    dest: "/usr/local/share/{{ item.shell }}-completions"
+    include:
+      - "./target/completions-{{ eza_latest_version }}/{{ item.completion_file }}"
+    extra_opts:
+      - "--strip-components=3"

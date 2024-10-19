@@ -1,0 +1,66 @@
+---
+- name: "Eza | Get latest version number"
+  register: latest_json
+  ansible.builtin.uri:
+    url: "https://api.github.com/repos/eza-community/eza/releases/latest"
+    method: GET
+    return_content: true
+    status_code: 200
+    body_format: json
+
+- name: "Eza | Set facts"
+  ansible.builtin.set_fact:
+    eza_latest_version: "{{ latest_json.json.tag_name[1:] }}"
+
+- name: "Eza | Download eza binary"
+  become: true
+  ansible.builtin.unarchive:
+    src: "https://github.com/eza-community/eza/releases/download/v{{ eza_latest_version }}/eza_{{ ansible_architecture }}-unknown-linux-gnu.tar.gz"
+    dest: "/usr/local/bin/"
+    remote_src: true
+    keep_newer: true
+    include:
+      - "./eza"
+    extra_opts:
+      - "--strip-components=1"
+
+- name: "Eza | Download eza extra archives"
+  ansible.builtin.get_url:
+    url: "https://github.com/eza-community/eza/releases/download/v{{ eza_latest_version }}/{{ item }}-{{ eza_latest_version }}.tar.gz"
+    dest: "/tmp/"
+    mode: "0644"
+  loop:
+    - completions
+    - man
+
+- name: "Eza | Install completion shell files"
+  ansible.builtin.include_tasks:
+    file: install-shell-completions.yml
+    apply:
+      tags: eza
+  loop:
+    - completion_file: _eza
+      shell: zsh
+    - completion_file: eza
+      shell: bash
+
+- name: "Eza | Install manpage files"
+  ansible.builtin.include_tasks:
+    file: install-manpages.yml
+    apply:
+      tags: eza
+  loop:
+    - number: 1
+      name: eza
+    - number: 5
+      name: eza_colors
+    - number: 5
+      name: eza_colors-explanation
+
+- name: "Eza | Remove downloaded archives"
+  ansible.builtin.file:
+    path: "/tmp/{{ item }}-{{ eza_latest_version }}.tar.gz"
+    state: absent
+  loop:
+    - completions
+    - man
