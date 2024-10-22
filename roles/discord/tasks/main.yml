@@ -10,7 +10,7 @@
 - name: "Discord | Install package [Debian]"
   become: true
   ansible.builtin.apt:
-    deb: "{{ discord_deb_version }}"
+    deb: "{{ discord_deb }}"
     state: present
   when: ansible_os_family == "Debian"
   tags: discord
