@@ -1,16 +1,27 @@
 ---
 - name: "ZSH | Install shell"
-  ansible.builtin.include_tasks: zsh.yml
+  ansible.builtin.include_tasks:
+    file: zsh.yml
+    apply:
+      tags:
+        - shell
+        - zsh
   tags:
     - shell
     - zsh
 
 - name: "ZSH | Install oh-my-zsh, its plugins and themes"
-  ansible.builtin.include_tasks: oh-my-zsh.yml
+  ansible.builtin.include_tasks:
+    file: oh-my-zsh.yml
+    apply:
+      tags:
+        - shell
+        - zsh
+        - omz
   tags:
     - shell
+    - zsh
     - omz
-    - p10k
 
 - name: "Shell | Copy configuration file"
   ansible.builtin.copy:
@@ -24,5 +35,6 @@
     - p10k.zsh
   tags:
     - shell
+    - zsh
     - omz
     - p10k
