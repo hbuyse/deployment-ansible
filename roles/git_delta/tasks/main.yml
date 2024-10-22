@@ -9,16 +9,41 @@
     - git-delta
 
 - name: "Git Delta | Install package [Debian]"
-  become: true
-  community.general.cargo:
-    name: alacritty
-    version: "{{ git_delta_latest_version }}"
-    locked: true
-    path: "/usr/local"
-  when: ansible_os_family == "Debian"
-  tags:
-    - git
-    - git-delta
+  when: ansible_os_family == 'Debian'
+  environment:
+    RUSTUP_HOME: "{{ ansible_user_dir }}/.rustup"
+    CARGO_HOME: "{{ ansible_user_dir }}/.cargo"
+    PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"
+  block:
+    - name: "Git Delta | Get latest version number [Debian]"
+      register: latest_json
+      ansible.builtin.uri:
+        url: "https://api.github.com/repos/dandavison/delta/releases/latest"
+        method: GET
+        return_content: true
+        status_code: 200
+        body_format: json
+      tags:
+        - git
+        - git-delta
+
+    - name: "Git Delta | Set facts [Debian]"
+      ansible.builtin.set_fact:
+        git_delta_latest_version: "{{ latest_json.json.tag_name }}"
+      tags:
+        - git
+        - git-delta
+
+    - name: "Git Delta | Install package [Debian]"
+      become: true
+      community.general.cargo:
+        name: git-delta
+        version: "{{ git_delta_latest_version }}"
+        locked: true
+        path: "/usr/local"
+      tags:
+        - git
+        - git-delta
 
 - name: "Git Delta | Install package [Rolling Release]"
   become: true
