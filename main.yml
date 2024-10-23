@@ -37,3 +37,4 @@
     - role: "xfce4"
     - role: "user"
     - role: "eza"
+    - role: "pre_commit"
