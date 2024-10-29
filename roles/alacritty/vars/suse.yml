@@ -1,0 +1,5 @@
+---
+alacritty_packages:
+  - alacritty
+  - alacritty-zsh-completion
+  - alacritty-bash-completion

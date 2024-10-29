@@ -1,4 +1,13 @@
 ---
+- name: "Alacritty | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags:
+    - alacritty
+
 - name: "Alacritty | Install from source"
   ansible.builtin.include_tasks:
     file: source.yml
