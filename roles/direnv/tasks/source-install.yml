@@ -20,6 +20,7 @@
     dest: "{{ direnv_man_install_dir }}/man1"
     remote_src: true
     keep_newer: true
+    mode: "0644"
     include:
       - "direnv-{{ direnv_version }}/man/direnv.1"
       - "direnv-{{ direnv_version }}/man/direnv.toml.1"

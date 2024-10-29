@@ -12,6 +12,7 @@
   ansible.builtin.unarchive:
     src: "/tmp/completions-{{ eza_latest_version }}.tar.gz"
     dest: "/usr/local/share/{{ item.shell }}-completions"
+    mode: "0644"
     include:
       - "./target/completions-{{ eza_latest_version }}/{{ item.completion_file }}"
     extra_opts:

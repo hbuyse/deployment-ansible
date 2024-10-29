@@ -12,6 +12,7 @@
   ansible.builtin.unarchive:
     src: "/tmp/man-{{ eza_latest_version }}.tar.gz"
     dest: "/usr/local/share/man/man{{ item.number }}"
+    mode: "0644"
     include:
       - "./target/man-{{ eza_latest_version }}/{{ item.name }}.{{ item.number }}"
     extra_opts:
