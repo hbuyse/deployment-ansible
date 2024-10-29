@@ -12,24 +12,11 @@
       - python3
     state: present
 
-- name: "Alacritty | Get latest version number"
-  register: latest_json
-  ansible.builtin.uri:
-    url: "https://api.github.com/repos/alacritty/alacritty/releases/latest"
-    method: GET
-    return_content: true
-    status_code: 200
-    body_format: json
-
-- name: "Alacritty | Set facts"
-  ansible.builtin.set_fact:
-    alacritty_latest_version: "{{ latest_json.json.tag_name[1:] }}"
-
 - name: "Alacritty | Install Rust package with locked dependencies"
   become: true
   community.general.cargo:
     name: alacritty
-    version: "{{ alacritty_latest_version }}"
+    state: latest
     locked: true
     path: "/usr/local"
   environment:
