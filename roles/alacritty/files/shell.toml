@@ -1,3 +1,4 @@
+[terminal]
 # Shell
 #
 # You can set `shell.program` to the path of your favorite shell, e.g.
@@ -8,6 +9,6 @@
 #   - (macOS) /bin/bash --login
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
-[shell]
+[terminal.shell]
 args = ["--login"]
 program = "/bin/zsh"
