@@ -2,6 +2,6 @@
 - name: "Eza | Install from package manager"
   become: true
   ansible.builtin.package:
-    name: eza
+    name: "{{ eza_packages }}"
     state: present
   when: ansible_os_family in ['Archlinux', 'Suse']

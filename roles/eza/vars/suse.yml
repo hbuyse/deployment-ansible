@@ -1,0 +1,5 @@
+---
+eza_packages:
+  - eza
+  - eza-zsh-completion
+  - eza-bash-completion
