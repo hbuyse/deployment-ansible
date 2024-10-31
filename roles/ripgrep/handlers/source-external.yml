@@ -1,0 +1,14 @@
+---
+- name: "Ripgrep | Ensure directory exists: {{ item.dest | basename }}"
+  become: true
+  ansible.builtin.file:
+    path: "{{ item.dest }}"
+    state: directory
+    mode: "0755"
+
+- name: "Ripgrep | Install {{ item.url | basename }}"
+  become: true
+  ansible.builtin.get_url:
+    url: "{{ item.url }}"
+    dest: "{{ item.dest }}"
+    mode: "0644"

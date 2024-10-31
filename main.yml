@@ -38,3 +38,4 @@
     - role: "user"
     - role: "eza"
     - role: "pre_commit"
+    - role: "ripgrep"

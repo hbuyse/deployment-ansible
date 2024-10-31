@@ -1,0 +1,5 @@
+---
+- name: "Ripgrep | Install from package manager [{{ ansible_os_family }}]"
+  become: true
+  ansible.builtin.package:
+    name: "{{ ripgrep_packages }}"

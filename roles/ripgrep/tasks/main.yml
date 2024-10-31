@@ -1,0 +1,27 @@
+---
+- name: "Ripgrep | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags:
+    - ripgrep
+
+- name: "Ripgrep | Install from source"
+  ansible.builtin.include_tasks:
+    file: source.yml
+    apply:
+      tags: ripgrep
+  when: ansible_os_family not in ['Archlinux', 'Suse']
+  tags:
+    - ripgrep
+
+- name: "Ripgrep | Install from package manager"
+  ansible.builtin.include_tasks:
+    file: package.yml
+    apply:
+      tags: ripgrep
+  when: ansible_os_family in ['Archlinux', 'Suse']
+  tags:
+    - ripgrep
