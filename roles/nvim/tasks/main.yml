@@ -6,7 +6,7 @@
     name:
       - neovim
     state: present
-  when: ansible_distribution != "Ubuntu"
+  when: ansible_os_family != "Debian"
 
 - name: "Neovim | Install program from static binary"
   become: true
@@ -16,7 +16,7 @@
     remote_src: true
     extra_opts:
       - --strip-components=1
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_os_family == "Debian"
 
 - name: "Neovim | Config folder"
   ansible.builtin.file:
