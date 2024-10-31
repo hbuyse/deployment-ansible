@@ -1,0 +1,33 @@
+---
+- name: "Bat | Ensure that shell completion directory exists [{{ item.shell }}]"
+  become: true
+  ansible.builtin.file:
+    path: "{{ item.install_dir }}"
+    state: "directory"
+    mode: "0755"
+    recurse: true
+
+- name: "Bat | Copy shell completion file [{{ item.shell }}]"
+  become: true
+  ansible.builtin.unarchive:
+    src: "/tmp/{{ bat_archive_fullname }}"
+    dest: "{{ install_dir }}"
+    mode: "0644"
+    include:
+      - "{{ bat_archive_name }}/autocomplete/{{ item.src_file }}"
+    extra_opts:
+      - "--strip-components=2"
+
+- name: "Bat | Rename shell completion file [{{ item.shell }}]"
+  become: true
+  block:
+    - name: "Bat | Copy file"
+      ansible.builtin.copy:
+        src: "{{ item.install_dir }}/{{ item.src_file }}"
+        dest: "{{ item.install_dir }}/{{ item.dst_file }}"
+        mode: "0644"
+
+    - name: "Bat | Remove old one"
+      ansible.builtin.file:
+        state: absent
+        path: "{{ item.install_dir }}/{{ item.src_file }}"

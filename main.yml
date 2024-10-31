@@ -39,3 +39,4 @@
     - role: "eza"
     - role: "pre_commit"
     - role: "ripgrep"
+    - role: "bat"

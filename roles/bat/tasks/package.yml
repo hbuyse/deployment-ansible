@@ -1,0 +1,6 @@
+---
+- name: "Bat | Install from package manager [{{ ansible_os_family }}]"
+  become: true
+  ansible.builtin.package:
+    name: bat
+    state: present

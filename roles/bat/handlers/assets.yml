@@ -1,0 +1,39 @@
+---
+- name: "Bat | Get latest version number"
+  register: latest_json
+  ansible.builtin.uri:
+    url: "https://api.github.com/repos/sharkdp/bat/releases/latest"
+    method: GET
+    return_content: true
+    status_code: 200
+    body_format: json
+
+- name: "Bat | Set facts"
+  ansible.builtin.set_fact:
+    bat_latest_version: "{{ latest_json.json.tag_name[1:] }}"
+    bat_archive_name: "bat-v{{ latest_json.json.tag_name[1:] }}-{{ ansible_architecture }}-unknown-linux-musl"
+    bat_archive_fullname: "bat-v{{ latest_json.json.tag_name[1:] }}-{{ ansible_architecture }}-unknown-linux-musl.tar.gz"
+
+- name: "Bat | Download bat archive"
+  ansible.builtin.get_url:
+    url: "https://github.com/sharkdp/bat/releases/download/v{{ bat_latest_version }}/{{ bat_archive_fullname }}"
+    dest: "/tmp/"
+    mode: "0644"
+  notify: "Bat | Remove downloaded archives"
+
+- name: "Bat | Install completion shell files"
+  ansible.builtin.include_tasks:
+    file: completions.yml
+  loop:
+    - dst_file: _bat
+      src_file: bat.zsh
+      shell: zsh
+      install_dir: "/usr/local/share/zsh/site-functions"
+    - dst_file: bat
+      src_file: bat.bash
+      shell: bash
+      install_dir: "/usr/local/share/bash-completions"
+
+- name: "Bat | Install manpages"
+  ansible.builtin.include_tasks:
+    file: manpages.yml
