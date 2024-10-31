@@ -2,9 +2,9 @@
 clang_llvm_version: 18
 clang_packages:
   - "llvm{{ clang_llvm_version }}"
-  - "llvm{{ clang_llvm_version }}-doc"
   - "clang{{ clang_llvm_version }}"
-  - "clang{{ clang_llvm_version }}-doc"
   - "libclang-cpp{{ clang_llvm_version }}"
   - "clang-tools"
   - "python3-clang{{ clang_llvm_version }}"
+  - "lldb{{ clang_llvm_version }}"
+  - "lld{{ clang_llvm_version }}"
