@@ -15,7 +15,7 @@
     state: directory
     mode: "0755"
 
-- name: "Oh My Posh | Ensure config directory exists"
+- name: "Oh My Posh | Copy configuration file"
   ansible.builtin.copy:
     src: "config.omp.yaml"
     dest: "{{ ansible_user_dir }}/.config/oh-my-posh"
