@@ -1,16 +1,40 @@
 ---
 # tasks file for direnv
 - name: "Direnv | Install from sources"
-  ansible.builtin.include_tasks: source-install.yml
+  ansible.builtin.include_tasks:
+    file: source-install.yml
+    apply:
+      tags: direnv
   when: ansible_os_family == "Debian"
+  tags: direnv
 
 - name: "Direnv | Install from package manager"
-  ansible.builtin.include_tasks: package-install.yml
+  ansible.builtin.include_tasks:
+    file: package-install.yml
+    apply:
+      tags: direnv
   when: ansible_os_family != "Debian"
+  tags: direnv
 
-- name: "Direnv | Create symlink to config"
+- name: "Direnv | Ensure config directory exists"
   ansible.builtin.file:
-    src: "{{ role_path }}/files"
+    path: "{{ ansible_user_dir }}/.config/direnv"
+    state: directory
+    mode: "0755"
+  tags: direnv
+
+- name: "Direnv | Copy direnvrc file"
+  ansible.builtin.copy:
+    src: "direnvrc"
     dest: "{{ ansible_user_dir }}/.config/direnv"
-    state: link
-    force: true
+    mode: "0644"
+  tags: direnv
+
+- name: "Direnv | Copy direnv.toml template file"
+  ansible.builtin.template:
+    src: "direnv.toml.j2"
+    dest: "{{ ansible_user_dir }}/.config/direnv"
+    mode: "0644"
+  loop:
+    - "direnv.toml"
+  tags: direnv
