@@ -3,3 +3,6 @@ docker_packages:
   - docker
   - docker-compose
   - docker-compose-switch
+  - docker-bash-completion
+  - docker-zsh-completion
+  - docker-rootless-extras
