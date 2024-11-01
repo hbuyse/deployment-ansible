@@ -2,7 +2,7 @@
 
 <channel name="xsettings" version="1.0">
   <property name="Net" type="empty">
-    <property name="ThemeName" type="string" value="Colloid-Dark"/>
+    <property name="ThemeName" type="string" value="catppuccin-mocha-peach-standard+default"/>
     <property name="IconThemeName" type="string" value="Papirus-Dark"/>
     <property name="DoubleClickTime" type="empty"/>
     <property name="DoubleClickDistance" type="empty"/>
@@ -43,6 +43,6 @@
     <property name="WindowScalingFactor" type="empty"/>
   </property>
   <property name="Xfce" type="empty">
-    <property name="SyncThemes" type="bool" value="true"/>
+    <property name="SyncThemes" type="bool" value="false"/>
   </property>
 </channel>
