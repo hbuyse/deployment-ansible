@@ -10,4 +10,4 @@
     RUSTUP_HOME: "{{ ansible_user_dir }}/.rustup"
     CARGO_HOME: "{{ ansible_user_dir }}/.cargo"
     PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"
-  notify: "Ripgrep | Install completions and manpage"
+  notify: "Ripgrep | Install completions"
