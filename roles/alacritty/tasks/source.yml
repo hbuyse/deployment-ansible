@@ -23,4 +23,4 @@
     RUSTUP_HOME: "{{ ansible_user_dir }}/.rustup"
     CARGO_HOME: "{{ ansible_user_dir }}/.cargo"
     PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"
-  notify: "Alacritty | Install desktop files and man pages"
+  notify: "Alacritty | Install extras"
