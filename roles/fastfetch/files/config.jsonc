@@ -19,12 +19,12 @@
       // draw borders first to make colors of left and right border consistent
       "key": "│           │\u001b[11D\u001b[31m user",
       "type": "title",
-      "format": "{1}"
+      "format": "{user-name}"
     },
     {
       "key": "│           │\u001b[11D\u001b[32m󰇅 hname",
       "type": "title",
-      "format": "{2}"
+      "format": "{host-name}"
     },
     {
       "key": "│           │\u001b[11D\u001b[33m󰅐 uptime",
@@ -58,8 +58,8 @@
     {
       "key": "│           │\u001b[11D\u001b[34m󰉉 disk",
       "type": "disk",
-      "folders": "/:/home",
-      "format": "/{?10}{10}{?}: {1} / {2} ({3}) - {9}"
+      "folders": "/:/home:/usr/local:/boot/efi",
+      "format": "/{name}: {size-used} / {size-total} ({size-percentage}) - {filesystem}"
     },
     {
       "key": "│           │\u001b[11D\u001b[35m memory",
@@ -68,7 +68,7 @@
     {
       "key": "│           │\u001b[11D\u001b[36m󰩟 network",
       "type": "localip",
-      "format": "{1} ({4})"
+      "format": "{ipv4} ({ifname})"
     },
     {
       "key": "│           │\u001b[11D\u001b[31m gpu",
