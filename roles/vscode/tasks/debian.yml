@@ -18,15 +18,5 @@
     components:
       - main
     architectures:
-      - amd64
-      - arm64
-      - armhf
+      - "{{ deb_arch }}"
     signed_by: "https://packages.microsoft.com/keys/microsoft.asc"
-
-- name: "VSCode | Install package [{{ ansible_os_family }}]"
-  become: true
-  ansible.builtin.package:
-    update_cache: true
-    state: present
-    name:
-      - code

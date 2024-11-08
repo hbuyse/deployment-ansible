@@ -1,25 +1,28 @@
 ---
-- name: "VSCode | Install [Debian]"
-  ansible.builtin.include_tasks:
-    file: debian.yml
-    apply:
-      tags: vscode
-  when: ansible_os_family == 'Debian'
+- name: "VSCode | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
   tags: vscode
 
-- name: "VSCode | Install [Archlinux]"
+- name: "VSCode | Add dependencies and repo"
   ansible.builtin.include_tasks:
-    file: archlinux.yml
+    file: "{{ item }}"
     apply:
       tags: vscode
-  when: ansible_os_family == 'Archlinux'
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
   tags: vscode
 
-- name: "VSCode | Install [Suse]"
-  ansible.builtin.include_tasks:
-    file: suse.yml
-    apply:
-      tags: vscode
-  when: ansible_os_family == 'Suse'
+- name: "VSCode | Install VS Code"
+  ansible.builtin.package:
+    update_cache: true
+    state: present
+    name:
+      - code
   tags:
     - vscode

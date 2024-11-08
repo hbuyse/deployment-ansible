@@ -13,11 +13,3 @@
     mode: "0644"
     owner: root
     group: root
-
-- name: "VSCode | Install package [{{ ansible_os_family }}]"
-  become: true
-  ansible.builtin.package:
-    name:
-      - code
-    state: present
-    update_cache: true
