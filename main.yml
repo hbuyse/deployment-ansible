@@ -8,6 +8,7 @@
     - name: "Dotfiles | Finalize installation"
       ansible.builtin.include_tasks: post_tasks/main.yml
   roles:
+    - role: "netrc"
     - role: "git"
     - role: "alacritty"
     - role: "git_delta"
