@@ -1,0 +1,66 @@
+---
+- name: "Autorandr | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags:
+    - autorandr
+    - x11
+
+- name: "Autorandr | Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ autorandr_packages }}"
+    state: present
+  when: ansible_os_family != 'Debian'
+  tags:
+    - autorandr
+    - x11
+
+- name: "Autorandr | Install from Pip"
+  become: true
+  ansible.builtin.pip:
+    name: "{{ autorandr_pip_packages }}"
+    state: present
+    break_system_packages: true
+  when: ansible_os_family == 'Debian'
+  tags:
+    - autorandr
+    - x11
+
+- name: "Autorandr | Copy configuration"
+  tags:
+    - autorandr
+    - x11
+  block:
+    - name: "Autorandr | Ensure configuration directory exists"
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/.config/autorandr"
+        state: directory
+        mode: "0755"
+
+    - name: "Autorandr | Copy postswitch.d folder"
+      ansible.builtin.copy:
+        src: "postswitch.d"
+        dest: "{{ ansible_user_dir }}/.config/autorandr"
+        mode: "0755"
+
+    - name: "Autorandr | Copy computer possible configurations"
+      ansible.builtin.include_tasks:
+        file: copy-configuration.yml
+      loop:
+        - hostname: white-tower
+          config_list:
+            - white-tower
+        - hostname: hbuyse-Latitude5400
+          config_list:
+            - l5400-onescreen
+            - l5400-threescreens-work
+            - l5400-twoscreens-home
+        - hostname: T480
+          config_list:
+            - t480-onescreen
+            - t480-threescreens
+            - t480-threescreens-bis

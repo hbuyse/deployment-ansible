@@ -1,0 +1,10 @@
+---
+- name: "Autorandr | Copy configuration for {{ item.hostname }}"
+  ansible.builtin.copy:
+    src: "{{ config }}"
+    dest: "{{ ansible_user_dir }}/.config/autorandr"
+    mode: "0755"
+  when: ansible_hostname == item.hostname
+  loop: "{{ item.config_list }}"
+  loop_control:
+    loop_var: config
