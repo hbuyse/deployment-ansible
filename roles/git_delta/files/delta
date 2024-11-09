@@ -1,0 +1,21 @@
+[include]
+path = themes/catppuccin.conf
+path = themes/themes.conf
+
+[core]
+pager = delta
+
+[interactive]
+diffFilter = delta --color-only
+
+[delta]
+features = catppuccin-mocha
+side-by-side = true
+navigate = true
+blame-timestamp-output-format = %d/%m/%Y %H:%M
+# timestamp left aligned - columns on 18 characters
+# author left aligned - columns on 20 characters but show only the first 18 characters
+# commit left aligned - columns on 13 characters
+blame-format = "{timestamp:<18} {author:<20.18} {commit:<13}"
+
+;  vim: set ts=4 sw=4 tw=0 et ft=gitconfig :

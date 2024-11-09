@@ -21,3 +21,28 @@
     name: "{{ git_packages }}"
     state: present
   tags: git
+
+- name: "Git | Copy git configuration"
+  tags: git
+  block:
+    - name: "Git | Ensure configuration directory exists"
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/.config/git"
+        state: directory
+        mode: "0755"
+
+    - name: "Git | Copy git configuration"
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "{{ ansible_user_dir }}/.config/git"
+        mode: "0644"
+      loop:
+        - config
+        - attributes
+        - gitk
+
+    - name: "Git | Copy git user configuration"
+      ansible.builtin.template:
+        src: user.j2
+        dest: "{{ ansible_user_dir }}/.config/git/user"
+        mode: "0644"

@@ -43,12 +43,12 @@
 
     - name: "Bat | Download catppuccin themes"
       ansible.builtin.get_url:
-        url: "https://raw.githubusercontent.com/catppuccin/bat/refs/heads/main/themes/Catppuccin%20{{ item | title }}.tmTheme"
-        dest: "{{ ansible_user_dir }}/.config/bat/themes/catppuccin-{{ item }}.tmTheme"
+        url: "https://raw.githubusercontent.com/catppuccin/bat/refs/heads/main/themes/Catppuccin%20{{ item }}.tmTheme"
+        dest: "{{ ansible_user_dir }}/.config/bat/themes/Catppuccin {{ item }}.tmTheme"
         mode: "0644"
       loop:
-        - frappe
-        - mocha
-        - latte
-        - macchiato
+        - Frappe
+        - Mocha
+        - Latte
+        - Macchiato
       notify: "Bat | Rebuild cache"

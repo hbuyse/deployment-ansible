@@ -26,3 +26,45 @@
   tags:
     - git
     - git-delta
+
+- name: "Git Delta | Install configuration"
+  tags:
+    - git
+    - git-delta
+  block:
+    - name: "Git Delta | Ensure git directory exists"
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/.config/git"
+        state: directory
+        mode: "0755"
+        recurse: true
+
+    - name: "Git Delta | Copy git-delta configuration"
+      ansible.builtin.copy:
+        src: "delta"
+        dest: "{{ ansible_user_dir }}/.config/git"
+        mode: "0644"
+
+- name: "Git Delta | Install themes"
+  tags:
+    - git
+    - git-delta
+  block:
+    - name: "Git Delta | Ensure themes directory exists"
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/.config/git/themes"
+        state: directory
+        mode: "0755"
+        recurse: true
+
+    - name: "Git Delta | Download git delta themes"
+      ansible.builtin.get_url:
+        url: "https://raw.githubusercontent.com/dandavison/delta/refs/heads/main/themes.gitconfig"
+        dest: "{{ ansible_user_dir }}/.config/git/themes/themes.conf"
+        mode: "0644"
+
+    - name: "Git Delta | Download catppuccin theme"
+      ansible.builtin.get_url:
+        url: "https://raw.githubusercontent.com/catppuccin/delta/refs/heads/main/catppuccin.gitconfig"
+        dest: "{{ ansible_user_dir }}/.config/git/themes/catppuccin.conf"
+        mode: "0644"
