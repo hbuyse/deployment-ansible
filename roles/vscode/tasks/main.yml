@@ -19,6 +19,7 @@
   tags: vscode
 
 - name: "VSCode | Install VS Code"
+  become: true
   ansible.builtin.package:
     update_cache: true
     state: present
