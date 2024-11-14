@@ -7,6 +7,10 @@ local function get_clangd_executable()
   end
 
   local paths = os.getenv('PATH')
+  if paths == nil then
+    return 'clangd'
+  end
+
   local list_clangd = {
     'clangd-devel',
     'clangd18',
