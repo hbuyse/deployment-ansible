@@ -1,12 +1,13 @@
 ---
-- name: "Post-tasks | Upgrade packages to latest version [{{ ansible_os_family }}]"
+- name: "Post-tasks | Update distro [{{ ansible_os_family }}]"
   become: true
-  community.general.pacman:
-    upgrade: true
-    state: "latest"
-    update_cache: true
+  block:
+    - name: "Post-tasks | Upgrade packages to latest version [{{ ansible_os_family }}]"
+      community.general.pacman:
+        upgrade: true
+        state: "latest"
+        update_cache: true
 
-- name: "Post-tasks | Clean cache of downloaded packages [{{ ansible_os_family }}]"
-  become: true
-  ansible.builtin.shell:
-    cmd: "pacman -Scc"
+    - name: "Post-tasks | Clean cache of downloaded packages [{{ ansible_os_family }}]"
+      ansible.builtin.shell:
+        cmd: "pacman -Scc"

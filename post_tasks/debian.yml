@@ -1,25 +1,26 @@
 ---
-- name: "Post-tasks | Upgrade packages to latest version [{{ ansible_os_family }}]"
+- name: "Post-tasks | Update distro [{{ ansible_os_family }}]"
   become: true
-  ansible.builtin.apt:
-    force_apt_get: true
-    state: "latest"
-    upgrade: "safe"
-    update_cache: true
+  block:
+    - name: "Post-tasks | Upgrade packages to latest version [{{ ansible_os_family }}]"
+      ansible.builtin.apt:
+        force_apt_get: true
+        state: "latest"
+        upgrade: "safe"
+        update_cache: true
 
-- name: "Post-tasks | Remove APT cache [{{ ansible_os_family }}]"
-  become: true
-  ansible.builtin.apt:
-    force_apt_get: true
-    state: "latest"
-    upgrade: "safe"
-    update_cache: true
+    - name: "Post-tasks | Remove APT cache [{{ ansible_os_family }}]"
+      ansible.builtin.apt:
+        force_apt_get: true
+        state: "latest"
+        upgrade: "safe"
+        update_cache: true
 
-- name: "Post-tasks | Remove dependencies that are no longer required and purge their configuration files [{{ ansible_os_family }}]"
-  ansible.builtin.apt:
-    autoremove: true
-    purge: true
+    - name: "Post-tasks | Remove dependencies that are no longer required and purge their configuration files [{{ ansible_os_family }}]"
+      ansible.builtin.apt:
+        autoremove: true
+        purge: true
 
-- name: "Post-tasks | The apt-get clean command clears the local repository of retrieved package files [{{ ansible_os_family }}]"
-  ansible.builtin.apt:
-    clean: true
+    - name: "Post-tasks | The apt-get clean command clears the local repository of retrieved package files [{{ ansible_os_family }}]"
+      ansible.builtin.apt:
+        clean: true
