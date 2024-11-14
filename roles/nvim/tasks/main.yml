@@ -7,6 +7,9 @@
       - neovim
     state: present
   when: ansible_os_family != "Debian"
+  tags:
+    - neovim
+    - nvim
 
 - name: "Neovim | Install program from static binary"
   become: true
@@ -17,18 +20,27 @@
     extra_opts:
       - --strip-components=1
   when: ansible_os_family == "Debian"
+  tags:
+    - neovim
+    - nvim
 
 - name: "Neovim | Config folder"
   ansible.builtin.file:
     mode: "0755"
     path: "{{ nvim_config_dir }}"
     state: directory
+  tags:
+    - neovim
+    - nvim
 
 - name: "Neovim | Copy static files in configuration directory"
   ansible.builtin.copy:
     src: "{{ role_path }}/files/"
     dest: "{{ nvim_config_dir }}"
     mode: "0644"
+  tags:
+    - neovim
+    - nvim
 
 - name: "Neovim | Copy templates files in configuration directory"
   ansible.builtin.template:
@@ -38,7 +50,13 @@
   loop:
     - "lua/hbuyse/plugins/formatter.lua"
     - "lua/hbuyse/init.lua"
+  tags:
+    - neovim
+    - nvim
 
 - name: "Neovim | Sync plugins"
   ansible.builtin.command: nvim --headless "+Lazy! sync" +qa
   changed_when: false
+  tags:
+    - neovim
+    - nvim
