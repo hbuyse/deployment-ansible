@@ -54,7 +54,7 @@
   become: "{{ (wallpapers_user == 'root') | bool }}"
   tags: wallpapers
   block:
-    - name: "Wallpapers | Copy PNG files"
+    - name: "Wallpapers | Convert SVG to PNG files"
       ansible.builtin.command:
         cmd: convert {{ wallpapers_install_dir }}/coding.svg {{ wallpapers_install_dir }}/coding.png
         creates: "{{ wallpapers_install_dir }}/coding.png"
