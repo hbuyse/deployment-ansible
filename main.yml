@@ -39,8 +39,6 @@
     - role: "oh_my_posh"
     - role: "web_browsers"
     - role: "wallpapers"
-      vars:
-        wallpapers_install_prefix: "{{ lookup('env', 'HOME') }}/.local"
     - role: "discord"
     - role: "icons"
     - role: "xfce4"

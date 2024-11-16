@@ -23,18 +23,49 @@
     recurse: true
   tags: wallpapers
 
-- name: "Wallpapers | Install wallpaper files"
+- name: "Wallpapers | Install SVG files"
   become: "{{ (wallpapers_user == 'root') | bool }}"
-  ansible.builtin.copy:
-    src: "coding.svg"
-    dest: "{{ wallpapers_install_dir }}"
-    mode: "0644"
   tags: wallpapers
+  block:
+    - name: "Wallpapers | Generate SVG file with colors"
+      ansible.builtin.shell:
+        executable: /bin/bash
+        cmd: |
+          set -o pipefail
+          cat {{ role_path }}/files/coding.svg | envsubst > {{ wallpapers_install_dir }}/coding.svg
+        creates: "{{ wallpapers_install_dir }}/coding.svg"
+      environment:
+        OUTLINE: "#f2cdcd"
+        INSIDE: "#dd7878"
+        BACKGROUND: "#1e1e2e"
 
-- name: "Wallpapers | Install wallpaper customizer script"
+    - name: "Wallpapers | Create SVG links"
+      ansible.builtin.file:
+        src: "{{ wallpapers_install_dir }}/coding.svg"
+        dest: "{{ wallpapers_install_dir }}/{{ item }}.svg"
+        owner: "{{ wallpapers_user }}"
+        group: "{{ wallpapers_user }}"
+        state: "link"
+      loop:
+        - "wallpaper"
+        - "locker"
+
+- name: "Wallpapers | Install PNG files"
   become: "{{ (wallpapers_user == 'root') | bool }}"
-  ansible.builtin.copy:
-    src: "generate-bg.sh"
-    dest: "{{ wallpapers_install_bin }}"
-    mode: "0755"
   tags: wallpapers
+  block:
+    - name: "Wallpapers | Copy PNG files"
+      ansible.builtin.command:
+        cmd: convert {{ wallpapers_install_dir }}/coding.svg {{ wallpapers_install_dir }}/coding.png
+        creates: "{{ wallpapers_install_dir }}/coding.png"
+
+    - name: "Wallpapers | Create PNG links"
+      ansible.builtin.file:
+        src: "{{ wallpapers_install_dir }}/coding.png"
+        dest: "{{ wallpapers_install_dir }}/{{ item }}.png"
+        owner: "{{ wallpapers_user }}"
+        group: "{{ wallpapers_user }}"
+        state: "link"
+      loop:
+        - "wallpaper"
+        - "locker"
