@@ -8,7 +8,7 @@ cmd_exists() {
 if cmd_exists betterlockscreen; then
   # Kill all betterlockscreen processes
   pkill -9 betterlockscreen
-  nohup betterlockscreen -u "$HOME/.config/wallpapers/locker" > /dev/null 2>&1 &
+  nohup betterlockscreen -u "/usr/local/share/wallpapers/locker.png" > /dev/null 2>&1 &
 fi
 
 # vim: set ts=2 sw=2 tw=0 et ft=sh :
