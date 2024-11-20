@@ -24,7 +24,7 @@
   ansible.builtin.pip:
     name: "{{ autorandr_pip_packages }}"
     state: present
-    break_system_packages: true
+    # break_system_packages: true
   when: ansible_os_family == 'Debian'
   tags:
     - autorandr
