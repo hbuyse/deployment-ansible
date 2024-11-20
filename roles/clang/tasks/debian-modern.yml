@@ -1,0 +1,11 @@
+---
+- name: "Clang | Install source repository"
+  become: true
+  ansible.builtin.deb822_repository:
+    name: "llvm"
+    types: deb
+    uris: "http://apt.llvm.org/{{ ansible_distribution_release }}"
+    suites: "llvm-toolchain-{{ ansible_distribution_release }}-{{ clang_llvm_stable_version }}"
+    components: main
+    state: present
+    signed_by: "https://apt.llvm.org/llvm-snapshot.gpg.key"

@@ -5,13 +5,16 @@
     state: present
     name: "{{ clang_dependencies }}"
 
-- name: "Clang | Install source repository [{{ ansible_os_family }}]"
-  become: true
-  ansible.builtin.deb822_repository:
-    name: "apt.llvm.org"
-    types: deb
-    uris: "http://apt.llvm.org/{{ ansible_distribution_release }}"
-    suites: "llvm-toolchain-{{ ansible_distribution_release }}-{{ clang_llvm_stable_version }}"
-    components: main
-    state: present
-    signed_by: "https://apt.llvm.org/llvm-snapshot.gpg.key"
+- name: "Clang | Add deb repository - modern"
+  when: ansible_version.full >= "2.15.0"
+  ansible.builtin.include_tasks:
+    file: debian-modern.yml
+    apply:
+      tags: clang
+
+- name: "Clang | Add deb repository - legacy"
+  when: ansible_version.full < "2.15.0"
+  ansible.builtin.include_tasks:
+    file: debian-legacy.yml
+    apply:
+      tags: clang

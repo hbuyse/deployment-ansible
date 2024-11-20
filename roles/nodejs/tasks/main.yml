@@ -7,12 +7,22 @@
       skip: true
   tags: nodejs
 
-- name: "NodeJS | Install [Debian]"
-  ansible.builtin.include_tasks: setup-debian.yml
-  when: ansible_os_family == "Debian"
+- name: "NodeJS | Add repository [{{ ansible_os_family }}]"
+  ansible.builtin.include_tasks:
+    file: "{{ item }}"
+    apply:
+      tags: nodejs
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
   tags: nodejs
 
-- name: "NodeJS | Install [Rolling Release]"
-  ansible.builtin.include_tasks: setup-rolling-release.yml
-  when: ansible_os_family in ["Archlinux", "Suse"]
+- name: "Nodejs | Install package and npm [{{ ansible_os_family }}]"
+  become: true
+  ansible.builtin.package:
+    name:
+      - nodejs
+    update_cache: true
+    state: present
   tags: nodejs

@@ -1,7 +1,0 @@
-- name: "Nodejs | Install from package manager [{{ ansible_os_family }}]"
-  become: true
-  ansible.builtin.package:
-    state: present
-    name: "{{ nodejs_packages }}"
-  tags:
-    - nodejs

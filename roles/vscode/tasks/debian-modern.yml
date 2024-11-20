@@ -1,0 +1,13 @@
+---
+- name: "Nodejs | Add repository"
+  become: true
+  ansible.builtin.deb822_repository:
+    name: vscode
+    types: deb
+    uris: "https://packages.microsoft.com/repos/code"
+    suites: "stable"
+    components:
+      - main
+    architectures:
+      - "{{ deb_arch }}"
+    signed_by: "https://packages.microsoft.com/keys/microsoft.asc"

@@ -1,8 +1,9 @@
 ---
-- name: "Git | Add PPA [{{ ansible_os_family }}]"
+- name: "Git | Add PPA"
   become: true
   ansible.builtin.apt_repository:
+    filename: git-core
     repo: "ppa:git-core/ppa"
     codename: "{{ ansible_distribution_release }}"
     state: present
-    update_cache: true
+    update_cache: false
