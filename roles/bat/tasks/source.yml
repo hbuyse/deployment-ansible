@@ -3,8 +3,7 @@
   become: true
   community.general.cargo:
     name: bat
-    state: present
-    version: "0.23.0"
+    state: latest
     locked: true
     path: "/usr/local"
   environment:
