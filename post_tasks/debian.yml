@@ -24,3 +24,4 @@
     - name: "Post-tasks | The apt-get clean command clears the local repository of retrieved package files [{{ ansible_os_family }}]"
       ansible.builtin.apt:
         clean: true
+      when: ansible_version.full >= "2.13.0"
