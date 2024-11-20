@@ -1,0 +1,24 @@
+---
+- name: "Conky | Ensure configuration directory exists"
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.config/conky"
+    mode: "0755"
+    state: "directory"
+
+- name: "Conky | Copy 'top' configuration file"
+  ansible.builtin.copy:
+    src: "conky.top.conf"
+    dest: "{{ ansible_user_dir }}/.config/conky"
+    mode: "0644"
+
+- name: "Conky | Copy launcher script"
+  ansible.builtin.copy:
+    src: "launch.sh"
+    dest: "{{ ansible_user_dir }}/.config/conky"
+    mode: "0755"
+
+- name: "Conky | Generate 'all' configuration file"
+  ansible.builtin.template:
+    src: "conky.all.conf.j2"
+    dest: "{{ ansible_user_dir }}/.config/conky/conky.all.conf"
+    mode: "0644"

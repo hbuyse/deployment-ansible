@@ -48,3 +48,4 @@
     - role: "ripgrep"
     - role: "bat"
     - role: "autorandr"
+    - role: "conky"
