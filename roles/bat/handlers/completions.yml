@@ -20,6 +20,7 @@
 
 - name: "Bat | Rename shell completion file [{{ item.shell }}]"
   become: true
+  when: item.src_file != item.dst_file
   block:
     - name: "Bat | Copy file"
       ansible.builtin.copy:
