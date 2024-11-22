@@ -9,23 +9,19 @@
     - autorandr
     - x11
 
-- name: "Autorandr | Install from package manager"
+- name: "Autorandr | Install dependencies"
   become: true
   ansible.builtin.package:
-    name: "{{ autorandr_packages }}"
-    state: present
-  when: ansible_os_family != 'Debian'
+    state: "present"
+    name: pipx
   tags:
-    - autorandr
     - x11
+    - autorandr
 
-- name: "Autorandr | Install from Pip"
-  become: true
-  ansible.builtin.pip:
-    name: "{{ autorandr_pip_packages }}"
+- name: "Autorandr | Install using Pipx"
+  community.general.pipx:
+    name: "autorandr"
     state: present
-    # break_system_packages: true
-  when: ansible_os_family == 'Debian'
   tags:
     - autorandr
     - x11
