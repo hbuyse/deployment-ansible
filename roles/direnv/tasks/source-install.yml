@@ -1,8 +1,22 @@
 ---
-- name: "Direnv | Install binary into {{ direnv_bin_install_dir }}"
+- name: "Direnv | Get latest version number"
+  register: latest_json
+  ansible.builtin.uri:
+    url: "https://api.github.com/repos/direnv/direnv/releases/latest"
+    method: GET
+    return_content: true
+    status_code: 200
+    body_format: json
+
+- name: "Direnv | Set facts"
+  ansible.builtin.set_fact:
+    direnv_latest_version: "{{ latest_json.json.tag_name[1:] }}"
+
+- name: "Direnv | Install binary [v{{ direnv_latest_version }}]"
   become: true
   ansible.builtin.get_url:
-    url: "https://github.com/direnv/direnv/releases/download/v{{ direnv_version }}/direnv.{{ ansible_system | lower }}-{{ alt_arch }}"
+    url: "https://github.com/direnv/direnv/releases/download/\
+      v{{ direnv_latest_version }}/direnv.{{ ansible_system | lower }}-{{ alt_arch }}"
     dest: "{{ direnv_bin_install_dir }}/direnv"
     mode: "0755"
 
@@ -13,18 +27,18 @@
     mode: "0755"
   become: true
 
-- name: "Direnv | Install man pages into {{ direnv_man_install_dir }}"
+- name: "Direnv | Install man pages"
   become: true
   ansible.builtin.unarchive:
-    src: "https://github.com/direnv/direnv/archive/refs/tags/v{{ direnv_version }}.tar.gz"
+    src: "https://github.com/direnv/direnv/archive/refs/tags/v{{ direnv_latest_version }}.tar.gz"
     dest: "{{ direnv_man_install_dir }}/man1"
     remote_src: true
     keep_newer: true
     mode: "0644"
     include:
-      - "direnv-{{ direnv_version }}/man/direnv.1"
-      - "direnv-{{ direnv_version }}/man/direnv.toml.1"
-      - "direnv-{{ direnv_version }}/man/direnv-fetchurl.1"
-      - "direnv-{{ direnv_version }}/man/direnv-stdlib.1"
+      - "direnv-{{ direnv_latest_version }}/man/direnv.1"
+      - "direnv-{{ direnv_latest_version }}/man/direnv.toml.1"
+      - "direnv-{{ direnv_latest_version }}/man/direnv-fetchurl.1"
+      - "direnv-{{ direnv_latest_version }}/man/direnv-stdlib.1"
     extra_opts:
       - "--strip-components=2"
