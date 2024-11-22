@@ -1,3 +1,2 @@
 ---
-nvim_version: "0.10.2"
 nvim_config_dir: "{{ ansible_user_dir }}/.config/nvim"

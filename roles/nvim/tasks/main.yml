@@ -11,20 +11,35 @@
     - neovim
     - nvim
 
-- name: "Neovim | Install program from static binary"
-  become: true
-  ansible.builtin.unarchive:
-    src: "https://github.com/neovim/neovim/releases/download/v{{ nvim_version }}/nvim-linux64.tar.gz"
-    dest: "/usr/local"
-    remote_src: true
-    extra_opts:
-      - --strip-components=1
+- name: "Neovim | Install program from static binary [v{{ nvim_latest_version }}]"
   when: ansible_os_family == "Debian"
   tags:
     - neovim
     - nvim
+  block:
+    - name: "Neovim | Get latest version number"
+      register: latest_json
+      ansible.builtin.uri:
+        url: "https://api.github.com/repos/neovim/neovim/releases/latest"
+        method: GET
+        return_content: true
+        status_code: 200
+        body_format: json
 
-- name: "Neovim | Config folder"
+    - name: "Neovim | Set facts"
+      ansible.builtin.set_fact:
+        nvim_latest_version: "{{ latest_json.json.tag_name[1:] }}"
+
+    - name: "Neovim | Install program from static binary [v{{ nvim_latest_version }}]"
+      become: true
+      ansible.builtin.unarchive:
+        src: "https://github.com/neovim/neovim/releases/download/v{{ nvim_latest_version }}/nvim-linux64.tar.gz"
+        dest: "/usr/local"
+        remote_src: true
+        extra_opts:
+          - --strip-components=1
+
+- name: "Neovim | Ensure configuration folder exists"
   ansible.builtin.file:
     mode: "0755"
     path: "{{ nvim_config_dir }}"
