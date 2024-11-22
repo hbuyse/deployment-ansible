@@ -11,7 +11,7 @@
   become: true
   ansible.builtin.unarchive:
     src: "/tmp/{{ bat_archive_fullname }}"
-    dest: "{{ install_dir }}"
+    dest: "{{ item.install_dir }}"
     mode: "0644"
     include:
       - "{{ bat_archive_name }}/autocomplete/{{ item.src_file }}"
