@@ -1,5 +1,4 @@
 ---
-fzf_version: "0.55.0"
 fzf_install_dir: "/usr/local"
 fzf_bin_install_dir: "{{ fzf_install_dir }}/bin"
 fzf_man_install_dir: "{{ fzf_install_dir }}/man"

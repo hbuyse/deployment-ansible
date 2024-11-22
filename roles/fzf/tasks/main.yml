@@ -1,9 +1,17 @@
 ---
 # tasks file for shell
 - name: "FZF | Install from sources"
-  ansible.builtin.include_tasks: source-install.yml
+  ansible.builtin.include_tasks:
+    file: source-install.yml
+    apply:
+      tags: fzf
   when: ansible_os_family == "Debian"
+  tags: fzf
 
 - name: "FZF | Install from package manager"
-  ansible.builtin.include_tasks: package-install.yml
+  ansible.builtin.include_tasks:
+    file: package-install.yml
+    apply:
+      tags: fzf
   when: ansible_os_family != "Debian"
+  tags: fzf

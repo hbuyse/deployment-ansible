@@ -1,20 +1,35 @@
 ---
-- name: "FZF | Install binary file into {{ direnv_bin_install_dir }}"
+- name: "FZF | Get latest version number"
+  register: latest_json
+  ansible.builtin.uri:
+    url: "https://api.github.com/repos/junegunn/fzf/releases/latest"
+    method: GET
+    return_content: true
+    status_code: 200
+    body_format: json
+
+- name: "FZF | Set facts"
+  ansible.builtin.set_fact:
+    fzf_latest_version: "{{ latest_json.json.tag_name[1:] }}"
+
+- name: "FZF | Install binary file [v{{ fzf_latest_version }}]"
   become: true
   ansible.builtin.unarchive:
-    src: "https://github.com/junegunn/fzf/releases/download/v{{ fzf_version }}/fzf-{{ fzf_version }}-{{ ansible_system | lower }}_{{ alt_arch }}.tar.gz"
+    src:
+      "https://github.com/junegunn/fzf/releases/download/v{{ fzf_latest_version }}/\
+      fzf-{{ fzf_latest_version }}-{{ ansible_system | lower }}_{{ alt_arch }}.tar.gz"
     dest: "{{ fzf_bin_install_dir }}"
     remote_src: true
 
-- name: "FZF | Install man pages into {{ direnv_man_install_dir }}"
+- name: "FZF | Install man pages"
   become: true
   ansible.builtin.unarchive:
-    src: "https://github.com/junegunn/fzf/archive/refs/tags/v{{ fzf_version }}.tar.gz"
+    src: "https://github.com/junegunn/fzf/archive/refs/tags/v{{ fzf_latest_version }}.tar.gz"
     dest: "{{ fzf_man_install_dir }}/man1"
     remote_src: true
     keep_newer: true
     include:
-      - "fzf-{{ fzf_version }}/man/man1/fzf.1"
-      - "fzf-{{ fzf_version }}/man/man1/fzf-tmux.1"
+      - "fzf-{{ fzf_latest_version }}/man/man1/fzf.1"
+      - "fzf-{{ fzf_latest_version }}/man/man1/fzf-tmux.1"
     extra_opts:
       - "--strip-components=3"
