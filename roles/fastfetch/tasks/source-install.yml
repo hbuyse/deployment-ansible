@@ -1,5 +1,19 @@
 ---
-- name: "Fastfetch | Install fastfetch from deb file"
+- name: "Fastfetch | Get latest version number"
+  register: latest_json
+  ansible.builtin.uri:
+    url: "https://api.github.com/repos/fastfetch-cli/fastfetch/releases/latest"
+    method: GET
+    return_content: true
+    status_code: 200
+    body_format: json
+
+- name: "Fastfetch | Set facts"
+  ansible.builtin.set_fact:
+    fastfetch_latest_version: "{{ latest_json.json.tag_name }}"
+
+- name: "Fastfetch | Install fastfetch from deb file [v{{ fastfetch_latest_version }}]"
   become: true
   ansible.builtin.apt:
-    deb: "https://github.com/fastfetch-cli/fastfetch/releases/download/{{ fastfetch_version }}/fastfetch-{{ ansible_system | lower }}-{{ deb_arch }}.deb"
+    deb: "https://github.com/fastfetch-cli/fastfetch/releases/download/\
+      {{ fastfetch_latest_version }}/fastfetch-{{ ansible_system | lower }}-{{ deb_arch }}.deb"
