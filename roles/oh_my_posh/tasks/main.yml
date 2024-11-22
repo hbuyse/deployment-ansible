@@ -1,8 +1,27 @@
 ---
-- name: "Oh My Posh | Install binary"
+- name: "Oh My Posh | Get latest version number"
+  register: latest_json
+  ansible.builtin.uri:
+    url: "https://api.github.com/repos/JanDeDobbeleer/oh-my-posh/releases/latest"
+    method: GET
+    return_content: true
+    status_code: 200
+    body_format: json
+  tags:
+    - oh_my_posh
+    - shell
+
+- name: "Oh My Posh | Set facts"
+  ansible.builtin.set_fact:
+    oh_my_posh_latest_version: "{{ latest_json.json.tag_name[1:] }}"
+  tags:
+    - oh_my_posh
+    - shell
+
+- name: "Oh My Posh | Install binary [v{{ oh_my_posh_latest_version }}]"
   become: true
   ansible.builtin.get_url:
-    url: "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v{{ oh_my_posh_version }}/posh-{{ ansible_system | lower }}-{{ alt_arch }}"
+    url: "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v{{ oh_my_posh_latest_version }}/posh-{{ ansible_system | lower }}-{{ alt_arch }}"
     dest: "/usr/local/bin/oh-my-posh"
     mode: "0755"
   tags:
