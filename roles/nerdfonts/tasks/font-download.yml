@@ -15,7 +15,7 @@
 - name: "Nerdfonts | Download fonts [{{ item }}]"
   when: not font_exists.stat.exists
   ansible.builtin.unarchive:
-    src: "https://github.com/ryanoasis/nerd-fonts/releases/download/{{ nerdfonts_version }}/{{ item }}.tar.xz"
+    src: "https://github.com/ryanoasis/nerd-fonts/releases/download/{{ nerdfonts_latest_version }}/{{ item }}.tar.xz"
     dest: "{{ nerdfonts_font_dir_prefix }}/{{ item }}"
     mode: "0644"
     remote_src: true

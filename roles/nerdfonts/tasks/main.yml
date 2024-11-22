@@ -1,4 +1,17 @@
 ---
+- name: "Nerdfonts | Get latest version number"
+  register: latest_json
+  ansible.builtin.uri:
+    url: "https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest"
+    method: GET
+    return_content: true
+    status_code: 200
+    body_format: json
+
+- name: "Nerdfonts | Set facts"
+  ansible.builtin.set_fact:
+    nerdfonts_latest_version: "{{ latest_json.json.tag_name[1:] }}"
+
 - name: "Nerdfonts | Ensure fonts directory exists"
   become: true
   ansible.builtin.file:
@@ -6,7 +19,7 @@
     state: directory
     mode: "0755"
 
-- name: "Nerdfonst | Download fonts if necessary"
+- name: "Nerdfonst | Download fonts if necessary [v{{ nerdfonts_latest_version }}]"
   ansible.builtin.include_tasks: font-download.yml
   loop:
     - "Hack"

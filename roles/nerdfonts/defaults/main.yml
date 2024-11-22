@@ -1,4 +1,3 @@
 ---
 # defaults file for nerdfonts
 nerdfonts_font_dir_prefix: "/usr/local/share/fonts"
-nerdfonts_version: "v3.2.1"
