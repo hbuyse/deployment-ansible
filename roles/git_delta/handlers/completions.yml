@@ -1,5 +1,5 @@
 ---
-- name: "Git Delta | Get latest version number [Debian]"
+- name: "Git Delta | Get latest version number"
   register: latest_json
   ansible.builtin.uri:
     url: "https://api.github.com/repos/dandavison/delta/releases/latest"
@@ -22,7 +22,8 @@
 
     - name: "Git Delta | Install completion file"
       ansible.builtin.get_url:
-        url: "https://raw.githubusercontent.com/dandavison/delta/refs/tags/{{ git_delta_latest_version }}/etc/completion/completion.bash"
+        url: "https://raw.githubusercontent.com/dandavison/delta/refs/tags/\
+          {{ git_delta_latest_version }}/etc/completion/completion.bash"
         dest: "/usr/local/share/bash-completion/completions/delta"
         mode: "0644"
 
@@ -36,6 +37,7 @@
 
     - name: "Git Delta | Install completion file"
       ansible.builtin.get_url:
-        url: "https://raw.githubusercontent.com/dandavison/delta/refs/tags/{{ git_delta_latest_version }}/etc/completion/completion.zsh"
+        url: "https://raw.githubusercontent.com/dandavison/delta/refs/tags/\
+          {{ git_delta_latest_version }}/etc/completion/completion.zsh"
         dest: "/usr/local/share/zsh/site-functions/_delta"
         mode: "0644"

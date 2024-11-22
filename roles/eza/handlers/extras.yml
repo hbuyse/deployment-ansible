@@ -14,7 +14,8 @@
 
 - name: "Eza | Download eza extra archives"
   ansible.builtin.get_url:
-    url: "https://github.com/eza-community/eza/releases/download/v{{ eza_latest_version }}/{{ item }}-{{ eza_latest_version }}.tar.gz"
+    url: "https://github.com/eza-community/eza/releases/download/\
+      v{{ eza_latest_version }}/{{ item }}-{{ eza_latest_version }}.tar.gz"
     dest: "/tmp/"
     mode: "0644"
   loop:
