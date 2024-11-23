@@ -9,19 +9,12 @@
     - autorandr
     - x11
 
-- name: "Autorandr | Install dependencies"
-  become: true
-  ansible.builtin.package:
-    state: "present"
-    name: pipx
-  tags:
-    - x11
-    - autorandr
-
 - name: "Autorandr | Install using Pipx"
+  become: true
   community.general.pipx:
     name: "autorandr"
-    state: present
+    state: latest
+    global: true
   tags:
     - autorandr
     - x11
