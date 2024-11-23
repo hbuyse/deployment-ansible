@@ -5,6 +5,6 @@ clang_packages:
   - "clang{{ clang_llvm_version }}"
   - "libclang-cpp{{ clang_llvm_version }}"
   - "clang-tools"
-  - "python3-clang{{ clang_llvm_version }}"
+  - "python3-clang"
   - "lldb{{ clang_llvm_version }}"
   - "lld{{ clang_llvm_version }}"
