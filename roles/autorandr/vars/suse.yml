@@ -1,1 +1,3 @@
-archlinux.yml
+---
+autorandr_packages:
+  - autorandr
