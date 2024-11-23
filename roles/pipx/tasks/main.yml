@@ -1,0 +1,15 @@
+---
+- name: "Pipx | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: pipx
+
+- name: "Pipx | Install packages"
+  become: true
+  ansible.builtin.package:
+    name: "{{ pipx_packages }}"
+    state: present
+  tags: pipx

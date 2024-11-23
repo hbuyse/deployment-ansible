@@ -47,5 +47,6 @@
     - role: "pre_commit"
     - role: "ripgrep"
     - role: "bat"
+    - role: "pipx"
     - role: "autorandr"
     - role: "conky"
