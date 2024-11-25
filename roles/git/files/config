@@ -29,6 +29,7 @@ conflictstyle = diff3
 [alias]
 lg = log --color --graph --pretty=logger --abbrev-commit
 rl = reflog --pretty=reflog
+change-commits = "!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \"if [[ \\\"$`echo $VAR`\\\" = '$OLD' ]]; then export $VAR='$NEW'; fi\" $@; }; f"
 
 [pretty]
 logger = %C(red)%h%C(reset) -%C(yellow)%d%C(reset) %s %C(green)(%cr) %C(bold blue)<%an>%C(reset)
