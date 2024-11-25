@@ -3,7 +3,7 @@ path = themes/catppuccin.conf
 path = themes/themes.conf
 
 [core]
-pager = delta
+pager = delta --tabs=4
 
 [interactive]
 diffFilter = delta --color-only
