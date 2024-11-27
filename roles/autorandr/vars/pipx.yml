@@ -1,0 +1,3 @@
+---
+autorandr_pipx_packages:
+  - autorandr

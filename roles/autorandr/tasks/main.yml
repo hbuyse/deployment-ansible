@@ -4,17 +4,31 @@
   with_first_found:
     - files:
         - "{{ ansible_os_family | lower }}.yml"
-      skip: true
+        - "pipx.yml"
   tags:
     - autorandr
     - x11
 
-- name: "Autorandr | Install using Pipx"
-  become: true
-  community.general.pipx:
-    name: "autorandr"
-    state: latest
-    global: true
+- name: "Autorandr | Install using package manager"
+  ansible.builtin.include_tasks:
+    file: package.yml
+    apply:
+      tags:
+        - autorandr
+        - x11
+  when: ansible_os_family not in ["Debian"]
+  tags:
+    - autorandr
+    - x11
+
+- name: "Autorandr | Install from sources"
+  ansible.builtin.include_tasks:
+    file: source.yml
+    apply:
+      tags:
+        - autorandr
+        - x11
+  when: ansible_os_family in ["Debian"]
   tags:
     - autorandr
     - x11

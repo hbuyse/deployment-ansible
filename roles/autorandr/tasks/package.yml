@@ -1,0 +1,6 @@
+---
+- name: "Autorandr | Install using package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ autorandr_packages }}"
+    state: present
