@@ -22,8 +22,6 @@
     - role: "git_delta"
     - role: "nodejs"
     - role: "nerdfonts"
-      vars:
-        nerdfonts_font_dir_prefix: "{{ lookup('env', 'HOME') }}/.local/share/fonts"
     - role: "nvim"
     - role: "direnv"
     - role: "fastfetch"
