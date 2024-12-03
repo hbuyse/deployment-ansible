@@ -59,6 +59,15 @@ return {
         ['_'] = { 'trim_whitespace' },
       },
       format_on_save = function(bufnr)
+{% if ansible_hostname == 'hbuyse-latitude5400' %}
+        -- Do not autoformat if in ~/work
+        local filepath = vim.api.nvim_buf_get_name(bufnr)
+        if filepath:find(vim.env.HOME .. '/work') then
+          vim.notify("No autoformat")
+          return
+        end
+
+{% endif %}
         -- Disable with a global or buffer-local variable
         if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
           return
