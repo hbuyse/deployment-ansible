@@ -64,28 +64,31 @@ import locale
 import os
 import re
 import textwrap
-import yaml
+from collections import OrderedDict
 
+import yaml
 from ansible import constants as C
 from ansible import context
 from ansible.executor.task_result import TaskResult
-from ansible.module_utils._text import to_text, to_bytes
+from ansible.module_utils._text import to_bytes, to_text
 from ansible.module_utils.common._collections_compat import Mapping
 from ansible.parsing.utils.yaml import from_yaml
 from ansible.plugins.callback import CallbackBase
 from ansible.template import Templar
 from ansible.utils.color import colorize, hostcolor, stringc
-from ansible.vars.clean import strip_internal_keys, module_response_deepcopy
+from ansible.vars.clean import module_response_deepcopy, strip_internal_keys
 from ansible.vars.hostvars import HostVarsVars
-from collections import OrderedDict
+
 try:
     from collections.abc import Sequence
 except:
     from collections import Sequence
+
 from numbers import Number
 from os.path import basename, isdir
+
+from watchdog.events import EVENT_TYPE_CREATED, FileSystemEventHandler
 from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler, EVENT_TYPE_CREATED
 
 _symbol = {
     "success": to_text("✔ "),
@@ -115,7 +118,7 @@ _session_title = {
     "use_stderr": "Use STDERR to output",
 }  # type: Dict[str,str]
 """:obj:`dict` of :obj:`str` to :obj:`str`: A dictionary of terms used as
-section title when displayin the output of a command.
+section title when displaying the output of a command.
 """
 
 _session_order = OrderedDict(
@@ -230,12 +233,16 @@ def stringtruncate(
     truncated_width = width - truncsize
 
     return stringc(
-        to_text(justfn(str(value), width))
-        if do_not_trucate
-        else to_text("{0}{1}".format(
-            value[:truncated_width] if justfn == str.ljust else truncate_placeholder,
-            truncate_placeholder if justfn == str.ljust else value[truncated_width:],
-        )),
+        (
+            to_text(justfn(str(value), width))
+            if do_not_trucate
+            else to_text(
+                "{0}{1}".format(
+                    value[:truncated_width] if justfn == str.ljust else truncate_placeholder,
+                    truncate_placeholder if justfn == str.ljust else value[truncated_width:],
+                )
+            )
+        ),
         color,
     )
 
@@ -321,7 +328,7 @@ class CallbackModule(CallbackBase, FileSystemEventHandler):
             host name where our task was delegated to. Defaults to ``None``.
         _item_processed (:obj:`bool`): A flag indicating if an item from a task
             was already processed and printed. This is to allow us to print a
-            header before start printin all the items from a task. Defaults to
+            header before start printing all the items from a task. Defaults to
             ``False``.
         _current_play (:obj:`~ansible.playbook.play.Play`): This attribute holds
             the current play being executed on this playbook. Defaults to
@@ -384,9 +391,7 @@ class CallbackModule(CallbackBase, FileSystemEventHandler):
                 displayed on the :data:`stderr` stream. Defaults to False.
         """
         self._display.display(msg=msg, color=color, stderr=stderr, screen_only=True)
-        self._display.display(
-            msg=ansi_escape.sub("", msg), stderr=stderr, log_only=True
-        )
+        self._display.display(msg=ansi_escape.sub("", msg), stderr=stderr, log_only=True)
 
     def v2_playbook_on_start(self, playbook):
         """Displays the Playbook report Header when Ansible starst running it.
@@ -496,9 +501,7 @@ class CallbackModule(CallbackBase, FileSystemEventHandler):
         self._current_play = play
         name = play.get_name().strip()
         if name:
-            self.display(
-                to_text("[PLAY: {0}]").format(stringc(name, C.COLOR_HIGHLIGHT)).center(91, "-")
-            )
+            self.display(to_text("[PLAY: {0}]").format(stringc(name, C.COLOR_HIGHLIGHT)).center(91, "-"))
         else:
             self.display("[PLAY]".center(80, "-"))
 
@@ -567,9 +570,7 @@ class CallbackModule(CallbackBase, FileSystemEventHandler):
         )
         if self._is_run_verbose(result, 2):
             # All result keys stating with _ansible_ are internal, so remove them from the result before we output anything.
-            abridged_result = strip_internal_keys(
-                module_response_deepcopy(result._result)
-            )
+            abridged_result = strip_internal_keys(module_response_deepcopy(result._result))
             abridged_result.pop("exception", None)
 
             if not self._is_run_verbose(verbosity=3):
@@ -680,7 +681,7 @@ class CallbackModule(CallbackBase, FileSystemEventHandler):
         self.display(task_result, color)
 
     def v2_runner_on_unreachable(self, result):
-        """When a host becames *unreachable* before the execution of its task,
+        """When a host becomes *unreachable* before the execution of its task,
         this method will display information about the unreachability.
 
         Args:
@@ -720,12 +721,8 @@ class CallbackModule(CallbackBase, FileSystemEventHandler):
             class.
         """
         self._preprocess_result(result)
-        status, display_color = CallbackModule.changed_artifacts(
-            result, "ok", C.COLOR_OK
-        )
-        task_result = self._process_item_result_output(
-            result, status, symbol("success")
-        )
+        status, display_color = CallbackModule.changed_artifacts(result, "ok", C.COLOR_OK)
+        task_result = self._process_item_result_output(result, status, symbol("success"))
         self.display(task_result, display_color)
 
     def v2_runner_item_on_skipped(self, result):
@@ -748,9 +745,7 @@ class CallbackModule(CallbackBase, FileSystemEventHandler):
         """
         if C.DISPLAY_SKIPPED_HOSTS:
             self._preprocess_result(result)
-            task_result = self._process_item_result_output(
-                result, "skipped", symbol("skip")
-            )
+            task_result = self._process_item_result_output(result, "skipped", symbol("skip"))
             self.display(task_result, C.COLOR_SKIP)
         else:
             self.outlines = []
@@ -774,9 +769,7 @@ class CallbackModule(CallbackBase, FileSystemEventHandler):
             class.
         """
         self._flush_display_buffer()
-        task_result = self._process_item_result_output(
-            result, "failed", symbol("failure")
-        )
+        task_result = self._process_item_result_output(result, "failed", symbol("failure"))
         self.display(task_result, C.COLOR_ERROR)
 
     def v2_playbook_on_stats(self, stats):
@@ -891,27 +884,17 @@ class CallbackModule(CallbackBase, FileSystemEventHandler):
         """
         if context.CLIARGS.get("args"):
             self.display(
-                to_text("{0}Positional arguments: {1}").format(
-                    " " * indent, ", ".join(context.CLIARGS["args"])
-                ),
+                to_text("{0}Positional arguments: {1}").format(" " * indent, ", ".join(context.CLIARGS["args"])),
                 color=C.COLOR_VERBOSE,
             )
 
-        for arg, val in {
-            key: value
-            for key, value in context.CLIARGS.items()
-            if key != "args" and value
-        }.items():
+        for arg, val in {key: value for key, value in context.CLIARGS.items() if key != "args" and value}.items():
             if iscollection(val):
                 self.display(to_text("{0}{1}:").format(" " * indent, arg), color=C.COLOR_VERBOSE)
                 for v in val:
-                    self.display(
-                        to_text("{0}- {1}").format(" " * (indent + 2), v), color=C.COLOR_VERBOSE
-                    )
+                    self.display(to_text("{0}- {1}").format(" " * (indent + 2), v), color=C.COLOR_VERBOSE)
             else:
-                self.display(
-                    to_text("{0}{1}: {2}").format(" " * indent, arg, val), color=C.COLOR_VERBOSE
-                )
+                self.display(to_text("{0}{1}: {2}").format(" " * indent, arg, val), color=C.COLOR_VERBOSE)
 
     def _get_tags(self, playbook):
         """Returns a collection of tags that will be associated with all tasks
@@ -973,15 +956,11 @@ class CallbackModule(CallbackBase, FileSystemEventHandler):
                     total_len = len(tag) + 6
                     first_item = True
                 else:
-                    tag_strings += to_text(" {0} {1} {2} {3}").format(
-                        "\x1b[6;30;47m", symbol("flag"), tag, "\x1b[0m"
-                    )
+                    tag_strings += to_text(" {0} {1} {2} {3}").format("\x1b[6;30;47m", symbol("flag"), tag, "\x1b[0m")
                     total_len += len(tag) + 5
             else:
                 first_item = False
-                tag_strings += to_text("  {0} {1} {2} {3}").format(
-                    "\x1b[6;30;47m", symbol("flag"), tag, "\x1b[0m"
-                )
+                tag_strings += to_text("  {0} {1} {2} {3}").format("\x1b[6;30;47m", symbol("flag"), tag, "\x1b[0m")
                 total_len = len(tag) + 6
         self.display("\n")
         self.display(tag_strings)
@@ -1047,7 +1026,7 @@ class CallbackModule(CallbackBase, FileSystemEventHandler):
         to the session title.
 
         If a session verbosity (found on the :const:`_session_order` dictionary)
-        doesnot cross the threshold for this playbook, it will not be shown.
+        does not cross the threshold for this playbook, it will not be shown.
 
         This method also converts all session titles that are present in the
         :const:`` dictionary, to their string representation. The rest of the
@@ -1061,7 +1040,7 @@ class CallbackModule(CallbackBase, FileSystemEventHandler):
             symbol_char (:obj:`str`, optional): An UTF-8 character to be used as
                 a symbol_char in the beginning of the output. Defaults to "".
             indent (int, optional): How many character the text generated from
-                the ``result`` should be indended to. Defaults to 2.
+                the ``result`` should be indented to. Defaults to 2.
 
         Returns:
             :obj:`str`: A formatted version of the giving ``result``.
@@ -1076,14 +1055,8 @@ class CallbackModule(CallbackBase, FileSystemEventHandler):
         )
 
         for key, verbosity in _session_order.items():
-            if (
-                key in result._result
-                and result._result[key]
-                and self._is_run_verbose(result, verbosity)
-            ):
-                task_result += self.reindent_session(
-                    _session_title.get(key, key), result._result[key], indent + 2
-                )
+            if key in result._result and result._result[key] and self._is_run_verbose(result, verbosity):
+                task_result += self.reindent_session(_session_title.get(key, key), result._result[key], indent + 2)
 
         for title, text in result._result.items():
             if title not in _session_title and text and self._is_run_verbose(result, 2):
@@ -1109,7 +1082,7 @@ class CallbackModule(CallbackBase, FileSystemEventHandler):
             symbol_char (:obj:`str`, optional): An UTF-8 character to be used as
                 a symbol_char in the beginning of the output. Defaults to "".
             indent (int, optional): How many character the text generated from
-                the ``result`` should be indended to. Defaults to 2.
+                the ``result`` should be indented to. Defaults to 2.
 
         Returns:
             :obj:`str`: A formatted version of the giving ``result``.
@@ -1125,11 +1098,7 @@ class CallbackModule(CallbackBase, FileSystemEventHandler):
             elif "path" in item_name:
                 item_name = item_name.get("path")
             else:
-                item_name = u'JSON: "{0}"'.format(
-                    stringtruncate(
-                        json.dumps(item_name, separators=(",", ":")), width=36
-                    )
-                )
+                item_name = 'JSON: "{0}"'.format(stringtruncate(json.dumps(item_name, separators=(",", ":")), width=36))
         task_host = self._get_host_string(result, "@")
         task_result = to_text("{0}{1} {2} ({3}) [{4}]").format(
             " " * (indent + 2), symbol_char, item_name, task_host, status.upper()
@@ -1155,9 +1124,7 @@ class CallbackModule(CallbackBase, FileSystemEventHandler):
             )
         )
 
-    def _display_summary_table_row(
-        self, host, success, changed, dark, failed, rescued, ignored
-    ):
+    def _display_summary_table_row(self, host, success, changed, dark, failed, rescued, ignored):
         """Displays a single line in the summary table, respecting the color and
         size given in the arguments.
 
@@ -1228,12 +1195,8 @@ class CallbackModule(CallbackBase, FileSystemEventHandler):
         var_manager = task.get_variable_manager()
         task_args = task.args
         if task.when and var_manager:
-            all_hosts = CallbackModule.get_chainned_value(
-                var_manager.get_vars(), "hostvars"
-            )
-            play_task_vars = var_manager.get_vars(
-                play=self._current_play, host=self._current_host, task=task
-            )
+            all_hosts = CallbackModule.get_chainned_value(var_manager.get_vars(), "hostvars")
+            play_task_vars = var_manager.get_vars(play=self._current_play, host=self._current_host, task=task)
             templar = Templar(task._loader, variables=play_task_vars)
             exception = False
             for hostname in all_hosts.keys():
@@ -1249,11 +1212,7 @@ class CallbackModule(CallbackBase, FileSystemEventHandler):
                 if not exception:
                     score = 1.0
         elif task.action == "debug" and task_args and "verbosity" in task_args:
-            score = (
-                1.0
-                if self._is_run_verbose(verbosity=int(task_args["verbosity"]))
-                else 0.0
-            )
+            score = 1.0 if self._is_run_verbose(verbosity=int(task_args["verbosity"])) else 0.0
         return score
 
     def _display_task_name(self, task, is_handler=False):
@@ -1286,9 +1245,7 @@ class CallbackModule(CallbackBase, FileSystemEventHandler):
 
         if self.task_display_name:
             self._task_name_buffer = (
-                self.task_display_name
-                if not is_handler
-                else "%s (via handler)..." % self.task_display_name
+                self.task_display_name if not is_handler else "%s (via handler)..." % self.task_display_name
             )
 
             display_score = self._display_task_decision_score(task)
@@ -1298,8 +1255,7 @@ class CallbackModule(CallbackBase, FileSystemEventHandler):
                 self._task_name_buffer = None
 
     def _flush_display_buffer(self):
-        """Display a task title if there is one to display.
-        """
+        """Display a task title if there is one to display."""
         if self._task_name_buffer:
             self.display(self._task_name_buffer)
             self._task_name_buffer = None
