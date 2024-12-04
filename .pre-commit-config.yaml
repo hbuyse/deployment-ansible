@@ -16,3 +16,7 @@ repos:
         description: Run configurations on .ansible-lint file
         verbose: true
         args: [-p]
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.3.0
+    hooks:
+      - id: codespell
