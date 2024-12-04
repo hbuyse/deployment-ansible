@@ -4,19 +4,19 @@
     path: "{{ nerdfonts_font_dir_prefix }}/{{ item }}"
   register: font_exists
 
-- name: "Nerdfonts | Ensure font directory exists [{{ item }}]"
+- name: "Nerdfonts | Install font [{{ item }}]"
   when: not font_exists.stat.exists
-  ansible.builtin.file:
-    path: "{{ nerdfonts_font_dir_prefix }}/{{ item }}"
-    mode: "0755"
-    state: directory
   become: true
+  block:
+    - name: "Nerdfonts | Ensure font directory exists [{{ item }}]"
+      ansible.builtin.file:
+        path: "{{ nerdfonts_font_dir_prefix }}/{{ item }}"
+        mode: "0755"
+        state: directory
 
-- name: "Nerdfonts | Download fonts [{{ item }}]"
-  when: not font_exists.stat.exists
-  ansible.builtin.unarchive:
-    src: "https://github.com/ryanoasis/nerd-fonts/releases/download/{{ nerdfonts_latest_version }}/{{ item }}.tar.xz"
-    dest: "{{ nerdfonts_font_dir_prefix }}/{{ item }}"
-    mode: "0644"
-    remote_src: true
-  become: true
+    - name: "Nerdfonts | Download fonts [{{ item }}]"
+      ansible.builtin.unarchive:
+        src: "https://github.com/ryanoasis/nerd-fonts/releases/download/v{{ nerdfonts_latest_version }}/{{ item }}.tar.xz"
+        dest: "{{ nerdfonts_font_dir_prefix }}/{{ item }}"
+        mode: "0644"
+        remote_src: true
