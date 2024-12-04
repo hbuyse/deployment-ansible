@@ -26,8 +26,6 @@
     - role: "direnv"
     - role: "fastfetch"
     - role: "tmux"
-      tags:
-        - tmux
     - role: "fzf"
     - role: "clang"
     - role: "lsp_servers"
