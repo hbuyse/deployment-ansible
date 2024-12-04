@@ -78,17 +78,17 @@ return {
         { '<C-p>', require('telescope.builtin').find_files, desc = 'Search Files' },
         { '<leader>b', require('telescope.builtin').buffers, desc = '[B]uffers' },
         { '<C-b>', require('telescope.builtin').buffers, desc = '[B]uffers' },
-        { '<leader>sd', require('telescope.builtin').diagnostics, desc = '[S]earch [D]iagnostics' },
-        { '<leader>sf', require('telescope.builtin').find_files, desc = '[S]earch [F]iles' },
-        { '<leader>sg', require('telescope.builtin').live_grep, desc = '[S]earch by [G]rep' },
-        { '<leader>sh', require('telescope.builtin').help_tags, desc = '[S]earch [H]elp' },
-        { '<leader>sr', require('telescope.builtin').lsp_references, desc = '[S]earch [R]eferences' },
+        { '<leader>sd', require('telescope.builtin').diagnostics, desc = '[S]earch [D]iagnostics' }, -- codespell:ignore earch
+        { '<leader>sf', require('telescope.builtin').find_files, desc = '[S]earch [F]iles' }, -- codespell:ignore earch
+        { '<leader>sg', require('telescope.builtin').live_grep, desc = '[S]earch by [G]rep' }, -- codespell:ignore earch
+        { '<leader>sh', require('telescope.builtin').help_tags, desc = '[S]earch [H]elp' }, -- codespell:ignore earch
+        { '<leader>sr', require('telescope.builtin').lsp_references, desc = '[S]earch [R]eferences' }, -- codespell:ignore earch
         {
           '<leader>sw',
           function()
             require('telescope.builtin').grep_string({ word_match = '-w' })
           end,
-          desc = '[S]earch current [W]ord',
+          desc = '[S]earch current [W]ord', -- codespell:ignore earch
         },
         {
           '<leader>dt',
@@ -101,12 +101,12 @@ return {
 
       local notify = require('telescope').extensions.notify
       if notify ~= nil then
-        table.insert(nkeymaps, { '<leader>sn', notify.notify, desc = '[S]earch [N]otifications' })
+        table.insert(nkeymaps, { '<leader>sn', notify.notify, desc = '[S]earch [N]otifications' }) -- codespell:ignore earch
       end
 
       local aerial = require('telescope').extensions.aerial
       if aerial then
-        table.insert(nkeymaps, { '<leader>ss', aerial.aerial, desc = '[S]earch [S]ymbols' })
+        table.insert(nkeymaps, { '<leader>ss', aerial.aerial, desc = '[S]earch [S]ymbols' }) -- codespell:ignore earch
       end
 
       return nkeymaps

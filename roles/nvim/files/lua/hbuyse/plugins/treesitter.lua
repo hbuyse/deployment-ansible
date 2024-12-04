@@ -101,7 +101,7 @@ return {
       { '<bs>', desc = 'Decrement Selection', mode = 'x' },
       { '<leader>th', vim.show_pos, desc = '[T]reesitter [H]ighlight' },
       { '<leader>tp', vim.treesitter.inspect_tree, desc = '[T]reesitter [P]layground' },
-      { '<leader>tq', vim.treesitter.query.edit, desc = '[T]reesitter [Q]uery Editor' },
+      { '<leader>tq', vim.treesitter.query.edit, desc = '[T]reesitter [Q]uery Editor' }, -- codespell:ignore uery
     },
   },
 }
