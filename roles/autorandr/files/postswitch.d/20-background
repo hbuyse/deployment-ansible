@@ -6,5 +6,5 @@ cmd_exists() {
 
 # Reset the background
 if cmd_exists feh; then
-    feh --bg-fill "/usr/local/share/wallpapers/wallpaper.png"
+    feh --bg-fill "/usr/local/share/backgrounds/wallpaper.png"
 fi

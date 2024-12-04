@@ -1,5 +1,5 @@
 ---
 wallpapers_user: "root"
 wallpapers_install_prefix: "/usr/local"
-wallpapers_install_dir: "{{ wallpapers_install_prefix }}/share/wallpapers"
+wallpapers_install_dir: "{{ wallpapers_install_prefix }}/share/backgrounds"
 wallpapers_install_bin: "{{ wallpapers_install_prefix }}/bin"
