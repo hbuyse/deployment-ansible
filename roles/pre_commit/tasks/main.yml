@@ -14,3 +14,12 @@
     state: present
   when: ansible_os_family in ['Archlinux', 'Suse']
   tags: pre-commit
+
+- name: "Pre-commit | Install using Pipx"
+  become: true
+  community.general.pipx:
+    name: "pre-commit"
+    state: latest
+    global: true
+  when: ansible_os_family in ['Debian']
+  tags: pre-commit
