@@ -31,7 +31,7 @@ ${color}${font Iosevka Nerd Font Mono:bold:size=10}Kernel: ${alignr}${color2}${f
 # CPU
 ${voffset 10}${color}${font Iosevka Nerd Font Mono:bold:size=10}CPU - ${freq_g}GHz - ${cpu cpu0}% ${hr}
 ${cpugraph cpu0}
-{% for i in range(cpu_count | int) %}
+{% for i in range(ansible_processor_vcpus) %}
 {% if i % 2 == 1 %}${alignr}{% endif %}
 ${cpubar cpu{{ i }} 6,148}{% if i % 2 == 0 %}\{% endif %}
 
@@ -39,11 +39,15 @@ ${cpubar cpu{{ i }} 6,148}{% if i % 2 == 0 %}\{% endif %}
 #
 ${voffset 10}${color}${font Iosevka Nerd Font Mono:bold:size=10}Memory ${hr}
 ${font}${color}RAM:${alignr}${font}${color2}${mem} / ${memmax}
+{% if ansible_swaptotal_mb != 0 %}
 ${font}${color}Swap:${alignr}${font}${color2}${swap} / ${swapmax}
+{% endif %}
 
 ${color}${font Iosevka Nerd Font Mono:bold:size=10}Temperature ${hr}
-{% for i in range(cpu_core_count | int) %}
-${font}${color}CPU {{ i + 1 }}: ${alignr}${font}${color2}${hwmon {{ coretemp_hwmon_number }} temp {{ i + 2 }}} °C
+{% for id in coretemp_hwmon_ids %}
+{% if loop.index % 2 == 0 %}${alignr}{% endif %}
+${font}${color}CPU {{ "{:>2}".format(loop.index) }}: ${font}${color2}${hwmon {{ coretemp_hwmon_number }} temp {{ id }}} °C{% if loop.index % 2 == 1 %}\{% endif %}
+
 {% endfor %}
 
 # Mountpoints

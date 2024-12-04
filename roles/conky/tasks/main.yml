@@ -5,33 +5,13 @@
     - files:
         - "{{ ansible_os_family | lower }}.yml"
       skip: true
-  tags: clang
+  tags: conky
 
 - name: "Conky | Install from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ conky_packages }}"
     state: present
-  tags: conky
-
-- name: "Conky | Get number of CPU cores"
-  ansible.builtin.shell:
-    executable: /bin/bash
-    cmd: |
-      set -o pipefail
-      lscpu | grep -E '^Core' | awk '{ print $4 }'
-  register: cpu_core_number
-  changed_when: cpu_core_number.rc != 0
-  tags: conky
-
-- name: "Conky | Get number of CPU threads"
-  ansible.builtin.shell:
-    executable: /bin/bash
-    cmd: |
-      set -o pipefail
-      lscpu | grep -E '^CPU\(' | awk '{ print $2 }'
-  register: cpu_number
-  changed_when: cpu_number.rc != 0
   tags: conky
 
 - name: "Conky | Get coretemp number in /sys"
@@ -44,11 +24,20 @@
   changed_when: coretemp_hwmon.rc != 0
   tags: conky
 
+- name: "Conky | Get list of coretemp monitors /sys"
+  ansible.builtin.shell:
+    executable: /bin/bash
+    cmd: |
+      set -o pipefail
+      ls /sys/devices/platform/coretemp.0/hwmon/{{ coretemp_hwmon.stdout_lines[0] }}/temp*_label | awk 'BEGIN {FS="[/_]"} {print $8}' | sed -e 's/temp//g'
+  register: coretemp_hwmon_id_list
+  changed_when: coretemp_hwmon_id_list.rc != 0
+  tags: conky
+
 - name: "Conky | Set CPU facts"
   ansible.builtin.set_fact:
-    cpu_core_count: "{{ cpu_core_number.stdout_lines[0] }}"
-    cpu_count: "{{ cpu_number.stdout_lines[0] }}"
     coretemp_hwmon_number: "{{ coretemp_hwmon.stdout_lines[0][-1] }}"
+    coretemp_hwmon_ids: "{{ (coretemp_hwmon_id_list.stdout_lines | map('int') | sort)[1:] }}"
   tags: conky
 
 - name: "Conky | Copy configuration files"
