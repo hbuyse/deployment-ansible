@@ -1,0 +1,4 @@
+---
+dependencies:
+  - role: pipx
+    when: ansible_os_family in ['Debian']
