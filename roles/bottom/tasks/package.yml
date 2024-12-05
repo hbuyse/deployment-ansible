@@ -1,0 +1,6 @@
+---
+- name: "Bottom | Install from package manager [{{ ansible_os_family }}]"
+  become: true
+  ansible.builtin.package:
+    name: bottom
+    state: present
