@@ -14,31 +14,35 @@
     state: present
   tags: conky
 
-- name: "Conky | Get coretemp number in /sys"
-  ansible.builtin.shell:
-    executable: /bin/bash
-    cmd: |
-      set -o pipefail
-      ls /sys/devices/platform/coretemp.0/hwmon/
-  register: coretemp_hwmon
-  changed_when: coretemp_hwmon.rc != 0
+- name: "Conky | Get temperature informations"
+  when: ansible_virtualization_role != "guest"
   tags: conky
+  block:
+    - name: "Conky | Get coretemp number in /sys"
+      ansible.builtin.shell:
+        executable: /bin/bash
+        cmd: |
+          set -o pipefail
+          ls /sys/devices/platform/coretemp.0/hwmon/
+      register: coretemp_hwmon
+      changed_when: coretemp_hwmon.rc != 0
+      tags: conky
 
-- name: "Conky | Get list of coretemp monitors /sys"
-  ansible.builtin.shell:
-    executable: /bin/bash
-    cmd: |
-      set -o pipefail
-      ls /sys/devices/platform/coretemp.0/hwmon/{{ coretemp_hwmon.stdout_lines[0] }}/temp*_label | awk 'BEGIN {FS="[/_]"} {print $8}' | sed -e 's/temp//g'
-  register: coretemp_hwmon_id_list
-  changed_when: coretemp_hwmon_id_list.rc != 0
-  tags: conky
+    - name: "Conky | Get list of coretemp monitors /sys"
+      ansible.builtin.shell:
+        executable: /bin/bash
+        cmd: |
+          set -o pipefail
+          ls /sys/devices/platform/coretemp.0/hwmon/{{ coretemp_hwmon.stdout_lines[0] }}/temp*_label | awk 'BEGIN {FS="[/_]"} {print $8}' | sed -e 's/temp//g'
+      register: coretemp_hwmon_id_list
+      changed_when: coretemp_hwmon_id_list.rc != 0
+      tags: conky
 
-- name: "Conky | Set CPU facts"
-  ansible.builtin.set_fact:
-    coretemp_hwmon_number: "{{ coretemp_hwmon.stdout_lines[0][-1] }}"
-    coretemp_hwmon_ids: "{{ (coretemp_hwmon_id_list.stdout_lines | map('int') | sort)[1:] }}"
-  tags: conky
+    - name: "Conky | Set CPU facts"
+      ansible.builtin.set_fact:
+        coretemp_hwmon_number: "{{ coretemp_hwmon.stdout_lines[0][-1] }}"
+        coretemp_hwmon_ids: "{{ (coretemp_hwmon_id_list.stdout_lines | map('int') | sort)[1:] }}"
+      tags: conky
 
 - name: "Conky | Copy configuration files"
   ansible.builtin.include_tasks:

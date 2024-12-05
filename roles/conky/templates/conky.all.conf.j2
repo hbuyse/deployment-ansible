@@ -43,12 +43,14 @@ ${font}${color}RAM:${alignr}${font}${color2}${mem} / ${memmax}
 ${font}${color}Swap:${alignr}${font}${color2}${swap} / ${swapmax}
 {% endif %}
 
+{% if ansible_virtualization_role != "guest" %}
 ${color}${font Iosevka Nerd Font Mono:bold:size=10}Temperature ${hr}
 {% for id in coretemp_hwmon_ids %}
 {% if loop.index % 2 == 0 %}${alignr}{% endif %}
 ${font}${color}CPU {{ "{:>2}".format(loop.index) }}: ${font}${color2}${hwmon {{ coretemp_hwmon_number }} temp {{ id }}} °C{% if loop.index % 2 == 1 %}\{% endif %}
 
 {% endfor %}
+{% endif %}
 
 # Mountpoints
 ${color}${font Iosevka Nerd Font Mono:bold:size=10}File System ${hr}
