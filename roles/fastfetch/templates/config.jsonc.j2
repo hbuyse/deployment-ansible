@@ -55,12 +55,16 @@
       "type": "cpu",
       "temp": true
     },
+{% for mount in ansible_mounts|sort(attribute='mount') %}
+{% if mount.fstype in ['ext4', 'vfat'] %}
     {
       "key": "│           │\u001b[11D\u001b[34m󰉉 disk",
       "type": "disk",
-      "folders": "/:/home:/usr/local:/boot/efi",
-      "format": "/{name}: {size-used} / {size-total} ({size-percentage}) - {filesystem}"
-    },
+      "folders": "{{ mount.mount }}",
+      "format": "{{ mount.mount }}: {size-used} / {size-total} ({size-percentage}) - {filesystem}"
+	},
+{% endif %}
+{% endfor %}
     {
       "key": "│           │\u001b[11D\u001b[35m memory",
       "type": "memory"

@@ -24,8 +24,8 @@
   tags: fastfetch
 
 - name: "Fastfetch | Copy config file"
-  ansible.builtin.copy:
-    src: "config.jsonc"
-    dest: "{{ ansible_user_dir }}/.config/fastfetch"
+  ansible.builtin.template:
+    src: "config.jsonc.j2"
+    dest: "{{ ansible_user_dir }}/.config/fastfetch/config.jsonc"
     mode: "0644"
   tags: fastfetch
