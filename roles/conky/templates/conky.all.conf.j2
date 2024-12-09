@@ -55,7 +55,7 @@ ${font}${color}CPU {{ "{:>2}".format(loop.index) }}: ${font}${color2}${hwmon {{ 
 # Mountpoints
 ${color}${font Iosevka Nerd Font Mono:bold:size=10}File System ${hr}
 {% for mount in ansible_mounts|sort(attribute='mount') %}
-{% if mount.fstype in ['ext4'] %}
+{% if mount.fstype in ['ext4', 'vfat'] %}
 ${font}${color}{{ mount.mount }}:${alignr}${color2}${fs_used_perc {{ mount.mount }}} % - ${fs_used {{ mount.mount }}} / ${fs_size {{ mount.mount }}}
 {% endif %}
 {% endfor %}
