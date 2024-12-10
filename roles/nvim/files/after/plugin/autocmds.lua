@@ -13,4 +13,18 @@ vim.api.nvim_create_autocmd('BufReadPost', {
   end,
 })
 
+-- Add folding capacity only if nvim-treesitter parser exists
+vim.api.nvim_create_autocmd('FileType', {
+  callback = function()
+    if not require('nvim-treesitter.parsers').has_parser() then
+      return
+    end
+
+    vim.opt.foldmethod = 'expr'
+    vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+    vim.opt.foldenable = true
+    vim.opt.foldlevel = 3
+  end,
+})
+
 -- vim: set ts=2 sw=2 tw=0 et ft=lua :
