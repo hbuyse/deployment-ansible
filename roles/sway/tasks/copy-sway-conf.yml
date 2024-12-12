@@ -1,0 +1,13 @@
+---
+- name: "Sway | Ensure directories exists"
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.config/sway"
+    state: directory
+    mode: "0755"
+
+- name: "Sway | Copy configuration files"
+  ansible.builtin.copy:
+    src: "sway/"
+    dest: "{{ ansible_user_dir }}/.config/sway/"
+    mode: "preserve"
+    directory_mode: "0755"

@@ -19,3 +19,10 @@
     file: "copy-service.yml"
     apply:
       tags: sway
+
+- name: "Sway | Copy configuration"
+  tags: sway
+  ansible.builtin.include_tasks:
+    file: "copy-sway-conf.yml"
+    apply:
+      tags: sway
