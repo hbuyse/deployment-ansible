@@ -50,3 +50,4 @@
     - role: "swaylock"
     - role: "swayidle"
     - role: "sway"
+    - role: "waybar"
