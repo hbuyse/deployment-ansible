@@ -6,6 +6,7 @@ export XDG_SESSION_DESKTOP=sway
 export XDG_CURRENT_DESKTOP=sway
 
 set -a
+
 # Import openSUSEway environment variables
 if [ -f /etc/sway/env ]; then
 	. /etc/sway/env

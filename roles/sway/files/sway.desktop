@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=Sway
+Name=Sway (systemd)
 Comment=An i3-compatible Wayland compositor
 Exec=/usr/local/bin/sway-wrapper.sh
 Type=Application

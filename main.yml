@@ -46,3 +46,4 @@
     - role: "pipx"
     - role: "autorandr"
     - role: "conky"
+    - role: "sway"

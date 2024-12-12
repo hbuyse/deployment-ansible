@@ -1,47 +1,53 @@
 ---
 # tasks file for sway
-- name: "Sway | Install required packages [Suse]"
-  ansible.builtin.include_tasks:
-    file: suse.yml
-  when: ansible_os_family == "Suse"
+- name: "Sway | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+  tags: sway
 
-- name: "Sway | Install required packages [Archlinux]"
-  ansible.builtin.include_tasks:
-    file: archlinux.yml
-  when: ansible_os_family == "Archlinux"
+- name: "Sway | Install required packages"
+  become: true
+  ansible.builtin.package:
+    name: "{{ sway_packages }}"
+  tags: sway
 
-- name: "Sway | Copy sway service file"
+- name: "Sway | Ensure directories exists"
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+  tags: sway
+  become: true
+  loop:
+    - /usr/local/lib/systemd/user
+    - /usr/local/share/wayland-sessions
+    - /usr/local/bin
+
+- name: "Sway | Copy sway service and sway-session target files"
   ansible.builtin.copy:
-    src: sway.service
+    src: "{{ item }}"
     dest: /usr/local/lib/systemd/user/
     mode: "0644"
   become: true
-  tags:
-    - configure_files
+  tags: sway
+  loop:
+    - sway.service
+    - sway-session.target
 
 - name: "Sway | Copy wayland-session file for sway"
   ansible.builtin.copy:
     src: sway.desktop
-    dest: /usr/local/share/wayland-sessions
+    dest: /usr/local/share/wayland-sessions/sway.desktop.brand
     mode: "0644"
   become: true
-  tags:
-    - configure_files
-
-- name: "Sway | Copy sway-session target file"
-  ansible.builtin.copy:
-    src: sway-session.target
-    dest: /usr/local/lib/systemd/user/
-    mode: "0644"
-  become: true
-  tags:
-    - configure_files
+  tags: sway
 
 - name: "Sway | Copy sway-wrapper shell script"
   ansible.builtin.copy:
     src: sway-wrapper.sh
-    dest: /usr/local/bin
+    dest: /usr/local/bin/
     mode: "0755"
   become: true
-  tags:
-    - configure_files
+  tags: sway
