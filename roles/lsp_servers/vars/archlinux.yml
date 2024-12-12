@@ -10,3 +10,5 @@ lsp_servers_package:
   - vscode-json-languageserver
   - yaml-language-server
 lsp_servers_npm:
+  - "@microsoft/compose-language-service"
+  - "vscode-markdown-languageserver"

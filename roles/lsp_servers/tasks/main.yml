@@ -19,15 +19,12 @@
   community.general.npm:
     name: "{{ item }}"
     global: true
-  with_items:
-    - "{{ lsp_servers_npm }}"
-    - "@microsoft/compose-language-service"
-    - "vscode-markdown-languageserver"
+    state: present
+  loop: "{{ lsp_servers_npm }}"
   tags: lsp_servers
 
 - name: "LSP Servers | Add rust-analyzer to list of Rustup component"
-  when:
-    - ansible_system == 'Linux'
+  when: ansible_system == 'Linux'
   ansible.builtin.command:
     cmd: rustup component add rust-analyzer
   environment:

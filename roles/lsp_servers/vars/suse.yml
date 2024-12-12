@@ -10,3 +10,5 @@ lsp_servers_npm:
   - "vscode-langservers-extracted"
   - "yaml-language-server"
   - "@ansible/ansible-language-server"
+  - "@microsoft/compose-language-service"
+  - "vscode-markdown-languageserver"
