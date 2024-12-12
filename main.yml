@@ -47,4 +47,5 @@
     - role: "autorandr"
     - role: "conky"
     - role: "gdm"
+    - role: "swaylock"
     - role: "sway"
