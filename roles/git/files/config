@@ -57,7 +57,8 @@ showPatch = true
 
 [rebase]
 stat = true
-autoStash = true
+autostash = true
+autosquash = true
 
 [diff "bin"]
 # Allow files following the diff=bin (defined in ~/.config/git/attributes) to be correctly differentiate
