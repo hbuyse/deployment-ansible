@@ -1,3 +1,4 @@
 ---
 waybar_packages:
   - waybar
+  - wlsunset

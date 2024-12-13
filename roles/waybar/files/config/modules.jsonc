@@ -47,9 +47,9 @@
       "activated": "<span color='#eba0ac'>󰌵</span>",
       "deactivated": "󰌶"
     },
-    "exec": "fallback_latitude=48.8 fallback_longitude=2.3 latitude= longitude= ~/.config/sway/scripts/sunset.sh",
-    "on-click": "~/.config/sway/scripts/sunset.sh toggle",
-    "exec-if": "~/.config/sway/scripts/sunset.sh check",
+    "exec": "fallback_latitude=48.8 fallback_longitude=2.3 latitude= longitude= ~/.config/waybar/scripts/sunset.sh",
+    "on-click": "~/.config/waybar/scripts/sunset.sh toggle",
+    "exec-if": "~/.config/waybar/scripts/sunset.sh check",
     "signal": 6
   },
   "backlight": {
