@@ -8,6 +8,9 @@ After=sway-session.target
 [Service]
 Type=simple
 ExecStart=/usr/bin/swayidle -w
+Restart=on-failure
+RestartSec=5
 
 [Install]
 WantedBy=sway-session.target
+;  vim: set ts=4 sw=4 tw=0 noet ft=systemd :
