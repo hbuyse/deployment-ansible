@@ -18,12 +18,22 @@
         state: directory
         mode: "0755"
 
-    - name: "Sway | Copy configuration files"
+    - name: "Sway | Copy static configuration files"
       ansible.builtin.copy:
         src: "config/"
         dest: "{{ waybar_config_dir }}"
         mode: "preserve"
         directory_mode: "0755"
+
+    - name: "Sway | Copy dynamic configuration files"
+      ansible.builtin.template:
+        src: "{{ item }}.j2"
+        dest: "{{ waybar_config_dir }}/{{ item }}"
+        mode: "0644"
+      loop:
+        - sway.jsonc
+        - hyprland.jsonc
+        - modules.jsonc
 
 - name: "Waybar | Install service file"
   become: true
