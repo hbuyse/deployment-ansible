@@ -37,7 +37,7 @@
 
     - name: "Waybar | Copy sway service and sway-session target files"
       ansible.builtin.copy:
-        src: "service/waybar.service"
+        src: "waybar.service"
         dest: "/usr/local/lib/systemd/user/waybar.service"
         mode: "0644"
 
