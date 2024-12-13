@@ -17,7 +17,6 @@
         path: "{{ ansible_user_dir }}/.config/waybar"
         state: directory
         mode: "0755"
-        recurse: true
 
     - name: "Sway | Copy configuration files"
       ansible.builtin.copy:
@@ -35,7 +34,6 @@
         path: "/usr/local/lib/systemd/user"
         state: "directory"
         mode: "0755"
-        recurse: true
 
     - name: "Waybar | Copy sway service and sway-session target files"
       ansible.builtin.copy:

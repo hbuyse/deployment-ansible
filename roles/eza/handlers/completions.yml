@@ -5,7 +5,6 @@
     path: "{{ item.install_dir }}"
     state: "directory"
     mode: "0755"
-    recurse: true
 
 - name: "Eza | Install shell completion file [{{ item.shell }}]"
   become: true

@@ -20,7 +20,6 @@
         path: "{{ ansible_user_dir }}/.config/kanshi"
         state: directory
         mode: "0755"
-        recurse: true
 
     - name: "Kanshi | Copy configuration"
       ansible.builtin.copy:
@@ -43,7 +42,6 @@
         path: "/usr/local/lib/systemd/user"
         state: directory
         mode: "0755"
-        recurse: true
 
     - name: "Kanshi | Copy service file"
       ansible.builtin.copy:
