@@ -2,3 +2,7 @@
 waybar_packages:
   - waybar
   - wlsunset
+  - power-profiles-daemon
+
+waybar_pip_packages:
+  - requests

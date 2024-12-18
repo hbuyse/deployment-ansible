@@ -4,6 +4,7 @@
   tags: waybar
 
 - name: "Waybar | Install packages"
+  become: true
   ansible.builtin.package:
     name: "{{ waybar_packages }}"
     state: "present"
@@ -12,20 +13,20 @@
 - name: "Waybar | Install configuration files"
   tags: waybar
   block:
-    - name: "Sway | Ensure directories exists"
+    - name: "Waybar | Ensure directories exists"
       ansible.builtin.file:
         path: "{{ waybar_config_dir }}"
         state: directory
         mode: "0755"
 
-    - name: "Sway | Copy static configuration files"
+    - name: "Waybar | Copy static configuration files"
       ansible.builtin.copy:
         src: "config/"
         dest: "{{ waybar_config_dir }}"
         mode: "preserve"
         directory_mode: "0755"
 
-    - name: "Sway | Copy dynamic configuration files"
+    - name: "Waybar | Copy dynamic configuration files"
       ansible.builtin.template:
         src: "{{ item }}.j2"
         dest: "{{ waybar_config_dir }}/{{ item }}"
@@ -34,6 +35,7 @@
         - sway.jsonc
         - hyprland.jsonc
         - modules.jsonc
+        - style.css
 
 - name: "Waybar | Install service file"
   become: true
@@ -59,3 +61,10 @@
         enabled: true
         scope: "user"
       tags: waybar
+
+- name: "Waybar | Create virtualenv for Python scripts"
+  ansible.builtin.pip:
+    name: "{{ waybar_pip_packages }}"
+    state: "present"
+    virtualenv: "{{ ansible_user_dir }}/.config/waybar/scripts/.venv"
+  tags: waybar

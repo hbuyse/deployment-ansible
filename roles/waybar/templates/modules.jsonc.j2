@@ -119,7 +119,7 @@
     "format-icons": {
       "Playing": "",
       "Paused": ""
-    }
+    },
     "exec": "playerctl metadata --format '{\"alt\": \"{% raw %}{{status}}{% endraw %}\", \"tooltip\": \"{% raw %}{{playerName}}{% endraw %}:  {% raw %}{{markup_escape(title)}}{% endraw %} - {% raw %}{{markup_escape(artist)}}\{% endraw %}" }'",
     "on-click": "playerctl play-pause; pkill -RTMIN+5 waybar",
     "on-click-right": "playerctl next; pkill -RTMIN+5 waybar",
@@ -133,10 +133,10 @@
   },
   "custom/weather": {
     "icon-size": 42,
-    "format": "{icon}  {}",
+    "format": "{0}  {1}",
     "tooltip": true,
     "interval": 3600,
-    "exec": "~/.config/waybar/scripts/weather.py --city=Paris",
+    "exec": "~/.config/waybar/scripts/.venv/bin/python ~/.config/waybar/scripts/weather.py --city=Paris",
     "return-type": "json",
     "format-icons": {
       "Unknown": "✨",
@@ -212,11 +212,11 @@
     ]
   },
   "custom/battery": {
-    "format": "{icon}  {}",
+    "format": "{0}  {1}",
     "format-icons": ["", "", "", "", ""],
     "tooltip": true,
     "interval": 60,
-    "exec": "python3 ~/.config/waybar/scripts/battery_combined.py",
+    "exec": "~/.config/waybar/scripts/.venv/bin/python ~/.config/waybar/scripts/battery_combined.py",
     "exec-if": "[ -e /sys/class/power_supply/BAT0 ]",
     "return-type": "json"
   },
