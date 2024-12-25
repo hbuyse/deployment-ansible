@@ -1,5 +1,4 @@
 ---
-nodejs_version: 20
 nodejs_packages:
-  - "nodejs{{ nodejs_version }}"
-  - "npm{{ nodejs_version }}"
+  - "nodejs-default"
+  - "npm-default"
