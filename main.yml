@@ -55,3 +55,4 @@
     - role: "kanshi"
     - role: "mako"
     - role: "wofi"
+    - role: "bottom"

@@ -1,0 +1,40 @@
+---
+- name: "Bottom | Get latest version number"
+  register: latest_json
+  ansible.builtin.uri:
+    url: "https://api.github.com/repos/ClementTsang/bottom/releases/latest"
+    method: GET
+    return_content: true
+    status_code: 200
+    body_format: json
+
+- name: "Bottom | Set facts"
+  ansible.builtin.set_fact:
+    bottom_latest_version: "{{ latest_json.json.tag_name }}"
+
+- name: "Bottom | Download bottom archives"
+  ansible.builtin.get_url:
+    url: "https://github.com/ClementTsang/bottom/releases/download/v{{ bottom_latest_version }}/{{ item }}.tar.gz"
+    dest: "/tmp/"
+    mode: "0644"
+  loop:
+    - completion
+    - manpage
+  notify: "Bottom | Remove downloaded archives"
+
+- name: "Bottom | Install completion shell files"
+  ansible.builtin.include_tasks:
+    file: completions.yml
+  loop:
+    - dst_file: _btm
+      src_file: _btm
+      shell: zsh
+      install_dir: "/usr/local/share/zsh/site-functions"
+    - dst_file: btm
+      src_file: btm.bash
+      shell: bash
+      install_dir: "/usr/local/share/bash-completion/completions"
+
+- name: "Bottom | Install manpages"
+  ansible.builtin.include_tasks:
+    file: manpages.yml

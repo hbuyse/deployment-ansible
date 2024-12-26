@@ -1,0 +1,19 @@
+---
+- name: "Bottom | Ensure that manpages directory exists [man1]"
+  become: true
+  ansible.builtin.file:
+    path: "/usr/local/share/man/man1"
+    state: "directory"
+    mode: "0755"
+    recurse: true
+
+- name: "Bottom | Install manpages [man1]"
+  become: true
+  ansible.builtin.unarchive:
+    src: "/tmp/manpage.tar.gz"
+    dest: "/usr/local/share/man/man1"
+    mode: "0755"
+    include:
+      - "{{ bat_archive_name }}/btm.1.gz"
+    extra_opts:
+      - "--strip-components=1"

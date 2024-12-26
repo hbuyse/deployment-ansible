@@ -1,0 +1,32 @@
+---
+- name: "Bottom | Install from source"
+  ansible.builtin.include_tasks:
+    file: source.yml
+    apply:
+      tags: bottom
+  when: ansible_os_family not in ['Archlinux', 'Suse']
+  tags: bottom
+
+- name: "Bottom | Install from package manager"
+  ansible.builtin.include_tasks:
+    file: package.yml
+    apply:
+      tags: bottom
+  when: ansible_os_family in ['Archlinux', 'Suse']
+  tags: bottom
+
+- name: "Bottom | Copy configuration file"
+  tags: bottom
+  block:
+    - name: "Bottom | Ensure configuration folder exists"
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/.config/bottom"
+        state: "directory"
+        mode: "0755"
+        recurse: true
+
+    - name: "Bottom | Copy configuration file"
+      ansible.builtin.copy:
+        src: "bottom.toml"
+        dest: "{{ ansible_user_dir }}/.config/bottom/bottom.toml"
+        mode: "0644"
