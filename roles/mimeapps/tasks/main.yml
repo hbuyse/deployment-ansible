@@ -1,0 +1,14 @@
+---
+- name: "Mimeapps | Copy user mimeapps.list file"
+  ansible.builtin.copy:
+    src: "mimeapps.list"
+    dest: "{{ ansible_user_dir }}/.config"
+    mode: "0644"
+  tags: mimeapps
+
+- name: "Mimeapps | Link mimeapps.list in deprecated location"
+  ansible.builtin.file:
+    src: "{{ ansible_user_dir }}/.config/mimeapps.list"
+    dest: "{{ ansible_user_dir }}/.local/share/applications/mimeapps.list"
+    state: link
+  tags: mimeapps
