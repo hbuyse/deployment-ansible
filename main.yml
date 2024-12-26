@@ -19,6 +19,7 @@
     - role: "netrc"
     - role: "ssh"
     - role: "mimeapps"
+    - role: "monitoring"
     - role: "git"
     - role: "alacritty"
     - role: "git_delta"
