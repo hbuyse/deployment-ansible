@@ -10,4 +10,4 @@
 
     - name: "Post-tasks | Clean cache of downloaded packages [{{ ansible_os_family }}]"
       ansible.builtin.shell:
-        cmd: "pacman -Scc"
+        cmd: "echo -e 'y\ny\n' | pacman -Scc"
