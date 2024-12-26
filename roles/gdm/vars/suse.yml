@@ -1,0 +1,4 @@
+---
+gdm_packages:
+  - gdm
+  - xwayland

@@ -1,0 +1,56 @@
+---
+- name: "Swayidle | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: swayidle
+
+- name: "Swayidle | Install packages"
+  become: true
+  ansible.builtin.package:
+    name: "{{ swayidle_packages }}"
+    state: present
+  tags: swayidle
+
+- name: "Swayidle | Install configuration"
+  tags: swayidle
+  block:
+    - name: "Swayidle | Ensure directory exist"
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/.config/swayidle"
+        state: directory
+        mode: "0755"
+
+    - name: "Swayidle | Copy configuration"
+      ansible.builtin.copy:
+        src: "config"
+        dest: "{{ ansible_user_dir }}/.config/swayidle/config"
+        mode: "0644"
+
+- name: "Swayidle | Install service file"
+  become: true
+  tags: swayidle
+  block:
+    - name: "Swayidle | Ensure directory exist"
+      ansible.builtin.file:
+        path: "/usr/local/lib/systemd/user/"
+        state: directory
+        mode: "0755"
+
+    - name: "Swayidle | Copy service file"
+      ansible.builtin.copy:
+        src: "swayidle.service"
+        dest: "/usr/local/lib/systemd/user/swayidle.service"
+        mode: "0644"
+      tags: swayidle
+
+    - name: "Swayidle | Enable service"
+      become: false
+      ansible.builtin.systemd:
+        name: "swayidle"
+        daemon_reload: true
+        enabled: true
+        scope: user
+      tags: swayidle

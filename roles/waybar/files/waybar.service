@@ -1,0 +1,15 @@
+[Unit]
+Description=Highly customizable Wayland bar for Sway and Wlroots based compositors.
+Documentation=https://github.com/Alexays/Waybar/wiki/
+PartOf=sway-session.target
+After=sway-session.target
+
+[Service]
+ExecStart=waybar -c %h/.config/waybar/${XDG_CURRENT_DESKTOP}.jsonc -s %h/.config/waybar/style.css
+ExecReload=kill -USR2 $MAINPID
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=sway-session.target
+;  vim: set ts=4 sw=4 tw=0 noet ft=systemd :

@@ -1,0 +1,70 @@
+---
+- name: "Waybar | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ ansible_os_family | lower }}.yml"
+  tags: waybar
+
+- name: "Waybar | Install packages"
+  become: true
+  ansible.builtin.package:
+    name: "{{ waybar_packages }}"
+    state: "present"
+  tags: waybar
+
+- name: "Waybar | Install configuration files"
+  tags: waybar
+  block:
+    - name: "Waybar | Ensure directories exists"
+      ansible.builtin.file:
+        path: "{{ waybar_config_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: "Waybar | Copy static configuration files"
+      ansible.builtin.copy:
+        src: "config/"
+        dest: "{{ waybar_config_dir }}"
+        mode: "preserve"
+        directory_mode: "0755"
+
+    - name: "Waybar | Copy dynamic configuration files"
+      ansible.builtin.template:
+        src: "{{ item }}.j2"
+        dest: "{{ waybar_config_dir }}/{{ item }}"
+        mode: "0644"
+      loop:
+        - sway.jsonc
+        - hyprland.jsonc
+        - modules.jsonc
+        - style.css
+
+- name: "Waybar | Install service file"
+  become: true
+  tags: waybar
+  block:
+    - name: "Waybar | Ensure directories exists"
+      ansible.builtin.file:
+        path: "/usr/local/lib/systemd/user"
+        state: "directory"
+        mode: "0755"
+
+    - name: "Waybar | Copy sway service and sway-session target files"
+      ansible.builtin.copy:
+        src: "waybar.service"
+        dest: "/usr/local/lib/systemd/user/waybar.service"
+        mode: "0644"
+
+    - name: "Waybar | Enable service"
+      become: false
+      ansible.builtin.systemd:
+        name: "waybar"
+        daemon_reload: true
+        enabled: true
+        scope: "user"
+      tags: waybar
+
+- name: "Waybar | Create virtualenv for Python scripts"
+  ansible.builtin.pip:
+    name: "{{ waybar_pip_packages }}"
+    state: "present"
+    virtualenv: "{{ ansible_user_dir }}/.config/waybar/scripts/.venv"
+  tags: waybar

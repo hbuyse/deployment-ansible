@@ -1,0 +1,4 @@
+---
+sway_packages:
+  - openSUSEway
+  - xwayland

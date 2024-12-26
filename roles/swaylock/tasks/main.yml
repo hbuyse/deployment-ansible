@@ -1,0 +1,47 @@
+---
+- name: "Swaylock | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: swaylock
+
+- name: "Swaylock | Install packages"
+  become: true
+  ansible.builtin.package:
+    name: "{{ swaylock_packages }}"
+    state: present
+  tags: swaylock
+
+- name: "Swaylock | Install configuration"
+  tags: swaylock
+  block:
+    - name: "Swaylock | Ensure directory exist"
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/.config/swaylock"
+        state: directory
+        mode: "0755"
+
+    - name: "Swaylock | Copy configuration"
+      ansible.builtin.copy:
+        src: "config"
+        dest: "{{ ansible_user_dir }}/.config/swaylock/config"
+        mode: "0644"
+
+- name: "Swaylock | Install service file"
+  become: true
+  tags: swaylock
+  block:
+    - name: "Swaylock | Ensure directory exist"
+      ansible.builtin.file:
+        path: "/usr/local/lib/systemd/user/"
+        state: directory
+        mode: "0755"
+
+    - name: "Swaylock | Copy service file"
+      ansible.builtin.copy:
+        src: "swaylock.service"
+        dest: "/usr/local/lib/systemd/user/swaylock.service"
+        mode: "0644"
+      tags: swaylock

@@ -1,0 +1,13 @@
+---
+swaylock_packages:
+  - swaylock
+  - swaylock-bash-completion
+  - swaylock-zsh-completion
+
+swaylock_effects_dependencies:
+  - meson
+  - wayland-devel
+  - wayland-protocols-devel
+  - libxkbcommon-devel
+  - cairo-devel
+  - gdk-pixbuf-devel

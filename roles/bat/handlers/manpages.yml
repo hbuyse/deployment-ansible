@@ -5,7 +5,6 @@
     path: "/usr/local/share/man/man1"
     state: "directory"
     mode: "0755"
-    recurse: true
 
 - name: "Bat | Install manpages [man1]"
   become: true

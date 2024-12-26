@@ -1,0 +1,296 @@
+{
+  "sway/workspaces": {
+    "all-outputs": false,
+    "disable-scroll": false,
+    "format": "{icon} {name}",
+    "format-icons": {
+      "1:term": "",
+      "2:dev": "",
+      "3:web": "󰈹",
+      "4:mail": "󰇮",
+      "5:message": "󰍡",
+      "6:spotify": "",
+      "8:docker": "",
+      "9:passwords": "",
+      "10:zoom": "",
+      "default": "󰌽"
+    }
+  },
+  "sway/language": {
+    "format": "  {short}",
+    "min-length": 5,
+    "tooltip": false,
+    "on-click": "swaymsg input $(swaymsg -t get_inputs --raw | jq '[.[] | select(.type == \"keyboard\")][0] | .identifier') xkb_switch_layout next"
+  },
+  "sway/mode": {
+    "format": "<span style=\"italic\">{}</span>",
+    "tooltip": false
+  },
+  "sway/window": {
+    "format": "{}",
+    "max-length": 50,
+    "tooltip": true
+  },
+  "sway/scratchpad": {
+    "format": "{icon} {count}",
+    "show-empty": false,
+    "format-icons": ["", " "],
+    "tooltip": true,
+    "tooltip-format": "{app}: {title}"
+  },
+  "custom/sunset": {
+    "interval": "once",
+    "tooltip": true,
+    "return-type": "json",
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "<span color='#eba0ac'>󰌵</span>",
+      "deactivated": "󰌶"
+    },
+    "exec": "fallback_latitude=48.8 fallback_longitude=2.3 latitude= longitude= ~/.config/waybar/scripts/sunset.sh",
+    "on-click": "~/.config/waybar/scripts/sunset.sh toggle",
+    "exec-if": "~/.config/waybar/scripts/sunset.sh check",
+    "signal": 6
+  },
+  "backlight": {
+    "device": "intel_backlight",
+    "format": "{icon}  {percent:>3}%",
+    "format-icons": ["󰹐", "󱩎", "󱩏", "󱩐", "󱩑", "󱩒", "󱩓", "󱩔", "󱩕", "󱩖", "󰛨"]
+  },
+  "pulseaudio": {
+    "format": "{icon} {volume:>3}% {format_source}",
+    "format-bluetooth": "{icon} {volume:>3}%",
+    "format-muted": " mute {format_source}",
+    "format-source": " {volume:>3}%",
+    "format-source-muted": " mute",
+    "format-icons": {
+      "headphone": "",
+      "default": ["", "", ""]
+    },
+    "tooltip-format": "{icon}  {volume}% {format_source}",
+    "on-click": "swaymsg exec '$term -e pulsemixer'",
+    "on-click-middle": "swaymsg exec '$volume_mute'",
+    "on-click-right": "swaymsg exec 'pavucontrol'"
+  },
+  "network": {
+    "format-wifi": "{icon}  {ipaddr}",
+    "format-ethernet": "  {ipaddr}",
+    "format-disconnected": "",
+    "tooltip-format-wifi": "{ifname} on {essid}",
+    "tooltip-format": "󰩟  {ipaddr}\n󱀣  {netmask}\n󱂇  {gwaddr}",
+    "on-click": "swaymsg exec '$term -e nmtui'",
+    "format-icons": ["󰤟", "󰤢", "󰤥", "󰤨", "󰤨"]
+  },
+  "clock": {
+    "format": "{:%d/%m %H:%M}",
+    "format-alt": "{:%e %b %Y %H:%M:%S}",
+    "tooltip": true,
+    "interval": 5,
+    "tooltip-format": "<tt><span size='9pt'>{calendar}</span></tt>",
+    "calendar": {
+      "mode": "year",
+      "mode-mon-col": 3,
+      "weeks-pos": "", // No week number
+      "on-scroll": 1,
+      "on-click-right": "mode",
+      "format": {
+        "months": "<span color='#ffead3'><b>{}</b></span>",
+        "days": "<span color='#ecc6d9'><b>{}</b></span>",
+        "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+        "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+      }
+    }
+  },
+  "custom/wf-recorder": {
+    "format": "{}",
+    "return-type": "json",
+    "interval": 1,
+    "tooltip-format": "{tooltip}",
+    "exec": "echo '{\"class\": \"recording\",\"text\":\" \",\"tooltip\":\"press Mod+Esc to stop recording\"}'",
+    "exec-if": "/usr/bin/pgrep wf-recorder",
+    "on-click": "killall --signal SIGINT wf-recorder"
+  },
+  "custom/playerctl": {
+    "interval": "once",
+    "tooltip": true,
+    "return-type": "json",
+    "format": "{icon}",
+    "format-icons": {
+      "Playing": "",
+      "Paused": ""
+    },
+    "exec": "playerctl metadata --format '{\"alt\": \"{% raw %}{{status}}{% endraw %}\", \"tooltip\": \"{% raw %}{{playerName}}{% endraw %}:  {% raw %}{{markup_escape(title)}}{% endraw %} - {% raw %}{{markup_escape(artist)}}\{% endraw %}" }'",
+    "on-click": "playerctl play-pause; pkill -RTMIN+5 waybar",
+    "on-click-right": "playerctl next; pkill -RTMIN+5 waybar",
+    "on-scroll-up": "playerctl position 10+; pkill -RTMIN+5 waybar",
+    "on-scroll-down": "playerctl position 10-; pkill -RTMIN+5 waybar",
+    "signal": 5
+  },
+  "custom/power": {
+    "format": " ",
+    "on-click": "~/.config/sway/scripts/powermenu.sh"
+  },
+  "custom/weather": {
+    "icon-size": 42,
+    "format": "{0}  {icon} ",
+    "tooltip": true,
+    "interval": 3600,
+    "exec": "~/.config/waybar/scripts/.venv/bin/python ~/.config/waybar/scripts/weather.py --city=Paris --temperature=C",
+    "return-type": "json",
+    "format-icons": {
+      "Unknown": "✨",
+      "Cloudy": "",
+      "Fog": "🌫",
+      "HeavyRain": "🌧",
+      "HeavyShowers": "🌧",
+      "HeavySnow": "❄️",
+      "HeavySnowShowers": "❄️",
+      "LightRain": "🌦",
+      "LightShowers": "🌦",
+      "LightSleet": "🌧",
+      "LightSleetShowers": "🌧",
+      "LightSnow": "🌨",
+      "LightSnowShowers": "🌨",
+      "PartlyCloudy": "⛅️",
+      "Sunny": "☀️",
+      "ThunderyHeavyRain": "🌩",
+      "ThunderyShowers": "⛈",
+      "ThunderySnowShowers": "⛈",
+      "VeryCloudy": ""
+    }
+  },
+  "custom/updates": {
+    "format": "{}",
+    "tooltip": true,
+    "interval": 300,
+    "exec": "~/.config/waybar/scripts/updates.sh",
+    "return-type": "json"
+  },
+
+  "custom/idle_inhibitor": {
+    "interval": 60,
+    "return-type": "json",
+    "format": "{icon}",
+    "format-icons": {
+      "activated": " ",
+      "deactivated": " "
+    },
+    "exec": "~/.config/sway/scripts/inhibit-idle.sh",
+    "exec-if": "~/.config/sway/scripts/inhibit-idle.sh check",
+    "on-click": "~/.config/sway/scripts/inhibit-idle.sh off; ~/.config/sway/scripts/inhibit-idle.sh interactive",
+    "on-click-middle": "~/.config/sway/scripts/inhibit-idle.sh off",
+    "signal": 15
+  },
+  "systemd-failed-units": {
+    "hide-on-ok": true,
+    "format": "✗ {nr_failed}",
+    "format-ok": "✓",
+    "system": true,
+    "user": true
+  },
+  "privacy": {
+    "icon-spacing": 4,
+    "icon-size": 18,
+    "transition-duration": 250,
+    "modules": [
+      {
+        "type": "screenshare",
+        "tooltip": true,
+        "tooltip-icon-size": 24
+      },
+      {
+        "type": "audio-out",
+        "tooltip": true,
+        "tooltip-icon-size": 24
+      },
+      {
+        "type": "audio-in",
+        "tooltip": true,
+        "tooltip-icon-size": 24
+      }
+    ]
+  },
+  "custom/battery": {
+    "format": "{0}  {1}",
+    "format-icons": ["", "", "", "", ""],
+    "tooltip": true,
+    "interval": 60,
+    "exec": "~/.config/waybar/scripts/.venv/bin/python ~/.config/waybar/scripts/battery_combined.py",
+    "exec-if": "[ -e /sys/class/power_supply/BAT0 ]",
+    "return-type": "json"
+  },
+  "cpu": {
+    "interval": 5,
+    "format": "  {usage:>2}%",
+    "states": {
+      "warning": 70,
+      "critical": 90
+    },
+    "on-click": "swaymsg exec '$term -e htop'"
+  },
+  "memory": {
+    "interval": 30,
+    "format": "  {percentage:>2}%",
+    "states": {
+      "warning": 70,
+      "critical": 90
+    },
+    "on-click": "swaymsg exec '$term -e htop'"
+  },
+  "tray": {
+    "icon-size": 16,
+    "spacing": 10
+  },
+{% for mount in ansible_mounts %}
+{% if mount.fstype in ['ext4', 'vfat'] %}
+  "disk#{{ mount.mount | replace('/', '_')}}": {
+    "interval": 30,
+    "path": "{{ mount.mount }}",
+    "format": "<span color='#83a598'>{path}</span>: {percentage_used}%"
+  },
+{% endif %}
+{% endfor %}
+  "power-profiles-daemon": {
+    "format": "{icon}",
+    "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+    "tooltip": true,
+    "format-icons": {
+      "default": " ",
+      "performance": " ",
+      "balanced": " ",
+      "power-saver": " "
+    }
+  },
+  "hyprland/language": {
+    "format": "  {short}"
+  },
+  "hyprland/workspaces": {
+    "all-outputs": false,
+    "format": "{icon} {name}",
+    "format-icons": {
+      "term": "",
+      "dev": "",
+      "web": "󰈹",
+      "mail": "󰇮",
+      "message": "󰍡",
+      "spotify": "",
+      "docker": "",
+      "passwords": "",
+      "zoom": "",
+      "default": "󰌽"
+    }
+  },
+  "bluetooth": {
+    "format-no-controller": "",
+    "tooltip-format-no-controller": "No controller available",
+    "tooltip-format": "{controller_alias}\t{controller_address}",
+    "format-connected": "󰂱 {num_connections}",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+    "format-disabled": "󰂲",
+    "tooltip-format-disabled": "Bluetooth disabled",
+    "on-click": "~/.config/waybar/scripts/bluetooth.sh toggle_power",
+    "on-click-right": "~/.config/waybar/scripts/bluetooth.sh toggle_status"
+  }
+}

@@ -1,0 +1,56 @@
+---
+- name: "Mako | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: mako
+
+- name: "Mako | Install packages"
+  become: true
+  ansible.builtin.package:
+    name: "{{ mako_packages }}"
+    state: present
+  tags: mako
+
+- name: "Mako | Install configuration"
+  tags: mako
+  block:
+    - name: "Mako | Ensure directory exist"
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/.config/mako"
+        state: directory
+        mode: "0755"
+
+    - name: "Mako | Copy configuration"
+      ansible.builtin.copy:
+        src: "config"
+        dest: "{{ ansible_user_dir }}/.config/mako/config"
+        mode: "0644"
+
+- name: "Mako | Install service file"
+  become: true
+  tags: mako
+  block:
+    - name: "Mako | Ensure directory exist"
+      ansible.builtin.file:
+        path: "/usr/local/lib/systemd/user/"
+        state: directory
+        mode: "0755"
+
+    - name: "Mako | Copy service file"
+      ansible.builtin.copy:
+        src: "mako.service"
+        dest: "/usr/local/lib/systemd/user/mako.service"
+        mode: "0644"
+      tags: mako
+
+    - name: "Mako | Enable service"
+      become: false
+      ansible.builtin.systemd:
+        name: "mako"
+        daemon_reload: true
+        enabled: true
+        scope: user
+      tags: mako

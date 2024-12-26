@@ -1,0 +1,39 @@
+---
+- name: "Wofi | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: wofi
+
+- name: "Wofi | Install packages"
+  become: true
+  ansible.builtin.package:
+    name: "{{ wofi_packages }}"
+    state: present
+  tags: wofi
+
+- name: "Wofi | Install configuration"
+  tags: wofi
+  block:
+    - name: "Wofi | Ensure directory exist"
+      ansible.builtin.file:
+        path: "{{ wofi_config_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: "Wofi | Copy static configuration files"
+      ansible.builtin.copy:
+        src: "{{ role_path }}/files/"
+        dest: "{{ wofi_config_dir }}"
+        mode: "0644"
+
+    - name: "Wofi | Copy dynamic configuration files"
+      ansible.builtin.template:
+        src: "{{ item }}.j2"
+        dest: "{{ wofi_config_dir }}/{{ item }}"
+        mode: "0644"
+      loop:
+        - colors.css
+        - style.css

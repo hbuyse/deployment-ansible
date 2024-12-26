@@ -1,0 +1,16 @@
+[Unit]
+Description=Idle manager for Wayland
+Documentation=man:swayidle(1)
+Documentation=https://github.com/gdamjan/swayidle - fork with sd-notify and autolock
+PartOf=graphical-session.target
+After=sway-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/swayidle -w
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=sway-session.target
+;  vim: set ts=4 sw=4 tw=0 noet ft=systemd :

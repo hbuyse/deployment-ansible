@@ -1,0 +1,60 @@
+---
+- name: "Kanshi | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+  tags: kanshi
+
+- name: "Kanshi | Install required packages"
+  become: true
+  ansible.builtin.package:
+    name: "{{ kanshi_packages }}"
+  tags: kanshi
+
+- name: "Kanshi | Install configuration files"
+  tags: kanshi
+  block:
+    - name: "Kanshi | Ensure directory exist"
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/.config/kanshi"
+        state: directory
+        mode: "0755"
+
+    - name: "Kanshi | Copy configuration"
+      ansible.builtin.copy:
+        src: "config"
+        dest: "{{ ansible_user_dir }}/.config/kanshi/config"
+        mode: "0644"
+
+    - name: "Kanshi | Copy notify hook script"
+      ansible.builtin.copy:
+        src: "notify.sh"
+        dest: "{{ ansible_user_dir }}/.config/kanshi/notify.sh"
+        mode: "0755"
+
+- name: "Kanshi | Install service file"
+  become: true
+  tags: kanshi
+  block:
+    - name: "Kanshi | Ensure directory exist"
+      ansible.builtin.file:
+        path: "/usr/local/lib/systemd/user"
+        state: directory
+        mode: "0755"
+
+    - name: "Kanshi | Copy service file"
+      ansible.builtin.copy:
+        src: "kanshi.service"
+        dest: "/usr/local/lib/systemd/user/kanshi.service"
+        mode: "0644"
+      tags: kanshi
+
+    - name: "Kanshi | Enable service"
+      become: false
+      ansible.builtin.systemd:
+        name: "kanshi"
+        daemon_reload: true
+        enabled: true
+        scope: user
+      tags: kanshi

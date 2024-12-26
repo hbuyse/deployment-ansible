@@ -1,0 +1,12 @@
+[Unit]
+Description=swaylock - Screen locker for Wayland
+Documentation=man:swaylock(1)
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/swaylock -f
+Restart=on-failure
+
+[Install]
+WantedBy=sway-session.target
+;  vim: set ts=4 sw=4 tw=0 noet ft=systemd :

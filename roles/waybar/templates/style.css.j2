@@ -1,0 +1,204 @@
+@import "themes/catppuccin-mocha.css";
+
+@keyframes blink-warning {
+  70% {
+    color: @wm_icon_bg;
+  }
+
+  to {
+    color: @wm_icon_bg;
+    background-color: shade(@warning_color, 0.5);
+  }
+}
+
+@keyframes blink-critical {
+  70% {
+    color: @wm_icon_bg;
+  }
+
+  to {
+    color: @wm_icon_bg;
+    background-color: shade(@error_color, 0.5);
+  }
+}
+
+/* Reset all styles */
+* {
+  border: none;
+  border-radius: 4px;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/* The whole bar */
+#waybar {
+  background: @theme_bg_color;
+  color: @theme_fg_color;
+  font-family: "Iosevka Nerd Font", "Ubuntu", "Font Awesome";
+  font-size: 14px;
+}
+
+tooltip {
+  border: 1px solid @crust;
+  background: @theme_bg_color;
+  opacity: 0.95;
+}
+
+tooltip label {
+  font-family: "Iosevka Nerd Font Mono", "Ubuntu Mono", "monospace";
+  font-size: 13px;
+}
+
+window#waybar.hidden {
+  opacity: 0.2;
+}
+
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+#workspaces button:hover {
+  background: @theme_selected_bg_color;
+  border: 1px solid @peach;
+  box-shadow: inherit;
+  text-shadow: inherit;
+}
+
+#workspaces button.active, /* active in hyprland */
+#workspaces button.focused, /* active in sway */
+#workspaces button.visible, /* visible: on screen but not focused */
+#workspaces button.selected {
+  /* border-color: @fg3; */
+  border-bottom: 2px solid @peach;
+}
+
+#workspaces button.urgent {
+  border: 2px solid @error_color;
+  color: @error_color;
+}
+
+#mode {
+  background: @background_color;
+}
+
+#backlight,
+#battery,
+#bluetooth,
+#clock,
+#cpu,
+#custom-battery,
+#custom-clipboard,
+#custom-idle_inhibitor,
+#custom-menu,
+#custom-playerctl,
+#custom-power,
+#custom-updates,
+#custom-sunset,
+#custom-weather,
+{% for mount in ansible_mounts %}
+{% if mount.fstype in ['ext4', 'vfat'] %}
+#disk.{{ mount.mount | replace('/', '_')}},
+{% endif %}
+{% endfor %}
+#language,
+#memory,
+#mode,
+#network,
+#power-profiles-daemon,
+#privacy,
+#pulseaudio,
+#scratchpad,
+#systemd-failed-units,
+#tray,
+#workspaces button {
+  /* top and bottom | left and right */
+  padding: 1px 10px;
+  margin: 4px 3px;
+  background: @theme_selected_bg_color;
+  color: @theme_selected_fg_color;
+}
+
+#custom-power {
+  background: @theme_selected_bg_color;
+  color: @red;
+}
+
+#custom-idle_inhibitor.activated,
+#idle_inhibitor.activated {
+  border: 1px solid @peach;
+}
+
+#battery,
+#custom-battery {
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#battery.warning,
+#custom-battery.warning {
+  color: @warning_color;
+}
+
+#battery.critical,
+#custom-battery.critical {
+  color: @error_color;
+}
+
+#battery.warning.discharging,
+#custom-battery.warning-discharging {
+  animation-name: blink-warning;
+  animation-duration: 3s;
+}
+
+#battery.critical.discharging,
+#custom-battery.critical-discharging {
+  animation-name: blink-critical;
+  animation-duration: 2s;
+}
+
+label:focus {
+  background-color: #000000;
+}
+
+#network.disconnected {
+  background: @theme_bg_color;
+  color: @wm_icon_bg;
+}
+
+#pulseaudio.muted {
+  /* border: 1px solid @error_color; */
+  color: @overlay0;
+}
+
+#custom-wf-recorder {
+  color: @error_color;
+  padding-right: 10px;
+}
+
+#clock,
+#cpu,
+#language,
+#memory,
+#network {
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+}
+
+#network {
+  border-bottom-color: @teal;
+}
+
+#memory {
+  border-bottom-color: @green;
+}
+
+#cpu {
+  border-bottom-color: @red;
+}
+
+#clock {
+  border-bottom-color: @blue;
+}
+
+#language {
+  border-bottom-color: @yellow;
+}

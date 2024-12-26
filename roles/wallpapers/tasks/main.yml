@@ -20,7 +20,6 @@
     path: "{{ wallpapers_install_dir }}"
     state: directory
     mode: "0755"
-    recurse: true
   tags: wallpapers
 
 - name: "Wallpapers | Install SVG files"

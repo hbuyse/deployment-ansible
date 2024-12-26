@@ -1,0 +1,36 @@
+---
+- name: "Sway | Ensure directories exists"
+  become: true
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+  loop:
+    - /usr/local/lib/systemd/user
+    - /usr/share/wayland-sessions
+    - /usr/local/bin
+
+- name: "Sway | Copy sway service and sway-session target files"
+  become: true
+  ansible.builtin.copy:
+    src: "service/{{ item }}"
+    dest: /usr/local/lib/systemd/user/
+    mode: "0644"
+  loop:
+    - sway.service
+    - sway-session.target
+
+# Copy the wayland session file at the "normal" place otherwise in /usr/local it is not seen
+- name: "Sway | Copy wayland-session file for sway"
+  become: true
+  ansible.builtin.copy:
+    src: service/sway.desktop
+    dest: /usr/share/wayland-sessions/sway-systemd.desktop
+    mode: "0644"
+
+- name: "Sway | Copy sway-wrapper shell script"
+  become: true
+  ansible.builtin.copy:
+    src: service/sway-wrapper.sh
+    dest: /usr/local/bin/
+    mode: "0755"
