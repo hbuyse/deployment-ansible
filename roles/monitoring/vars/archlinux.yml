@@ -1,0 +1,4 @@
+---
+monitoring_packages:
+  - htop
+  - tcpdump

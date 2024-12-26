@@ -18,6 +18,7 @@
   roles:
     - role: "netrc"
     - role: "mimeapps"
+    - role: "monitoring"
     - role: "git"
     - role: "alacritty"
     - role: "git_delta"
