@@ -29,7 +29,15 @@
 
 - name: "Sway | Copy preferred-terminal script"
   tags: sway
-  ansible.builtin.copy:
-    src: "preferred-terminal"
-    dest: "{{ ansible_user_dir }}/.local/bin"
-    mode: "0755"
+  block:
+    - name: "Sway | Ensure ~/.local/bin exists"
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/.local/bin"
+        state: "directory"
+        mode: "0755"
+
+    - name: "Sway | Copy preferred-terminal script"
+      ansible.builtin.copy:
+        src: "preferred-terminal"
+        dest: "{{ ansible_user_dir }}/.local/bin/"
+        mode: "0755"
