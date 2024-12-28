@@ -14,7 +14,7 @@
     state: present
   tags: conky
 
-- name: "Conky | Get temperature informations"
+- name: "Conky | Get temperature information"
   when: ansible_virtualization_role != "guest"
   tags: conky
   block:
