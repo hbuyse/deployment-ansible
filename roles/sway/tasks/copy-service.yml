@@ -19,6 +19,7 @@
   loop:
     - sway.service
     - sway-session.target
+    - lxpolkit.service
 
 # Copy the wayland session file at the "normal" place otherwise in /usr/local it is not seen
 - name: "Sway | Copy wayland-session file for sway"
@@ -34,3 +35,12 @@
     src: service/sway-wrapper.sh
     dest: /usr/local/bin/
     mode: "0755"
+
+- name: "Sway | Enable lxpolkit service"
+  become: false
+  ansible.builtin.systemd:
+    name: "lxpolkit"
+    daemon_reload: true
+    enabled: true
+    scope: "user"
+  tags: [sway, lxpolkit]
