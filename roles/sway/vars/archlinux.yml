@@ -2,3 +2,15 @@
 sway_packages:
   - sway
   - lxsession-gtk3
+  - pcmanfm
+  - nwg-look
+  - capitaine-cursors
+  - vimix-cursors
+  - xcursor-comix
+  - xcursor-themes
+  - adw-gtk-theme
+  - adapta-gtk-theme
+  - arc-gtk-theme
+  - arc-solid-gtk-theme
+  - materia-gtk-theme
+  - pop-gtk-theme
