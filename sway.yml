@@ -1,0 +1,25 @@
+---
+- name: "Sway | Installation"
+  hosts: localhost
+  pre_tasks:
+    - name: "Sway | Prepare installation"
+      ansible.builtin.include_tasks:
+        file: pre_tasks/main.yml
+        apply:
+          tags: always
+      tags: always
+  post_tasks:
+    - name: "Sway | Finalize installation"
+      ansible.builtin.include_tasks:
+        file: post_tasks/main.yml
+        apply:
+          tags: always
+      tags: always
+  roles:
+    - role: "swaylock"
+    - role: "swayidle"
+    - role: "sway"
+    - role: "waybar"
+    - role: "kanshi"
+    - role: "mako"
+    - role: "wofi"
