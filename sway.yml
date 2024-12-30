@@ -16,6 +16,7 @@
           tags: always
       tags: always
   roles:
+    - role: "lightdm"
     - role: "swaylock"
     - role: "swayidle"
     - role: "sway"

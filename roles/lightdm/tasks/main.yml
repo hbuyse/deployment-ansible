@@ -1,0 +1,35 @@
+---
+- name: "LightDM | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: lightdm
+
+- name: "LightDM | Install package"
+  become: true
+  ansible.builtin.package:
+    name: "{{ lightdm_packages }}"
+    update_cache: true
+    state: present
+  tags: lightdm
+
+- name: "LightDM | Update configuration"
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/lightdm/lightdm-gtk-greeter.conf
+    line: "{{ item.key }}={{ item.value }}"
+    insertafter: "^#{{ item.key }}="
+  loop:
+    - key: "background"
+      value: "/usr/local/share/backgrounds/wallpaper.png"
+    - key: "user-background"
+      value: "true"
+    - key: "theme-name"
+      value: "Materia-dark-compact"
+    - key: "icon-theme-name"
+      value: "Papirus-Dark"
+    - key: "font-name"
+      value: "Iosevka Nerd Font Regular 10"
+  tags: lightdm
