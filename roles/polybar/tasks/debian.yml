@@ -18,6 +18,7 @@
   ansible.builtin.command:
     cmd: "polybar --version"
   register: "polybar_current_version"
+  changed_when: false
   tags: polybar
 
 - name: "Polybar | Download and install [v{{ polybar_latest_version }}]"
@@ -29,6 +30,8 @@
         src: "https://github.com/polybar/polybar/releases/download/{{ polybar_latest_version }}/polybar-{{ polybar_latest_version }}.tar.gz"
         dest: "/tmp/"
         remote_src: true
+      notify:
+        - "Polybar | Remove downloaded source code"
 
     - name: "Polybar | Create build directory"
       ansible.builtin.file:

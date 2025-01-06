@@ -1,0 +1,5 @@
+---
+- name: "Polybar | Remove downloaded source code"
+  ansible.builtin.file:
+    path: "/tmp/polybar-{{ polybar_latest_version }}"
+    state: "absent"
