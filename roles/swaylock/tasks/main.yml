@@ -16,7 +16,6 @@
   when: ansible_os_family not in ['Archlinux']
 
 - name: "Swaylock | Install packages"
-  become: true
   kewlfft.aur.aur:
     name: "{{ swaylock_packages }}"
     use: yay
