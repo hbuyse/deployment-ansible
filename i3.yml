@@ -1,0 +1,25 @@
+---
+- name: "Dotfiles | Installation"
+  hosts: localhost
+  pre_tasks:
+    - name: "Dotfiles | Prepare installation"
+      ansible.builtin.include_tasks:
+        file: pre_tasks/main.yml
+        apply:
+          tags: always
+      tags: always
+  post_tasks:
+    - name: "Dotfiles | Finalize installation"
+      ansible.builtin.include_tasks:
+        file: post_tasks/main.yml
+        apply:
+          tags: always
+      tags: always
+  roles:
+    - role: "nerdfonts"
+    - role: "wallpapers"
+    - role: "icons"
+    - role: "pipx"
+    - role: "autorandr"
+    - role: "conky"
+    - role: "polybar"
