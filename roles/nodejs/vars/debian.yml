@@ -1,5 +1,7 @@
 ---
-nodejs_version: 20
+nodejs_version: 22
+nodejs_packages:
+  - nodejs
 nodejs_dependencies:
   - apt-transport-https
   - ca-certificates

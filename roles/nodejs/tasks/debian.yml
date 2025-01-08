@@ -5,19 +5,17 @@
     name: "{{ nodejs_dependencies }}"
     state: present
 
-- name: "Nodejs | Add NodeSource deb repository - modern [{{ ansible_os_family }}]"
-  when: ansible_version.full >= "2.15.0"
-  ansible.builtin.include_tasks:
-    file: debian-modern.yml
-    apply:
-      tags: nodejs
-
-- name: "Nodejs | Add NodeSource deb repository - legacy [{{ ansible_os_family }}]"
-  when: ansible_version.full < "2.15.0"
-  ansible.builtin.include_tasks:
-    file: debian-legacy.yml
-    apply:
-      tags: nodejs
+- name: "Nodejs | Add NodeSource deb repository {{ ansible_os_family }}]"
+  become: true
+  ansible.builtin.deb822_repository:
+    name: nodesource
+    types: deb
+    uris: "https://deb.nodesource.com/node_{{ nodejs_version }}.x"
+    suites: "nodistro"
+    components:
+      - main
+    architectures: "{{ deb_arch }}"
+    signed_by: "https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key"
 
 - name: "Nodejs | Create preference files [{{ ansible_os_family }}]"
   become: true
