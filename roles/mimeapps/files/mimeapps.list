@@ -1,10 +1,10 @@
 [Default Applications]
 application/json5=nvim.desktop
 application/json=nvim.desktop
-application/json=nvim.desktop
 application/pdf=firefox.desktop
 application/rdf+xml=firefox.desktop
 application/rss+xml=firefox.desktop
+application/x-shellscript=nvim.desktop
 application/xhtml+xml=nvim.desktop
 application/xml=nvim.desktop
 application/yaml=nvim.desktop
@@ -87,6 +87,7 @@ text/htmlh=nvim.desktop
 text/javascript=nvim.desktop
 text/markdown=nvim.desktop
 text/markdown=nvim.desktop
+text/plain=nvim.desktop
 text/x-authors=nvim.desktop
 text/x-bibtex=nvim.desktop
 text/x-c++hdr=nvim.desktop
