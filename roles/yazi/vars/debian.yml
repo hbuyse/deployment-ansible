@@ -1,0 +1,9 @@
+---
+yazi_dependencies:
+  - ffmpeg
+  - 7zip
+  - jq
+  - poppler-utils
+  - fzf
+  - zoxide
+  - imagemagick
