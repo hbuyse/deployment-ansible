@@ -180,6 +180,18 @@ return {
       -- server attaches
       local servers = {
         bashls = {},
+        basedpyright = {
+          settings = {
+            basedpyright = {
+              analysis = {
+                diagnosticMode = 'openFilesOnly',
+                inlayHints = {
+                  callArgumentNames = true,
+                },
+              },
+            },
+          },
+        },
         clangd = {
           cmd = {
             get_clangd_executable(),
@@ -233,7 +245,6 @@ return {
             })
           end,
         },
-        pyright = {},
         robotframework_ls = {},
         rust_analyzer = {
           -- From https://rust-analyzer.github.io/manual.html#nvim-lsp

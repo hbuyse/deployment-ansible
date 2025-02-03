@@ -5,8 +5,10 @@ lsp_servers_package:
 
 lsp_servers_npm:
   - "bash-language-server"
-  - "pyright"
   - "typescript-language-server"
   - "vscode-langservers-extracted"
   - "yaml-language-server"
   - "@ansible/ansible-language-server"
+
+lsp_servers_pip:
+  - "basedpyright"

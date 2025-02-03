@@ -2,7 +2,6 @@
 lsp_servers_package:
   - lua-language-server
   - bash-language-server
-  - pyright
   - texlab
   - typescript-language-server
   - vscode-css-languageserver
@@ -12,3 +11,5 @@ lsp_servers_package:
 lsp_servers_npm:
   - "@microsoft/compose-language-service"
   - "vscode-markdown-languageserver"
+lsp_servers_pip:
+  - "basedpyright"
