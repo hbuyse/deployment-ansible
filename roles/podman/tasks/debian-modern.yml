@@ -1,0 +1,9 @@
+---
+- name: "Podman | Install repository [Debian]"
+  become: true
+  ansible.builtin.deb822_repository:
+    name: "devel:kubic:libcontainers:stable"
+    types: deb
+    uris: "https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu_{{ ansible_distribution_version }}"
+    suites: "/"
+    signed_by: "https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu_{{ ansible_distribution_version }}/Release.key"

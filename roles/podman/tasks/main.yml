@@ -1,0 +1,16 @@
+---
+- name: "Podman | Add repository [Debian]"
+  ansible.builtin.include_tasks:
+    file: debian.yml
+    apply:
+      tags: podman
+  when: ansible_os_family == "Debian"
+  tags: podman
+
+- name: "Podman | Install packages"
+  become: true
+  ansible.builtin.package:
+    update_cache: true
+    state: present
+    name: "podman"
+  tags: podman

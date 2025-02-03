@@ -33,6 +33,7 @@
     - role: "vscode"
     - role: "zsh"
     - role: "docker"
+    - role: "podman"
     - role: "oh_my_posh"
     - role: "web_browsers"
     - role: "wallpapers"
