@@ -1,0 +1,27 @@
+---
+- name: "Yazi | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags:
+    - yazi
+
+- name: "Yazi | Install from source"
+  ansible.builtin.include_tasks:
+    file: source.yml
+    apply:
+      tags: yazi
+  when: ansible_os_family not in ['Archlinux', 'Suse']
+  tags:
+    - yazi
+
+- name: "Yazi | Install from package manager"
+  ansible.builtin.include_tasks:
+    file: package.yml
+    apply:
+      tags: yazi
+  when: ansible_os_family in ['Archlinux', 'Suse']
+  tags:
+    - yazi
