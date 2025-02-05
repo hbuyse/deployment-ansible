@@ -7,20 +7,28 @@
       skip: true
   tags: polybar
 
+- name: "Polybar | Install dependencies"
+  become: true
+  ansible.builtin.package:
+    name: "{{ polybar_dependencies }}"
+    state: present
+  when: polybar_dependencies is defined
+  tags: polybar
+
 - name: "Polybar | Install from sources [{{ ansible_os_family }}]"
   ansible.builtin.include_tasks:
-    file: debian.yml
+    file: source.yml
     apply:
       tags: polybar
   tags: polybar
-  when: ansible_os_family in ['Debian']
+  when: polybar_packages is not defined
 
 - name: "Polybar | Install from package manager [{{ ansible_os_family }}]"
   become: true
   ansible.builtin.package:
     name: "{{ polybar_packages }}"
     state: present
-  when: ansible_os_family not in ['Debian']
+  when: polybar_packages is defined
   tags: polybar
 
 - name: "Polybar | Install configuration files"

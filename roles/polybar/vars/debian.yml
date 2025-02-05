@@ -1,7 +1,4 @@
 ---
-polybar_packages:
-  - polybar
-
 polybar_dependencies:
   - build-essential
   - git

@@ -57,28 +57,3 @@
         chdir: "/tmp/polybar-{{ polybar_latest_version }}/build"
         jobs: 4
         target: "install"
-
-- name: "Polybar | Install configuration files"
-  tags: polybar
-  block:
-    - name: "Polybar | Ensure directories exists"
-      ansible.builtin.file:
-        path: "{{ polybar_config_dir }}"
-        state: directory
-        mode: "0755"
-
-    - name: "Polybar | Copy static configuration files"
-      ansible.builtin.copy:
-        src: "{{ role_path }}/files/"
-        dest: "{{ polybar_config_dir }}"
-        mode: "preserve"
-        directory_mode: "0755"
-
-    - name: "Polybar | Copy dynamic configuration files"
-      ansible.builtin.template:
-        src: "{{ item }}.j2"
-        dest: "{{ polybar_config_dir }}/{{ item }}"
-        mode: "0644"
-      loop:
-        - bars.ini
-        - modules.ini
