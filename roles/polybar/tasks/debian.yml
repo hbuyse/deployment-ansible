@@ -1,0 +1,84 @@
+---
+- name: "Polybar | Get latest version number"
+  register: latest_json
+  ansible.builtin.uri:
+    url: "https://api.github.com/repos/polybar/polybar/releases/latest"
+    method: GET
+    return_content: true
+    status_code: 200
+    body_format: json
+  tags: polybar
+
+- name: "Polybar | Set facts"
+  ansible.builtin.set_fact:
+    polybar_latest_version: "{{ latest_json.json.tag_name }}"
+  tags: polybar
+
+- name: "Polybar | Get current version"
+  ansible.builtin.command:
+    cmd: "polybar --version"
+  register: "polybar_current_version"
+  changed_when: false
+  tags: polybar
+
+- name: "Polybar | Download and install [v{{ polybar_latest_version }}]"
+  tags: polybar
+  when: polybar_latest_version not in polybar_current_version.stdout
+  block:
+    - name: "Polybar | Extract polybar source code [v{{ polybar_latest_version }}]"
+      ansible.builtin.unarchive:
+        src: "https://github.com/polybar/polybar/releases/download/{{ polybar_latest_version }}/polybar-{{ polybar_latest_version }}.tar.gz"
+        dest: "/tmp/"
+        remote_src: true
+      notify:
+        - "Polybar | Remove downloaded source code"
+
+    - name: "Polybar | Create build directory"
+      ansible.builtin.file:
+        state: "directory"
+        path: "/tmp/polybar-{{ polybar_latest_version }}/build"
+        mode: "0755"
+
+    - name: "Polybar | Configure polybar compilation"
+      ansible.builtin.command:
+        cmd: "cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DBUILD_POLYBAR=yes -DBUILD_POLYBAR_MSG=yes -DBUILD_DOC=yes -DBUILD_DOC_MAN=yes -DBUILD_SHELL=yes .."
+        chdir: "/tmp/polybar-{{ polybar_latest_version }}/build"
+      changed_when: false
+
+    - name: "Polybar | Compile polybar source code"
+      community.general.make:
+        chdir: "/tmp/polybar-{{ polybar_latest_version }}/build"
+        jobs: 4
+        target: "all"
+
+    - name: "Polybar | Install polybar"
+      become: true
+      community.general.make:
+        chdir: "/tmp/polybar-{{ polybar_latest_version }}/build"
+        jobs: 4
+        target: "install"
+
+- name: "Polybar | Install configuration files"
+  tags: polybar
+  block:
+    - name: "Polybar | Ensure directories exists"
+      ansible.builtin.file:
+        path: "{{ polybar_config_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: "Polybar | Copy static configuration files"
+      ansible.builtin.copy:
+        src: "{{ role_path }}/files/"
+        dest: "{{ polybar_config_dir }}"
+        mode: "preserve"
+        directory_mode: "0755"
+
+    - name: "Polybar | Copy dynamic configuration files"
+      ansible.builtin.template:
+        src: "{{ item }}.j2"
+        dest: "{{ polybar_config_dir }}/{{ item }}"
+        mode: "0644"
+      loop:
+        - bars.ini
+        - modules.ini

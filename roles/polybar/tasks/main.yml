@@ -1,0 +1,49 @@
+---
+- name: "Polybar | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: polybar
+
+- name: "Polybar | Install from sources [{{ ansible_os_family }}]"
+  ansible.builtin.include_tasks:
+    file: debian.yml
+    apply:
+      tags: polybar
+  tags: polybar
+  when: ansible_os_family in ['Debian']
+
+- name: "Polybar | Install from package manager [{{ ansible_os_family }}]"
+  become: true
+  ansible.builtin.package:
+    name: "{{ polybar_packages }}"
+    state: present
+  when: ansible_os_family not in ['Debian']
+  tags: polybar
+
+- name: "Polybar | Install configuration files"
+  tags: polybar
+  block:
+    - name: "Polybar | Ensure directories exists"
+      ansible.builtin.file:
+        path: "{{ polybar_config_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: "Polybar | Copy static configuration files"
+      ansible.builtin.copy:
+        src: "{{ role_path }}/files/"
+        dest: "{{ polybar_config_dir }}"
+        mode: "preserve"
+        directory_mode: "0755"
+
+    - name: "Polybar | Copy dynamic configuration files"
+      ansible.builtin.template:
+        src: "{{ item }}.j2"
+        dest: "{{ polybar_config_dir }}/{{ item }}"
+        mode: "0644"
+      loop:
+        - bars.ini
+        - modules.ini
