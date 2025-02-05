@@ -11,7 +11,7 @@
     - neovim
     - nvim
 
-- name: "Neovim | Install program from static binary [v{{ nvim_latest_version }}]"
+- name: "Neovim | Install program from static binary"
   when: ansible_os_family == "Debian"
   tags:
     - neovim
