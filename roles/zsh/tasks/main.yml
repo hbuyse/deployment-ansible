@@ -24,17 +24,29 @@
     - omz
 
 - name: "Shell | Copy configuration file"
-  ansible.builtin.copy:
-    src: "{{ role_path }}/files/{{ item }}"
-    dest: "{{ ansible_user_dir }}/.{{ item }}"
-    mode: "0644"
-    owner: "{{ ansible_user_uid }}"
-    group: "{{ ansible_user_gid }}"
-  loop:
-    - zshrc
-    - p10k.zsh
   tags:
     - shell
     - zsh
     - omz
     - p10k
+  block:
+    - name: "Shell | Copy static configuration file"
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "{{ ansible_user_dir }}/.{{ item }}"
+        mode: "0644"
+        owner: "{{ ansible_user_uid }}"
+        group: "{{ ansible_user_gid }}"
+      loop:
+        - zshrc
+        - p10k.zsh
+        - xprofile
+        - Xresources
+
+    - name: "Shell | Copy dynamic configuration file"
+      ansible.builtin.template:
+        src: "{{ item }}.j2"
+        dest: "{{ ansible_user_dir }}/.{{ item }}"
+        mode: "0644"
+      loop:
+        - zprofile
