@@ -242,14 +242,12 @@
     "icon-size": 16,
     "spacing": 10
   },
-{% for mount in ansible_mounts %}
-{% if mount.fstype in ['ext4', 'vfat'] %}
+{% for mount in ansible_mounts|selectattr('fstype','in','ext4,vfat')|sort(attribute='mount') %}
   "disk#{{ mount.mount | replace('/', '_')}}": {
     "interval": 30,
     "path": "{{ mount.mount }}",
     "format": "<span color='#83a598'>{path}</span>: {percentage_used}%"
   },
-{% endif %}
 {% endfor %}
   "power-profiles-daemon": {
     "format": "{icon}",

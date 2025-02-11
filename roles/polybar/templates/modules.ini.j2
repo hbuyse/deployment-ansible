@@ -25,11 +25,9 @@ interval = 60
 spacing = 0
 
 {% set count = namespace(value=0) %}
-{% for mount in ansible_mounts|sort(attribute='mount') %}
-{% if mount.fstype in ['ext4', 'vfat'] %}
+{% for mount in ansible_mounts|selectattr('fstype','in','ext4,vfat')|sort(attribute='mount') %}
 mount-{{ count.value }} = {{ mount.mount }}
 {% set count.value = count.value + 1 %}
-{% endif %}
 {% endfor %}
 
 # Available tags:

@@ -28,10 +28,8 @@
     "modules-left": ["systemd-failed-units", "privacy"],
     "modules-right": [
       "power-profiles-daemon",
-{% for mount in ansible_mounts %}
-{% if mount.fstype in ['ext4', 'vfat'] %}
+{% for mount in ansible_mounts|selectattr('fstype','in','ext4,vfat')|sort(attribute='mount') %}
       "disk#{{ mount.mount | replace('/', '_')}}",
-{% endif %}
 {% endfor %}
       "memory",
       "cpu",

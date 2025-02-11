@@ -54,10 +54,8 @@ ${font}${color}CPU {{ "{:>2}".format(loop.index) }}: ${font}${color2}${hwmon {{ 
 
 # Mountpoints
 ${color}${font Iosevka Nerd Font Mono:bold:size=10}File System ${hr}
-{% for mount in ansible_mounts|sort(attribute='mount') %}
-{% if mount.fstype in ['ext4', 'vfat'] %}
+{% for mount in ansible_mounts|selectattr('fstype','in','ext4,vfat')|sort(attribute='mount') %}
 ${font}${color}{{ mount.mount }}:${alignr}${color2}${fs_used_perc {{ mount.mount }}} % - ${fs_used {{ mount.mount }}} / ${fs_size {{ mount.mount }}}
-{% endif %}
 {% endfor %}
 ]]
 -- vim: set ts=4 sw=4 tw=0 noet ft=lua :
