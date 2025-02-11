@@ -1,0 +1,28 @@
+---
+- name: "Docker | Ensure old versions of Docker are not installed." # noqa ignore-errors
+  become: true
+  ansible.builtin.package:
+    name:
+      - docker
+      - docker-client
+      - docker-client-latest
+      - docker-common
+      - docker-latest
+      - docker-latest-logrotate
+      - docker-logrotate
+      - docker-selinux
+      - docker-engine-selinux
+      - docker-engine
+    state: absent
+  ignore_errors: true
+
+- name: "Docker | Add yum repository"
+  become: true
+  ansible.builtin.yum_repository:
+    name: docker-ce-stable
+    description: "Docker CE Stable - $basearch"
+    file: docker-ce
+    baseurl: "https://download.docker.com/linux/fedora/$releasever/$basearch/stable"
+    gpgkey: "https://download.docker.com/linux/fedora/gpg"
+    gpgcheck: true
+    enabled: true

@@ -28,7 +28,7 @@
   community.general.pipx:
     name: "{{ item }}"
     state: latest
-    global: true
+    # global: true
   loop: "{{ lsp_servers_pip }}"
   tags: lsp_servers
 

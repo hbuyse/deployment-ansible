@@ -1,3 +1,6 @@
 ---
 rustup_dependencies:
   - openssl-devel
+  - perl-FindBin
+  - perl-IPC-Cmd
+  - perl-File-Compare

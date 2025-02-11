@@ -7,18 +7,24 @@
       skip: true
   tags: eza
 
-- name: "Eza | Install from source"
-  ansible.builtin.include_tasks:
-    file: source.yml
-    apply:
-      tags: eza
-  when: ansible_os_family not in ['Archlinux', 'Suse']
-  tags: eza
+- name: "Eza | Install Rust package with locked dependencies [{{ ansible_os_family }}]"
+  become: true
+  community.general.cargo:
+    name: eza
+    state: latest
+    locked: true
+    path: "/usr/local"
+  environment:
+    RUSTUP_HOME: "{{ ansible_user_dir }}/.rustup"
+    CARGO_HOME: "{{ ansible_user_dir }}/.cargo"
+    PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"
+  notify: "Eza | Install completions and manpage"
+  when: eza_packages is not defined
 
-- name: "Eza | Install from package manager"
-  ansible.builtin.include_tasks:
-    file: package.yml
-    apply:
-      tags: eza
-  when: ansible_os_family in ['Archlinux', 'Suse']
+- name: "Eza | Install from package manager [{{ ansible_os_family }}]"
+  become: true
+  ansible.builtin.package:
+    name: "{{ eza_packages }}"
+    state: present
+  when: eza_packages is defined
   tags: eza

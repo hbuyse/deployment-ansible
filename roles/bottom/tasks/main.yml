@@ -1,18 +1,34 @@
 ---
-- name: "Bottom | Install from source"
-  ansible.builtin.include_tasks:
-    file: source.yml
-    apply:
-      tags: bottom
-  when: ansible_os_family not in ['Archlinux', 'Suse']
+- name: "Bottom | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
   tags: bottom
 
+- name: "Bottom | Install Rust package with locked dependencies"
+  become: true
+  community.general.cargo:
+    name: bottom
+    state: latest
+    locked: true
+    path: "/usr/local"
+  environment:
+    RUSTUP_HOME: "{{ ansible_user_dir }}/.rustup"
+    CARGO_HOME: "{{ ansible_user_dir }}/.cargo"
+    PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"
+  when: bottom_packages is not defined
+  tags: bottom
+  notify:
+    - "Bottom | Install assets"
+
 - name: "Bottom | Install from package manager"
-  ansible.builtin.include_tasks:
-    file: package.yml
-    apply:
-      tags: bottom
-  when: ansible_os_family in ['Archlinux', 'Suse']
+  become: true
+  ansible.builtin.package:
+    name: "{{ bottom_packages }}"
+    state: present
+  when: bottom_packages is defined
   tags: bottom
 
 - name: "Bottom | Copy configuration file"

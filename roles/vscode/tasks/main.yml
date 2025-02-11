@@ -23,7 +23,6 @@
   ansible.builtin.package:
     update_cache: true
     state: present
-    name:
-      - code
+    name: "{{ vscode_packages }}"
   tags:
     - vscode

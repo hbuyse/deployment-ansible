@@ -7,12 +7,16 @@
       skip: true
   tags: docker
 
-- name: "Docker | Add repository [Debian]"
+
+- name: "Docker | Add dependencies and repo"
   ansible.builtin.include_tasks:
-    file: debian.yml
+    file: "{{ item }}"
     apply:
       tags: docker
-  when: ansible_os_family == "Debian"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
   tags: docker
 
 - name: "Docker | Install packages"
@@ -23,3 +27,11 @@
     name: "{{ docker_packages }}"
   notify: "Docker | Restart docker service"
   tags: docker
+
+- name: "Docker | Ensure docker users are added to the docker group"
+  become: true
+  tags: docker
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    groups: docker
+    append: true

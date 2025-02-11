@@ -12,7 +12,7 @@
   ansible.builtin.package:
     name: "{{ pre_commit_packages }}"
     state: present
-  when: ansible_os_family in ['Archlinux', 'Suse']
+  when: pre_commit_packages is defined
   tags: pre-commit
 
 - name: "Pre-commit | Install using Pipx"
@@ -21,5 +21,5 @@
     name: "pre-commit"
     state: latest
     global: true
-  when: ansible_os_family in ['Debian']
+  when: pre_commit_packages is not defined
   tags: pre-commit

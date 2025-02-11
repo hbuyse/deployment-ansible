@@ -13,7 +13,9 @@
     name: "{{ swaylock_packages }}"
     state: present
   tags: swaylock
-  when: ansible_os_family not in ['Archlinux']
+  when:
+    - swaylock_packages is defined
+    - ansible_os_family != "Archlinux"
 
 - name: "Swaylock | Install packages"
   kewlfft.aur.aur:
@@ -21,7 +23,9 @@
     use: yay
     state: present
   tags: swaylock
-  when: ansible_os_family in ['Archlinux']
+  when:
+    - swaylock_packages is defined
+    - ansible_os_family == "Archlinux"
 
 - name: "Swaylock | Install configuration"
   tags: swaylock

@@ -1,7 +1,6 @@
 ---
 sway_packages:
-  - openSUSEway
-  - xwayland
+  - sway
   - lxsession
   - Thunar
   - NetworkManager-tui

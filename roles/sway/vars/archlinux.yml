@@ -2,3 +2,5 @@
 sway_packages:
   - sway
   - lxsession-gtk3
+  - thunar
+  - networkmanager
