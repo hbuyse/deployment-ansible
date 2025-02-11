@@ -155,6 +155,12 @@ mkdir -p "$(dirname "${INSTALL_REPO}")"
 if [ ! -d "${INSTALL_REPO}" ]; then
     git clone https://github.com/hbuyse/deployment-ansible "${INSTALL_REPO}"
     display_ko_ok $?
+
+    echo "---" > "${INSTALL_REPO}"/host_vars/localhost.yml
+    echo "git_user_name: \"\"" > "${INSTALL_REPO}"/host_vars/localhost.yml
+    echo "git_user_email: \"\"" > "${INSTALL_REPO}"/host_vars/localhost.yml
+
+    echo "DO NOT FORGET TO FILL THE FILE: host_vars/localhost.yml"
 else
     display_already_installed
 fi
