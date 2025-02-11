@@ -46,3 +46,4 @@
     - role: "ripgrep"
     - role: "bat"
     - role: "bottom"
+    - role: "python"
