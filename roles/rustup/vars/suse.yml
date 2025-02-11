@@ -1,0 +1,3 @@
+---
+rustup_dependencies:
+  - libopenssl-devel
