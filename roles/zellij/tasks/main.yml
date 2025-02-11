@@ -1,0 +1,66 @@
+---
+- name: "Zellij | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: zellij
+
+- name: "Zellij | Install Rust package with locked dependencies"
+  become: true
+  community.general.cargo:
+    name: zellij
+    state: latest
+    locked: true
+    path: "/usr/local"
+  environment:
+    RUSTUP_HOME: "{{ ansible_user_dir }}/.rustup"
+    CARGO_HOME: "{{ ansible_user_dir }}/.cargo"
+    PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"
+  when: zellij_packages is not defined
+  tags: zellij
+
+- name: "Zellij | Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ zellij_packages }}"
+    state: present
+  when: zellij_packages is defined
+  tags: zellij
+
+- name: "Zellij | Copy configuration files"
+  tags: zellij
+  block:
+    - name: "Zellij | Ensure config directory exist"
+      ansible.builtin.file:
+        path: "{{ zellij_config_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: "Zellij | Copy files"
+      ansible.builtin.copy:
+        src: "{{ role_path }}/files/"
+        dest: "{{ zellij_config_dir }}"
+        mode: "0644"
+
+- name: "Zellij | Install plugins"
+  tags: zellij
+  block:
+    - name: "Zellij | Ensure plugins directory exist"
+      ansible.builtin.file:
+        path: "{{ zellij_plugins_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: "Zellij | Install plugins"
+      ansible.builtin.include_tasks: install-plugin.yml
+      loop:
+        - name: zjswitcher
+          repo: WingsZeng/zjswitcher
+        - name: zjstatus
+          repo: dj95/zjstatus
+        - name: zjframes
+          repo: dj95/zjstatus
+        - name: zj-docker
+          repo: dj95/zj-docker

@@ -1,0 +1,21 @@
+- name: "Zellij | Get latest version number for '{{ item.name }}'"
+  register: latest_json
+  ansible.builtin.uri:
+    url: "https://api.github.com/repos/{{ item.repo }}/releases/latest"
+    method: GET
+    return_content: true
+    status_code: 200
+    body_format: json
+
+- name: "Zellij | Set facts"
+  ansible.builtin.set_fact:
+    latest_version: "{{ latest_json.json.tag_name }}"
+
+- name: "Zellij | Install plugin {{ plugin_version }}"
+  become: true
+  ansible.builtin.get_url:
+    url: "https://github.com/{{ item.repo }}/releases/download/{{ latest_version }}/{{ item.name }}.wasm"
+    dest: "{{ zellij_plugins_dir }}"
+    mode: "0644"
+  vars:
+    plugin_version: "'{{ item.name }}' [{{ latest_version }}]"

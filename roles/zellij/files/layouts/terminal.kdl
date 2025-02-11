@@ -1,0 +1,55 @@
+layout {
+    default_tab_template {
+        pane
+        pane size=1 borderless=true {
+            plugin location="file:~/.config/zellij/plugins/zjstatus.wasm" {
+                format_left   "{mode}#[fg=black,bg=cyan,bold] {session} #[fg=cyan,bg=#1e1e2e]{tabs}"
+                format_center ""
+                format_right  "{datetime}{command_whoami}{command_hostname}"
+                format_space  ""
+
+                datetime        "#[fg=blue]#[fg=black,bg=blue,bold] {format} "
+                datetime_format "%d/%m/%Y  %H:%M"
+                datetime_timezone "Europe/Paris"
+
+                command_whoami_command     "whoami"
+                command_whoami_format      "#[fg=green,bg=blue]#[fg=black,bg=green,bold] {stdout} "
+                command_whoami_interval    "0"
+                command_whoami_rendermode  "static"
+
+                command_hostname_command     "uname -r"
+                command_hostname_format      "#[fg=magenta,bg=green]#[fg=black,bg=magenta,bold] {stdout} "
+                command_hostname_interval    "0"
+                command_hostname_rendermode  "static"
+
+                border_enabled  "false"
+                border_char     "─"
+                border_format   "#[fg=#cdd6f4]{char}"
+                border_position "top"
+
+				hide_frame_for_single_pane       "false"
+
+                mode_normal        "#[fg=#1e1e2e,bg=cyan]"
+				mode_locked        "#[fg=black,bg=blue,bold] LOCKED #[fg=blue,bg=cyan]"
+				mode_resize        "#[fg=black,bg=blue,bold] RESIZE #[fg=blue,bg=cyan]"
+				mode_pane          "#[fg=black,bg=blue,bold] PANE #[fg=blue,bg=cyan]"
+				mode_tab           "#[fg=black,bg=blue,bold] TAB #[fg=blue,bg=cyan]"
+				mode_scroll        "#[fg=black,bg=blue,bold] SCROLL #[fg=blue,bg=cyan]"
+				mode_enter_search  "#[fg=black,bg=blue,bold] E-SEARCH #[fg=blue,bg=cyan]"
+				mode_search        "#[fg=black,bg=blue,bold] SEARCH #[fg=blue,bg=cyan]"
+				mode_rename_tab    "#[fg=black,bg=blue,bold] RN TAB #[fg=blue,bg=cyan]"
+				mode_rename_pane   "#[fg=black,bg=blue,bold] RN PANE #[fg=blue,bg=cyan]"
+				mode_session       "#[fg=black,bg=blue,bold] SESSION #[fg=blue,bg=cyan]"
+				mode_move          "#[fg=black,bg=blue,bold] MOVE #[fg=blue,bg=cyan]"
+				mode_prompt        "#[fg=black,bg=blue,bold] PROMPT #[fg=blue,bg=cyan]"
+				mode_tmux          "#[fg=black,bg=blue,bold] TMUX #[fg=blue,bg=cyan]"
+
+				mode_default_to_mode "tmux"
+
+                tab_normal     "#[fg=#1e1e2e,bg=#9399b2] #[fg=#45475a,bg=#9399b2]{index} #[fg=#9399b2,bg=#313244]#[fg=#cdd6f4,bg=#313244] {name} #[fg=#313244,bg=#1e1e2e]"
+                tab_active     "#[fg=#1e1e2e,bg=#fab387] #[fg=#45475a,bg=#fab387]{index} #[fg=#fab387,bg=#45475a]#[fg=#cdd6f4,bg=#45475a] {name} #[fg=#45475a,bg=#1e1e2e]"
+                tab_separator  ""
+            }
+        }
+    }
+}

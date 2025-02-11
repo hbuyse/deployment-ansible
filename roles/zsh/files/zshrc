@@ -147,3 +147,14 @@ alias v="nvim"
 
 eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/config.omp.yaml)"
 eval "$(oh-my-posh completion zsh)"
+
+autoload -Uz add-zsh-hook
+preexec_pipe_message_to_zjswitcher() {
+    [[ -n "$ZELLIJ" ]] && zellij pipe --name Event::CommandUpdate -- $1
+}
+add-zsh-hook preexec preexec_pipe_message_to_zjswitcher
+
+precmd_pipe_message_to_zjswitcher() {
+    [[ -n "$ZELLIJ" ]] && zellij pipe --name Event::CommandUpdate -- $SHELL
+}
+add-zsh-hook precmd precmd_pipe_message_to_zjswitcher

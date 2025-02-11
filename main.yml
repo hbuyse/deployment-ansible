@@ -47,3 +47,4 @@
     - role: "bat"
     - role: "bottom"
     - role: "python"
+    - role: "zellij"
