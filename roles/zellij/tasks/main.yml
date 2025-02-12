@@ -21,6 +21,17 @@
   when: zellij_packages is not defined
   tags: zellij
 
+- name: "Zellij | Include OS specific tasks"
+  ansible.builtin.include_tasks:
+    file: "{{ item }}"
+    apply:
+      tags: zellij
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: zellij
+
 - name: "Zellij | Install from package manager"
   become: true
   ansible.builtin.package:
