@@ -1,0 +1,5 @@
+---
+- name: "Zellij | Add COPR repo"
+  community.general.copr:
+    name: "varlad/zellij"
+    state: "enabled"
