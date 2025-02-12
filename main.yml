@@ -17,8 +17,6 @@
       tags: always
   roles:
     - role: "netrc"
-    - role: "rpmfusion"
-      when: ansible_os_family == "RedHat"
     - role: "mimeapps"
     - role: "git"
     - role: "alacritty"

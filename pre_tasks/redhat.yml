@@ -2,9 +2,11 @@
 - name: "RPM Fusion | Add repository GPG keys"
   become: true
   ansible.builtin.rpm_key:
-    key: "https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-{{ item }}-{{ ansible_distribution | lower }}-2020"
+    key: "https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-{{ repo }}-{{ ansible_distribution | lower }}-2020"
     state: present
-  with_items:
+  loop_control:
+    loop_var: repo
+  loop:
     - "free"
     - "nonfree"
   tags: rpmfusion
@@ -13,11 +15,13 @@
   become: true
   ansible.builtin.dnf:
     name:
-      "https://mirrors.rpmfusion.org/{{ item }}/{{ ansible_distribution | lower }}/rpmfusion-{{ item }}-release-\
+      "https://mirrors.rpmfusion.org/{{ repo }}/{{ ansible_distribution | lower }}/rpmfusion-{{ repo }}-release-\
       {{ ansible_distribution_major_version }}.noarch.rpm"
     state: present
   loop:
     - "free"
     - "nonfree"
+  loop_control:
+    loop_var: repo
   when: ansible_os_family == "RedHat"
   tags: rpmfusion
