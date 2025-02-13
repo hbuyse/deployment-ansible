@@ -17,7 +17,7 @@ layout {
                 command_whoami_interval    "0"
                 command_whoami_rendermode  "static"
 
-                command_hostname_command     "uname -r"
+                command_hostname_command     "uname -n"
                 command_hostname_format      "#[fg=magenta,bg=green]#[fg=black,bg=magenta,bold] {stdout} "
                 command_hostname_interval    "0"
                 command_hostname_rendermode  "static"
