@@ -1,0 +1,7 @@
+- name: Gather the package facts
+  ansible.builtin.package_facts:
+    manager: auto
+
+- name: "Web Browsers | Install non-snap firefox"
+  block:
+    - name: "Web Browsers | Check if firefox comes from Snap"
