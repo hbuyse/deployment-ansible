@@ -12,7 +12,7 @@
   ansible.builtin.apt:
     deb: "{{ discord_deb }}"
     state: present
-  when: ansible_os_family == "Debian"
+  when: discord_deb is defined
   tags: discord
 
 - name: "Discord | Install package [Rolling Release]"
@@ -20,5 +20,5 @@
   ansible.builtin.package:
     name: "{{ discord_package }}"
     state: present
-  when: ansible_os_family != "Debian"
+  when: discord_package is defined
   tags: discord
