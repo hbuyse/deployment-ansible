@@ -1,5 +1,5 @@
 ---
-clang_llvm_stable_version: 18
+clang_llvm_stable_version: 20
 
 clang_dependencies:
   - lsb-release
