@@ -1,0 +1,5 @@
+---
+keymapp_install_dir: "{{ ansible_user_dir }}/.local"
+keymapp_bin_dir: "{{ keymapp_install_dir }}/bin"
+keymapp_icons_dir: "{{ keymapp_install_dir }}/share/icons"
+keymapp_desktop_dir: "{{ keymapp_install_dir }}/share/applications"

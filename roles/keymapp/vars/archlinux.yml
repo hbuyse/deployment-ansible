@@ -1,0 +1,5 @@
+---
+keymapp_dependencies:
+  - libusb
+  - webkit2gtk-4.1
+  - gtk3

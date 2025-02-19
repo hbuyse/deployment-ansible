@@ -1,0 +1,62 @@
+---
+- name: "Keymapp | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: keymapp
+
+- name: "Keymapp | Install dependencies [{{ ansible_dependencies }}]"
+  become: true
+  ansible.builtin.package:
+    state: present
+    name: "{{ keymapp_dependencies }}"
+  when: keymapp_dependencies is defined
+  tags: keymapp
+
+- name: "Keymapp | Download latest archive"
+  ansible.builtin.get_url:
+    url: "https://oryx.nyc3.cdn.digitaloceanspaces.com/keymapp/keymapp-latest.tar.gz"
+    dest: "/tmp/"
+    mode: "0644"
+  notify: "Keymapp | Remove downloaded archive"
+  tags: keymapp
+
+- name: "Keymapp | Extract archive files"
+  ansible.builtin.unarchive:
+    src: "/tmp/keymapp-latest.tar.gz"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode }}"
+    include:
+      - "{{ item.file }}"
+  loop:
+    - file: keymapp
+      dest: "{{ keymapp_bin_dir }}"
+      mode: "0755"
+    - file: icon.png
+      dest: "{{ keymapp_icons_dir }}"
+      mode: "0644"
+  tags: keymapp
+
+- name: "Keymapp | Copy desktop file"
+  ansible.builtin.copy:
+    src: "keymapp.desktop"
+    dest: "{{ keymapp_desktop_dir }}"
+    mode: "0644"
+  tags: keymapp
+
+- name: "Keymapp | Copy udev rule files"
+  become: true
+  ansible.builtin.copy:
+    src: "50-zsa.rules"
+    dest: "/etc/udev/rules.d/"
+    mode: "0644"
+  tags: keymapp
+
+- name: "Keymapp | Add current user to 'plugdev' group"
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    groups: "plugdev"
+    append: true
+  tags: keymapp
