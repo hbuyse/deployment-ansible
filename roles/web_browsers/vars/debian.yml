@@ -3,5 +3,4 @@ web_browsers_packages:
   - chromium-browser
   - chromium-browser-l10n
   - firefox
-  - firefox-locale-en
-  - firefox-locale-fr
+  - firefox-l10n-fr
