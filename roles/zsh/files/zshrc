@@ -146,7 +146,6 @@ alias v="nvim"
 [[ ! -f "$HOME/.external.zsh" ]] || source "$HOME/.external.zsh"
 
 eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/config.omp.yaml)"
-eval "$(oh-my-posh completion zsh)"
 
 autoload -Uz add-zsh-hook
 preexec_pipe_message_to_zjswitcher() {
