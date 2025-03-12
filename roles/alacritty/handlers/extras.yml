@@ -28,6 +28,7 @@
     - url: "https://github.com/alacritty/alacritty/releases/download/v{{ alacritty_latest_version }}/_alacritty"
       dest: "/usr/local/share/zsh/site-functions"
     - url: "https://github.com/alacritty/alacritty/releases/download/v{{ alacritty_latest_version }}/alacritty.bash"
-      dest: "/usr/local/share/bash-completion/completions/alacritty"
+      dest: "/usr/local/share/bash-completion/completions"
+      name: "alacritty"
     - url: "https://github.com/alacritty/alacritty/releases/download/v{{ alacritty_latest_version }}/alacritty.fish"
       dest: "/usr/local/share/fish/vendor_completions.d"

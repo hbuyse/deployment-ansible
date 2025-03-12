@@ -12,3 +12,17 @@
     url: "{{ item.url }}"
     dest: "{{ item.dest }}"
     mode: "0644"
+
+- name: "Alacritty | Rename file"
+  when: item.name is defined
+  block:
+    - name: "Alacritty | Copy file"
+      ansible.builtin.copy:
+        src: "{{ item.dest }}"
+        dest: "{{ item.dest | dirname }}/{{ item.name }}"
+        mode: "0644"
+
+    - name: "Alacritty | Remove old file {{ item.dest }}"
+      ansible.builtin.file:
+        path: "{{ item.dest }}"
+        state: "absent"
