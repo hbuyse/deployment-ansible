@@ -1,0 +1,25 @@
+---
+# - name: "Brightnessctl | Include OS specific variables"
+#   ansible.builtin.include_vars: "{{ item }}"
+#   with_first_found:
+#     - files:
+#         - "{{ ansible_os_family | lower }}.yml"
+#       skip: true
+#   tags: brightnessctl
+
+- name: "Brightnessctl | Install packages"
+  become: true
+  ansible.builtin.package:
+    state: present
+    name: "{{ brightnessctl_packages }}"
+  when: brightnessctl_packages is defined
+  tags: brightnessctl
+
+# Allow brightnessctl to work without 'sudo'
+- name: "Brightnessctl | Add current user to 'video' group"
+  become: true
+  tags: brightnessctl
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    groups: "{{ brightnessctl_group }}"
+    append: true

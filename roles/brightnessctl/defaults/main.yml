@@ -1,0 +1,5 @@
+---
+brightnessctl_packages:
+  - brightnessctl
+
+brightnessctl_group: "video"
