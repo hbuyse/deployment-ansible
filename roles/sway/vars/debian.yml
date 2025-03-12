@@ -1,0 +1,6 @@
+---
+sway_packages:
+  - sway
+  - lxsession
+  - thunar
+  - network-manager
