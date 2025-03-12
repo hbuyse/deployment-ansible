@@ -46,7 +46,7 @@
     - name: "Kanshi | Copy service file"
       ansible.builtin.copy:
         src: "kanshi.service"
-        dest: "/usr/local/lib/systemd/user/kanshi.service"
+        dest: "/usr/local/lib/systemd/user"
         mode: "0644"
       tags: kanshi
 

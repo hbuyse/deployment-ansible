@@ -5,7 +5,7 @@
     - wayland-sessions
     - wayland
   block:
-    - name: "Wayland Sessions | Ensure font directory exists [{{ item }}]"
+    - name: "Wayland Sessions | Ensure directory exists"
       ansible.builtin.file:
         path: "/usr/local/lib/systemd/user"
         mode: "0755"
