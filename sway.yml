@@ -17,6 +17,7 @@
       tags: always
   roles:
     - role: "lightdm"
+    - role: "brightnessctl"
     - role: "swaylock"
     - role: "swayidle"
     - role: "sway"
