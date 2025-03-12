@@ -55,7 +55,9 @@
   "backlight": {
     "device": "intel_backlight",
     "format": "{icon}  {percent:>3}%",
-    "format-icons": ["󰹐", "󱩎", "󱩏", "󱩐", "󱩑", "󱩒", "󱩓", "󱩔", "󱩕", "󱩖", "󰛨"]
+    "format-icons": ["󰹐", "󱩎", "󱩏", "󱩐", "󱩑", "󱩒", "󱩓", "󱩔", "󱩕", "󱩖", "󰛨"],
+    "on-scroll-down": "brightnessctl --quiet set 5%-",
+    "on-scroll-up": "brightnessctl --quiet set 5%+"
   },
   "pulseaudio": {
     "format": "{icon} {volume:>3}% {format_source}",
@@ -84,8 +86,9 @@
   "clock": {
     "format": "{:%d/%m %H:%M}",
     "format-alt": "{:%e %b %Y %H:%M:%S}",
-    "tooltip": true,
     "interval": 5,
+{% if ansible_os_family != "Debian" %}
+    "tooltip": true,
     "tooltip-format": "<tt><span size='9pt'>{calendar}</span></tt>",
     "calendar": {
       "mode": "year",
@@ -101,6 +104,7 @@
         "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
       }
     }
+{% endif %}
   },
   "custom/wf-recorder": {
     "format": "{}",

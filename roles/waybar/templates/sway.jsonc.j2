@@ -11,13 +11,15 @@
       "custom/sunset",
       "custom/idle_inhibitor",
       "custom/updates",
+{% if ansible_os_family != "Debian" %}
       "bluetooth",
+{% endif %}
       "backlight",
       "pulseaudio",
       "sway/language",
       "network",
       "clock",
-      "custom/power"
+      "custom/power",
     ],
     "include": ["~/.config/waybar/modules.jsonc"]
   },
@@ -25,16 +27,25 @@
     "layer": "top",
     "position": "bottom",
     "height": 30,
-    "modules-left": ["systemd-failed-units", "privacy"],
+{% if ansible_os_family != "Debian" %}
+    "modules-left": [
+      "systemd-failed-units",
+      "privacy",
+    ],
+{% endif %}
     "modules-right": [
+{% if ansible_os_family != "Debian" %}
       "power-profiles-daemon",
+{% endif %}
 {% for mount in ansible_mounts|selectattr('fstype','in','ext4,vfat')|sort(attribute='mount') %}
       "disk#{{ mount.mount | replace('/', '_')}}",
 {% endfor %}
       "memory",
       "cpu",
       "custom/battery",
-      "tray"
+{% if ansible_os_family != "Debian" %}
+      "tray",
+{% endif %}
     ],
     "include": ["~/.config/waybar/modules.jsonc"]
   }
