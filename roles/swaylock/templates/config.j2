@@ -2,12 +2,14 @@ ignore-empty-password
 font=Iosevka Nerd Font
 #font-size=80
 
+{% if ansible_os_family == "Archlinux" %}
 # clock: Show time and date.
 # timestr: The format string for the time. Defaults to '%T'.
 # datestr: The format string for the date. Defaults to '%a, %x'.
 clock
 timestr=%R
 datestr=%d/%m/%Y
+{% endif %}
 
 # Display the given image, optionally only on the given output.
 # image: [[<output>]:]<path>
@@ -20,6 +22,7 @@ show-keyboard-layout
 # Disable the Caps Lock text.
 disable-caps-lock-text
 
+{% if ansible_os_family == "Archlinux" %}
 # Make the lock screen fade in instead of just popping in.
 #fade-in=0.2
 
@@ -32,6 +35,7 @@ effect-scale=0.3
 
 # Always show the indicator
 indicator
+{% endif %}
 # Sets the indicator radius.
 indicator-radius=150
 # Sets the indicator thickness.
