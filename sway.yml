@@ -16,8 +16,9 @@
           tags: always
       tags: always
   roles:
-    - role: "lightdm"
+    # - role: "lightdm"
     - role: "brightnessctl"
+    - role: "wayland_sessions"
     - role: "swaylock"
     - role: "swayidle"
     - role: "sway"

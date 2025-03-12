@@ -47,16 +47,16 @@
         state: "directory"
         mode: "0755"
 
-    - name: "Waybar | Copy sway service and sway-session target files"
+    - name: "Waybar | Copy service file"
       ansible.builtin.copy:
         src: "waybar.service"
-        dest: "/usr/local/lib/systemd/user/waybar.service"
+        dest: "/usr/local/lib/systemd/user"
         mode: "0644"
 
     - name: "Waybar | Enable service"
       become: false
       ansible.builtin.systemd:
-        name: "waybar"
+        name: "waybar.service"
         daemon_reload: true
         enabled: true
         scope: "user"

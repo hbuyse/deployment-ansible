@@ -3,7 +3,7 @@ Description=mako - Screen locker for Wayland
 Documentation=man:mako(1)
 Documentation=https://github.com/emersion/mako - A lightweight Wayland notification daemon
 PartOf=graphical-session.target
-After=sway-session.target
+After=wayland-session.target
 
 [Service]
 Type=simple
@@ -12,5 +12,5 @@ Restart=on-failure
 RestartSec=5
 
 [Install]
-WantedBy=sway-session.target
+WantedBy=wayland-session.target
 ;  vim: set ts=4 sw=4 tw=0 noet ft=systemd :

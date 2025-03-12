@@ -1,0 +1,21 @@
+---
+- name: "Wayland Sessions | Create wayland session service files"
+  become: true
+  tags:
+    - wayland-sessions
+    - wayland
+  block:
+    - name: "Wayland Sessions | Ensure font directory exists [{{ item }}]"
+      ansible.builtin.file:
+        path: "/usr/local/lib/systemd/user"
+        mode: "0755"
+        state: directory
+
+    - name: "Wayland Sessions | Download wayland sessions service files"
+      ansible.builtin.get_url:
+        url: "{{ item }}"
+        dest: "/usr/local/lib/systemd/user"
+        mode: "0644"
+      loop:
+        - "https://raw.githubusercontent.com/xdbob/sway-services/refs/heads/master/systemd/wayland-session-pre.target"
+        - "https://raw.githubusercontent.com/xdbob/sway-services/refs/heads/master/systemd/wayland-session.target"

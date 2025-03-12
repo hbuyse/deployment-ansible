@@ -10,16 +10,26 @@
     - /usr/share/wayland-sessions
     - /usr/local/bin
 
-- name: "Sway | Copy sway service and sway-session target files"
+- name: "Sway | Create sway service and sway-session target files"
   become: true
-  ansible.builtin.copy:
-    src: "service/{{ item }}"
-    dest: /usr/local/lib/systemd/user/
-    mode: "0644"
-  loop:
-    - sway.service
-    - sway-session.target
-    - lxpolkit.service
+  block:
+    - name: "Sway | Copy sway and lxpolkit service files"
+      ansible.builtin.copy:
+        src: "service/{{ item }}"
+        dest: /usr/local/lib/systemd/user/
+        mode: "0644"
+      loop:
+        - sway.service
+        - lxpolkit.service
+
+    - name: "Sway | Copy sway and lxpolkit service files"
+      ansible.builtin.get_url:
+        url: "{{ item }}"
+        dest: /usr/local/lib/systemd/user/
+        mode: "0644"
+      loop:
+        - "https://raw.githubusercontent.com/xdbob/sway-services/refs/heads/master/systemd/sway-session-pre.target"
+        - "https://raw.githubusercontent.com/xdbob/sway-services/refs/heads/master/systemd/sway-session.target"
 
 # Copy the wayland session file at the "normal" place otherwise in /usr/local it is not seen
 - name: "Sway | Copy wayland-session file for sway"
