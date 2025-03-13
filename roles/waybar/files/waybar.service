@@ -6,7 +6,7 @@ PartOf=wayland-session.target
 After=wayland-session.target
 
 [Service]
-ExecStart=waybar -c %h/.config/waybar/${XDG_CURRENT_DESKTOP}.jsonc -s %h/.config/waybar/style.css
+ExecStart=/usr/bin/waybar -c %h/.config/waybar/${XDG_CURRENT_DESKTOP}.jsonc -s %h/.config/waybar/style.css
 ExecReload=kill -USR2 $MAINPID
 Restart=on-failure
 RestartSec=5
