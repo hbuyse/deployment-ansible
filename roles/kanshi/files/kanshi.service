@@ -1,6 +1,7 @@
 [Unit]
 Description=Dynamic output configuration
 Documentation=man:kanshi(1)
+Documentation=https://github.com/emersion/kanshi
 ConditionPathExists=%h/.config/kanshi/config
 PartOf=wayland-session.target
 Requires=wayland-session.target
