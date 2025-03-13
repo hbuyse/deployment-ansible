@@ -1,8 +1,8 @@
 [Unit]
-Description=mako - Screen locker for Wayland
+Description=mako - A lightweight Wayland notification daemon
 Documentation=man:mako(1)
-Documentation=https://github.com/emersion/mako - A lightweight Wayland notification daemon
-PartOf=graphical-session.target
+Documentation=https://github.com/emersion/mako
+PartOf=wayland-session.target
 After=wayland-session.target
 
 [Service]
