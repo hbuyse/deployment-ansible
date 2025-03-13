@@ -1,0 +1,72 @@
+---
+- name: "Nextcloud | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: nextcloud
+
+- name: "Nextcloud | Install packages"
+  become: true
+  when: nextcloud_packages is defined
+  ansible.builtin.package:
+    name: "{{ nextcloud_packages }}"
+    state: present
+  tags: nextcloud
+
+- name: "Nextcloud | Install AppImage"
+  become: true
+  when: nextcloud_packages is not defined
+  tags: nextcloud
+  block:
+    - name: "Nextcloud | Get latest version number"
+      register: latest_json
+      ansible.builtin.uri:
+        url: "https://api.github.com/repos/nextcloud-releases/desktop/releases/latest"
+        method: GET
+        return_content: true
+        status_code: 200
+        body_format: json
+
+    - name: "Nextcloud | Set facts"
+      ansible.builtin.set_fact:
+        nextcloud_latest_version: "{{ latest_json.json.tag_name[1:] }}"
+
+    - name: "Nextcloud | Download AppImage"
+      ansible.builtin.get_url:
+        url:
+          "https://github.com/nextcloud-releases/desktop/releases/download/v{{ nextcloud_latest_version }}/\
+          Nextcloud-{{ nextcloud_latest_version }}-x86_64.AppImage"
+        dest: "/usr/local/bin/nextcloud"
+        mode: "0755"
+
+    - name: "Nextcloud | Copy desktop file"
+      ansible.builtin.copy:
+        src: "nextcloud.desktopclient.desktop"
+        dest: "/usr/local/share/applications"
+        mode: "0755"
+
+- name: "Nextcloud | Start service file"
+  become: true
+  tags: nextcloud
+  block:
+    - name: "Nextcloud | Ensure directory exists"
+      ansible.builtin.file:
+        path: "/usr/local/lib/systemd/user"
+        state: directory
+        mode: "0755"
+
+    - name: "Nextcloud | Copy service file"
+      ansible.builtin.copy:
+        src: "nextcloud.service"
+        dest: "/usr/local/lib/systemd/user"
+        mode: "0644"
+
+    - name: "Nextcloud | Enable service"
+      become: false
+      ansible.builtin.systemd:
+        name: "nextcloud"
+        daemon_reload: true
+        enabled: true
+        scope: "user"

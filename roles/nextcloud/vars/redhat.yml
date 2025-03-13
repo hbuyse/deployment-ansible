@@ -1,0 +1,3 @@
+---
+nextcloud_packages:
+  - nextcloud-client
