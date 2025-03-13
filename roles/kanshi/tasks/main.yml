@@ -44,8 +44,8 @@
         mode: "0755"
 
     - name: "Kanshi | Copy service file"
-      ansible.builtin.copy:
-        src: "kanshi.service"
+      ansible.builtin.get_url:
+        url: "https://raw.githubusercontent.com/xdbob/sway-services/refs/heads/master/systemd/kanshi.service"
         dest: "/usr/local/lib/systemd/user"
         mode: "0644"
       tags: kanshi
