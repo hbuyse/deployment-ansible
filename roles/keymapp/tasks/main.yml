@@ -7,7 +7,7 @@
       skip: true
   tags: keymapp
 
-- name: "Keymapp | Install dependencies [{{ ansible_dependencies }}]"
+- name: "Keymapp | Install dependencies"
   become: true
   ansible.builtin.package:
     state: present
