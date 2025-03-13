@@ -1,6 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 
-# # robustness: if the previous graphical session left some failed units,
+# TODO: error handling
+
+# From: https://people.debian.org/~mpitt/systemd.conf-2016-graphical-session.pdf
+
+# robustness: if the previous graphical session left some failed units,
 # reset them so that they don't break this startup
 for unit in $(systemctl --user --no-legend --state=failed --plain list-units | cut -f1 -d' '); do
     partof="$(systemctl --user show -p PartOf --value "$unit")"
@@ -12,33 +16,24 @@ for unit in $(systemctl --user --no-legend --state=failed --plain list-units | c
     done
 done
 
-# Session
-export XDG_SESSION_TYPE=wayland
-export XDG_SESSION_DESKTOP=sway
+# /etc/profile contains a lot of important environment variables
+source /etc/profile
+
 export XDG_CURRENT_DESKTOP=sway
 
-set -a
+# save environment variables that will be added to systemd
+new_env=$(systemctl --user show-environment | cut -d'=' -f 1 | sort | comm -13 - <(env | cut -d'=' -f 1 | sort))
 
-# Import openSUSEway environment variables
-if [ -f /etc/sway/env ]; then
-    . /etc/sway/env
-fi
+# import environment variables from the login manager
+systemctl --user import-environment $new_env
 
-# Import environment.d variables by calling the systemd generator
-if [ -f /usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator ]; then
-    eval "$(/usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator)"
-fi
-set +a
-
-# Set dependencies to run with proprietary drivers
+# then start the service
 if grep -qE "nvidia|fglrx" /proc/modules; then
     export WLR_NO_HARDWARE_CURSORS=1
-    unsupported_gpu="--unsupported-gpu"
+    systemctl --wait --user start sway-unsupported-gpu.service
 else
-    unsupported_gpu=""
+    systemctl --wait --user start sway.service
 fi
 
-# Start the Sway session
-systemctl --user start sway-session.target
-
-systemd-cat --identifier=sway sway $unsupported_gpu $@
+# cleanup environment
+systemctl --user unset-environment $new_env
