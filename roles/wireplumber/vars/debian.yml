@@ -1,0 +1,6 @@
+---
+wireplumber_packages:
+  - pipewire
+  - pipewire-pulse
+  - wireplumber
+  - wireplumber-doc

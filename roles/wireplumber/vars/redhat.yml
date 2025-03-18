@@ -1,0 +1,8 @@
+---
+wireplumber_packages:
+  - pipewire
+  - pipewire-alsa
+  - pipewire-jack-audio-connection-kit
+  - pipewire-pulse
+  - wireplumber
+  - wireplumber-doc
