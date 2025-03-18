@@ -1,6 +1,7 @@
 ---
 wireplumber_packages:
   - pipewire
-  - pipewire-pulse
+  - pipewire-audio-client-libraries
+  - pulseaudio-utils
   - wireplumber
   - wireplumber-doc

@@ -1,0 +1,56 @@
+---
+- name: "Wireplumber | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags:
+    - wireplumber
+
+- name: "Wireplumber | Install packages"
+  ansible.builtin.package:
+    name: "{{ wireplumber_packages }}"
+    state: "present"
+  when: wireplumber_packages is not defined
+  tags:
+    - wireplumber
+
+- name: "Wireplumber | Stop PulseAudio"
+  ansible.builtin.systemd:
+    name: "pulseaudio"
+    state: "stopped"
+    scope: "user"
+  tags:
+    - wireplumber
+
+- name: "Wireplumber | Disable PulseAudio service"
+  ansible.builtin.systemd:
+    name: "pulseaudio"
+    enabled: false
+    scope: "user"
+  tags:
+    - wireplumber
+
+# - name: "Wireplumber | Uninstall PulseAudio"
+#   ansible.builtin.packages:
+#     name: "pulseaudio"
+#     state: "absent"
+#   tags:
+#     - wireplumber
+
+- name: "Wireplumber | Enable Pipewire service "
+  ansible.builtin.systemd:
+    name: "pipewire"
+    enabled: false
+    scope: "user"
+  tags:
+    - wireplumber
+
+- name: "Wireplumber | Enable Wireplumber service"
+  ansible.builtin.systemd:
+    name: "wireplumber"
+    enabled: false
+    scope: "user"
+  tags:
+    - wireplumber
