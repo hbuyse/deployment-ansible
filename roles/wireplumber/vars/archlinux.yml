@@ -9,3 +9,5 @@ wireplumber_packages:
   - pipewire-v4l2
   - wireplumber
   - wireplumber-docs
+  - xdg-desktop-portal-wlr
+  - xdg-desktop-portal-gtk
