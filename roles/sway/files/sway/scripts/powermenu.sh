@@ -2,7 +2,7 @@
 
 function lock() {
     case "${XDG_SESSION_TYPE}-${XDG_SESSION_DESKTOP}" in
-    "wayland-sway" | "wayland-sway-session")
+    "wayland-sway"*)
         systemctl --user kill --signal USR1 swayidle.service
         ;;
     "wayland-hyprland")
@@ -11,12 +11,15 @@ function lock() {
     "x11-i3")
         xautolock -locknow
         ;;
+    *)
+        echo "Unknown case: ${XDG_SESSION_TYPE}-${XDG_SESSION_DESKTOP}"
+        ;;
     esac
 }
 
 function logout() {
     case "${XDG_SESSION_TYPE}-${XDG_SESSION_DESKTOP}" in
-    "wayland-sway" | "wayland-sway-session")
+    "wayland-sway"*)
         swaymsg exit
         ;;
     "wayland-hyprland")
@@ -24,6 +27,9 @@ function logout() {
         ;;
     "x11-i3")
         i3-msg exit
+        ;;
+    *)
+        echo "Unknown case: ${XDG_SESSION_TYPE}-${XDG_SESSION_DESKTOP}"
         ;;
     esac
 }
