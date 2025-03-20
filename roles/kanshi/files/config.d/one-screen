@@ -1,0 +1,11 @@
+# Profile used in Virtual Machine
+profile virtual {
+	output "Virtual-1" enable mode 1600x900@60Hz position 0,0
+	exec ~/.config/kanshi/notify.sh 'virtual'
+}
+
+# Profile used when having only the monitor from the laptop
+profile laptop-one-screen {
+	output "eDP-1" enable mode 1920x1080@60Hz position 0,0
+	exec ~/.config/kanshi/notify.sh 'laptop-one-screen'
+}

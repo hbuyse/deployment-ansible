@@ -24,13 +24,19 @@
     - name: "Kanshi | Copy configuration"
       ansible.builtin.copy:
         src: "config"
-        dest: "{{ ansible_user_dir }}/.config/kanshi/config"
+        dest: "{{ ansible_user_dir }}/.config/kanshi"
+        mode: "0644"
+
+    - name: "Kanshi | Copy configuration"
+      ansible.builtin.copy:
+        src: "config.d"
+        dest: "{{ ansible_user_dir }}/.config/kanshi"
         mode: "0644"
 
     - name: "Kanshi | Copy notify hook script"
       ansible.builtin.copy:
         src: "notify.sh"
-        dest: "{{ ansible_user_dir }}/.config/kanshi/notify.sh"
+        dest: "{{ ansible_user_dir }}/.config/kanshi"
         mode: "0755"
 
 - name: "Kanshi | Install service file"
