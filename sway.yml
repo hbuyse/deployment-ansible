@@ -27,3 +27,4 @@
     - role: "mako"
     - role: "wofi"
     - role: "nextcloud"
+    - role: "wireplumber"
