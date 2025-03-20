@@ -8,49 +8,61 @@
   tags:
     - wireplumber
 
+- name: "Wireplumber | Uninstall pipewire-media-session"
+  become: true
+  ansible.builtin.package:
+    name: "pipewire-media-session"
+    state: "absent"
+  tags:
+    - wireplumber
+
+- name: "Wireplumber | Uninstall pipewire-media-session-docs"
+  become: true
+  ansible.builtin.package:
+    name: "pipewire-media-session-docs"
+    state: "absent"
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags:
+    - wireplumber
+
 - name: "Wireplumber | Install packages"
+  become: true
   ansible.builtin.package:
     name: "{{ wireplumber_packages }}"
     state: "present"
-  when: wireplumber_packages is not defined
+  when: wireplumber_packages is defined
   tags:
     - wireplumber
 
 - name: "Wireplumber | Stop PulseAudio"
   ansible.builtin.systemd:
-    name: "pulseaudio"
+    name: "pulseaudio.{{ item }}"
+    enabled: false
     state: "stopped"
     scope: "user"
-  tags:
-    - wireplumber
-
-- name: "Wireplumber | Disable PulseAudio service"
-  ansible.builtin.systemd:
-    name: "pulseaudio"
-    enabled: false
-    scope: "user"
+  loop:
+    - socket
+    - service
   tags:
     - wireplumber
 
 # - name: "Wireplumber | Uninstall PulseAudio"
+#   become: true
 #   ansible.builtin.packages:
 #     name: "pulseaudio"
 #     state: "absent"
 #   tags:
 #     - wireplumber
 
-- name: "Wireplumber | Enable Pipewire service "
+- name: "Wireplumber | Enable Pipewire and Wireplumber services"
   ansible.builtin.systemd:
     name: "pipewire"
-    enabled: false
+    enabled: true
+    state: "started"
     scope: "user"
-  tags:
-    - wireplumber
-
-- name: "Wireplumber | Enable Wireplumber service"
-  ansible.builtin.systemd:
-    name: "wireplumber"
-    enabled: false
-    scope: "user"
+  loop:
+    - "pipewire"
+    - "pipewire-pulse"
+    - "wireplumber"
   tags:
     - wireplumber
