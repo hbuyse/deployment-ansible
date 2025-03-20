@@ -1,9 +1,31 @@
 ---
-- name: "Web Browsers | Import OS specific variables"
-  ansible.builtin.include_vars: "{{ ansible_os_family | lower }}.yml"
+- name: "Web Browsers | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
   tags:
     - web
     - browser
+    - browsers
+
+- name: "Web Browsers | Include OS specific tasks"
+  ansible.builtin.include_tasks:
+    file: "{{ item }}"
+    apply:
+      tags:
+        - web
+        - browser
+        - browsers
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags:
+    - web
+    - browser
+    - browsers
 
 - name: "Web Browsers | Install from package manager"
   become: true
@@ -13,3 +35,4 @@
   tags:
     - web
     - browser
+    - browsers

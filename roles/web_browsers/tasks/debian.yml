@@ -1,0 +1,32 @@
+---
+- name: "Web Browsers | Remove firefox installation as snap"
+  become: true
+  community.general.snap:
+    name: firefox
+    state: absent
+  register: snap_uninstall
+
+- name: "Web Browsers | Reinstall firefox as debian package" # no-qa: no-handler
+  become: true
+  when: snap_uninstall.changed # noqa: no-handler
+  block:
+    - name: "Web Browsers | Uninstall Firefox debian package"
+      ansible.builtin.package:
+        name: firefox
+        state: absent
+
+    - name: "Web Browsers | Add Mozilla deb repository"
+      ansible.builtin.deb822_repository:
+        name: mozilla
+        types: deb
+        uris: "https://packages.mozilla.org/apt"
+        suites: "mozilla"
+        components:
+          - main
+        signed_by: "https://packages.mozilla.org/apt/repo-signing-key.gpg"
+
+    - name: "Web Browsers | Add preferences file for Firefox"
+      ansible.builtin.copy:
+        src: "preferences"
+        dest: "/etc/apt/preferences.d/firefox-deb-nosnap"
+        mode: "0644"
