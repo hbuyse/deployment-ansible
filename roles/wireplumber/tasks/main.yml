@@ -36,13 +36,14 @@
 
 - name: "Wireplumber | Stop PulseAudio"
   ansible.builtin.systemd:
-    name: "pulseaudio.{{ item }}"
+    name: "{{ item }}"
     enabled: false
     state: "stopped"
     scope: "user"
+  when: "item in services"
   loop:
-    - socket
-    - service
+    - pulseaudio.socket
+    - pulseaudio.service
   tags:
     - wireplumber
 
