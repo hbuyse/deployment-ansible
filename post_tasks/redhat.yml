@@ -1,0 +1,13 @@
+---
+- name: "Post-tasks | Update distro [{{ ansible_os_family }}]"
+  become: true
+  block:
+    - name: "Post-tasks | Upgrade packages to latest version [{{ ansible_os_family }}]"
+      ansible.builtin.dnf:
+        name: "*"
+        state: latest
+        update_cache: true
+
+    - name: "Post-tasks | Clean cache of downloaded packages [{{ ansible_os_family }}]"
+      ansible.builtin.shell:
+        cmd: "dnf clean all"
