@@ -4,6 +4,9 @@
     alt_arch: "{{ ansible_machine | replace('x86_64', 'amd64') | replace('aarch64', 'arm64') }}"
   tags: always
 
+- name: "Pre-tasks | Get list of services"
+  ansible.builtin.service_facts:
+
 - name: "Pre-tasks | Run some OS specific tasks [{{ ansible_os_family }}]"
   ansible.builtin.include_tasks:
     file: "{{ item }}"
