@@ -1,3 +1,5 @@
 ---
 nextcloud_packages:
   - nextcloud-client
+  - gnome-keyring
+  - seahorse

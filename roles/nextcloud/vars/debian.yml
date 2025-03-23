@@ -1,2 +1,5 @@
 ---
 nextcloud_appimage: true
+nextcloud_packages:
+  - gnome-keyring
+  - seahorse
