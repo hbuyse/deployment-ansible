@@ -1,0 +1,6 @@
+- name: "Nextcloud | Add PPA"
+  become: true
+  ansible.builtin.apt_repository:
+    repo: "ppa:nextcloud-devs/client"
+    codename: "{{ ansible_distribution_release | lower }}"
+    update_cache: true

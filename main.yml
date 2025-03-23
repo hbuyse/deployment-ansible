@@ -49,3 +49,4 @@
     - role: "python"
     - role: "zellij"
     - role: "keymapp"
+    - role: "nextcloud"
