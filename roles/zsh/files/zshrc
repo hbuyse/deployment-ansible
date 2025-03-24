@@ -157,3 +157,20 @@ precmd_pipe_message_to_zjswitcher() {
     [[ -n "$ZELLIJ" ]] && zellij pipe --name Event::CommandUpdate -- $SHELL
 }
 add-zsh-hook precmd precmd_pipe_message_to_zjswitcher
+
+zellij_rename_tab() {
+	if [[ -n "${ZELLIJ}" ]] && [[ -n "${1}" ]]; then
+		command nohup zellij action rename-tab "${1}" >/dev/null 2>&1
+	fi
+}
+
+preexec_rename_zellij_tab() {
+	local name="$(echo "${1}" | awk '{print $1}')"
+	zellij_rename_tab "${name}"
+}
+add-zsh-hook preexec preexec_rename_zellij_tab
+
+precmd_rename_zellij_tab() {
+	zellij_rename_tab "zsh"
+}
+add-zsh-hook precmd precmd_rename_zellij_tab
