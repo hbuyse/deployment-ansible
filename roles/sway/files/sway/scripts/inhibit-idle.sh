@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 status() {
-    pgrep -f "systemd-inhibit --what=idle" > /dev/null 2>&1
+    pgrep -lf "systemd-inhibit --what=idle" | grep -v 'pgrep' > /dev/null 2>&1
     return $?
 }
 
