@@ -1,0 +1,10 @@
+---
+wireplumber_packages:
+  - pipewire
+  - pipewire-pulseaudio
+  - pipewire-utils
+  - pulseaudio-utils
+  - wireplumber
+  - wireplumber-doc
+  - xdg-desktop-portal-wlr
+  - xdg-desktop-portal-gtk

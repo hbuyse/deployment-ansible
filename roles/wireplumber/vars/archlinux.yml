@@ -1,0 +1,13 @@
+---
+wireplumber_packages:
+  - pipewire
+  - pipewire-alsa
+  - pipewire-audio
+  - pipewire-docs
+  - pipewire-jack
+  - pipewire-pulse
+  - pipewire-v4l2
+  - wireplumber
+  - wireplumber-docs
+  - xdg-desktop-portal-wlr
+  - xdg-desktop-portal-gtk
