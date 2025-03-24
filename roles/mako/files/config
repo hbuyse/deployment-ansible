@@ -28,10 +28,11 @@ border-color=#fab387
 border-color=#f38ba8
 ignore-timeout=1
 
-[app-name="Spotify"]
+[desktop-entry="com.spotify.Client"]
 background-color=#191414
 text-color=#ffffff
 border-color=#1db954
+border-size=2
 
 [mode=do-not-disturb]
 invisible=1
