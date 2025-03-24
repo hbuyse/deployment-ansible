@@ -46,3 +46,15 @@
   tags:
     - oh_my_posh
     - shell
+
+- name: "Oh My Posh | Clear cache"
+  ansible.builtin.command:
+    argv:
+      - oh-my-posh
+      - cache
+      - clear
+  register: output
+  changed_when: output.rc == 0
+  tags:
+    - oh_my_posh
+    - shell
