@@ -29,28 +29,57 @@
         dest: "{{ ansible_user_dir }}/.config/mako/config"
         mode: "0644"
 
-- name: "Mako | Install service file"
+- name: "Mako | Check if AppArmor profile exists"
+  ansible.builtin.stat:
+    path: "/etc/apparmor.d/fr.emersion.Mako"
+  register: profile_result
+  tags: mako
+
+- name: "Mako | Disable AppArmor profile"
   become: true
+  when: profile_result.stat.exists
+  tags: mako
+  block:
+    - name: "Mako | Link AppArmor profile to 'disable' folder"
+      ansible.builtin.file:
+        src: "/etc/apparmor.d/fr.emersion.Mako"
+        dest: "/etc/apparmor.d/disable/fr.emersion.Mako"
+        state: "link"
+
+    - name: "Mako | Restart AppArmor service"
+      ansible.builtin.systemd:
+        name: "apparmor"
+        state: "restarted"
+
+- name: "Mako | Install service file"
   tags: mako
   block:
     - name: "Mako | Ensure directory exist"
+      become: true
       ansible.builtin.file:
         path: "/usr/local/lib/systemd/user/"
         state: directory
         mode: "0755"
 
     - name: "Mako | Copy service file"
+      become: true
       ansible.builtin.copy:
         src: "mako.service"
         dest: "/usr/local/lib/systemd/user/mako.service"
         mode: "0644"
       tags: mako
 
+    - name: "Mako | Disable 'dunst' service if exists"
+      ansible.builtin.systemd:
+        name: "dunst"
+        enabled: false
+        state: "stopped"
+        scope: user
+
     - name: "Mako | Enable service"
-      become: false
       ansible.builtin.systemd:
         name: "mako"
         daemon_reload: true
         enabled: true
+        state: "started"
         scope: user
-      tags: mako
