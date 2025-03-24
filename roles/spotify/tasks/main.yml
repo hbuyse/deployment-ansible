@@ -1,0 +1,16 @@
+---
+- name: "Spotify | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: spotify
+
+- name: "Spotify | Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ spotify_packages }}"
+    state: present
+  tags: spotify
+
