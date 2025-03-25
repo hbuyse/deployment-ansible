@@ -33,9 +33,12 @@ rl = reflog --pretty=reflog
 change-commits = "!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \"if [[ \\\"$`echo $VAR`\\\" = '$OLD' ]]; then export $VAR='$NEW'; fi\" $@; }; f"
 
 [pretty]
-logger = %C(red)%h%C(reset) -%C(yellow)%d%C(reset) %s %C(green)(%cr) %C(bold blue)<%an>%C(reset)
+logger = %C(red)%h%C(reset) - %C(green)%cd%C(reset) -%C(yellow)%d%C(reset) %s %C(bold blue)<%an>%C(reset)
 # reflog, with relative date:
 reflog = %C(auto)%h %<|(17)%gd %C(blue)%ci%C(reset) %gs
+
+[log]
+date = format-local:%d/%m/%Y %H:%M
 
 [fetch]
 # If true, fetch will automatically behave as if the --prune option was given on the command line.
