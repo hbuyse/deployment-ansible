@@ -50,3 +50,4 @@
     - role: "zellij"
     - role: "keymapp"
     - role: "nextcloud"
+    - role: "spotify"
