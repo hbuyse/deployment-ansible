@@ -4,3 +4,6 @@ sway_packages:
   - lxsession-gtk3
   - thunar
   - networkmanager
+  # Screenshots
+  - grim
+  - slurp

@@ -4,3 +4,6 @@ sway_packages:
   - lxsession
   - thunar
   - network-manager
+  # Screenshots
+  - grim
+  - slurp
