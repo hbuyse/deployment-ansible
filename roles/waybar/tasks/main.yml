@@ -59,6 +59,7 @@
         name: "waybar.service"
         daemon_reload: true
         enabled: true
+        state: "restarted"
         scope: "user"
       tags: waybar
 
