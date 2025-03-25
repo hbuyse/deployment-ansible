@@ -160,8 +160,8 @@ label:focus {
 }
 
 #network.disconnected {
-  background: @theme_bg_color;
-  color: @wm_icon_bg;
+  color: @surface2;
+  text-decoration: line-through;
 }
 
 #pulseaudio.muted {
@@ -185,6 +185,10 @@ label:focus {
 
 #network {
   border-bottom-color: @teal;
+}
+
+#network.wifi {
+  border-bottom-color: @mauve;
 }
 
 #memory {

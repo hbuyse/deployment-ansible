@@ -17,7 +17,9 @@
       "backlight",
       "pulseaudio",
       "sway/language",
-      "network",
+{% for interface in ansible_facts | dict2items | selectattr('value.module', 'defined') | map(attribute='value') | list | sort(attribute='device') %}
+      "network#{{ interface.device }}",
+{% endfor %}
       "clock",
       "custom/power",
     ],
