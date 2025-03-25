@@ -74,15 +74,19 @@
     "on-click-middle": "swaymsg exec '$volume_mute'",
     "on-click-right": "swaymsg exec 'pavucontrol'"
   },
-  "network": {
-    "format-wifi": "{icon}  {ipaddr}",
-    "format-ethernet": "  {ipaddr}",
-    "format-disconnected": "",
-    "tooltip-format-wifi": "{ifname} on {essid}",
-    "tooltip-format": "󰩟  {ipaddr}\n󱀣  {netmask}\n󱂇  {gwaddr}",
+{% for interface in ansible_facts | dict2items | selectattr('value.module', 'defined') | map(attribute='value') | list | sort(attribute='device') %}
+  "network#{{ interface.device }}": {
+    "interface": "{{ interface.device }}",
+    "format-wifi": "{icon}  {ifname}: {ipaddr}",
+    "format-ethernet": "  {ifname}: {ipaddr}",
+    "format-disconnected": "  {ifname}",
+    "tooltip-format-wifi": "Connected on {essid} (Freq: {frequency})\nSignal: {signalStrength}\n\n󰩟  {ipaddr}\n󱀣  {netmask} ({cidr})\n󱂇  {gwaddr}\n\nUp: {bandwidthUpOctets}\nDown: {bandwidthDownOctets}",
+    "tooltip-format-disconnected": "Disconnected",
+    "tooltip-format": "󰩟  {ipaddr}\n󱀣  {netmask} ({cidr})\n󱂇  {gwaddr}\n\nUp: {bandwidthUpOctets}\nDown: {bandwidthDownOctets}",
     "on-click": "swaymsg exec '$term -e nmtui'",
     "format-icons": ["󰤟", "󰤢", "󰤥", "󰤨", "󰤨"]
   },
+{% endfor %}
   "clock": {
     "format": "{:%d/%m %H:%M}",
     "format-alt": "{:%e %b %Y %H:%M:%S}",
