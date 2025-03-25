@@ -7,10 +7,22 @@
       skip: true
   tags: spotify
 
+- name: "Spotify | Include OS specific tasks"
+  ansible.builtin.include_tasks:
+    file: "{{ item }}"
+    apply:
+      tags: spotify
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: spotify
+
 - name: "Spotify | Install from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ spotify_packages }}"
     state: present
+    update_cache: true
+  when: spotify_packages is defined
   tags: spotify
-
