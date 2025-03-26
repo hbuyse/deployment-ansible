@@ -18,6 +18,7 @@
     - name: "Web Browsers | Add Mozilla deb repository"
       ansible.builtin.deb822_repository:
         name: mozilla
+        enabled: true
         types: deb
         uris: "https://packages.mozilla.org/apt"
         suites: "mozilla"

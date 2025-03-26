@@ -3,6 +3,7 @@
   become: true
   ansible.builtin.deb822_repository:
     name: vscode
+    enabled: true
     types: deb
     uris: "https://packages.microsoft.com/repos/code"
     suites: "stable"

@@ -3,6 +3,7 @@
   become: true
   ansible.builtin.deb822_repository:
     name: "llvm"
+    enabled: true
     types: deb
     uris: "http://apt.llvm.org/{{ ansible_distribution_release }}"
     suites: "llvm-toolchain-{{ ansible_distribution_release }}-{{ clang_llvm_stable_version }}"
