@@ -5,6 +5,7 @@ After=network-online.target
 Wants=network-online.target systemd-networkd-wait-online.service
 
 [Service]
+Environment="XDG_CURRENT_DESKTOP=Unity"
 ExecStart=nextcloud --background
 Restart=on-failure
 RestartSec=5s

@@ -1,6 +1,10 @@
 - name: "Nextcloud | Add PPA"
   become: true
-  ansible.builtin.apt_repository:
-    repo: "ppa:nextcloud-devs/client"
-    codename: "{{ ansible_distribution_release | lower }}"
-    update_cache: true
+  ansible.builtin.deb822_repository:
+    name: nextcloud-devs
+    enabled: true
+    types: deb
+    uris: "https://ppa.launchpadcontent.net/nextcloud-devs/client/ubuntu"
+    suites: "{{ ansible_distribution_release | lower }}"
+    components:
+      - main

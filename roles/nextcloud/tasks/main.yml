@@ -24,6 +24,7 @@
   ansible.builtin.package:
     name: "{{ nextcloud_packages }}"
     state: present
+    update_cache: true
   tags: nextcloud
 
 - name: "Nextcloud | Start service file"
