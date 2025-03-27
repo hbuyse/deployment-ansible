@@ -1,20 +1,14 @@
 ---
-- name: "Docker | Install dependencies [Debian]"
+- name: "Docker | Install repository [Debian]"
   become: true
-  ansible.builtin.package:
-    state: present
-    name: "{{ docker_dependencies }}"
-
-- name: "Docker | Add deb repository - modern"
-  when: ansible_version.full >= "2.15.0"
-  ansible.builtin.include_tasks:
-    file: debian-modern.yml
-    apply:
-      tags: docker
-
-- name: "Docker | Add deb repository - legacy"
-  when: ansible_version.full < "2.15.0"
-  ansible.builtin.include_tasks:
-    file: debian-legacy.yml
-    apply:
-      tags: docker
+  ansible.builtin.deb822_repository:
+    name: docker
+    enabled: true
+    types: deb
+    uris: "https://download.docker.com/linux/{{ ansible_distribution | lower }}"
+    suites: "{{ ansible_distribution_release }}"
+    components:
+      - stable
+    architectures:
+      - "{{ deb_arch }}"
+    signed_by: "https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg"

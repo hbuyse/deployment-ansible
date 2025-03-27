@@ -1,14 +1,10 @@
 ---
-- name: "Podman | Add deb repository - modern"
-  when: ansible_version.full >= "2.15.0"
-  ansible.builtin.include_tasks:
-    file: debian-modern.yml
-    apply:
-      tags: podman
-
-- name: "Podman | Add deb repository - legacy"
-  when: ansible_version.full < "2.15.0"
-  ansible.builtin.include_tasks:
-    file: debian-legacy.yml
-    apply:
-      tags: podman
+- name: "Podman | Install repository [Debian]"
+  become: true
+  ansible.builtin.deb822_repository:
+    name: "podman"
+    enabled: true
+    types: deb
+    uris: "https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu_{{ ansible_distribution_version }}"
+    suites: "/"
+    signed_by: "https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu_{{ ansible_distribution_version }}/Release.key"
