@@ -18,7 +18,6 @@
     RUSTUP_HOME: "{{ ansible_user_dir }}/.rustup"
     CARGO_HOME: "{{ ansible_user_dir }}/.cargo"
     PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"
-  register: install
   notify:
     - "Bat | Install assets"
   when: bat_packages is not defined
