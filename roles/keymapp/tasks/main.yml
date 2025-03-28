@@ -49,6 +49,20 @@
       mode: "0644"
   tags: keymapp
 
+- name: "Keymapp | Rename icon file"
+  tags: keymapp
+  block:
+    - name: "Keymapp | Copy icon file"
+      ansible.builtin.copy:
+        src: "{{ keymapp_icons_dir }}/icon.png"
+        dest: "{{ keymapp_icons_dir }}/keymapp.png"
+        mode: "0644"
+
+    - name: "Keymapp | Remove old icon file"
+      ansible.builtin.file:
+        path: "{{ keymapp_icons_dir }}/icon.png"
+        state: absent
+
 - name: "Keymapp | Copy desktop file"
   ansible.builtin.copy:
     src: "keymapp.desktop"
