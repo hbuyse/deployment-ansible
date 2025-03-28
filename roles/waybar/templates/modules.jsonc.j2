@@ -141,14 +141,14 @@
   },
   "custom/weather": {
     "icon-size": 42,
-    "format": "{0}  {icon} ",
+    "format": "{0} <span font-family='Noto Color Emoji'>{icon}</span>",
     "tooltip": true,
     "interval": 3600,
     "exec": "~/.config/waybar/scripts/.venv/bin/python ~/.config/waybar/scripts/weather.py --city=Paris --temperature=C",
     "return-type": "json",
     "format-icons": {
       "Unknown": "✨",
-      "Cloudy": "",
+      "Cloudy": "☁️",
       "Fog": "🌫",
       "HeavyRain": "🌧",
       "HeavyShowers": "🌧",
@@ -165,7 +165,7 @@
       "ThunderyHeavyRain": "🌩",
       "ThunderyShowers": "⛈",
       "ThunderySnowShowers": "⛈",
-      "VeryCloudy": ""
+      "VeryCloudy": "☁️",
     }
   },
   "custom/updates": {

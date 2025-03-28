@@ -30,7 +30,7 @@ WEATHER_SYMBOL = {
     "ThunderyHeavyRain":   "🌩",
     "ThunderyShowers":     "⛈",
     "ThunderySnowShowers": "⛈",
-    "VeryCloudy": "☁️",
+    "VeryCloudy":          "☁️",
 }
 
 WWO_CODE = {
