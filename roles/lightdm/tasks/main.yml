@@ -15,21 +15,20 @@
     state: present
   tags: lightdm
 
-- name: "LightDM | Update configuration"
+- name: "LightDM | Copy configuration"
   become: true
-  ansible.builtin.lineinfile:
-    path: /etc/lightdm/lightdm-gtk-greeter.conf
-    line: "{{ item.key }}={{ item.value }}"
-    insertafter: "^#{{ item.key }}="
-  loop:
-    - key: "background"
-      value: "/usr/local/share/backgrounds/wallpaper.png"
-    - key: "user-background"
-      value: "true"
-    - key: "theme-name"
-      value: "Materia-dark-compact"
-    - key: "icon-theme-name"
-      value: "Papirus-Dark"
-    - key: "font-name"
-      value: "Iosevka Nerd Font Regular 10"
   tags: lightdm
+  block:
+    - name: "LightDM | Ensure config directory exists"
+      ansible.builtin.file:
+        path: "/etc/lightdm"
+        state: directory
+        mode: "0755"
+
+    - name: "LightDM | Update configuration"
+      ansible.builtin.template:
+        src: "lightdm-gtk-greeter.conf.j2"
+        dest: "/etc/lightdm/lightdm-gtk-greeter.conf"
+        owner: "root"
+        group: "root"
+        mode: "0644"

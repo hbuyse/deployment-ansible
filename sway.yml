@@ -17,6 +17,8 @@
       tags: always
   roles:
     # - role: "lightdm"
+    #   vars:
+    #     lightdm_active_monitor: "DP-3"
     - role: "brightnessctl"
     - role: "wayland_sessions"
     - role: "swaylock"
