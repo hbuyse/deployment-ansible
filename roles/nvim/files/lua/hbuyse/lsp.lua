@@ -18,4 +18,5 @@ vim.lsp.enable({
   'basedpyright', -- Python
   'cmake', -- CMake
   'cssls', -- CSS
+  'rust_analyzer', -- Rust
 })
