@@ -15,4 +15,5 @@ vim.lsp.enable({
   'yamlls', -- Yaml
   'bashls', -- Shell
   'luals', -- Lua
+  'basedpyright', -- Python
 })
