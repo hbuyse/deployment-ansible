@@ -127,12 +127,15 @@ class PowerSupply:
     def power_now(self):
         """Get data from the file /sys/class/power_supply/*/power_now"""
         data = 0
-        try:
-            with open(os.path.join(self._path, "power_now"), "r") as fld:
+        for filename in ["power_now", "current_now"]:
+            filepath = os.path.join(self._path, filename)
+
+            if not os.path.exists(filepath):
+                continue
+
+            with open(filepath, "r") as fld:
                 data = int(fld.read().strip())
-        except FileNotFoundError:
-            with open(os.path.join(self._path, "current_now"), "r") as fld:
-                data = int(fld.read().strip())
+
         return data
 
     @property
@@ -274,13 +277,17 @@ def main():
     powersupplies = PowerSupplies()
 
     charge_icon = "" if powersupplies.status == "Charging" else ""
-    remaining_time = powersupplies.time_remaining
-
     remaining_time_str = ""
-    if remaining_time != datetime.timedelta(0):
-        remaining_time_str = "({:02d}h{:02d})".format(
-            int(remaining_time.seconds / 3600), int(remaining_time.seconds % 3600 / 60)
-        )
+
+    try:
+        remaining_time = powersupplies.time_remaining
+
+        if remaining_time != datetime.timedelta(0):
+            remaining_time_str = "({:02d}h{:02d})".format(
+                int(remaining_time.seconds / 3600), int(remaining_time.seconds % 3600 / 60)
+            )
+    except ZeroDivisionError:
+        pass
 
     classes = []
 
