@@ -12,4 +12,6 @@ vim.lsp.config('*', {
 vim.lsp.enable({
   'clangd', -- C / C++
   'jsonls', -- JSON / JSONC
+  'yamlls', -- Yaml
+  'bashls', -- Shell
 })
