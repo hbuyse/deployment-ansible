@@ -142,3 +142,5 @@ end
 vim.api.nvim_exec2([[ filetype plugin on ]], {})
 
 require('hbuyse')
+
+vim.lsp.enable({ 'clangd', 'jsonls' })
