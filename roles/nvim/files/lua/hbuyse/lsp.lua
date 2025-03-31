@@ -14,4 +14,5 @@ vim.lsp.enable({
   'jsonls', -- JSON / JSONC
   'yamlls', -- Yaml
   'bashls', -- Shell
+  'luals', -- Lua
 })
