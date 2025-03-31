@@ -17,4 +17,5 @@ vim.lsp.enable({
   'luals', -- Lua
   'basedpyright', -- Python
   'cmake', -- CMake
+  'cssls', -- CSS
 })
