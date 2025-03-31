@@ -148,6 +148,7 @@ return {
   {
     -- Quickstart configs for Nvim LSP
     'neovim/nvim-lspconfig',
+    enabled = false,
     dependencies = {
       'SmiteshP/nvim-navic',
     },
