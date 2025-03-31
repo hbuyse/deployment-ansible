@@ -1,0 +1,19 @@
+---
+- name: "Spotify | Add repository"
+  become: true
+  ansible.builtin.deb822_repository:
+    name: spotify
+    enabled: true
+    types: deb
+    uris: "https://repository.spotify.com"
+    suites: "stable"
+    components:
+      - non-free
+    signed_by: "https://download.spotify.com/debian/pubkey_C85668DF69375001.gpg"
+
+- name: "Spotify | Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "spotify-client"
+    state: present
+    update_cache: true
