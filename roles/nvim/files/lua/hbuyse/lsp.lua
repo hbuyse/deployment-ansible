@@ -16,4 +16,5 @@ vim.lsp.enable({
   'bashls', -- Shell
   'luals', -- Lua
   'basedpyright', -- Python
+  'cmake', -- CMake
 })
