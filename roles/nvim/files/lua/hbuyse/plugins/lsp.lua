@@ -148,7 +148,7 @@ return {
   {
     -- Quickstart configs for Nvim LSP
     'neovim/nvim-lspconfig',
-    enabled = false,
+    enabled = vim.fn.has('nvim-0.11') == 0, -- Not enabled after Neovim 0.11
     dependencies = {
       'SmiteshP/nvim-navic',
     },
