@@ -1,0 +1,48 @@
+---
+- name: "QEMU-KVM | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags:
+    - qemu
+    - kvm
+    - virtualization
+    - virt
+
+- name: "QEMU-KVM | Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ qemu_kvm_packages }}"
+    state: present
+  tags:
+    - qemu
+    - kvm
+    - virtualization
+    - virt
+
+- name: "QEMU-KVM | Add 'libvirt' group to user"
+  become: true
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    groups: "libvirt"
+    append: true
+  tags:
+    - qemu
+    - kvm
+    - virtualization
+    - virt
+
+- name: "QEMU-KDM | Enable libvirtd service"
+  become: true
+  ansible.builtin.systemd:
+    name: "libvirtd"
+    daemon_reload: true
+    enabled: true
+    state: "started"
+  tags:
+    - qemu
+    - kvm
+    - virtualization
+    - virt

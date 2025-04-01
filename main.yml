@@ -51,3 +51,4 @@
     - role: "keymapp"
     - role: "nextcloud"
     - role: "spotify"
+    - role: "qemu_kvm"
