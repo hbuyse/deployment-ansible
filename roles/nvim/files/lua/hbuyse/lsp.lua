@@ -19,4 +19,5 @@ vim.lsp.enable({
   'cmake', -- CMake
   'cssls', -- CSS
   'rust_analyzer', -- Rust
+  'texlab', -- LaTeX
 })
