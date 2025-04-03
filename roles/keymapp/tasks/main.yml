@@ -25,11 +25,11 @@
 
 - name: "Keymapp | Ensure directory exist"
   ansible.builtin.file:
-    path: "{{ keymapp_icons_dir }}"
+    path: "{{ item }}"
     state: directory
     mode: "0755"
   loop:
-    - "{{ keymapp_icons_dir }}"
+    - "{{ keymapp_bin_dir }}"
     - "{{ keymapp_icons_dir }}"
   tags: keymapp
 
