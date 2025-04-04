@@ -52,3 +52,4 @@
     - role: "nextcloud"
     - role: "spotify"
     - role: "qemu_kvm"
+    - role: "theming"

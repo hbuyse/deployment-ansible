@@ -1,0 +1,5 @@
+---
+theming_packages:
+  - adw-gtk3-theme
+  - arc-theme
+  - materia-gtk-theme

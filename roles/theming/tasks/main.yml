@@ -1,0 +1,22 @@
+---
+- name: "Theming | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: [theme, theming]
+
+- name: "Theming | Install packages"
+  ansible.builtin.package:
+    name: "{{ theming_packages }}"
+    state: present
+  when: theming_packages is defined
+  tags: [theme, theming]
+
+- name: "Theming | Install Matcha theme"
+  ansible.builtin.include_tasks:
+    file: matcha.yml
+    apply:
+      tags: [theme, theming, matcha]
+  tags: [theme, theming]

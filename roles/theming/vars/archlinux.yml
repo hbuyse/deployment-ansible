@@ -1,0 +1,13 @@
+---
+theming_packages:
+  - nwg-look
+  - capitaine-cursors
+  - vimix-cursors
+  - xcursor-comix
+  - xcursor-themes
+  - adapta-gtk-theme
+  - adw-gtk-theme
+  - arc-gtk-theme
+  - arc-solid-gtk-theme
+  - materia-gtk-theme
+  - pop-gtk-theme
