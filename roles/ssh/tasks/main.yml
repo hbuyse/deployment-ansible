@@ -1,0 +1,22 @@
+---
+- name: "SSH | Ensure directory exists"
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.ssh"
+    state: "directory"
+    mode: "0700"
+  tags: ssh
+
+- name: "SSH | Copy private key and config files"
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/"
+    dest: "{{ ansible_user_dir }}/.ssh"
+    mode: "preserve"
+    directory_mode: "0755"
+  tags: ssh
+
+- name: "SSH | Copy public key"
+  ansible.builtin.template:
+    src: "id_rsa.pub.j2"
+    dest: "{{ ansible_user_dir }}/.ssh/id_rsa.pub"
+    mode: "0644"
+  tags: ssh
