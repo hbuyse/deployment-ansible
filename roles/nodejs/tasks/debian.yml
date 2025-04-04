@@ -22,8 +22,10 @@
   become: true
   ansible.builtin.template:
     src: preferences.j2
-    dest: "/etc/apt/preferences.d/{{ item }}"
+    dest: "/etc/apt/preferences.d/{{ pkg }}"
     mode: "0644"
   loop:
     - nsolid
     - nodejs
+  loop_control:
+    loop_var: pkg
