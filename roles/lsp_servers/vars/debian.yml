@@ -1,5 +1,4 @@
 ---
-lsp_servers_package:
 lsp_servers_npm:
   - "bash-language-server"
   - "typescript-language-server"

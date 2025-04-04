@@ -9,6 +9,7 @@
 
 - name: "LSP servers | Install from package manager"
   become: true
+  when: lsp_servers_package is defined
   ansible.builtin.package:
     name: "{{ lsp_servers_package }}"
     state: present
@@ -16,6 +17,7 @@
 
 - name: "LSP servers | Install from Node Package Manager"
   become: true
+  when: lsp_servers_npm is defined
   community.general.npm:
     name: "{{ item }}"
     global: true
@@ -25,10 +27,11 @@
 
 - name: "LSP servers | Install from PIP"
   become: true
+  when: lsp_servers_pip is defined
   community.general.pipx:
     name: "{{ item }}"
     state: latest
-    # global: true
+    global: true
   loop: "{{ lsp_servers_pip }}"
   tags: lsp_servers
 
