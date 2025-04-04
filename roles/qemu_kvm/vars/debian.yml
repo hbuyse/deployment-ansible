@@ -1,6 +1,6 @@
 ---
 qemu_kvm_packages:
-  - qemu-kvm
+  - qemu-system-x86
   - virt-manager
   - virtinst
   - libvirt-clients
