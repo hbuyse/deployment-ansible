@@ -2,6 +2,7 @@
 lsp_servers_package:
   # - lua-language-server
   - nodejs-bash-language-server
+  - ruff
 lsp_servers_npm:
   - "@ansible/ansible-language-server"
   - "@microsoft/compose-language-service"

@@ -2,6 +2,7 @@
 lsp_servers_package:
   - lua-language-server
   - texlab
+  - python-ruff
 
 lsp_servers_npm:
   - "bash-language-server"

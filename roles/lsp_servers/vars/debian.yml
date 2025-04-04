@@ -9,3 +9,4 @@ lsp_servers_npm:
   - "vscode-markdown-languageserver"
 lsp_servers_pip:
   - "basedpyright"
+  - "ruff"

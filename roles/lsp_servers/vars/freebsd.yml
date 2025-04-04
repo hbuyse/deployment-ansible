@@ -2,6 +2,7 @@
 lsp_servers_package:
   - rust-analyzer
   - texlab
+  - ruff
 
 lsp_servers_npm:
   - "bash-language-server"
