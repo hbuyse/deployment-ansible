@@ -16,6 +16,7 @@ vim.lsp.enable({
   'bashls', -- Shell
   'luals', -- Lua
   'basedpyright', -- Python
+  'ruff', -- Python
   'cmake', -- CMake
   'cssls', -- CSS
   'rust_analyzer', -- Rust
