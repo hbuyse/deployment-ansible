@@ -24,6 +24,7 @@
   tags: keymapp
 
 - name: "Keymapp | Ensure directory exist"
+  become: "{{ keymapp_become }}"
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
@@ -34,6 +35,7 @@
   tags: keymapp
 
 - name: "Keymapp | Extract archive files"
+  become: "{{ keymapp_become }}"
   ansible.builtin.unarchive:
     src: "/tmp/keymapp-latest.tar.gz"
     dest: "{{ item.dest }}"
@@ -50,6 +52,7 @@
   tags: keymapp
 
 - name: "Keymapp | Rename icon file"
+  become: "{{ keymapp_become }}"
   tags: keymapp
   block:
     - name: "Keymapp | Copy icon file"
@@ -64,6 +67,7 @@
         state: absent
 
 - name: "Keymapp | Copy desktop file"
+  become: "{{ keymapp_become }}"
   ansible.builtin.copy:
     src: "keymapp.desktop"
     dest: "{{ keymapp_desktop_dir }}"
