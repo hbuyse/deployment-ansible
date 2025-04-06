@@ -169,6 +169,7 @@ if [ ! -d "${INSTALL_REPO}" ]; then
     echo "---" > "${INSTALL_REPO}"/host_vars/localhost.yml
     echo "git_user_name: \"\"" > "${INSTALL_REPO}"/host_vars/localhost.yml
     echo "git_user_email: \"\"" > "${INSTALL_REPO}"/host_vars/localhost.yml
+    echo "ssh_pubkey_email: \"{{ ssh_pubkey_email }}\"" > "${INSTALL_REPO}"/host_vars/localhost.yml
 
     echo "DO NOT FORGET TO FILL THE FILE: host_vars/localhost.yml"
 else
