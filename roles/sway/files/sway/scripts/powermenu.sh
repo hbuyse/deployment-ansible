@@ -53,11 +53,8 @@ function list() {
     echo -en "img:${icon_folder}/${size}x${size}/apps/system-shutdown.svg:text:Shutdown\n"
     echo -en "img:${icon_folder}/${size}x${size}/apps/system-reboot.svg:text:Reboot\n"
     echo -en "img:${icon_folder}/${size}x${size}/apps/system-suspend.svg:text:Suspend\n"
-    # if [[ "$(xset q | grep "DPMS is " | awk '{ print $3 }' | tr "[:upper:]" "[:lower:]")" == "disabled" ]]; then
-    #     echo -en "img:${icon_folder}/${size}x${size}/panel/caffeine-cup-empty.svg:text:Uncaffeinate\n"
-    # else
-    #     echo -en "img:${icon_folder}/${size}x${size}/panel/caffeine-cup-full.svg:text:Caffeinate\n"
-    # fi
+
+    # Notification daemon
     if pgrep mako > "/dev/null"; then
         if makoctl mode | grep -qw do-not-disturb > /dev/null 2>&1; then
             echo -en "img:${icon_folder}/${size}x${size}/apps/bell.svg:text:Do Disturb\n"
@@ -65,21 +62,26 @@ function list() {
             echo -en "img:${icon_folder}/${size}x${size}/apps/bell.svg:text:Do Not Disturb\n"
         fi
     fi
+
+    # Locking system
+    if systemctl --user is-alive --quiet swayidle.service; then
+        echo -en "img:${icon_folder}/${size}x${size}/panel/caffeine-cup-full.svg:text:Caffeinate\n"
+    else
+        echo -en "img:${icon_folder}/${size}x${size}/panel/caffeine-cup-empty.svg:text:Uncaffeinate\n"
+    fi
 }
 
 function run() {
     if [[ -n "${1}" ]]; then
         case "${1}" in
-        # "Uncaffeinate")
-        #     xautolock -enable
-        #     xset -display :0 s 600 600 +dpms
-        #     notify-send "Screen saver" "Enabled"
-        #     ;;
-        # "Caffeinate")
-        #     xautolock -disable
-        #     xset -display :0 s off -dpms
-        #     notify-send "Screen saver" "Disabled"
-        #     ;;
+        "Uncaffeinate")
+            systemctl --user start swayidle.service
+            notify-send "Screen saver" "Enabled"
+            ;;
+        "Caffeinate")
+            systemctl --user stop swayidle.service
+            notify-send "Screen saver" "Disabled"
+            ;;
         "Lock")
             lock
             ;;
