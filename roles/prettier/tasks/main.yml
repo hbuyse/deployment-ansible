@@ -1,0 +1,25 @@
+---
+- name: "Prettier | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: [prettier, formatter, formatters]
+
+- name: "Prettier | Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ prettier_packages }}"
+    update_cache: true
+    state: present
+  tags: [prettier, formatter, formatters]
+  when: prettier_packages is defined
+
+- name: "Prettier | Install from source"
+  ansible.builtin.include_tasks:
+    file: "source.yml"
+    apply:
+      tags: [prettier, formatter, formatters]
+  tags: [prettier, formatter, formatters]
+  when: prettier_packages is not defined

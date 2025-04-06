@@ -1,0 +1,7 @@
+---
+- name: "Black | Install using Pipx"
+  become: true
+  community.general.pipx:
+    name: "black"
+    state: latest
+    global: true

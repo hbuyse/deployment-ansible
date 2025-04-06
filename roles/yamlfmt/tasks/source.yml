@@ -1,0 +1,24 @@
+---
+- name: "YamlFmt | Get latest version number"
+  register: latest_json
+  ansible.builtin.uri:
+    url: "https://api.github.com/repos/{{ yamlfmt_github_user }}/{{ yamlfmt_github_repo }}/releases/latest"
+    method: GET
+    return_content: true
+    status_code: 200
+    body_format: json
+
+- name: "YamlFmt | Set facts"
+  ansible.builtin.set_fact:
+    yamlfmt_latest_version: "{{ latest_json.json.tag_name[1:] }}"
+
+- name: "YamlFmt | Install executable"
+  become: true
+  ansible.builtin.unarchive:
+    src: "https://github.com/{{ yamlfmt_github_user }}/{{ yamlfmt_github_repo }}/releases/download/v{{ yamlfmt_latest_version }}/\
+          yamlfmt_{{ yamlfmt_latest_version }}_{{ ansible_system }}_{{ ansible_architecture }}.tar.gz"
+    dest: "/usr/local/bin"
+    mode: "0755"
+    include:
+      - "yamlfmt"
+    remote_src: true

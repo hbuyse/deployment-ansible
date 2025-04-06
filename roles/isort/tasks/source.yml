@@ -1,0 +1,7 @@
+---
+- name: "Isort | Install using Pipx"
+  become: true
+  community.general.pipx:
+    name: "isort"
+    state: latest
+    global: true

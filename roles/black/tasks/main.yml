@@ -1,0 +1,25 @@
+---
+- name: "Black | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: [Black, formatter, formatters]
+
+- name: "Black | Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ black_packages }}"
+    update_cache: true
+    state: present
+  tags: [Black, formatter, formatters]
+  when: black_packages is defined
+
+- name: "Black | Install from source"
+  ansible.builtin.include_tasks:
+    file: "source.yml"
+    apply:
+      tags: [Black, formatter, formatters]
+  tags: [Black, formatter, formatters]
+  when: black_packages is not defined

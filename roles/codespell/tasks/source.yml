@@ -1,0 +1,7 @@
+---
+- name: "CodeSpell | Install using Pipx"
+  become: true
+  community.general.pipx:
+    name: "codespell"
+    state: latest
+    global: true

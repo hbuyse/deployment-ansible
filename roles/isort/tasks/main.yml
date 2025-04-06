@@ -1,0 +1,25 @@
+---
+- name: "Isort | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: [isort, formatter, formatters]
+
+- name: "Isort | Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ isort_packages }}"
+    update_cache: true
+    state: present
+  tags: [isort, formatter, formatters]
+  when: isort_packages is defined
+
+- name: "Isort | Install from source"
+  ansible.builtin.include_tasks:
+    file: "source.yml"
+    apply:
+      tags: [isort, formatter, formatters]
+  tags: [isort, formatter, formatters]
+  when: isort_packages is not defined

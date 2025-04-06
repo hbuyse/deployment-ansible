@@ -1,0 +1,25 @@
+---
+- name: "YamlFmt | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: [yamlfmt, formatter, formatters]
+
+- name: "YamlFmt | Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ yamlfmt_packages }}"
+    update_cache: true
+    state: present
+  tags: [yamlfmt, formatter, formatters]
+  when: yamlfmt_packages is defined
+
+- name: "YamlFmt | Install from source"
+  ansible.builtin.include_tasks:
+    file: "source.yml"
+    apply:
+      tags: [yamlfmt, formatter, formatters]
+  tags: [yamlfmt, formatter, formatters]
+  when: yamlfmt_packages is not defined

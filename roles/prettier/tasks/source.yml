@@ -1,0 +1,7 @@
+---
+- name: "Prettier | Install from Node Package Manager"
+  become: true
+  community.general.npm:
+    name: "prettier"
+    global: true
+    state: latest

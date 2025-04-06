@@ -53,3 +53,12 @@
     - role: "nextcloud"
     - role: "spotify"
     - role: "qemu_kvm"
+    # Formatters
+    - role: "black"
+    - role: "codespell"
+    - role: "isort"
+    - role: "perltidy"
+    - role: "prettier"
+    - role: "shfmt"
+    - role: "stylua"
+    - role: "yamlfmt"

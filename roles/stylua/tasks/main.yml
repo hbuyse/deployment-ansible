@@ -1,0 +1,25 @@
+---
+- name: "StyLua | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: [stylua, formatter, formatters]
+
+- name: "StyLua | Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ stylua_packages }}"
+    update_cache: true
+    state: present
+  tags: [stylua, formatter, formatters]
+  when: stylua_packages is defined
+
+- name: "StyLua | Install from source"
+  ansible.builtin.include_tasks:
+    file: "source.yml"
+    apply:
+      tags: [stylua, formatter, formatters]
+  tags: [stylua, formatter, formatters]
+  when: stylua_packages is not defined
