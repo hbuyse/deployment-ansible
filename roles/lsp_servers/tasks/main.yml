@@ -21,7 +21,7 @@
   community.general.npm:
     name: "{{ item }}"
     global: true
-    state: present
+    state: latest
   loop: "{{ lsp_servers_npm }}"
   tags: lsp
 
