@@ -5,7 +5,7 @@
     - files:
         - "{{ ansible_os_family | lower }}.yml"
       skip: true
-  tags: [Black, formatter, formatters]
+  tags: [black, formatter, formatters]
 
 - name: "Black | Install from package manager"
   become: true
@@ -13,13 +13,13 @@
     name: "{{ black_packages }}"
     update_cache: true
     state: present
-  tags: [Black, formatter, formatters]
+  tags: [black, formatter, formatters]
   when: black_packages is defined
 
 - name: "Black | Install from source"
   ansible.builtin.include_tasks:
     file: "source.yml"
     apply:
-      tags: [Black, formatter, formatters]
-  tags: [Black, formatter, formatters]
+      tags: [black, formatter, formatters]
+  tags: [black, formatter, formatters]
   when: black_packages is not defined
