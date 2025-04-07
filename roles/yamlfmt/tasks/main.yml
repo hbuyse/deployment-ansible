@@ -22,4 +22,4 @@
     apply:
       tags: [yamlfmt, formatter, formatters]
   tags: [yamlfmt, formatter, formatters]
-  when: yamlfmt_packages is not defined
+  when: (yamlfmt_packages is not defined) or yamlfmt_force_source_install

@@ -22,4 +22,4 @@
     apply:
       tags: [codespell, formatter, formatters]
   tags: [codespell, formatter, formatters]
-  when: codespell_packages is not defined
+  when: (codespell_packages is not defined) or codespell_force_source_install

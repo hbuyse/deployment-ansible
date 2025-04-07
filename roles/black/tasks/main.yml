@@ -22,4 +22,4 @@
     apply:
       tags: [black, formatter, formatters]
   tags: [black, formatter, formatters]
-  when: black_packages is not defined
+  when: (black_packages is not defined) or black_force_source_install

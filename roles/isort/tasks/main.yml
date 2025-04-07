@@ -22,4 +22,4 @@
     apply:
       tags: [isort, formatter, formatters]
   tags: [isort, formatter, formatters]
-  when: isort_packages is not defined
+  when: (isort_packages is not defined) or isort_force_source_install

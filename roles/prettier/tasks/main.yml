@@ -22,4 +22,4 @@
     apply:
       tags: [prettier, formatter, formatters]
   tags: [prettier, formatter, formatters]
-  when: prettier_packages is not defined
+  when: (prettier_packages is not defined) or prettier_force_source_install

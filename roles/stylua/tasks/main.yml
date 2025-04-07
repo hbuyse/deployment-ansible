@@ -22,4 +22,4 @@
     apply:
       tags: [stylua, formatter, formatters]
   tags: [stylua, formatter, formatters]
-  when: stylua_packages is not defined
+  when: (stylua_packages is not defined) or stylua_force_source_install

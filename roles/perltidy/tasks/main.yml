@@ -22,4 +22,4 @@
     apply:
       tags: [perltidy, formatter, formatters]
   tags: [perltidy, formatter, formatters]
-  when: perltidy_packages is not defined
+  when: (perltidy_packages is not defined) or perltidy_force_source_install
