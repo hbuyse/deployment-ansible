@@ -28,4 +28,4 @@
     CARGO_HOME: "{{ ansible_user_dir }}/.cargo"
     PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"
   tags: [stylua, formatter]
-  when: stylua_packages is not defined
+  when: (stylua_packages is not defined) or stylua_force_source_install

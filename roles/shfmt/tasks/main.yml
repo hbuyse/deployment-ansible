@@ -22,4 +22,4 @@
     apply:
       tags: [shfmt, formatter]
   tags: [shfmt, formatter]
-  when: shfmt_packages is not defined
+  when: (shfmt_packages is not defined) or shfmt_force_source_install
