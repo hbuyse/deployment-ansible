@@ -1,4 +1,5 @@
 ---
+prettier_force_source_install: false
 prettier_npm_packages:
   - prettier
   - prettier-plugin-go-template
