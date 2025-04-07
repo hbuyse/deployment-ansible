@@ -14,4 +14,4 @@
     update_cache: true
     state: present
   tags: [perltidy, formatter, formatters]
-  when: codespell_packages is defined
+  when: perltidy_packages is defined
