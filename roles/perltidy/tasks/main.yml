@@ -15,3 +15,11 @@
     state: present
   tags: [perltidy, formatter, formatters]
   when: perltidy_packages is defined
+
+- name: "Perl-Tidy | Install from source"
+  ansible.builtin.include_tasks:
+    file: "source.yml"
+    apply:
+      tags: [perltidy, formatter, formatters]
+  tags: [perltidy, formatter, formatters]
+  when: perltidy_packages is not defined

@@ -1,0 +1,6 @@
+---
+- name: "Perl-Tidy | Install using CPANM"
+  become: true
+  community.general.cpanm:
+    name: "Perl::Tidy"
+    notest: true
