@@ -1,3 +1,4 @@
 ---
 yamlfmt_github_user: "google"
 yamlfmt_github_repo: "yamlfmt"
+yamlfmt_force_source_install: false
