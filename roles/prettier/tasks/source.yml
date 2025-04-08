@@ -5,3 +5,6 @@
     name: "prettier"
     global: true
     state: latest
+    path: "/usr/local"
+    production: true
+    no_optional: true
