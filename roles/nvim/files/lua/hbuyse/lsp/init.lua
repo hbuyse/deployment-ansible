@@ -265,4 +265,5 @@ vim.lsp.enable({
   'cssls', -- CSS
   'rust_analyzer', -- Rust
   'texlab', -- LaTeX
+  'ansiblels', -- Ansible
 })
