@@ -22,6 +22,9 @@
     name: "{{ item }}"
     global: true
     state: latest
+    path: "/usr/local"
+    production: true
+    no_optional: true
   loop: "{{ lsp_servers_npm }}"
   tags: lsp
 
