@@ -74,13 +74,13 @@
   block:
     - name: "Wireplumber | Ensure configuration directory exists"
       ansible.builtin.file:
-        path: "{{ wireplumber_user_conf_dir }}"
+        path: "{{ wireplumber_user_dir }}"
         state: "directory"
         mode: "0755"
 
     - name: "Wireplumber | Copy configuration files"
       ansible.builtin.copy:
         src: "{{ role_path }}/files/"
-        dest: "{{ wireplumber_user_conf_dir }}"
+        dest: "{{ wireplumber_user_dir }}"
         mode: "0644"
       notify: "Wireplumber | Restart Wireplumber service"
