@@ -49,10 +49,11 @@
     - nvim
 
 - name: "Neovim | Copy static files in configuration directory"
-  ansible.builtin.copy:
+  ansible.posix.synchronize:
     src: "{{ role_path }}/files/"
     dest: "{{ nvim_config_dir }}"
-    mode: "0644"
+    recursive: true
+    delete: true
   tags:
     - neovim
     - nvim
