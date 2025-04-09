@@ -57,7 +57,7 @@
 
 - name: "Wireplumber | Enable Pipewire and Wireplumber services"
   ansible.builtin.systemd:
-    name: "pipewire"
+    name: "{{ item }}"
     enabled: true
     state: "started"
     scope: "user"
