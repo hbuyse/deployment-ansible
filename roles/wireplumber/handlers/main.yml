@@ -1,0 +1,6 @@
+---
+- name: "Wireplumber | Restart Wireplumber service"
+  ansible.builtin.systemd:
+    name: "wireplumber"
+    state: "restarted"
+    scope: "user"

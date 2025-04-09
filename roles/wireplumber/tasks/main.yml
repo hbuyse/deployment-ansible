@@ -83,3 +83,4 @@
         src: "{{ role_path }}/files/"
         dest: "{{ wireplumber_user_conf_dir }}"
         mode: "0644"
+      notify: "Wireplumber | Restart Wireplumber service"
