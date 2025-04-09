@@ -80,6 +80,6 @@
 
     - name: "Wireplumber | Copy configuration files"
       ansible.builtin.copy:
-        src: "90-set-priorities.conf"
+        src: "{{ role_path }}/files/"
         dest: "{{ wireplumber_user_conf_dir }}"
         mode: "0644"
