@@ -180,6 +180,28 @@ return {
       -- Use a loop to conveniently both setup defined servers and map buffer local keybindings when the language
       -- server attaches
       local servers = {
+        ansiblels = {
+          settings = {
+            ansible = {
+              python = {
+                interpreterPath = 'python',
+              },
+              ansible = {
+                path = 'ansible',
+              },
+              executionEnvironment = {
+                enabled = false,
+              },
+              validation = {
+                enabled = true,
+                lint = {
+                  enabled = true,
+                  path = 'ansible-lint',
+                },
+              },
+            },
+          },
+        },
         bashls = {},
         basedpyright = {
           settings = {
