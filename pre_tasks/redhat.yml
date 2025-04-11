@@ -1,16 +1,4 @@
 ---
-- name: "RPM Fusion | Add repository GPG keys"
-  become: true
-  ansible.builtin.rpm_key:
-    key: "https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-{{ repo }}-{{ ansible_distribution | lower }}-2020"
-    state: present
-  loop_control:
-    loop_var: repo
-  loop:
-    - "free"
-    - "nonfree"
-  tags: rpmfusion
-
 - name: "RPM Fusion | Install repo package"
   become: true
   ansible.builtin.dnf:

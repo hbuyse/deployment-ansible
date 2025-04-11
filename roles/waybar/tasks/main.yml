@@ -10,8 +10,35 @@
     state: "present"
   tags: waybar
 
+- name: "Waybar | Install service file"
+  become: true
+  tags: waybar
+  block:
+    - name: "Waybar | Ensure directories exists"
+      ansible.builtin.file:
+        path: "/usr/local/lib/systemd/user"
+        state: "directory"
+        mode: "0755"
+
+    - name: "Waybar | Copy service file"
+      ansible.builtin.copy:
+        src: "waybar.service"
+        dest: "/usr/local/lib/systemd/user"
+        mode: "0644"
+
+    - name: "Waybar | Enable service"
+      become: false
+      ansible.builtin.systemd:
+        name: "waybar.service"
+        daemon_reload: true
+        enabled: true
+        state: "started"
+        scope: "user"
+      tags: waybar
+
 - name: "Waybar | Install configuration files"
   tags: waybar
+  notify: "Waybar | Restart service"
   block:
     - name: "Waybar | Ensure directories exists"
       ansible.builtin.file:
@@ -36,32 +63,6 @@
         - hyprland.jsonc
         - modules.jsonc
         - style.css
-
-- name: "Waybar | Install service file"
-  become: true
-  tags: waybar
-  block:
-    - name: "Waybar | Ensure directories exists"
-      ansible.builtin.file:
-        path: "/usr/local/lib/systemd/user"
-        state: "directory"
-        mode: "0755"
-
-    - name: "Waybar | Copy service file"
-      ansible.builtin.copy:
-        src: "waybar.service"
-        dest: "/usr/local/lib/systemd/user"
-        mode: "0644"
-
-    - name: "Waybar | Enable service"
-      become: false
-      ansible.builtin.systemd:
-        name: "waybar.service"
-        daemon_reload: true
-        enabled: true
-        state: "restarted"
-        scope: "user"
-      tags: waybar
 
 - name: "Waybar | Create virtualenv for Python scripts"
   ansible.builtin.pip:

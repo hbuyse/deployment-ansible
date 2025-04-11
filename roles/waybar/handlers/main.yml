@@ -1,0 +1,6 @@
+---
+- name: "Waybar | Restart service"
+  ansible.builtin.systemd:
+    name: "waybar.service"
+    state: "restarted"
+    scope: "user"
