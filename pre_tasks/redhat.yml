@@ -3,7 +3,7 @@
   become: true
   ansible.builtin.dnf:
     name:
-      "https://mirrors.rpmfusion.org/{{ repo }}/{{ ansible_distribution | lower }}/rpmfusion-{{ repo }}-release-\
+      "https://download1.rpmfusion.org/{{ repo }}/{{ ansible_distribution | lower }}/rpmfusion-{{ repo }}-release-\
       {{ ansible_distribution_major_version }}.noarch.rpm"
     state: present
   loop:
