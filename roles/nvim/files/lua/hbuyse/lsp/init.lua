@@ -21,7 +21,7 @@ end
 vim.diagnostic.config({
   float = {
     source = false,
-    border = vim.g.border_style,
+    border = 'double',
     severity_sort = true,
     format = format,
     suffix = suffix,
