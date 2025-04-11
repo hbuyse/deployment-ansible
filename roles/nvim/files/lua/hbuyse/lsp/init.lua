@@ -32,6 +32,8 @@ vim.diagnostic.config({
     spacing = 4,
     format = format,
     suffix = suffix,
+    virt_text_pos = 'eol',
+    hl_mode = 'combine',
   },
   virtual_lines = false,
   signs = {
@@ -44,6 +46,10 @@ vim.diagnostic.config({
   },
   underline = true,
   severity_sort = true,
+  jump = {
+    float = true,
+  },
+  update_in_insert = false,
 })
 
 --- Setup mapping when attaching LSP server
@@ -68,9 +74,17 @@ local function lsp_keymaps(client, bufnr)
   end
 
   -- Diagnostics keymaps
-  kmap('n', '<leader>dn', vim.diagnostic.goto_next, '[D]iagnostic [N]ext')
-  kmap('n', '<leader>dp', vim.diagnostic.goto_prev, '[D]iagnostic [P]revious')
+  kmap('n', '<leader>dn', function()
+    vim.diagnostic.jump({ count = 1 })
+  end, '[D]iagnostic [N]ext')
+  kmap('n', '<leader>dp', function()
+    vim.diagnostic.jump({ count = 1 })
+  end, '[D]iagnostic [P]revious')
   kmap('n', '<leader>dl', vim.diagnostic.open_float, '[D]iagnostics In [L]ine')
+  -- Toggle diagnostics (global)
+  kmap('n', '<leader>de', function()
+    vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+  end, '[D]iagnostic [E]nable')
 
   -- LSP keymaps
   kmap('n', 'gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
@@ -143,15 +157,6 @@ end
 local function on_attach(client, bufnr)
   lsp_keymaps(client, bufnr)
 
-  -- Toggle diagnostics (global)
-  vim.keymap.set('n', '\\E', function()
-    vim.diagnostic.enable(not vim.diagnostic.is_enabled())
-  end, opts)
-
-  -- Feed all diagnostics to quickfix list, or buffer diagnostics to location list
-  vim.keymap.set('n', '<Leader>dq', vim.diagnostic.setqflist, opts)
-  vim.keymap.set('n', '<Leader>dl', vim.diagnostic.setloclist, opts)
-
   -- Format
   -- vim.keymap.set({ 'n', 'x' }, '<leader>F', function()
   --     vim.lsp.buf.format({ async = true })
@@ -172,6 +177,7 @@ local function on_attach(client, bufnr)
       vim.log.levels.INFO
     )
   end, opts)
+
   -- Toggle (global)
   vim.keymap.set('n', '\\H', function()
     vim.g.inlay_hint_enabled = not vim.g.inlay_hint_enabled
