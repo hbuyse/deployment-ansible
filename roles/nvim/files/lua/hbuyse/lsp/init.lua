@@ -52,6 +52,15 @@ vim.diagnostic.config({
   update_in_insert = false,
 })
 
+local border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' }
+local open_floating_preview = vim.lsp.util.open_floating_preview
+---@diagnostic disable-next-line: duplicate-set-field
+vim.lsp.util.open_floating_preview = function(contents, syntax, options, ...)
+  options = options or {}
+  options.border = options.border or border
+  return open_floating_preview(contents, syntax, options, ...)
+end
+
 --- Setup mapping when attaching LSP server
 ---@param client table LSP client
 ---@param bufnr integer Buffer number
@@ -207,7 +216,6 @@ local function on_attach(client, bufnr)
   -- Document highlight
   if client:supports_method('textDocument/InlayHint') then
     lsp_inlay_hints(bufnr)
-    vim.notify('Activated', vim.log.levels.INFO, { title = 'InlayHints' })
   else
     vim.notify('Server not supporting', vim.log.levels.INFO, { title = 'InlayHints' })
   end
