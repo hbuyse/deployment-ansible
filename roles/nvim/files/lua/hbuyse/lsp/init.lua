@@ -5,12 +5,6 @@ end
 
 -- Diagnostic config
 
-local signs = { Error = ' ', Warn = ' ', Hint = ' ', Info = ' ' }
-for type, icon in pairs(signs) do
-  local hl = 'DiagnosticSign' .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = '' })
-end
-
 --
 -- Diagnostic is displayed as: diagnostic.source: diagnostic.message [diagnostic.code]
 -- Virtual text, virtual lines and float should all follow this format
@@ -46,7 +40,14 @@ vim.diagnostic.config({
     suffix = suffix,
   },
   virtual_lines = false,
-  signs = true,
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = ' ',
+      [vim.diagnostic.severity.WARN] = ' ',
+      [vim.diagnostic.severity.INFO] = ' ',
+      [vim.diagnostic.severity.HINT] = ' ',
+    },
+  },
   underline = true,
   severity_sort = true,
 })
