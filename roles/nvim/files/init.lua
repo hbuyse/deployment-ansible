@@ -46,6 +46,7 @@ local opts = {
   -- Disable mouse support
   mouse = '',
   mousescroll = 'ver:0,hor:0',
+  winborder = 'rounded',
 }
 
 -- Window options
