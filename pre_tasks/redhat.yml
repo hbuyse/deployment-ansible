@@ -23,5 +23,4 @@
     - "nonfree"
   loop_control:
     loop_var: repo
-  when: ansible_os_family == "RedHat"
   tags: rpmfusion
