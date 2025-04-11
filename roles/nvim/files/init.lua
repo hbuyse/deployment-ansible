@@ -101,7 +101,7 @@ local bopts = {
 }
 
 for opt, val in pairs(opts) do
-  vim.api.nvim_set_option_value(opt, val, {})
+  vim.api.nvim_set_option_value(opt, val, { scope = 'global' })
 end
 
 for opt, val in pairs(wopts) do
