@@ -18,12 +18,6 @@ local function suffix(d)
   return string.format(' [%s]', d.code and d.code or 'Unknown')
 end
 
-local virtual_lines_opts = {
-  format = function(d)
-    return string.format('%s: %s [%s]', d.source and d.source or 'Unknown', d.message, d.code and d.code or 'Unknown')
-  end,
-}
-
 vim.diagnostic.config({
   float = {
     source = false,
