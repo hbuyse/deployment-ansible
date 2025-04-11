@@ -54,6 +54,12 @@ function list() {
     echo -en "img:${icon_folder}/${size}x${size}/apps/system-reboot.svg:text:Reboot\n"
     echo -en "img:${icon_folder}/${size}x${size}/apps/system-suspend.svg:text:Suspend\n"
 
+    if systemctl --user is-active --quiet swayidle.service; then
+        echo -en "img:${icon_folder}/${size}x${size}/panel/caffeine-cup-full.svg:text:Caffeinate\n"
+    else
+        echo -en "img:${icon_folder}/${size}x${size}/panel/caffeine-cup-empty.svg:text:Uncaffeinate\n"
+    fi
+
     # Notification daemon
     if pgrep mako > "/dev/null"; then
         if makoctl mode | grep -qw do-not-disturb > /dev/null 2>&1; then
@@ -61,13 +67,6 @@ function list() {
         else
             echo -en "img:${icon_folder}/${size}x${size}/apps/bell.svg:text:Do Not Disturb\n"
         fi
-    fi
-
-    # Locking system
-    if systemctl --user is-alive --quiet swayidle.service; then
-        echo -en "img:${icon_folder}/${size}x${size}/panel/caffeine-cup-full.svg:text:Caffeinate\n"
-    else
-        echo -en "img:${icon_folder}/${size}x${size}/panel/caffeine-cup-empty.svg:text:Uncaffeinate\n"
     fi
 }
 
