@@ -9,8 +9,11 @@ lsp_servers_package:
   - vscode-json-languageserver
   - yaml-language-server
   - ruff
+  - ansible-language-server
+
 lsp_servers_npm:
   - "@microsoft/compose-language-service"
   - "vscode-markdown-languageserver"
+
 lsp_servers_pip:
   - "basedpyright"
