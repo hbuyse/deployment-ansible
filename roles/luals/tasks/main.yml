@@ -1,0 +1,24 @@
+---
+- name: "Lua Language Server | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: lsp
+
+- name: "Lua Language Server | Install from package manager"
+  become: true
+  when: luals_package is defined
+  ansible.builtin.package:
+    name: "{{ luals_package }}"
+    state: present
+  tags: lsp
+
+- name: "Lua Language Server | Install from GitHub"
+  when: luals_package is not defined
+  ansible.builtin.include_tasks:
+    file: source.yml
+    apply:
+      tags: lsp
+  tags: lsp

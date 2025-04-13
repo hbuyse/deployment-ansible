@@ -1,0 +1,3 @@
+---
+ruff_package:
+  - "devel/ruff"

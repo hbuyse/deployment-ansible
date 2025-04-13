@@ -1,0 +1,3 @@
+---
+ansiblels_package:
+  - ansible-language-server

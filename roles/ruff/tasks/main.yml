@@ -1,0 +1,25 @@
+---
+- name: "Ruff | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: lsp
+
+- name: "Ruff | Install from package manager"
+  become: true
+  when: ruff_package is defined
+  ansible.builtin.package:
+    name: "{{ ruff_package }}"
+    state: present
+  tags: lsp
+
+- name: "Ruff | Install from PIP"
+  become: true
+  when: ruff_package is not defined
+  community.general.pipx:
+    name: "{{ ruff_pip_package }}"
+    global: true
+    state: latest
+  tags: lsp

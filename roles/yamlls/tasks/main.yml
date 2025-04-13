@@ -1,0 +1,28 @@
+---
+- name: "YAML Language Server | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: lsp
+
+- name: "YAML Language Server | Install from package manager"
+  become: true
+  when: yamlls_package is defined
+  ansible.builtin.package:
+    name: "{{ yamlls_package }}"
+    state: present
+  tags: lsp
+
+- name: "YAML Language Server | Install from Node Package Manager"
+  become: true
+  when: yamlls_package is not defined
+  community.general.npm:
+    name: "{{ yamlls_npm_package }}"
+    global: true
+    state: latest
+    path: "/usr/local"
+    production: true
+    no_optional: true
+  tags: lsp

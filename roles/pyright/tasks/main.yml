@@ -1,0 +1,28 @@
+---
+- name: "Pyright Language Server | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: lsp
+
+- name: "Pyright Language Server | Install from package manager"
+  become: true
+  when: pyright_package is defined
+  ansible.builtin.package:
+    name: "{{ pyright_package }}"
+    state: present
+  tags: lsp
+
+- name: "Pyright Language Server | Install from Node Package Manager"
+  become: true
+  when: pyright_package is not defined
+  community.general.npm:
+    name: "{{ pyright_npm_package }}"
+    global: true
+    state: latest
+    path: "/usr/local"
+    production: true
+    no_optional: true
+  tags: lsp

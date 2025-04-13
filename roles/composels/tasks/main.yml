@@ -1,0 +1,28 @@
+---
+- name: "Compose Language Server | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: lsp
+
+- name: "Compose Language Server | Install from package manager"
+  become: true
+  when: composels_package is defined
+  ansible.builtin.package:
+    name: "{{ composels_package }}"
+    state: present
+  tags: lsp
+
+- name: "Compose Language Server | Install from Node Package Manager"
+  become: true
+  when: composels_package is not defined
+  community.general.npm:
+    name: "{{ composels_npm_package }}"
+    global: true
+    state: latest
+    path: "/usr/local"
+    production: true
+    no_optional: true
+  tags: lsp

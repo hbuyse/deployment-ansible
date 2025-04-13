@@ -1,7 +1,0 @@
----
-dependencies:
-  - role: nodejs
-  - role: clang
-  - role: rustup
-    when: ansible_system == 'Linux'
-  - role: pipx

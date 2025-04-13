@@ -1,0 +1,3 @@
+---
+bashls_package:
+  - "nodejs-bash-language-server"

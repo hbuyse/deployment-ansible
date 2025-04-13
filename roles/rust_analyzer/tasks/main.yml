@@ -1,0 +1,27 @@
+---
+- name: "Rust Analyzer Language Server | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: lsp
+
+- name: "Rust Analyzer Language Server | Install from package manager"
+  become: true
+  when: rust_analyzer_package is defined
+  ansible.builtin.package:
+    name: "{{ rust_analyzer_package }}"
+    state: present
+  tags: lsp
+
+- name: "Rust Analyzer Language Server | Add rust-analyzer to list of Rustup component"
+  when: rust_analyzer_package is not defined
+  ansible.builtin.command:
+    cmd: rustup component add rust-analyzer
+  environment:
+    RUSTUP_HOME: "{{ ansible_user_dir }}/.rustup"
+    CARGO_HOME: "{{ ansible_user_dir }}/.cargo"
+    PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"
+  changed_when: false
+  tags: lsp
