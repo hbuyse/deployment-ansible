@@ -68,5 +68,5 @@
   ansible.builtin.pip:
     name: "{{ waybar_pip_packages }}"
     state: "present"
-    virtualenv: "{{ ansible_user_dir }}/.config/waybar/scripts/.venv"
+    virtualenv: "{{ waybar_config_dir }}/scripts/.venv"
   tags: waybar
