@@ -111,7 +111,11 @@
 {% endif %}
   },
   "custom/wf-recorder": {
+{% if ansible_os_family == "Debian" %}
     "format": "{}",
+{% else %}
+    "format": "{text}",
+{% endif %}
     "return-type": "json",
     "interval": 1,
     "tooltip-format": "{tooltip}",
@@ -141,7 +145,11 @@
   },
   "custom/weather": {
     "icon-size": 42,
-    "format": "{0} <span font-family='Noto Color Emoji'>{icon}</span>",
+{% if ansible_os_family == "Debian" %}
+    "format": "{} <span font-family='Noto Color Emoji'>{icon}</span>",
+{% else %}
+    "format": "{text} <span font-family='Noto Color Emoji'>{icon}</span>",
+{% endif %}
     "tooltip": true,
     "interval": 3600,
     "exec": "~/.config/waybar/scripts/.venv/bin/python ~/.config/waybar/scripts/weather.py --city=Paris --temperature=C",
@@ -169,7 +177,11 @@
     }
   },
   "custom/updates": {
+{% if ansible_os_family == "Debian" %}
     "format": "{}",
+{% else %}
+    "format": "{text}",
+{% endif %}
     "tooltip": true,
     "interval": 300,
     "exec": "~/.config/waybar/scripts/updates.sh",
@@ -220,7 +232,11 @@
     ]
   },
   "custom/battery": {
-    "format": "{0}  {1}",
+{% if ansible_os_family == "Debian" %}
+    "format": "{icon}  {}",
+{% else %}
+    "format": "{icon}  {text}",
+{% endif %}
     "format-icons": ["", "", "", "", ""],
     "tooltip": true,
     "interval": 60,
