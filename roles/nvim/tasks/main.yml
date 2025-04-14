@@ -1,18 +1,26 @@
 ---
-# tasks file for nvim
+- name: "Neovim | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags:
+    - neovim
+    - nvim
+
 - name: "Neovim | Install program from package manager"
   become: true
   ansible.builtin.package:
-    name:
-      - neovim
+    name: "{{ nvim_package }}"
     state: present
-  when: ansible_os_family != "Debian"
+  when: nvim_package is defined
   tags:
     - neovim
     - nvim
 
 - name: "Neovim | Install program from static binary"
-  when: ansible_os_family == "Debian"
+  when: nvim_package is not defined
   tags:
     - neovim
     - nvim
