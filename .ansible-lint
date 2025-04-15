@@ -10,6 +10,7 @@ profile: production
 exclude_paths:
   - .cache/
   - .github/
+  - collections/
 
 # Ansible-lint does not fail on warnings from the rules or tags listed below
 warn_list:

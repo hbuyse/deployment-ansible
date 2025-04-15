@@ -180,3 +180,4 @@ pyrightconfig.json
 
 .ansible/
 host_vars/localhost.yml
+collections/ansible_collections
