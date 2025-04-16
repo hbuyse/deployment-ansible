@@ -247,7 +247,7 @@ vim.lsp.enable({
   'yamlls', -- Yaml
   'bashls', -- Shell
   'luals', -- Lua
-  'basedpyright', -- Python
+  'pyright', -- Python
   'ruff', -- Python
   'cmake', -- CMake
   'cssls', -- CSS
