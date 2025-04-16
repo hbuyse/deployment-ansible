@@ -12,18 +12,22 @@
   ansible.builtin.set_fact:
     luals_latest_version: "{{ latest_json.json.tag_name }}"
 
-- name: "Lua Language Server | Ensure install directory exists"
+- name: "Lua Language Server | Install latest version"
   become: true
-  ansible.builtin.file:
-    path: "{{ luals_install_dir }}"
-    state: directory
-    mode: "0755"
+  block:
+    - name: "Lua Language Server | Ensure install directory exists"
+      ansible.builtin.file:
+        path: "{{ luals_install_dir }}"
+        state: directory
+        mode: "0777"
 
-- name: "Lua Language Server | Install executable"
-  become: true
-  ansible.builtin.unarchive:
-    src:
-      "https://github.com/{{ luals_github_user }}/{{ luals_github_repo }}/releases/download/{{ luals_latest_version }}/\
-      lua-language-server-{{ luals_latest_version }}-{{ ansible_system | lower }}-x64.tar.gz"
-    dest: "{{ luals_install_dir }}"
-    remote_src: true
+    - name: "Lua Language Server | Install executable"
+      ansible.builtin.unarchive:
+        src:
+          "https://github.com/{{ luals_github_user }}/{{ luals_github_repo }}/releases/download/{{ luals_latest_version }}/\
+          lua-language-server-{{ luals_latest_version }}-{{ ansible_system | lower }}-x64.tar.gz"
+        dest: "{{ luals_install_dir }}"
+        remote_src: true
+        owner: root
+        group: root
+        mode: "u=rwX,g=rwX,o=rwX"
