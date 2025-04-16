@@ -76,3 +76,4 @@
     - role: "shfmt"
     - role: "stylua"
     - role: "yamlfmt"
+    - role: "network"
