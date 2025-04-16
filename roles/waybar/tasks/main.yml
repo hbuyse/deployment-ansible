@@ -34,7 +34,6 @@
         enabled: true
         state: "started"
         scope: "user"
-      tags: waybar
 
 - name: "Waybar | Install configuration files"
   tags: waybar
