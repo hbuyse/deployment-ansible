@@ -46,9 +46,3 @@
         src: user.j2
         dest: "{{ ansible_user_dir }}/.config/git/user"
         mode: "0644"
-
-    - name: "Git | Generate global gitignore configuration"
-      ansible.builtin.get_url:
-        url: "https://www.toptal.com/developers/gitignore/api/c,cmake,python,lua,vim,linux"
-        dest: "{{ ansible_user_dir }}/.config/git/ignore"
-        mode: "0644"
