@@ -77,7 +77,6 @@ return {
       local nkeymaps = {
         { '<C-p>', require('telescope.builtin').find_files, desc = 'Search Files' },
         { '<leader>b', require('telescope.builtin').buffers, desc = '[B]uffers' },
-        { '<C-b>', require('telescope.builtin').buffers, desc = '[B]uffers' },
         { '<leader>sd', require('telescope.builtin').diagnostics, desc = '[S]earch [D]iagnostics' }, -- codespell:ignore earch
         { '<leader>sf', require('telescope.builtin').find_files, desc = '[S]earch [F]iles' }, -- codespell:ignore earch
         { '<leader>sg', require('telescope.builtin').live_grep, desc = '[S]earch by [G]rep' }, -- codespell:ignore earch
@@ -93,7 +92,7 @@ return {
         {
           '<leader>dt',
           function()
-            require('telescope.builtin').git_files({ cwd = os.getenv('HOME') .. '/.dotfiles' })
+            require('telescope.builtin').git_files({ cwd = os.getenv('HOME') .. '/Programming/deployment-ansible' })
           end,
           desc = 'Search in [D]o[T]files',
         },
@@ -105,7 +104,7 @@ return {
       end
 
       local aerial = require('telescope').extensions.aerial
-      if aerial then
+      if aerial ~= nil then
         table.insert(nkeymaps, { '<leader>ss', aerial.aerial, desc = '[S]earch [S]ymbols' }) -- codespell:ignore earch
       end
 
