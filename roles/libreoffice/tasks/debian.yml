@@ -1,0 +1,11 @@
+---
+- name: "Libreoffice | Add PPA"
+  become: true
+  ansible.builtin.deb822_repository:
+    name: libreoffice
+    enabled: true
+    types: deb
+    uris: "https://ppa.launchpadcontent.net/libreoffice/ppa/ubuntu"
+    suites: "{{ ansible_distribution_release | lower }}"
+    components:
+      - main
