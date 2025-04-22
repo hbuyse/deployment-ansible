@@ -1,0 +1,17 @@
+---
+- name: "TexLive | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: [texlive, formatter, formatters]
+
+- name: "TexLive | Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ texlive_packages }}"
+    update_cache: true
+    state: present
+  tags: [texlive, latex, tex]
+  when: texlive_packages is defined
