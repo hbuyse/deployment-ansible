@@ -79,6 +79,7 @@
     - nvim
 
 - name: "Neovim | Sync plugins"
+  when: nvim_update_plugins|bool
   ansible.builtin.command: nvim --headless "+Lazy! sync" +qa
   changed_when: false
   tags:
