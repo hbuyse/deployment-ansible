@@ -1,0 +1,133 @@
+---
+texlive_selected_scheme: "scheme-custom"
+texlive_install_prefix: "/usr/local"
+texlive_tlpdbopt_sys_install_prefix: "{{ texlive_install_prefix }}"
+texlive_texdir: "{{ texlive_install_prefix }}/texlive/2025"
+texlive_texmfsysconfig: "{{ texlive_texdir }}/texmf-config"
+texlive_texmfsysvar: "{{ texlive_texdir }}/texmf-var"
+texlive_texmfconfig: "{{ ansible_user_dir }}/.texlive2025/texmf-config"
+texlive_texmfhome: "{{ ansible_user_dir }}/texmf"
+texlive_texmflocal: "{{ texlive_install_prefix }}/texlive/texmf-local"
+texlive_texmfvar: "{{ texlive_install_prefix }}/.texlive2025/texmf-var"
+
+# Architecture
+texlive_binary_aarch64_linux: false
+texlive_binary_amd64_freebsd: false
+texlive_binary_amd64_netbsd: false
+texlive_binary_armhf_linux: false
+texlive_binary_i386_freebsd: false
+texlive_binary_i386_linux: false
+texlive_binary_i386_netbsd: false
+texlive_binary_i386_solaris: false
+texlive_binary_universal_darwin: false
+texlive_binary_windows: false
+texlive_binary_x86_64_cygwin: false
+texlive_binary_x86_64_darwinlegacy: false
+texlive_binary_x86_64_linux: true
+texlive_binary_x86_64_linuxmusl: false
+texlive_binary_x86_64_solaris: false
+
+texlive_schemes:
+  custom: "{{ texlive_custom_collections }}"
+  # Minimal scheme collections (plain only [binary])
+  minimal:
+    - basic
+  # Basic scheme collections (plain and latex)
+  basic:
+    - basic
+    - latex
+  # Small scheme collections (basic + xetex, metapost, a few languages)
+  small:
+    - basic
+    - latex
+    - latexrecommended
+    - metapost
+    - xetex
+  # Medium scheme collections (small + more packages and languages)
+  medium:
+    - basic
+    - binextra
+    - context
+    - fontsrecommended
+    - fontutils
+    - langczechslovak
+    - langenglish
+    - langeuropean
+    - langfrench
+    - langgerman
+    - langitalian
+    - langpolish
+    - langportuguese
+    - langspanish
+    - latex
+    - latexrecommended
+    - luatex
+    - mathscience
+    - metapost
+    - plaingeneric
+    - texworks
+    - xetex
+  # Full scheme collections (everything)
+  full:
+    - basic
+    - bibtexextra
+    - binextra
+    - context
+    - fontsextra
+    - fontsrecommended
+    - fontutils
+    - formatsextra
+    - games
+    - humanities
+    - langarabic
+    - langchinese
+    - langcjk
+    - langcyrillic
+    - langczechslovak
+    - langenglish
+    - langeuropean
+    - langfrench
+    - langgerman
+    - langgreek
+    - langitalian
+    - langjapanese
+    - langkorean
+    - langother
+    - langpolish
+    - langportuguese
+    - langspanish
+    - latex
+    - latexextra
+    - latexrecommended
+    - luatex
+    - mathscience
+    - metapost
+    - music
+    - pictures
+    - plaingeneric
+    - pstricks
+    - publishers
+    - texworks
+    # - wintools # Should be added when installing on windows
+    - xetex
+
+texlive_instopt_adjustpath: true
+texlive_instopt_adjustrepo: true
+texlive_instopt_letter: false # false is A4 letter size, true is US letter size
+texlive_instopt_portable: false
+texlive_instopt_write18_restricted: true
+
+texlive_tlpdbopt_autobackup: true
+texlive_tlpdbopt_backupdir: "tlpkg/backups"
+texlive_tlpdbopt_create_formats: true
+texlive_tlpdbopt_desktop_integration: true
+texlive_tlpdbopt_file_assocs: true
+texlive_tlpdbopt_generate_updmap: false
+texlive_tlpdbopt_install_docfiles: true
+texlive_tlpdbopt_install_srcfiles: true
+texlive_tlpdbopt_location: "https://distrib-coffee.ipsl.jussieu.fr/pub/mirrors/ctan/systems/texlive/tlnet"
+texlive_tlpdbopt_post_code: true
+texlive_tlpdbopt_sys_bin: "{{ texlive_tlpdbopt_sys_install_prefix }}/bin"
+texlive_tlpdbopt_sys_info: "{{ texlive_tlpdbopt_sys_install_prefix }}/info"
+texlive_tlpdbopt_sys_man: "{{ texlive_tlpdbopt_sys_install_prefix }}/man"
+texlive_tlpdbopt_w32_multi_user: true
