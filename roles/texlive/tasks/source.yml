@@ -1,0 +1,6 @@
+---
+- name: "TexLive | Generate profile"
+  ansible.builtin.template:
+    src: "profile.j2"
+    dest: "/tmp/profile"
+    mode: "0644"

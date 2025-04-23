@@ -15,3 +15,12 @@
     state: present
   tags: [texlive, latex, tex]
   when: texlive_packages is defined
+
+- name: "TexLive | Install from source"
+  become: true
+  ansible.builtin.include_tasks:
+    file: "source.yml"
+    apply:
+      tags: [texlive, latex, tex]
+  tags: [texlive, latex, tex]
+  when: texlive_packages is not defined
