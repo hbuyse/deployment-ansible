@@ -17,7 +17,6 @@
   when: texlive_packages is defined
 
 - name: "TexLive | Install from source"
-  become: true
   ansible.builtin.include_tasks:
     file: "source.yml"
     apply:
