@@ -37,6 +37,12 @@ text-color=#ffffff
 border-color=#1db954
 border-size=2
 
+[app-name="Spotify"]
+background-color=#191414
+text-color=#ffffff
+border-color=#1db954
+border-size=2
+
 [mode=do-not-disturb]
 invisible=1
 
