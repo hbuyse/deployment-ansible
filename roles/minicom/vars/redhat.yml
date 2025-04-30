@@ -1,0 +1,5 @@
+---
+minicom_packages:
+  - minicom
+
+minicom_group: dialout

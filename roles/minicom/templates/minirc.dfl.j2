@@ -1,0 +1,32 @@
+# Machine-generated file - use "minicom -s" to change parameters.
+# Serial Device
+pu port             /dev/ttyUSB0
+
+# Lockfile Location
+pu lock             /var/lock
+
+# Bps/Par/Bits
+pu baudrate         115200
+pu bits             8
+pu parity           N
+pu stopbits         1
+
+# Download directory
+pu downdir          {{ ansible_user_dir }}/Downloads
+
+# Hardware Flow Control
+pu rtscts           Yes
+
+# Software Flow Control
+pu xonxoff          Yes
+
+# Line wrapping
+pu linewrap         Yes
+
+# Colors foreground then background grouped by menu, term and then stat
+pu mfcolor          WHITE
+pu mbcolor          BLACK
+pu tfcolor          WHITE
+pu tbcolor          BLACK
+pu sfcolor          WHITE
+pu sbcolor          BLACK
