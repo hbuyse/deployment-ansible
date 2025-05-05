@@ -5,7 +5,7 @@
     - files:
         - "{{ ansible_os_family | lower }}.yml"
       skip: true
-  tags: [texlive, formatter, formatters]
+  tags: [texlive, latex, tex]
 
 - name: "TexLive | Install from package manager"
   become: true

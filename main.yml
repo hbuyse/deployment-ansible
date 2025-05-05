@@ -79,3 +79,4 @@
     # End Formatters
     - role: "network"
     - role: "minicom"
+    - role: "texlive"
