@@ -260,7 +260,12 @@
       "warning": 70,
       "critical": 90
     },
-    "on-click": "swaymsg exec '$term -e htop'"
+    "on-click": "swaymsg exec '$term -e htop'",
+{% if ansible_os_family == "Debian" %}
+    "tooltip-format": "RAM: {used:0.1f} / {total:0.1f} Gb"
+{% else %}
+    "tooltip-format": "RAM: {used:0.1f} / {total:0.1f} Gb\nSWAP: {swapUsed:0.1f} / {swapTotal:0.1f} Gb"
+{% endif %}
   },
   "tray": {
     "icon-size": 16,
