@@ -47,9 +47,9 @@ set $menu       pkill -x wofi || wofi --show drun
 set $powermenu  $HOME/.config/sway/scripts/powermenu.sh
 
 # Volume control
-set $volume_down pulsemixer --change-volume -1 && $onscreen_bar $(pulsemixer --get-volume)
-set $volume_up pulsemixer --change-volume +1 && $onscreen_bar $(pulsemixer --get-volume)
-set $volume_mute pulsemixer --toggle-mute && $(pulsemixer --get-volume)
+set $volume_down pactl set-sink-volume @DEFAULT_SINK@   -5%
+set $volume_up   pactl set-sink-volume @DEFAULT_SINK@   +5%
+set $volume_mute pactl set-sink-mute   @DEFAULT_SINK@   toggle
 
 set $pulseaudio $term_float pulsemixer
 #  vim: set ts=4 sw=4 tw=0 et ft=swayconfig :
