@@ -10,6 +10,18 @@
     state: "present"
   tags: waybar
 
+- name: "Waybar | Get version"
+  ansible.builtin.command:
+    cmd: "waybar --version"
+  register: waybar_version
+  changed_when: waybar_version.rc != 0
+  tags: waybar
+
+- name: "Waybar | Extract version"
+  ansible.builtin.set_fact:
+    waybar_current_version: "{{ waybar_version.stdout | regex_search('[0-9]+.[0-9]+.[0-9]+') }}"
+  tags: waybar
+
 - name: "Waybar | Install service file"
   become: true
   tags: waybar

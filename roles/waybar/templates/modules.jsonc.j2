@@ -92,7 +92,7 @@
     "format": "{:%d/%m %H:%M}",
     "format-alt": "{:%e %b %Y %H:%M:%S}",
     "interval": 5,
-{% if ansible_os_family != "Debian" %}
+{% if waybar_current_version.split('.') | map('int') | list >= [0, 9, 19] %}
     "tooltip": true,
     "tooltip-format": "<tt><span size='9pt'>{calendar}</span></tt>",
     "calendar": {
@@ -112,10 +112,10 @@
 {% endif %}
   },
   "custom/wf-recorder": {
-{% if ansible_os_family == "Debian" %}
-    "format": "{}",
-{% else %}
+{% if waybar_current_version.split('.') | map('int') | list >= [0, 12, 0] %}
     "format": "{text}",
+{% else %}
+    "format": "{}",
 {% endif %}
     "return-type": "json",
     "interval": 1,
@@ -146,10 +146,10 @@
   },
   "custom/weather": {
     "icon-size": 42,
-{% if ansible_os_family == "Debian" %}
-    "format": "{} <span font-family='Noto Color Emoji'>{icon}</span>",
-{% else %}
+{% if waybar_current_version.split('.') | map('int') | list >= [0, 12, 0] %}
     "format": "{text} <span font-family='Noto Color Emoji'>{icon}</span>",
+{% else %}
+    "format": "{} <span font-family='Noto Color Emoji'>{icon}</span>",
 {% endif %}
     "tooltip": true,
     "interval": 3600,
@@ -178,10 +178,10 @@
     }
   },
   "custom/updates": {
-{% if ansible_os_family == "Debian" %}
-    "format": "{}",
-{% else %}
+{% if waybar_current_version.split('.') | map('int') | list >= [0, 12, 0] %}
     "format": "{text}",
+{% else %}
+    "format": "{}",
 {% endif %}
     "tooltip": true,
     "interval": 300,
@@ -233,10 +233,10 @@
     ]
   },
   "custom/battery": {
-{% if ansible_os_family == "Debian" %}
-    "format": "{icon}  {}",
-{% else %}
+{% if waybar_current_version.split('.') | map('int') | list >= [0, 12, 0] %}
     "format": "{icon}  {text}",
+{% else %}
+    "format": "{icon}  {}",
 {% endif %}
     "format-icons": ["", "", "", "", ""],
     "tooltip": true,
@@ -262,10 +262,10 @@
       "critical": 90
     },
     "on-click": "swaymsg exec '$term -e htop'",
-{% if ansible_os_family == "Debian" %}
-    "tooltip-format": "RAM: {used:0.1f} / {total:0.1f} Gb"
-{% else %}
+{% if waybar_current_version.split('.') | map('int') | list >= [0, 9, 10] %}
     "tooltip-format": "RAM: {used:0.1f} / {total:0.1f} Gb\nSWAP: {swapUsed:0.1f} / {swapTotal:0.1f} Gb"
+{% elif waybar_current_version.split('.') | map('int') | list >= [0, 9, 4] %}
+    "tooltip-format": "RAM: {used:0.1f} / {total:0.1f} Gb"
 {% endif %}
   },
   "tray": {

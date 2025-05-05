@@ -31,14 +31,14 @@
     "layer": "top",
     "position": "bottom",
     "height": 30,
-{% if ansible_os_family != "Debian" %}
     "modules-left": [
+{% if waybar_current_version.split('.') | map('int') | list >= [0, 10, 0] %}
       "systemd-failed-units",
       "privacy",
-    ],
 {% endif %}
+    ],
     "modules-right": [
-{% if ansible_os_family != "Debian" %}
+{% if waybar_current_version.split('.') | map('int') | list >= [0, 10, 0] %}
       "power-profiles-daemon",
 {% endif %}
 {% for mount in ansible_mounts|selectattr('fstype','in','ext4,vfat')|sort(attribute='mount') %}
