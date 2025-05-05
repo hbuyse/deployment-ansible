@@ -95,9 +95,7 @@ window#waybar.hidden {
 #custom-updates,
 #custom-sunset,
 #custom-weather,
-{% for mount in ansible_mounts|selectattr('fstype','in','ext4,vfat')|sort(attribute='mount') %}
-#disk.{{ mount.mount | replace('/', '_')}},
-{% endfor %}
+#disk,
 #language,
 #memory,
 #mode,

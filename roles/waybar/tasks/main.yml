@@ -61,7 +61,6 @@
         - sway.jsonc
         - hyprland.jsonc
         - modules.jsonc
-        - style.css
 
 - name: "Waybar | Create virtualenv for Python scripts"
   ansible.builtin.pip:
