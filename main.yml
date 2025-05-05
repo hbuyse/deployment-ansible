@@ -85,3 +85,4 @@
     # Linters
     - role: "ansiblelint"
     # End Linters
+    - role: "texlive"
