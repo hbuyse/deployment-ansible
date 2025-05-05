@@ -39,9 +39,7 @@ return {
         },
       },
       formatters_by_ft = {
-{% if ansible_hostname != 'hbuyse-latitude5400' %}
         c = { 'clang-format' },
-{% endif %}
         json = { 'prettier' },
         lua = { 'stylua' },
         -- Conform will run multiple formatters sequentially
