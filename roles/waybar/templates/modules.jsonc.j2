@@ -71,8 +71,7 @@
       "default": ["", "", ""]
     },
     "tooltip-format": "{desc}: {volume}% {format_source}",
-    "on-click": "swaymsg exec '$term -e pulsemixer'",
-    "on-click-middle": "swaymsg exec '$volume_mute'",
+    "on-click": "swaymsg exec '$volume_mute'",
     "on-click-right": "swaymsg exec 'pavucontrol'"
   },
 {% for interface in ansible_facts | dict2items | selectattr('value.module', 'defined') | map(attribute='value') | list | sort(attribute='device') %}
