@@ -1,3 +1,6 @@
+--- Disable the Dock audio devices.
+-- @module 89-disable-dock-device
+
 local rule = {
   matches = {
     {
