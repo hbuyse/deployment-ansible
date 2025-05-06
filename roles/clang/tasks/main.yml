@@ -33,3 +33,18 @@
     apply:
       tags: clang
   tags: clang
+
+- name: "Clangd | Copy configuration file"
+  tags: [clang, clangd]
+  block:
+    - name: "Clangd | Ensure configuration directory exists"
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/.config/clangd"
+        mode: "0755"
+        state: "directory"
+
+    - name: "Clangd | Copy launcher script"
+      ansible.builtin.copy:
+        src: "config.yaml"
+        dest: "{{ clang_clangd_config_dir }}"
+        mode: "0755"
