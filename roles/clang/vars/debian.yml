@@ -1,12 +1,6 @@
 ---
 clang_llvm_stable_version: 20
 
-clang_dependencies:
-  - lsb-release
-  - wget
-  - software-properties-common
-  - gnupg
-
 clang_packages:
   # LLVM
   - "libllvm{{ clang_llvm_stable_version }}"
