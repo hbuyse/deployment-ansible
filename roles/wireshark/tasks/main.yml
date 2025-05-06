@@ -1,0 +1,39 @@
+---
+- name: "Wireshark | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ ansible_os_family | lower }}.yml"
+  tags: wireshark
+
+- name: "Wireshark | Add repository"
+  ansible.builtin.include_tasks:
+    file: "{{ item }}"
+    apply:
+      tags: wireshark
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: wireshark
+
+- name: "Wireshark | Install packages"
+  become: true
+  ansible.builtin.package:
+    name: "{{ wireshark_packages }}"
+    state: "present"
+  when: wireshark_packages is defined
+  tags: wireshark
+
+- name: "Wireshark | Install configuration files"
+  tags: wireshark
+  block:
+    - name: "Wireshark | Ensure directories exists"
+      ansible.builtin.file:
+        path: "{{ wireshark_config_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: "Wireshark | Copy static configuration files"
+      ansible.builtin.copy:
+        src: "{{ role_path }}/files/"
+        dest: "{{ wireshark_config_dir }}"
+        mode: "preserve"
+        directory_mode: "0755"

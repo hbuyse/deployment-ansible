@@ -1,0 +1,4 @@
+---
+wireshark_packages:
+  - wireshark-cli
+  - wireshark-qt
