@@ -2,7 +2,7 @@
 - name: "Clang | Install source repository"
   become: true
   ansible.builtin.deb822_repository:
-    name: "llvm"
+    name: "llvm-{{ clang_llvm_stable_version }}"
     enabled: true
     types: deb
     uris: "http://apt.llvm.org/{{ ansible_distribution_release }}"
