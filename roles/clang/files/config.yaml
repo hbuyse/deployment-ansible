@@ -1,0 +1,17 @@
+---
+Diagnostics:
+  UnusedIncludes: Strict
+
+Completion:
+  AllScopes: Yes
+  ArgumentLists: FullPlaceholders
+  HeaderInsertion: IWYU
+
+InlayHints:
+  Enabled: Yes
+  BlockEnd: No
+  Designators: Yes
+  ParameterNames: Yes
+  DeducedTypes: Yes
+  DefaultArguments: No
+  TypeNameLimit: 24
