@@ -25,14 +25,7 @@
     state: present
     name: "{{ clang_packages }}"
   tags: clang
-
-- name: "Clang | Update Clang and LLVM alternatives [Debian]"
-  when: ansible_os_family == 'Debian'
-  ansible.builtin.include_tasks:
-    file: alternatives.yml
-    apply:
-      tags: clang
-  tags: clang
+  notify: "Clang | Update Clang and LLVM alternatives"
 
 - name: "Clangd | Copy configuration file"
   tags: [clang, clangd]
