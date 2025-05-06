@@ -1,0 +1,8 @@
+---
+- name: "Clang | Update Clang and LLVM alternatives"
+  when: ansible_os_family == 'Debian'
+  ansible.builtin.include_tasks:
+    file: alternatives.yml
+    apply:
+      tags: clang
+  tags: clang
