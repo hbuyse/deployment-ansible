@@ -49,6 +49,9 @@ pruneTags = true
 # the --multiple option of git-fetch[1] is in effect).
 # A value of 0 will give some reasonable default. If unset, it defaults to 1.
 parallel = 0
+# When set to yes, all populated submodules are fetched and submodules that are both unpopulated and changed are fetched.
+# When set to on-demand, only changed submodules are fetched.
+# When set to no, submodules are never fetched.
 recurseSubmodules = true
 
 [push]
@@ -61,8 +64,11 @@ path = nvim
 showPatch = true
 
 [rebase]
+# Show a diffstat of what changed upstream since the last rebase
 stat = true
+# Automatically create a temporary stash entry before the operation begins, and apply it after the operation ends
 autostash = true
+# Setting configuration variable rebase.autoSquash to true enables auto-squashing by default for interactive rebase
 autosquash = true
 
 [diff "bin"]
