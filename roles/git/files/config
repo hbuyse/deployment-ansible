@@ -79,7 +79,7 @@ textconv = hexdump -C
 [diff "pcap"]
 # Allow files following the diff=pcap (defined in ~/.config/git/attributes) to be correctly differentiate
 binary = true
-textconv = tshark -x -V -P -r
+textconv = tshark --hexdump all --hexdump ascii -V --print --read-file
 
 [init]
 defaultBranch = main
