@@ -75,6 +75,7 @@
         enabled: false
         state: "stopped"
         scope: user
+      when: "'dunst' in services"
 
     - name: "Mako | Enable service"
       ansible.builtin.systemd:
