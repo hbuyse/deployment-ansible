@@ -83,6 +83,7 @@
   tags: keymapp
 
 - name: "Keymapp | Add current user to 'plugdev' group"
+  become: true
   when: ansible_os_family == "Debian"
   ansible.builtin.user:
     name: "{{ ansible_user_id }}"
