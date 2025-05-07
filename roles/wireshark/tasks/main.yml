@@ -37,3 +37,11 @@
         dest: "{{ wireshark_config_dir }}"
         mode: "preserve"
         directory_mode: "0755"
+
+- name: "Wireshark | Add user to group wireshark"
+  become: true
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    groups: "{{ wireshark_group }}"
+    append: true
+  tags: wireshark
