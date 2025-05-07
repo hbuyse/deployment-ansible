@@ -2,7 +2,6 @@
 waybar_packages:
   - waybar
   - wlsunset
-  - tuned-ppd
   - google-noto-emoji-fonts
 
 waybar_pip_packages:

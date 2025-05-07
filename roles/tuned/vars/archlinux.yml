@@ -1,0 +1,4 @@
+---
+tuned_packages:
+  - tuned
+  - tuned-ppd

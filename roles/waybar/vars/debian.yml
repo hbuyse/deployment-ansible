@@ -1,7 +1,6 @@
 ---
 waybar_packages:
   - waybar
-  - power-profiles-daemon
   - fonts-noto-color-emoji
   - playerctl
 
