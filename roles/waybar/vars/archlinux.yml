@@ -2,7 +2,6 @@
 waybar_packages:
   - waybar
   - wlsunset
-  - power-profiles-daemon
   - noto-fonts-emoji
 
 waybar_pip_packages:

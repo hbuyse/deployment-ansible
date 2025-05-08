@@ -30,3 +30,4 @@
     - role: "mako"
     - role: "wofi"
     - role: "wireplumber"
+    - role: "tuned"

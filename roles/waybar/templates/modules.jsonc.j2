@@ -290,6 +290,16 @@
       "power-saver": " "
     }
   },
+  "custom/tuned": {
+    "interval": 60,
+    "tooltip": true,
+    "return-type": "json",
+    "format": "{}",
+    "exec": "~/.config/waybar/scripts/tuned-switcher.sh get",
+    "on-click": "~/.config/waybar/scripts/tuned-switcher.sh switch",
+    "exec-if": "~/.config/waybar/scripts/tuned-switcher.sh check",
+    "signal": 7
+  },
   "hyprland/language": {
     "format": "  {short}"
   },

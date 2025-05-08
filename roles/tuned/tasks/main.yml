@@ -1,0 +1,38 @@
+---
+- name: "TuneD | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags:
+    - tuned
+
+- name: "TuneD | Install packages"
+  become: true
+  ansible.builtin.package:
+    name: "{{ tuned_packages }}"
+    state: "present"
+  when: tuned_packages is defined
+  tags:
+    - tuned
+
+- name: "TuneD | Enable TuneD service"
+  become: true
+  ansible.builtin.systemd:
+    name: "tuned"
+    enabled: true
+    state: "started"
+  tags:
+    - tuned
+
+- name: "TuneD | Enable TuneD-PPD service"
+  become: true
+  ansible.builtin.systemd:
+    name: "tuned-ppd"
+    enabled: true
+    state: "started"
+  register: res
+  failed_when: "res is failed and 'Could not find the requested service' not in res.msg"
+  tags:
+    - tuned

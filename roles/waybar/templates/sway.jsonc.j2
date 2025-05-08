@@ -40,6 +40,8 @@
     "modules-right": [
 {% if waybar_current_version.split('.') | map('int') | list >= [0, 10, 0] %}
       "power-profiles-daemon",
+{% else %}
+      "custom/tuned",
 {% endif %}
 {% for mount in ansible_mounts|selectattr('fstype','in','ext4,vfat')|sort(attribute='mount') %}
       "disk#{{ mount.mount | replace('/', '_')}}",
