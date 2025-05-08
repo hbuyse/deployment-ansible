@@ -32,5 +32,7 @@
     name: "tuned-ppd"
     enabled: true
     state: "started"
+  register: res
+  failed_when: "res is failed and 'Could not find the requested service' not in res.msg"
   tags:
     - tuned
