@@ -82,3 +82,6 @@
     - role: "stylua"
     - role: "yamlfmt"
     # End Formatters
+    # Linters
+    - role: "ansiblelint"
+    # End Linters

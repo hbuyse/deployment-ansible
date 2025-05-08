@@ -1,0 +1,25 @@
+---
+- name: "Ansible Lint | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: lint
+
+- name: "Ansible Lint | Install from package manager"
+  become: true
+  when: ansiblelint_packages is defined
+  ansible.builtin.package:
+    name: "{{ ansiblelint_packages }}"
+    state: present
+  tags: lint
+
+- name: "Ansible Lint | Install from PIP"
+  become: true
+  when: ansiblelint_packages is not defined
+  community.general.pipx:
+    name: "{{ ansiblelint_pip_package }}"
+    global: true
+    state: latest
+  tags: lint

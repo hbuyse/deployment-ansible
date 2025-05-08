@@ -1,0 +1,3 @@
+---
+ansiblelint_packages:
+  - ansible-lint
