@@ -1,7 +1,9 @@
+[user]
+name = "Henri Buyse"
+email = "henri.buyse@gmail.com"
+
 [include]
 path = delta
-# Should contain private information
-path = user
 path = local ; find "local" relative to the current file
 
 [core]
