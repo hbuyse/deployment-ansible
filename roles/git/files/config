@@ -6,6 +6,10 @@ email = "henri.buyse@gmail.com"
 path = delta
 path = local ; find "local" relative to the current file
 
+# include "work" configuration file if currently in a git directory stored in ~/work (works with symlink)
+[includeIf "gitdir:~/work/"]
+path = ~/work/.gitconfig
+
 [core]
 editor = nvim
 attributesFile = ~/.config/git/attributes
