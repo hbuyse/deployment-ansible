@@ -1,4 +1,13 @@
 ---
+- name: "SSH | Check that the email for the public key is populated"
+  ansible.builtin.assert:
+    that:
+      - ssh_pubkey_email is defined
+      - ssh_pubkey_email | length > 0
+    fail_msg: "ssh_pubkey_email must not be empty (check your host_vars/localhost.yml)"
+    quiet: true
+  tags: ssh
+
 - name: "SSH | Ensure directory exists"
   ansible.builtin.file:
     path: "{{ ansible_user_dir }}/.ssh"
