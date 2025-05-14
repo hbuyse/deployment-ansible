@@ -46,6 +46,10 @@ reflog = %C(auto)%h %<|(17)%gd %C(blue)%ci%C(reset) %gs
 [log]
 date = format-local:%d/%m/%Y %H:%M
 
+[credential]
+# Do not ask for the passphrase or user + password during 5 minutes
+helper = "cache --timeout 300"
+
 [fetch]
 # If true, fetch will automatically behave as if the --prune option was given on the command line.
 # See also remote.<name>.prune and the PRUNING section of git-fetch[1].
