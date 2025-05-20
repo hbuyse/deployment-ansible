@@ -1,6 +1,28 @@
 ---
+- name: "TexLive | Create temporary directory"
+  ansible.builtin.tempfile:
+    state: "directory"
+    suffix: "texlive"
+  register: tmptexdir
+  # notify:
+  #   - "TexLive | Remove temporary folder"
+
 - name: "TexLive | Generate profile"
   ansible.builtin.template:
     src: "profile.j2"
-    dest: "/tmp/profile"
+    dest: "{{ tmptexdir.path }}/profile"
     mode: "0644"
+
+- name: "TexLive | Download the installer"
+  ansible.builtin.unarchive:
+    src: "https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz"
+    dest: "{{ tmptexdir.path }}"
+    remote_src: true
+    extra_opts:
+      - "--strip-components=1"
+
+- name: "TexLive | Run the installer"
+  ansible.builtin.command:
+    cmd: "{{ tmptexdir.path }}/install-tl --profile {{ tmptexdir.path }}/profile"
+  register: install
+  changed_when: install.rc == 0

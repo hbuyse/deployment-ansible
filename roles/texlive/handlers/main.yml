@@ -1,0 +1,5 @@
+---
+- name: "TexLive | Remove temporary folder"
+  ansible.builtin.file:
+    path: "{{ tmptexdir }}"
+    state: absent
