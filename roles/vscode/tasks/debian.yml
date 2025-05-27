@@ -1,5 +1,5 @@
 ---
-- name: "Nodejs | Add repository"
+- name: "VSCode | Add repository"
   become: true
   ansible.builtin.deb822_repository:
     name: vscode
