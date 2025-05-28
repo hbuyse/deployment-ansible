@@ -28,7 +28,11 @@ if [[ ! -f "$OS_RELEASE" ]]; then
     exit 1
 fi
 
-DISTRIB=$(grep ID_LIKE $OS_RELEASE | cut -d'=' -f2)
+DISTRIB=$(grep -w ID_LIKE $OS_RELEASE | cut -d'=' -f2)
+if [ -z "$DISTRIB" ]; then
+    DISTRIB=$(grep -w ID $OS_RELEASE | cut -d'=' -f2)
+fi
+
 case "$DISTRIB" in
 "arch")
     check checkupdates || {
@@ -85,6 +89,22 @@ case "$DISTRIB" in
     done
     # Remove last '\n'
     tooltip=${tooltip::-2}
+    ;;
+"fedora")
+    nbUpdates=$(dnf repoquery --quiet --upgrades | wc -l)
+    mapfile -t updates < <(join -j1 \
+        <(dnf repoquery --quiet --installed --queryformat '%{name} %{evr}\n' | sort) \
+        <(dnf repoquery --quiet --upgrades --queryformat '%{name} %{evr}\n' | sort))
+
+    tooltip="<b>${nbUpdates} 󰏕 updates</b>\n"
+    tooltip+="<b>$(stringToLen "PkgName" 20) $(stringToLen "PrevVersion" 20) $(stringToLen "NextVersion" 20)</b>\n"
+
+    for i in "${updates[@]}"; do
+        update="$(stringToLen "$(echo "$i" | awk '{print $1}')" 20)"
+        prev="$(stringToLen "$(echo "$i" | awk '{print $2}')" 20)"
+        next="$(stringToLen "$(echo "$i" | awk '{print $3}')" 20)"
+        tooltip+="<b>$update</b> $prev $next\n"
+    done
     ;;
 *)
     exit 0
