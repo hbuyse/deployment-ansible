@@ -47,13 +47,13 @@ case "$DISTRIB" in
     nbUpdates=${#updates[@]}
 
     tooltip="<b>$nbUpdates 󰏕 updates</b>\n"
-    tooltip+=" <b>$(stringToLen "PkgName" 20) $(stringToLen "PrevVersion" 20) $(stringToLen "NextVersion" 20)</b>\n"
+    tooltip+="<b>$(stringToLen "PkgName" 20) $(stringToLen "PrevVersion" 20) $(stringToLen "NextVersion" 20)</b>\n"
 
     for i in "${updates[@]}"; do
         update="$(stringToLen "$(echo "$i" | awk '{print $1}')" 20)"
         prev="$(stringToLen "$(echo "$i" | awk '{print $2}')" 20)"
         next="$(stringToLen "$(echo "$i" | awk '{print $4}')" 20)" # skipping '->' string
-        tooltip+="<b> $update </b>$prev $next\n"
+        tooltip+="<b>$update</b>$prev $next\n"
     done
 
     # Remove last '\n'
@@ -73,7 +73,7 @@ case "$DISTRIB" in
     nbUpdates=$((${#updates[@]} - 1))
 
     tooltip="<b>${nbUpdates} 󰏕 updates</b>\n"
-    tooltip+=" <b>$(stringToLen "PkgName" 20) $(stringToLen "PrevVersion" 20) $(stringToLen "NextVersion" 20)</b>\n"
+    tooltip+="<b>$(stringToLen "PkgName" 20) $(stringToLen "PrevVersion" 20) $(stringToLen "NextVersion" 20)</b>\n"
 
     for ((i = 0; i < "${nbLines}"; i++)); do
         if [ "${i}" -eq 0 ]; then continue; fi
@@ -85,7 +85,7 @@ case "$DISTRIB" in
         oldversion="$(echo "$update" | awk '{print $6}')"
         oldversion=${oldversion::-1}
         prev="$(stringToLen "${oldversion}" 20)" # skipping '->' string
-        tooltip+="<b> $pkg </b>$prev $next\n"
+        tooltip+="<b>$pkg</b> $prev $next\n"
     done
     # Remove last '\n'
     tooltip=${tooltip::-2}
