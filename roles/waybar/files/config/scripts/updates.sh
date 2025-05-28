@@ -55,9 +55,6 @@ case "$DISTRIB" in
         next="$(stringToLen "$(echo "$i" | awk '{print $4}')" 20)" # skipping '->' string
         tooltip+="<b>$update</b>$prev $next\n"
     done
-
-    # Remove last '\n'
-    tooltip=${tooltip::-2}
     ;;
 "debian")
     check apt || {
@@ -87,8 +84,6 @@ case "$DISTRIB" in
         prev="$(stringToLen "${oldversion}" 20)" # skipping '->' string
         tooltip+="<b>$pkg</b> $prev $next\n"
     done
-    # Remove last '\n'
-    tooltip=${tooltip::-2}
     ;;
 "fedora")
     nbUpdates=$(dnf repoquery --quiet --upgrades | wc -l)
@@ -110,6 +105,9 @@ case "$DISTRIB" in
     exit 0
     ;;
 esac
+S
+# Remove last '\n'
+tooltip=${tooltip::-2}
 
 [ "$nbUpdates" -le 0 ] && nbUpdates="" || nbUpdates="  $nbUpdates"
 echo "{ \"text\": \"${nbUpdates}\", \"tooltip\": \"${tooltip}\"}"
