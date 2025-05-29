@@ -1,6 +1,10 @@
 ---
 - name: "User | Copy the face image"
+  tags: user
   ansible.builtin.copy:
     src: "face.png"
-    dest: "{{ ansible_user_dir }}/.face"
+    dest: "{{ item }}"
     mode: "0644"
+  loop:
+    - "{{ ansible_user_dir }}/.face"
+    - "/var/lib/AccountsService/icons/{{ ansible_user_id }}"
