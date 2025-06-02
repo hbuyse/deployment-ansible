@@ -73,6 +73,16 @@ path = nvim
 [stash]
 showPatch = true
 
+[status]
+# Show the branch and tracking info even in short-format
+branch = false
+# Set to true to enable --short by default in git-status
+short = false
+# If set to true, git-status will display the number of entries currently stashed away.
+showStash = true
+# Show also individual files in untracked directories
+showUntrackedFiles = all
+
 [rebase]
 # Show a diffstat of what changed upstream since the last rebase
 stat = true
