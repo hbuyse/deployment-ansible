@@ -1,0 +1,76 @@
+---
+- name: "NcSpot | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags:
+    - ncspot
+
+- name: "NcSpot | Install Rust package with locked dependencies"
+  become: true
+  community.general.cargo:
+    name: ncspot
+    state: latest
+    locked: true
+    path: "/usr/local"
+  environment:
+    RUSTUP_HOME: "{{ ansible_user_dir }}/.rustup"
+    CARGO_HOME: "{{ ansible_user_dir }}/.cargo"
+    PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"
+  tags: ncspot
+  when: ncspot_packages is not defined
+
+- name: "NcSpot | Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ ncspot_packages }}"
+  when: ncspot_packages is defined
+  tags: ncspot
+
+- name: "NcSpot | Copy configuration"
+  tags: ncspot
+  block:
+    - name: "NcSpot | Ensure configuration directory exists"
+      ansible.builtin.file:
+        path: "{{ ncspot_config_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: "NcSpot | Copy configuration file"
+      ansible.builtin.copy:
+        src: config.toml
+        dest: "{{ ncspot_config_dir }}/config.toml"
+        mode: "0644"
+
+- name: "NcSpot | Copy librespot credentials"
+  tags: [ncspot, librespot]
+  block:
+    - name: "NcSpot | Ensure librespot cache directory exists"
+      ansible.builtin.file:
+        path: "{{ ncspot_librespot_cache_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: "NcSpot | Copy configuration file"
+      ansible.builtin.copy:
+        src: credentials.json
+        dest: "{{ ncspot_librespot_cache_dir }}/credentials.json"
+        mode: "0644"
+
+- name: "NcSpot | Download NcSpot desktop file"
+  tags: ncspot
+  become: true
+  block:
+    - name: "NcSpot | Ensure applications directory exist"
+      ansible.builtin.file:
+        path: "/usr/local/share/applications"
+        state: directory
+        mode: "0755"
+
+    - name: "Alacritty | Download desktop file"
+      ansible.builtin.get_url:
+        url: "https://raw.githubusercontent.com/hrkfdn/ncspot/refs/heads/main/misc/ncspot.desktop"
+        dest: "/usr/local/share/applications/ncspot.desktop"
+        mode: "0644"

@@ -1,0 +1,39 @@
+initial_screen = "library"
+use_nerdfont = true
+audio_cache = true
+audio_cache_size = 5000
+volnorm = true
+notify = true
+bitrate = 320
+gapless = true
+shuffle = true
+repeat = "playlist"
+playback_state = "Paused"
+statusbar_format = "%artists - %title"
+
+[track_format]
+left = "%artists - %title"
+center = "%album"
+right = "%saved %duration"
+
+[notification_format]
+title = "%title"
+body = "%artists"
+
+[theme]
+background = "#1e1e2e"
+primary = "#cdd6f4"
+secondary = "#94e2d5"
+title = "#f5e0dc"
+playing = "#a6e3a1"
+playing_bg = "#1e1e2e"
+highlight = "#cdd6f4"
+highlight_bg = "#897f85"
+playing_selected = "#a6e3a1"
+error = "#1e1e2e"
+error_bg = "#f38ba8"
+statusbar = "#f5e0dc"
+statusbar_bg = "#313244"
+statusbar_progress = "#f5e0dc"
+cmdline = "#f5e0dc"
+cmdline_bg = "#181825"
