@@ -1,0 +1,6 @@
+---
+- name: "Mako | Restart service"
+  ansible.builtin.systemd:
+    name: "mako"
+    state: "restarted"
+    scope: user
