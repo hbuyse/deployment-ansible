@@ -332,5 +332,20 @@
     "tooltip-format-disabled": "Bluetooth disabled",
     "on-click": "~/.config/waybar/scripts/bluetooth.sh toggle_power",
     "on-click-right": "~/.config/waybar/scripts/bluetooth.sh toggle_status"
+  },
+  "custom/ncspot": {
+    "interval": 5,
+    "tooltip": true,
+    "return-type": "json",
+    "format": "{icon}  {}",
+    "format-icons": {
+      "play": "",
+      "pause": "",
+      "stop": ""
+    },
+    "exec": "~/.config/waybar/scripts/.venv/bin/python ~/.config/waybar/scripts/ncspot-player.py",
+    "exec-if": "pgrep ncspot",
+    "exec-on-event": true,
+    "on-click": "~/.config/waybar/scripts/.venv/bin/python ~/.config/waybar/scripts/ncspot-player.py toggleplay"
   }
 }

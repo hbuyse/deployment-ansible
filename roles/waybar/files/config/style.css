@@ -96,6 +96,7 @@ window#waybar.hidden {
 #custom-sunset,
 #custom-weather,
 #custom-tuned,
+#custom-ncspot,
 #disk,
 #language,
 #memory,
@@ -118,6 +119,12 @@ window#waybar.hidden {
 #custom-power {
   background: @theme_selected_bg_color;
   color: @red;
+}
+
+#custom-ncspot {
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-bottom-color: #1ed760;
 }
 
 #custom-idle_inhibitor.activated,
