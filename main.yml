@@ -58,6 +58,8 @@
     - role: "spotify_player"
     - role: "ncspot"
     - role: "discord"
+    - role: "mattermost_desktop"
+      when: ansible_hostname == 'hbuyse-latitude5400'
     - role: "qemu_kvm"
     # LSP Servers
     - role: "ansiblels"

@@ -1,0 +1,59 @@
+---
+- name: "Mattermost Desktop | Get latest version number"
+  register: latest_json
+  ansible.builtin.uri:
+    url: "https://api.github.com/repos/{{ mattermost_desktop_github_user }}/{{ mattermost_desktop_github_repo }}/releases/latest"
+    method: GET
+    return_content: true
+    status_code: 200
+    body_format: json
+
+- name: "Mattermost Desktop | Set facts"
+  ansible.builtin.set_fact:
+    mattermost_desktop_latest_version: "{{ latest_json.json.tag_name[1:] }}"
+    mattermost_desktop_root_folder:
+      "mattermost-desktop-{{ latest_json.json.tag_name[1:] }}-{{ ansible_system | lower }}-\
+      {{ (ansible_architecture == 'x86_64') | ternary('x64', 'arm64') }}"
+
+- name: "Mattermost Desktop | Ensure final directory exist"
+  become: true
+  ansible.builtin.file:
+    path: "{{ mattermost_desktop_install_dir }}"
+    state: directory
+    owner: "root"
+    group: "root"
+    mode: "0755"
+
+- name: "Mattermost Desktop | Extract archive"
+  become: true
+  ansible.builtin.unarchive:
+    src:
+      "https://github.com/{{ mattermost_desktop_github_user }}/{{ mattermost_desktop_github_repo }}/releases/download/\
+      v{{ mattermost_desktop_latest_version }}/{{ mattermost_desktop_root_folder }}.tar.gz"
+    dest: "{{ mattermost_desktop_install_dir }}"
+    owner: "root"
+    group: "root"
+    exclude:
+      - "{{ mattermost_desktop_root_folder }}/create_desktop_file.sh"
+    extra_opts:
+      - --strip-components=1
+    remote_src: true
+
+- name: "Mattermost Desktop | Copy desktop file"
+  become: true
+  block:
+    - name: "Mattermost Desktop | Ensure applications directory exist"
+      ansible.builtin.file:
+        path: "/usr/local/share/applications"
+        state: directory
+        owner: "root"
+        group: "root"
+        mode: "0755"
+
+    - name: "Mattermost Desktop | Copy desktop file"
+      ansible.builtin.template:
+        src: "mattermost-desktop.desktop.j2"
+        dest: "/usr/local/share/applications/mattermost-desktop.desktop"
+        owner: "root"
+        group: "root"
+        mode: "0644"
