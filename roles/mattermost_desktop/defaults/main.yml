@@ -2,3 +2,4 @@
 mattermost_desktop_install_dir: "/opt/mattermost-desktop"
 mattermost_desktop_github_user: "mattermost"
 mattermost_desktop_github_repo: "desktop"
+mattermost_desktop_version_filepath: "{{ mattermost_desktop_install_dir }}/.version"

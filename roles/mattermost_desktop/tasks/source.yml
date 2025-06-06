@@ -15,45 +15,70 @@
       "mattermost-desktop-{{ latest_json.json.tag_name[1:] }}-{{ ansible_system | lower }}-\
       {{ (ansible_architecture == 'x86_64') | ternary('x64', 'arm64') }}"
 
-- name: "Mattermost Desktop | Ensure final directory exist"
-  become: true
-  ansible.builtin.file:
-    path: "{{ mattermost_desktop_install_dir }}"
-    state: directory
-    owner: "root"
-    group: "root"
-    mode: "0755"
-
-- name: "Mattermost Desktop | Extract archive"
-  become: true
-  ansible.builtin.unarchive:
-    src:
-      "https://github.com/{{ mattermost_desktop_github_user }}/{{ mattermost_desktop_github_repo }}/releases/download/\
-      v{{ mattermost_desktop_latest_version }}/{{ mattermost_desktop_root_folder }}.tar.gz"
-    dest: "{{ mattermost_desktop_install_dir }}"
-    owner: "root"
-    group: "root"
-    exclude:
-      - "{{ mattermost_desktop_root_folder }}/create_desktop_file.sh"
-    extra_opts:
-      - --strip-components=1
-    remote_src: true
-
-- name: "Mattermost Desktop | Copy desktop file"
-  become: true
+- name: "Mattermost Desktop | Try to load version file"
   block:
-    - name: "Mattermost Desktop | Ensure applications directory exist"
+    - name: "Mattermost Desktop | Load version file"
+      ansible.builtin.set_fact:
+        mattermost_desktop_version: "{{ lookup('file', mattermost_desktop_version_filepath) | from_json }}"
+
+  rescue:
+    - name: "Mattermost Desktop | Load version file [fallback]"
+      ansible.builtin.set_fact:
+        mattermost_desktop_version:
+          version: "0.0.0"
+
+- name: "Mattermost Desktop | Set current version"
+  ansible.builtin.set_fact:
+    mattermost_desktop_current_version: "{{ mattermost_desktop_version.version }}"
+
+- name: "Mattermost Desktop | Install latest version [{{ mattermost_desktop_latest_version }}]"
+  become: true
+  when: "mattermost_desktop_current_version is ansible.builtin.version(mattermost_desktop_latest_version, '<')"
+  block:
+    - name: "Mattermost Desktop | Ensure final directory exist"
       ansible.builtin.file:
-        path: "/usr/local/share/applications"
+        path: "{{ mattermost_desktop_install_dir }}"
         state: directory
         owner: "root"
         group: "root"
         mode: "0755"
 
+    - name: "Mattermost Desktop | Extract archive"
+      ansible.builtin.unarchive:
+        src:
+          "https://github.com/{{ mattermost_desktop_github_user }}/{{ mattermost_desktop_github_repo }}/releases/download/\
+          v{{ mattermost_desktop_latest_version }}/{{ mattermost_desktop_root_folder }}.tar.gz"
+        dest: "{{ mattermost_desktop_install_dir }}"
+        owner: "root"
+        group: "root"
+        exclude:
+          - "{{ mattermost_desktop_root_folder }}/create_desktop_file.sh"
+        extra_opts:
+          - --strip-components=1
+        remote_src: true
+
     - name: "Mattermost Desktop | Copy desktop file"
+      block:
+        - name: "Mattermost Desktop | Ensure applications directory exist"
+          ansible.builtin.file:
+            path: "/usr/local/share/applications"
+            state: directory
+            owner: "root"
+            group: "root"
+            mode: "0755"
+
+        - name: "Mattermost Desktop | Copy desktop file"
+          ansible.builtin.template:
+            src: "mattermost-desktop.desktop.j2"
+            dest: "/usr/local/share/applications/mattermost-desktop.desktop"
+            owner: "root"
+            group: "root"
+            mode: "0644"
+
+    - name: "Mattermost Desktop | Write version in custom file"
       ansible.builtin.template:
-        src: "mattermost-desktop.desktop.j2"
-        dest: "/usr/local/share/applications/mattermost-desktop.desktop"
+        src: "version.j2"
+        dest: "{{ mattermost_desktop_version_filepath }}"
         owner: "root"
         group: "root"
         mode: "0644"
