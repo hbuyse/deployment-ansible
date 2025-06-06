@@ -1,0 +1,7 @@
+---
+discord_api_url: "https://discord.com/api"
+discord_version_url: "{{ discord_api_url }}/updates/stable?platform=linux"
+discord_apps_host: "stable.dl2.discordapp.net"
+discord_apps_url: "https://{{ discord_apps_host }}/apps"
+discord_install_dir: "/opt/discord"
+discord_version_filepath: "{{ discord_install_dir }}/.version"

@@ -5,20 +5,20 @@
     - files:
         - "{{ ansible_os_family | lower }}.yml"
       skip: true
-  tags: discord
+  tags: [discord, messaging]
 
-- name: "Discord | Install package [Debian]"
-  become: true
-  ansible.builtin.apt:
-    deb: "{{ discord_deb }}"
-    state: present
-  when: discord_deb is defined
-  tags: discord
+- name: "Discord | Install from archive"
+  ansible.builtin.include_tasks:
+    file: "source.yml"
+    apply:
+      tags: [discord, messaging]
+  when: discord_packages is not defined
+  tags: [discord, messaging]
 
-- name: "Discord | Install package [Rolling Release]"
+- name: "Discord | Install from package manager"
   become: true
   ansible.builtin.package:
-    name: "{{ discord_package }}"
+    name: "{{ discord_packages }}"
     state: present
-  when: discord_package is defined
-  tags: discord
+  when: discord_packages is defined
+  tags: [discord, messaging]
