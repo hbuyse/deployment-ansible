@@ -65,12 +65,21 @@
   block:
     - name: "NcSpot | Ensure applications directory exist"
       ansible.builtin.file:
-        path: "/usr/local/share/applications"
+        path: "{{ item }}"
         state: directory
         mode: "0755"
+      loop:
+        - "/usr/local/share/applications"
+        - "/usr/local/share/icons"
 
     - name: "Alacritty | Download desktop file"
       ansible.builtin.get_url:
         url: "https://raw.githubusercontent.com/hrkfdn/ncspot/refs/heads/main/misc/ncspot.desktop"
         dest: "/usr/local/share/applications/ncspot.desktop"
+        mode: "0644"
+
+    - name: "Alacritty | Download icon file"
+      ansible.builtin.get_url:
+        url: "https://raw.githubusercontent.com/hrkfdn/ncspot/refs/heads/main/images/logo.svg"
+        dest: "/usr/local/share/icons/ncspot.svg"
         mode: "0644"
