@@ -1,0 +1,5 @@
+---
+foot_packages:
+  - foot
+  - foot-terminfo
+  - foot-themes
