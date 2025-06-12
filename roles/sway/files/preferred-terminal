@@ -29,19 +29,19 @@ TERMINALS+=("urxvt")
 TERMINALS+=("xterm")
 
 for terminal in "${TERMINALS[@]}"; do
-	if command -v "$terminal" >/dev/null 2>&1; then
-		exec "$terminal" "$@"
-	fi
+    if command -v "$terminal" > /dev/null 2>&1; then
+        exec "$terminal" "$@"
+    fi
 done
 
-case ${XDG_SESSION_TYPE} in
-"wayland")
-	swaynag -m "${0} could not find a terminal emulator. Please install one."
-	;;
-"x11")
-	i3-nagbar -m "${0} could not find a terminal emulator. Please install one."
-	;;
+case "${XDG_SESSION_TYPE}-${XDG_SESSION_DESKTOP}" in
+"wayland-sway" | "wayland-sway-systemd")
+    swaynag -m "${0} could not find a terminal emulator. Please install one."
+    ;;
+"x11-i3")
+    i3-nagbar -m "${0} could not find a terminal emulator. Please install one."
+    ;;
 *)
-	notify-send "${0}" "Unknown XDG_SESSION_TYPE (${XDG_SESSION_TYPE})"
-	;;
+    notify-send "${0}" "Unknown XDG_SESSION_TYPE-XDG_SESSION_DESKTOP (${XDG_SESSION_TYPE}-${XDG_SESSION_DESKTOP})"
+    ;;
 esac
