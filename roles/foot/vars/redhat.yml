@@ -1,4 +1,4 @@
 ---
 foot_packages:
   - foot
-  - foot-terminfo:w
+  - foot-terminfo
