@@ -32,3 +32,4 @@
     - role: "wofi"
     - role: "wireplumber"
     - role: "tuned"
+    - role: "wlprop"
