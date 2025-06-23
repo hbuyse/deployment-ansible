@@ -165,11 +165,6 @@ label:focus {
   background-color: #000000;
 }
 
-#network.disconnected {
-  color: @surface2;
-  text-decoration: line-through;
-}
-
 #pulseaudio.muted {
   /* border: 1px solid @error_color; */
   color: @overlay0;
@@ -195,6 +190,20 @@ label:focus {
 
 #network.wifi {
   border-bottom-color: @mauve;
+}
+
+#network.disabled {
+  color: @red;
+  text-decoration: line-through;
+}
+
+#network.disconnected,
+#network.linked {
+  color: @surface2;
+}
+
+#network.disconnected {
+  text-decoration: line-through;
 }
 
 #memory {
