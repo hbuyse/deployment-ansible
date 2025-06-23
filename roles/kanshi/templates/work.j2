@@ -1,0 +1,26 @@
+# Profiles used at work when connected to docks
+#
+
+# Profiles with vertical monitor on the left
+#
+{% for conf in kanshi_work_confs.left %}
+profile work-dock-left-{{ loop.index }} {
+	output "{{ conf.vertical }}" mode 1920x1080@60.000Hz transform 90 position 0,0
+	output "{{ conf.horizontal }}" mode 1920x1080@60.000Hz transform normal position 1080,534
+	output "eDP-1" enable mode 1920x1080@60Hz position 1080,1614 scale 1.2
+	exec ~/.config/kanshi/notify.sh 'work-dock-left'
+}
+
+{% endfor %}
+# Profiles with vertical monitor on the right
+#
+{% for conf in kanshi_work_confs.right %}
+profile work-dock-right-{{ loop.index }} {
+	output "{{ conf.vertical }}" mode 1920x1080@60.000Hz transform 270 position 1920,0
+	output "{{ conf.horizontal }}" mode 1920x1080@60.000Hz transform normal position 0,534
+	output "eDP-1" enable mode 1920x1080@60Hz position 0,1614 scale 1.2
+	exec ~/.config/kanshi/notify.sh 'work-dock-right'
+}
+
+{% endfor %}
+#  vim: set ts=4 sw=4 tw=0 noet ft=conf :

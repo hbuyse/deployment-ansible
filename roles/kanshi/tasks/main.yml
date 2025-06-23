@@ -12,7 +12,7 @@
     name: "{{ kanshi_packages }}"
   tags: kanshi
 
-- name: "Kanshi | Install configuration files"
+- name: "Kanshi | Install static configuration files"
   tags: kanshi
   block:
     - name: "Kanshi | Ensure directory exist"
@@ -38,6 +38,27 @@
         src: "notify.sh"
         dest: "{{ ansible_user_dir }}/.config/kanshi"
         mode: "0755"
+
+- name: "Kanshi | Include 'work' variables"
+  ansible.builtin.include_vars:
+    file: "work.yml"
+  tags: kanshi
+
+- name: "Kanshi | Install dynamic configuration files"
+  when: kanshi_work_confs is defined
+  tags: kanshi
+  block:
+    - name: "Kanshi | Ensure directory exist"
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/.config/kanshi/config.d"
+        state: directory
+        mode: "0755"
+
+    - name: "Kanshi | Generate 'work' configuration"
+      ansible.builtin.template:
+        src: "work.j2"
+        dest: "{{ ansible_user_dir }}/.config/kanshi/config.d/work"
+        mode: "0644"
 
 - name: "Kanshi | Install service file"
   become: true
