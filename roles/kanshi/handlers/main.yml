@@ -1,0 +1,9 @@
+---
+- name: "Kanshi | Enable and restart service"
+  become: false
+  ansible.builtin.systemd:
+    name: "kanshi"
+    daemon_reload: true
+    enabled: true
+    state: "restarted"
+    scope: "user"

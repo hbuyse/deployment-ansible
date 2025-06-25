@@ -26,12 +26,14 @@
         src: "config"
         dest: "{{ ansible_user_dir }}/.config/kanshi"
         mode: "0644"
+      notify: "Kanshi | Enable and restart service"
 
     - name: "Kanshi | Copy configuration"
       ansible.builtin.copy:
         src: "config.d"
         dest: "{{ ansible_user_dir }}/.config/kanshi"
         mode: "0644"
+      notify: "Kanshi | Enable and restart service"
 
     - name: "Kanshi | Copy notify hook script"
       ansible.builtin.copy:
@@ -59,6 +61,7 @@
         src: "work.j2"
         dest: "{{ ansible_user_dir }}/.config/kanshi/config.d/work"
         mode: "0644"
+      notify: "Kanshi | Enable and restart service"
 
 - name: "Kanshi | Install service file"
   become: true
@@ -76,12 +79,4 @@
         dest: "/usr/local/lib/systemd/user"
         mode: "0644"
       tags: kanshi
-
-    - name: "Kanshi | Enable service"
-      become: false
-      ansible.builtin.systemd:
-        name: "kanshi"
-        daemon_reload: true
-        enabled: true
-        scope: user
-      tags: kanshi
+      notify: "Kanshi | Enable and restart service"
