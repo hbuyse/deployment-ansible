@@ -47,7 +47,9 @@
   tags: kanshi
 
 - name: "Kanshi | Install dynamic configuration files"
-  when: kanshi_work_confs is defined
+  when:
+    - ansible_hostname == 'hbuyse-latitude5400'
+    - kanshi_work_confs is defined
   tags: kanshi
   block:
     - name: "Kanshi | Ensure directory exist"
