@@ -34,6 +34,8 @@
     link: /usr/bin/x-terminal-emulator
     priority: 100
     state: present
+  tags:
+    - alacritty
 
 - name: "Alacritty | Ensure config directory exists"
   ansible.builtin.file:
