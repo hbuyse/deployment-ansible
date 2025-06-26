@@ -62,6 +62,9 @@
     "on-scroll-down": "brightnessctl --quiet set 5%-",
     "on-scroll-up": "brightnessctl --quiet set 5%+"
 {% endif %}
+{% if waybar_current_version.split('.') | map('int') | list >= [0, 12, 0] %}
+    "min-brightness": 5.0,
+{% endif %}
   },
   "pulseaudio": {
     "format": "{icon} {volume:>3}% {format_source}",
