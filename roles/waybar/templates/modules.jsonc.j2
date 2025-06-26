@@ -56,8 +56,12 @@
     "device": "intel_backlight",
     "format": "{icon}  {percent:>3}%",
     "format-icons": ["󰹐", "󱩎", "󱩏", "󱩐", "󱩑", "󱩒", "󱩓", "󱩔", "󱩕", "󱩖", "󰛨"],
+{% if waybar_current_version.split('.') | map('int') | list >= [0, 9, 18] %}
+    "scroll-step": 5.0,
+{% else %}
     "on-scroll-down": "brightnessctl --quiet set 5%-",
     "on-scroll-up": "brightnessctl --quiet set 5%+"
+{% endif %}
   },
   "pulseaudio": {
     "format": "{icon} {volume:>3}% {format_source}",
