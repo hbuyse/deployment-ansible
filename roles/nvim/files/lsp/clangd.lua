@@ -35,7 +35,7 @@ local function get_clangd_executable()
   return 'clangd'
 end
 
-vim.lsp.config.clangd = {
+return {
   cmd = {
     get_clangd_executable(),
     '--background-index',
@@ -47,5 +47,3 @@ vim.lsp.config.clangd = {
   root_markers = { '.clangd', 'compile_commands.json' },
   filetypes = { 'c', 'cpp' },
 }
-
-vim.lsp.enable('clangd')
