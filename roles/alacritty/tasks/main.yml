@@ -30,7 +30,7 @@
   become: true
   community.general.alternatives:
     name: x-terminal-emulator
-    path: /usr/local/bin/alacritty
+    path: "{{ alacritty_packages is defined | ternary('/usr/bin/alacritty', '/usr/local/bin/alacritty') }}"
     link: /usr/bin/x-terminal-emulator
     priority: 100
     state: present
