@@ -55,6 +55,7 @@
     - role: "keymapp"
     - role: "nextcloud"
     - role: "spotify"
+    - role: "spotify_player"
     - role: "ncspot"
     - role: "discord"
     - role: "mattermost_desktop"

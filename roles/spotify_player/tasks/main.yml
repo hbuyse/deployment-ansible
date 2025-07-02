@@ -1,0 +1,81 @@
+---
+- name: "Spotify Player | Check that client id and secret are populated"
+  ansible.builtin.assert:
+    that:
+      - spotify_player_client_id is defined
+      - spotify_player_client_id | length > 0
+      - spotify_player_client_secret is defined
+      - spotify_player_client_secret | length > 0
+    fail_msg: "spotify_player_client_id and spotify_player_client_secret must not be empty (check your host_vars/localhost.yml)"
+    quiet: true
+  tags: spotify_player
+
+- name: "Spotify Player | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags:
+    - spotify_player
+
+- name: "Spotify Player | Install Rust package with locked dependencies"
+  become: true
+  community.general.cargo:
+    name: spotify_player
+    state: latest
+    locked: true
+    path: "/usr/local"
+  environment:
+    RUSTUP_HOME: "{{ ansible_user_dir }}/.rustup"
+    CARGO_HOME: "{{ ansible_user_dir }}/.cargo"
+    PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"
+  tags: spotify_player
+  when: spotify_player_packages is not defined
+
+- name: "Spotify Player | Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ spotify_player_packages }}"
+  when: spotify_player_packages is defined
+  tags: spotify_player
+
+- name: "Spotify Player | Copy notifier script"
+  tags: spotify_player
+  block:
+    - name: "Spotify Player | Ensure configuration directory exists"
+      ansible.builtin.file:
+        path: "{{ spotify_player_config_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: "Spotify Player | Copy configuration file"
+      ansible.builtin.template:
+        src: app.toml.j2
+        dest: "{{ spotify_player_config_dir }}/app.toml"
+        mode: "0644"
+
+- name: "Spotify Player | Copy notifier script"
+  tags: spotify_player
+  block:
+    - name: "Spotify Player | Copy notifier file"
+      ansible.builtin.copy:
+        src: notify.py
+        dest: "{{ spotify_player_config_dir }}/notify.py"
+        mode: "0644"
+
+    - name: "Spotify Player | Create virtualenv"
+      ansible.builtin.pip:
+        name:
+          - async-timeout
+          - certifi
+          - charset-normalizer
+          - dbus-python
+          - idna
+          - redis
+          - requests
+          - six
+          - spotipy
+          - urllib3
+        state: "present"
+        virtualenv: "{{ spotify_player_config_dir }}/.venv"
