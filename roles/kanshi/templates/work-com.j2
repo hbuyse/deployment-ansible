@@ -1,0 +1,14 @@
+# Profiles used at work when connected to docks (commercial side)
+#
+
+# Profiles with split screens
+#
+{% for conf in kanshi_work_confs.com %}
+profile work-dock-left-{{ loop.index }} {
+    output "{{ conf.left }}" mode 1920x1080@60.000Hz transform normal position 0,0
+    output "{{ conf.right }}" mode 1920x1080@60.000Hz transform normal position 1920,0
+    output "eDP-1" mode 1920x1080@60Hz transform normal position 0,1080 scale 1.2
+    exec ~/.config/kanshi/notify.sh 'work-dock-com-{{ loop.index }}'
+}
+
+{% endfor %}

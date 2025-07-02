@@ -65,6 +65,13 @@
         mode: "0644"
       notify: "Kanshi | Enable and restart service"
 
+    - name: "Kanshi | Generate 'work-com' configuration"
+      ansible.builtin.template:
+        src: "work-com.j2"
+        dest: "{{ ansible_user_dir }}/.config/kanshi/config.d/work-com"
+        mode: "0644"
+      notify: "Kanshi | Enable and restart service"
+
 - name: "Kanshi | Install service file"
   become: true
   tags: kanshi

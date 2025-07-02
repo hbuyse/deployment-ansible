@@ -12,3 +12,6 @@ kanshi_work_confs:
       horizontal: "Dell Inc. DELL P2419H 3K8KBR2"
     - vertical: "Dell Inc. DELL P2317H HH77Y832A6DL"
       horizontal: "Dell Inc. DELL P2419HC 87PYC53"
+  com:
+    - left: "Dell Inc. DELL P2419H 87V1Y9C41NLB"
+      right: "Dell Inc. DELL P2419H FHD7K43"
