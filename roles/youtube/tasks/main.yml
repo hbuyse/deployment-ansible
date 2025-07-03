@@ -1,0 +1,34 @@
+- name: "Youtube | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: youtube
+
+- name: "Youtube | Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ youtube_packages }}"
+    state: present
+  tags: youtube
+
+- name: "Youtube | Copy desktop file"
+  tags: youtube
+  become: true
+  block:
+    - name: "Youtube | Ensure applications directory exist"
+      ansible.builtin.file:
+        path: "/usr/local/share/applications"
+        state: directory
+        owner: "root"
+        group: "root"
+        mode: "0755"
+
+    - name: "Youtube | Copy desktop file"
+      ansible.builtin.copy:
+        src: "youtube.desktop"
+        dest: "/usr/local/share/applications/youtube.desktop"
+        owner: "root"
+        group: "root"
+        mode: "0644"

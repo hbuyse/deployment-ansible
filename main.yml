@@ -57,6 +57,7 @@
     - role: "spotify"
     - role: "spotify_player"
     - role: "ncspot"
+    - role: "youtube"
     - role: "discord"
     - role: "mattermost_desktop"
       when: ansible_hostname == 'hbuyse-latitude5400'

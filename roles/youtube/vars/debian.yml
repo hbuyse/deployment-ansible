@@ -1,0 +1,4 @@
+---
+youtube_packages:
+  - chromium-browser
+  - chromium-browser-l10n

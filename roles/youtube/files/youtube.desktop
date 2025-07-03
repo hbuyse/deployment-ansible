@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Youtube
+Comment=Youtube browser window
+Exec=chromium-browser --app=https://youtube.com
+Terminal=false
+Type=Application
+Icon=youtube
+Categories=AudioVideo;Audio;Video;Player
