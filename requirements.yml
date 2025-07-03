@@ -2,4 +2,5 @@
 collections:
   - name: ansible.posix
   - name: community.general
+    version: ">=11.0.0"
   - name: kewlfft.aur
