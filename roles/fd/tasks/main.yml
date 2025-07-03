@@ -1,0 +1,31 @@
+---
+- name: "FD | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: fd
+
+- name: "FD | Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ fd_packages }}"
+    update_cache: true
+    state: present
+  tags: fd
+  when: fd_packages is defined
+
+- name: "FD | Install Rust package with locked dependencies"
+  become: true
+  community.general.cargo:
+    name: fd-find
+    state: latest
+    locked: true
+    path: "/usr/local"
+  environment:
+    RUSTUP_HOME: "{{ ansible_user_dir }}/.rustup"
+    CARGO_HOME: "{{ ansible_user_dir }}/.cargo"
+    PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"
+  tags: fd
+  when: fd_packages is not defined

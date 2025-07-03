@@ -50,6 +50,7 @@
     - role: "pre_commit"
     - role: "ripgrep"
     - role: "bat"
+    - role: "fd"
     - role: "bottom"
     - role: "zellij"
     - role: "keymapp"
