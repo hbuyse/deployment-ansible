@@ -1,4 +1,4 @@
-initial_screen = "library"
+initial_screen = "queue"
 use_nerdfont = true
 audio_cache = true
 audio_cache_size = 5000
