@@ -16,10 +16,16 @@
   tags: [stylua, formatter, formatters]
   when: stylua_packages is defined
 
-- name: "StyLua | Install from source"
-  ansible.builtin.include_tasks:
-    file: "source.yml"
-    apply:
-      tags: [stylua, formatter, formatters]
+- name: "StyLua | Install Rust package with locked dependencies"
+  become: true
+  community.general.cargo:
+    name: stylua
+    state: latest
+    locked: true
+    path: "/usr/local"
+  environment:
+    RUSTUP_HOME: "{{ ansible_user_dir }}/.rustup"
+    CARGO_HOME: "{{ ansible_user_dir }}/.cargo"
+    PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"
   tags: [stylua, formatter, formatters]
   when: stylua_packages is not defined
