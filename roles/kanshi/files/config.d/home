@@ -15,8 +15,8 @@ profile home-dock {
 
 # Profile used at home when connected to the dock on Latitude 5400
 profile home-dock-2 {
-	output "Unknown VG248 M1LMQS118673" mode 1920x1080@119.982Hz transform 90 position 0,0
-	output "Unknown VG248 M1LMQS118675" mode 1920x1080@119.982Hz transform normal position 1080,420
+	output "Unknown VG248 M1LMQS118673" mode 1920x1080@60.000Hz transform 90 position 0,0
+	output "Unknown VG248 M1LMQS118675" mode 1920x1080@60.000Hz transform normal position 1080,420
 	output "eDP-1" disable
 	exec ~/.config/kanshi/notify.sh 'home-dock'
 }
