@@ -1,0 +1,6 @@
+---
+spotify_player_dependencies:
+  - openssl
+  - alsa
+  - dbus-1
+  - libsixel
