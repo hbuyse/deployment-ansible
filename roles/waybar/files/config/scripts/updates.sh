@@ -105,7 +105,7 @@ case "$DISTRIB" in
     exit 0
     ;;
 esac
-S
+
 # Remove last '\n'
 tooltip=${tooltip::-2}
 
