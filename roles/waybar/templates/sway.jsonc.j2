@@ -45,9 +45,7 @@
 {% else %}
       "custom/tuned",
 {% endif %}
-{% for mount in ansible_mounts|selectattr('fstype','in','ext4,vfat')|sort(attribute='mount') %}
-      "disk#{{ mount.mount | replace('/', '_')}}",
-{% endfor %}
+      "custom/disk_aio",
       "memory",
       "cpu",
       "custom/battery",
