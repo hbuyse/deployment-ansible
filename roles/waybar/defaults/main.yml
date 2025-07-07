@@ -1,2 +1,7 @@
 ---
 waybar_config_dir: "{{ ansible_user_dir }}/.config/waybar"
+
+waybar_pip_packages:
+  - requests
+  - PyGObject
+  - tabulate

@@ -3,6 +3,3 @@ waybar_packages:
   - waybar
   - wlsunset
   - noto-coloremoji-fonts
-
-waybar_pip_packages:
-  - requests
