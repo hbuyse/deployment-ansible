@@ -3,3 +3,5 @@ waybar_packages:
   - waybar
   - fonts-noto-color-emoji
   - playerctl
+  - libplayerctl-dev
+  - gir1.2-playerctl-2.0
