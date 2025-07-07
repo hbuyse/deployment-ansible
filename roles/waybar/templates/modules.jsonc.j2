@@ -23,11 +23,19 @@
     "on-click": "swaymsg input $(swaymsg -t get_inputs --raw | jq '[.[] | select(.type == \"keyboard\")][0] | .identifier') xkb_switch_layout next"
   },
   "sway/mode": {
+{% if waybar_current_version.split('.') | map('int') | list >= [0, 12, 0] %}
+    "format": "<span style=\"italic\">{text}</span>",
+{% else %}
     "format": "<span style=\"italic\">{}</span>",
+{% endif %}
     "tooltip": false
   },
   "sway/window": {
+{% if waybar_current_version.split('.') | map('int') | list >= [0, 12, 0] %}
+    "format": "{text}",
+{% else %}
     "format": "{}",
+{% endif %}
     "max-length": 50,
     "tooltip": true
   },
@@ -294,7 +302,11 @@
     "interval": 60,
     "tooltip": true,
     "return-type": "json",
+{% if waybar_current_version.split('.') | map('int') | list >= [0, 12, 0] %}
+    "format": "{text}",
+{% else %}
     "format": "{}",
+{% endif %}
     "exec": "~/.config/waybar/scripts/tuned-switcher.sh get",
     "on-click": "~/.config/waybar/scripts/tuned-switcher.sh switch",
     "exec-if": "~/.config/waybar/scripts/tuned-switcher.sh check",
@@ -337,7 +349,11 @@
     "interval": 5,
     "tooltip": true,
     "return-type": "json",
+{% if waybar_current_version.split('.') | map('int') | list >= [0, 12, 0] %}
+    "format": "{icon}  {text}",
+{% else %}
     "format": "{icon}  {}",
+{% endif %}
     "format-icons": {
       "play": "",
       "pause": "",
@@ -349,7 +365,11 @@
     "on-click": "~/.config/waybar/scripts/.venv/bin/python ~/.config/waybar/scripts/ncspot-player.py toggleplay"
   },
   "custom/media": {
+{% if waybar_current_version.split('.') | map('int') | list >= [0, 12, 0] %}
+    "format": "{icon}  {text}",
+{% else %}
     "format": "{icon}  {}",
+{% endif %}
     "tooltip": true,
     "return-type": "json",
     "max-length": 40,
@@ -364,8 +384,11 @@
     "on-click": "playerctl --player=spotify_player play-pause"
   },
   "custom/disk_aio": {
-    "format": "{}",
+{% if waybar_current_version.split('.') | map('int') | list >= [0, 12, 0] %}
+    "format": "{text}",
+{% else %}
     "tooltip": true,
+{% endif %}
     "return-type": "json",
     "escape": false,
     // Filter player based on name
