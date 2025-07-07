@@ -97,6 +97,7 @@ window#waybar.hidden {
 #custom-weather,
 #custom-tuned,
 #custom-ncspot,
+#custom-media,
 #disk,
 #language,
 #memory,
@@ -121,10 +122,9 @@ window#waybar.hidden {
   color: @red;
 }
 
-#custom-ncspot {
-  border-bottom-width: 2px;
-  border-bottom-style: solid;
-  border-bottom-color: #1ed760;
+#custom-ncspot,
+#custom-media.custom-spotify_player {
+  border-bottom: 2px solid #1ed760;
 }
 
 #custom-idle_inhibitor.activated,

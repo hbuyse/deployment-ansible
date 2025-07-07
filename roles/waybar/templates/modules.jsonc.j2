@@ -354,5 +354,20 @@
     "exec-if": "pgrep ncspot",
     "exec-on-event": true,
     "on-click": "~/.config/waybar/scripts/.venv/bin/python ~/.config/waybar/scripts/ncspot-player.py toggleplay"
+  },
+  "custom/media": {
+    "format": "{icon}  {}",
+    "tooltip": true,
+    "return-type": "json",
+    "max-length": 40,
+    "format-icons": {
+      "spotify": "",
+      "spotify_player": "",
+      "default": "🎜"
+    },
+    "escape": true,
+    // Filter player based on name
+    "exec": "~/.config/waybar/scripts/.venv/bin/python ~/.config/waybar/scripts/mediaplayer.py --player spotify_player",
+    "on-click": "playerctl --player=spotify_player play-pause"
   }
 }
