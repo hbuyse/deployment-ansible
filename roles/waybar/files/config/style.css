@@ -108,6 +108,7 @@ window#waybar.hidden {
 #pulseaudio,
 #scratchpad,
 #systemd-failed-units,
+#temperature,
 #tray,
 #workspaces button {
   /* top and bottom | left and right */
@@ -167,6 +168,15 @@ window#waybar.hidden {
 #custom-battery.critical-discharging {
   animation-name: blink-critical;
   animation-duration: 2s;
+}
+
+#temperature.critical {
+  border-bottom: 2px solid @error_color;
+  color: @error_color;
+}
+
+#temperature.warning {
+  border-bottom: 2px solid @warning_color;
 }
 
 label:focus {
