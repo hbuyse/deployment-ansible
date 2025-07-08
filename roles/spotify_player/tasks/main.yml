@@ -48,7 +48,7 @@
   when: spotify_player_packages is defined
   tags: spotify_player
 
-- name: "Spotify Player | Copy configuration file"
+- name: "Spotify Player | Copy configuration files"
   tags: spotify_player
   block:
     - name: "Spotify Player | Ensure configuration directory exists"
@@ -61,6 +61,12 @@
       ansible.builtin.template:
         src: app.toml.j2
         dest: "{{ spotify_player_config_dir }}/app.toml"
+        mode: "0644"
+
+    - name: "Spotify Player | Download theme file"
+      ansible.builtin.get_url:
+        url: "https://raw.githubusercontent.com/aome510/spotify-player/refs/heads/master/examples/theme.toml"
+        dest: "{{ spotify_player_config_dir }}/theme.toml"
         mode: "0644"
 
 - name: "Spotify Player | Install zsh completion file"
