@@ -12,13 +12,19 @@
       "custom/sunset",
       "custom/idle_inhibitor",
       "custom/updates",
+{% if ansible_os_family != "Debian" %}
       "bluetooth",
+{% endif %}
+{% if ansible_form_factor in ["Portable", "Laptop", "Notebook"] %}
       "backlight",
+{% endif %}
       "pulseaudio",
       "hyprland/language",
-      "network",
+{% for interface in ansible_facts | dict2items | selectattr('value.module', 'defined') | map(attribute='value') | list | sort(attribute='device') %}
+      "network#{{ interface.device }}",
+{% endfor %}
       "clock",
-      "custom/power"
+      "custom/power",
     ],
     "include": ["~/.config/waybar/modules.jsonc"]
   },
@@ -27,16 +33,27 @@
     "position": "bottom",
     "name": "bottom",
     "height": 30,
-    "modules-left": ["systemd-failed-units", "privacy"],
+    "modules-left": [
+{% if waybar_current_version.split('.') | map('int') | list >= [0, 10, 0] %}
+      "systemd-failed-units",
+      "privacy",
+{% endif %}
+      "custom/media",
+      "custom/ncspot"
+    ],
     "modules-right": [
+{% if waybar_current_version.split('.') | map('int') | list >= [0, 10, 0] %}
       "power-profiles-daemon",
-{% for mount in ansible_mounts|selectattr('fstype','in','ext4,vfat')|sort(attribute='mount') %}
-      "disk#{{ mount.mount | replace('/', '_')}}",
-{% endfor %}
+{% else %}
+      "custom/tuned",
+{% endif %}
+      "custom/disk_aio",
       "memory",
       "cpu",
       "custom/battery",
-      "tray"
+{% if ansible_os_family != "Debian" %}
+      "tray",
+{% endif %}
     ],
     "include": ["~/.config/waybar/modules.jsonc"]
   }
