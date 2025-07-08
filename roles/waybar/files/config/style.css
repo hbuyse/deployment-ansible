@@ -88,17 +88,17 @@ window#waybar.hidden {
 #cpu,
 #custom-battery,
 #custom-clipboard,
+#custom-disk_aio,
 #custom-idle_inhibitor,
+#custom-media,
 #custom-menu,
+#custom-ncspot,
 #custom-playerctl,
 #custom-power,
-#custom-updates,
 #custom-sunset,
-#custom-weather,
 #custom-tuned,
-#custom-ncspot,
-#custom-media,
-#custom-disk_aio,
+#custom-updates,
+#custom-weather,
 #language,
 #memory,
 #mode,
@@ -116,6 +116,7 @@ window#waybar.hidden {
   margin: 4px 3px;
   background: @theme_selected_bg_color;
   color: @theme_selected_fg_color;
+  border-bottom: 2px solid @theme_bg_color;
 }
 
 #custom-power {
