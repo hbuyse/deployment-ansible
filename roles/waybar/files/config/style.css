@@ -233,6 +233,16 @@ label:focus {
   border-bottom-color: @red;
 }
 
+#cpu.warning,
+#memory.warning {
+  color: @warning_color;
+}
+
+#cpu.critical,
+#memory.critical {
+  color: @error_color;
+}
+
 #clock {
   border-bottom-color: @blue;
 }
