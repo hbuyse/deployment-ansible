@@ -3,3 +3,7 @@ waybar_packages:
   - waybar
   - wlsunset
   - google-noto-emoji-fonts
+  # PyGobject dependencies
+  - gobject-introspection-devel
+  - cairo-gobject-devel
+  - python3-devel
