@@ -81,6 +81,7 @@ window#waybar.hidden {
 
 #workspaces button.urgent {
   border: 1px solid @error_color;
+  border-bottom-width: 2px;
   color: @error_color;
 }
 
