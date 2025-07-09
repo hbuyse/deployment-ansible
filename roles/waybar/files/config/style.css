@@ -56,10 +56,18 @@ window#waybar.hidden {
   opacity: 0.2;
 }
 
+#workspaces button {
+  background: @theme_selected_bg_color;
+  color: @theme_selected_fg_color;
+  border: 1px solid @theme_bg_color;
+  border-bottom: 2px solid @theme_bg_color;
+  padding: 1px 10px;
+  margin: 4px 2px;
+}
+
 /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
 #workspaces button:hover {
-  background: @theme_selected_bg_color;
-  border: 1px solid @peach;
+  border-color: @peach;
   box-shadow: inherit;
   text-shadow: inherit;
 }
@@ -68,12 +76,11 @@ window#waybar.hidden {
 #workspaces button.focused, /* active in sway */
 #workspaces button.visible, /* visible: on screen but not focused */
 #workspaces button.selected {
-  /* border-color: @fg3; */
-  border-bottom: 2px solid @peach;
+  border-bottom-color: @peach;
 }
 
 #workspaces button.urgent {
-  border: 2px solid @error_color;
+  border: 1px solid @error_color;
   color: @error_color;
 }
 
@@ -109,11 +116,10 @@ window#waybar.hidden {
 #scratchpad,
 #systemd-failed-units,
 #temperature,
-#tray,
-#workspaces button {
+#tray {
   /* top and bottom | left and right */
   padding: 1px 10px;
-  margin: 4px 3px;
+  margin: 4px 2px;
   background: @theme_selected_bg_color;
   color: @theme_selected_fg_color;
   border-bottom: 2px solid @theme_bg_color;
