@@ -34,7 +34,6 @@
     - role: "web_browsers"
     - role: "wallpapers"
     - role: "icons"
-    - role: "xfce4"
     - role: "user"
     - role: "network"
     - role: "nvim"
@@ -55,13 +54,9 @@
     - role: "zellij"
     - role: "keymapp"
     - role: "nextcloud"
-    - role: "spotify"
     - role: "spotify_player"
-    - role: "ncspot"
     - role: "youtube"
     - role: "discord"
-    - role: "mattermost_desktop"
-      when: ansible_hostname == 'hbuyse-latitude5400'
     - role: "qemu_kvm"
     # LSP Servers
     - role: "ansiblels"
