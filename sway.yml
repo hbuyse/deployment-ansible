@@ -19,6 +19,13 @@
     # - role: "lightdm"
     #   vars:
     #     lightdm_active_monitor: "DP-3"
+    - role: "alacritty"
+    - role: "zsh"
+    - role: "oh_my_posh"
+    - role: "fastfetch"
+    - role: "tmux"
+    - role: "fzf"
+    - role: "nerdfonts"
     - role: "wallpapers"
     - role: "brightnessctl"
     - role: "wayland_sessions"
