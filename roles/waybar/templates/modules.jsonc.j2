@@ -398,12 +398,12 @@
     "interval": 5,
     "hwmon-path-abs": "/sys/devices/platform/coretemp.0/hwmon",
     "input-filename": "temp1_input",
-    "format": " {temperatureC}°C",
+    "format": " {temperatureC:>3}°C",
     "critical-threshold": 85,
-    "format-critical": " {temperatureC}°C",
+    "format-critical": " {temperatureC:>3}°C",
 {% if waybar_current_version.split('.') | map('int') | list >= [0, 12, 0] %}
     "warning-threshold": 75,
-    "format-warning": " {temperatureC}°C",
+    "format-warning": " {temperatureC:>3}°C",
 {% endif %}
     "tooltip": false
   }
