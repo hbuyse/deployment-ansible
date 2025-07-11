@@ -58,7 +58,7 @@ local wopts = {
   number = true,
 
   -- display relative line numbers
-  relativenumber = true,
+  relativenumber = false,
 
   -- Show current line
   cursorline = true,
