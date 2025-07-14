@@ -71,6 +71,7 @@
     - role: "ruff"
     - role: "rust_analyzer"
     - role: "texlab"
+    - role: "tombi"
     - role: "yamlls"
     # End LSP Servers
     # Formatters
