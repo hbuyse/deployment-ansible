@@ -1,6 +1,0 @@
----
-- name: "Fastfetch | Install from package manager"
-  become: true
-  ansible.builtin.package:
-    name:
-      - fastfetch
