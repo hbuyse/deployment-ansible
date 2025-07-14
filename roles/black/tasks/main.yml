@@ -17,9 +17,10 @@
   when: black_packages is defined
 
 - name: "Black | Install from source"
-  ansible.builtin.include_tasks:
-    file: "source.yml"
-    apply:
-      tags: [black, formatter, formatters]
+  become: true
+  community.general.pipx:
+    name: "black"
+    state: latest
+    global: true
   tags: [black, formatter, formatters]
   when: black_packages is not defined
