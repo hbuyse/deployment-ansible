@@ -17,9 +17,10 @@
   when: isort_packages is defined
 
 - name: "Isort | Install from source"
-  ansible.builtin.include_tasks:
-    file: "source.yml"
-    apply:
-      tags: [isort, formatter, formatters]
+  become: true
+  community.general.pipx:
+    name: "isort"
+    state: latest
+    global: true
   tags: [isort, formatter, formatters]
   when: isort_packages is not defined
