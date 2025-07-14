@@ -2,3 +2,4 @@
 direnv_install_dir: "/usr/local"
 direnv_bin_install_dir: "{{ direnv_install_dir }}/bin"
 direnv_man_install_dir: "{{ direnv_install_dir }}/man"
+direnv_config_dir: "{{ ansible_user_dir }}/.config/direnv"

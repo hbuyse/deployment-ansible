@@ -1,6 +1,0 @@
----
-- name: "Direnv | Install from package manager"
-  become: true
-  ansible.builtin.package:
-    name:
-      - direnv
