@@ -255,4 +255,5 @@ vim.lsp.enable({
   'texlab', -- LaTeX
   'ansiblels', -- Ansible
   'composels', -- Docker compose
+  'tombi', -- Toml
 })
