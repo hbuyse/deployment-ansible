@@ -20,6 +20,7 @@
     PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"
   notify: "Eza | Install completions and manpage"
   when: eza_packages is not defined
+  tags: eza
 
 - name: "Eza | Install from package manager [{{ ansible_os_family }}]"
   become: true
