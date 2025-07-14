@@ -16,10 +16,15 @@
   tags: [prettier, formatter, formatters]
   when: prettier_packages is defined
 
-- name: "Prettier | Install from source"
-  ansible.builtin.include_tasks:
-    file: "source.yml"
-    apply:
-      tags: [prettier, formatter, formatters]
+- name: "Prettier | Install from Node Package Manager"
+  become: true
+  community.general.npm:
+    name: "{{ item }}"
+    global: true
+    state: latest
+    path: "/usr/local"
+    production: true
+    no_optional: true
   tags: [prettier, formatter, formatters]
   when: prettier_packages is not defined
+  loop: "{{ prettier_npm_packages }}"

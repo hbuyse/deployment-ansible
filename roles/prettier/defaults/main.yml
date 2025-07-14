@@ -1,0 +1,8 @@
+---
+prettier_npm_packages:
+  - prettier
+  - prettier-plugin-go-template
+  - prettier-plugin-toml
+  - prettier-plugin-nginx
+  - prettier-plugin-jinja-template
+  - prettier-plugin-sql
