@@ -1,9 +1,25 @@
 ---
+- name: "Git Delta | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: [git, git-delta]
+
+- name: "Git Delta | Install package [Rolling Release]"
+  become: true
+  ansible.builtin.package:
+    name: "{{ git_delta_packages }}"
+    state: present
+  when: git_delta_packages is defined
+  tags: [git, git-delta]
+
 - name: "Git Delta | Install package [Debian]"
-  when: ansible_os_family == 'Debian'
+  when: git_delta_packages is not defined
   become: true
   community.general.cargo:
-    name: git-delta
+    name: "{{ git_delta_cargo_package }}"
     state: latest
     locked: true
     path: "/usr/local"
@@ -11,26 +27,11 @@
     RUSTUP_HOME: "{{ ansible_user_dir }}/.rustup"
     CARGO_HOME: "{{ ansible_user_dir }}/.cargo"
     PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"
-  tags:
-    - git
-    - git-delta
+  tags: [git, git-delta]
   notify: "Git Delta | Install completion files"
 
-- name: "Git Delta | Install package [Rolling Release]"
-  become: true
-  ansible.builtin.package:
-    name:
-      - git-delta
-    state: present
-  when: ansible_os_family != "Debian"
-  tags:
-    - git
-    - git-delta
-
 - name: "Git Delta | Install configuration"
-  tags:
-    - git
-    - git-delta
+  tags: [git, git-delta]
   block:
     - name: "Git Delta | Ensure git directory exists"
       ansible.builtin.file:
@@ -45,9 +46,7 @@
         mode: "0644"
 
 - name: "Git Delta | Install themes"
-  tags:
-    - git
-    - git-delta
+  tags: [git, git-delta]
   block:
     - name: "Git Delta | Ensure themes directory exists"
       ansible.builtin.file:
