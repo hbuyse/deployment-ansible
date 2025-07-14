@@ -10,25 +10,22 @@
     - x11
 
 - name: "Autorandr | Install using package manager"
-  ansible.builtin.include_tasks:
-    file: package.yml
-    apply:
-      tags:
-        - autorandr
-        - x11
-  when: ansible_os_family not in ["Debian"]
+  become: true
+  ansible.builtin.package:
+    name: "{{ autorandr_packages }}"
+    state: present
+  when: autorandr_packages is defined
   tags:
     - autorandr
     - x11
 
 - name: "Autorandr | Install from sources"
-  ansible.builtin.include_tasks:
-    file: source.yml
-    apply:
-      tags:
-        - autorandr
-        - x11
-  when: ansible_os_family in ["Debian"]
+  become: true
+  community.general.pipx:
+    name: "{{ autorandr_pipx_packages }}"
+    state: latest
+    global: true
+  when: autorandr_packages is not defined
   tags:
     - autorandr
     - x11

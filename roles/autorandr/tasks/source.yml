@@ -1,7 +1,0 @@
----
-- name: "Autorandr | Install using Pipx"
-  become: true
-  community.general.pipx:
-    name: "{{ autorandr_pipx_packages }}"
-    state: latest
-    global: true
