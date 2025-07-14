@@ -1,17 +1,23 @@
 ---
-# tasks file for shell
-- name: "FZF | Install from sources"
-  ansible.builtin.include_tasks:
-    file: source-install.yml
-    apply:
-      tags: fzf
-  when: ansible_os_family == "Debian"
+- name: "Discord | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
   tags: fzf
 
 - name: "FZF | Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ fzf_packages }}"
+  when: fzf_packages is defined
+  tags: fzf
+
+- name: "FZF | Install from sources"
   ansible.builtin.include_tasks:
-    file: package-install.yml
+    file: source.yml
     apply:
       tags: fzf
-  when: ansible_os_family != "Debian"
+  when: fzf_packages is not defined
   tags: fzf
