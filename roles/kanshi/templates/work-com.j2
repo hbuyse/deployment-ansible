@@ -5,8 +5,26 @@
 #
 {% for conf in kanshi_work_confs.com %}
 profile work-dock-left-{{ loop.index }} {
-    output "{{ conf.left }}" mode 1920x1080@60.000Hz transform normal position 0,0
-    output "{{ conf.right }}" mode 1920x1080@60.000Hz transform normal position 1920,0
+{% if kanshi_version.split('.') | map('int') | list >= [1, 6, 0] %}
+	output "{{ conf.left }}" {
+		mode 1920x1080@60.000Hz
+		transform normal
+		position 0,0
+		adaptive_sync off
+	}
+	output "{{ conf.right }}" {
+		mode 1920x1080@60.000Hz
+		transform normal
+		position 1920,0
+		adaptive_sync off
+	}
+{% elif kanshi_version.split('.') | map('int') | list >= [1, 4, 0] %}
+	output "{{ conf.left }}" mode 1920x1080@60.000Hz transform normal position 0,0 adaptive_sync off
+	output "{{ conf.right }}" mode 1920x1080@60.000Hz transform normal position 1920,0 adaptive_sync off
+{% else %}
+	output "{{ conf.left }}" mode 1920x1080@60.000Hz transform normal position 0,0
+	output "{{ conf.right }}" mode 1920x1080@60.000Hz transform normal position 1920,0
+{% endif %}
     output "eDP-1" disable
     exec ~/.config/kanshi/notify.sh 'work-dock-com-{{ loop.index }}'
 }

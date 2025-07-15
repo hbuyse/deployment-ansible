@@ -1,0 +1,33 @@
+# Profile used in Virtual Machine
+profile virtual {
+{% if kanshi_version.split('.') | map('int') | list >= [1, 6, 0] %}
+	output "Virtual-1" {
+		mode 1660x900@60Hz
+		transform 90
+		position 0,0
+		adaptive_sync off
+	}
+{% elif kanshi_version.split('.') | map('int') | list >= [1, 4, 0] %}
+	output "Virtual-1" mode 1660x900@60Hz position 0,0 adaptive_sync off
+{% else %}
+	output "Virtual-1" mode 1660x900@60Hz position 0,0
+{% endif %}
+	exec ~/.config/kanshi/notify.sh 'virtual'
+}
+
+# Profile used when having only the monitor from the laptop
+profile laptop-one-screen {
+{% if kanshi_version.split('.') | map('int') | list >= [1, 6, 0] %}
+	output "eDP-1" {
+		mode 1920x1080@60Hz
+		transform 90
+		position 0,0
+		adaptive_sync off
+	}
+{% elif kanshi_version.split('.') | map('int') | list >= [1, 4, 0] %}
+	output "eDP-1" mode 1920x1080@60Hz position 0,0 adaptive_sync off
+{% else %}
+	output "eDP-1" mode 1920x1080@60Hz position 0,0
+{% endif %}
+	exec ~/.config/kanshi/notify.sh 'laptop-one-screen'
+}

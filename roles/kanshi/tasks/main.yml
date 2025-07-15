@@ -12,34 +12,36 @@
     name: "{{ kanshi_packages }}"
   tags: kanshi
 
+- name: "Kanshi | Gather the package facts"
+  ansible.builtin.package_facts:
+    manager: auto
+  tags: kanshi
+
+- name: "Kanshi | Store version as fact"
+  ansible.builtin.set_fact:
+    kanshi_version: "{{ ansible_facts.packages['kanshi'][0]['version'] | regex_search('[0-9]+.[0-9]+.[0-9]+') }}"
+  tags: kanshi
+
 - name: "Kanshi | Install static configuration files"
   tags: kanshi
   block:
     - name: "Kanshi | Ensure directory exist"
       ansible.builtin.file:
-        path: "{{ ansible_user_dir }}/.config/kanshi"
+        path: "{{ kanshi_config_dir }}"
         state: directory
         mode: "0755"
 
-    - name: "Kanshi | Copy configuration"
+    - name: "Kanshi | Copy root configuration"
       ansible.builtin.copy:
-        src: "config"
-        dest: "{{ ansible_user_dir }}/.config/kanshi"
-        mode: "0644"
+        src: "{{ item.src }}"
+        dest: "{{ kanshi_config_dir }}"
+        mode: "{{ item.mode }}"
       notify: "Kanshi | Enable and restart service"
-
-    - name: "Kanshi | Copy configuration"
-      ansible.builtin.copy:
-        src: "config.d"
-        dest: "{{ ansible_user_dir }}/.config/kanshi"
-        mode: "0644"
-      notify: "Kanshi | Enable and restart service"
-
-    - name: "Kanshi | Copy notify hook script"
-      ansible.builtin.copy:
-        src: "notify.sh"
-        dest: "{{ ansible_user_dir }}/.config/kanshi"
-        mode: "0755"
+      loop:
+        - src: "config"
+          mode: "0644"
+        - src: "notify.sh"
+          mode: "0755"
 
 - name: "Kanshi | Include 'work' variables"
   ansible.builtin.include_vars:
@@ -47,30 +49,36 @@
   tags: kanshi
 
 - name: "Kanshi | Install dynamic configuration files"
-  when:
-    - ansible_hostname == 'hbuyse-latitude5400'
-    - kanshi_work_confs is defined
   tags: kanshi
   block:
     - name: "Kanshi | Ensure directory exist"
       ansible.builtin.file:
-        path: "{{ ansible_user_dir }}/.config/kanshi/config.d"
+        path: "{{ kanshi_config_dir }}/config.d"
         state: directory
         mode: "0755"
 
-    - name: "Kanshi | Generate 'work' configuration"
+    - name: "Kanshi | Generate configuration [{{ item }}]"
       ansible.builtin.template:
-        src: "work.j2"
-        dest: "{{ ansible_user_dir }}/.config/kanshi/config.d/work"
+        src: "{{ item }}"
+        dest: "{{ kanshi_config_dir }}/config.d/{{ item | replace('.j2', '') }}"
         mode: "0644"
       notify: "Kanshi | Enable and restart service"
+      loop:
+        - "home.j2"
+        - "one-screen.j2"
 
-    - name: "Kanshi | Generate 'work-com' configuration"
+    - name: "Kanshi | Generate configuration [{{ item }}]"
       ansible.builtin.template:
-        src: "work-com.j2"
-        dest: "{{ ansible_user_dir }}/.config/kanshi/config.d/work-com"
+        src: "{{ item }}"
+        dest: "{{ kanshi_config_dir }}/config.d/{{ item | replace('.j2', '') }}"
         mode: "0644"
       notify: "Kanshi | Enable and restart service"
+      loop:
+        - "work-com.j2"
+        - "work.j2"
+      when:
+        - ansible_hostname == 'hbuyse-latitude5400'
+        - kanshi_work_confs is defined
 
 - name: "Kanshi | Install service file"
   become: true
@@ -78,14 +86,14 @@
   block:
     - name: "Kanshi | Ensure directory exist"
       ansible.builtin.file:
-        path: "/usr/local/lib/systemd/user"
+        path: "{{ kanshi_systemd_dir }}"
         state: directory
         mode: "0755"
 
     - name: "Kanshi | Copy service file"
       ansible.builtin.get_url:
         url: "https://raw.githubusercontent.com/xdbob/sway-services/refs/heads/master/systemd/kanshi.service"
-        dest: "/usr/local/lib/systemd/user"
+        dest: "{{ kanshi_systemd_dir }}"
         mode: "0644"
       tags: kanshi
       notify: "Kanshi | Enable and restart service"

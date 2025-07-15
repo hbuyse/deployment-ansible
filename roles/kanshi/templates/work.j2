@@ -5,8 +5,26 @@
 #
 {% for conf in kanshi_work_confs.left %}
 profile work-dock-left-{{ loop.index }} {
+{% if kanshi_version.split('.') | map('int') | list >= [1, 6, 0] %}
+	output "{{ conf.vertical }}" {
+		mode 1920x1080@60.000Hz
+		transform 90
+		position 0,0
+		adaptive_sync off
+	}
+	output "{{ conf.horizontal }}" {
+		mode 1920x1080@60.000Hz
+		transform normal
+		position 1080,534
+		adaptive_sync off
+	}
+{% elif kanshi_version.split('.') | map('int') | list >= [1, 4, 0] %}
+	output "{{ conf.vertical }}" mode 1920x1080@60.000Hz transform 90 position 0,0 adaptive_sync off
+	output "{{ conf.horizontal }}" mode 1920x1080@60.000Hz transform normal position 1080,534 adaptive_sync off
+{% else %}
 	output "{{ conf.vertical }}" mode 1920x1080@60.000Hz transform 90 position 0,0
 	output "{{ conf.horizontal }}" mode 1920x1080@60.000Hz transform normal position 1080,534
+{% endif %}
 	output "eDP-1" disable
 	exec ~/.config/kanshi/notify.sh 'work-dock-left-{{ loop.index }}'
 }
@@ -16,8 +34,26 @@ profile work-dock-left-{{ loop.index }} {
 #
 {% for conf in kanshi_work_confs.right %}
 profile work-dock-right-{{ loop.index }} {
+{% if kanshi_version.split('.') | map('int') | list >= [1, 6, 0] %}
+	output "{{ conf.vertical }}" {
+		mode 1920x1080@60.000Hz
+		transform 270
+		position 1920,0
+		adaptive_sync off
+	}
+	output "{{ conf.horizontal }}" {
+		mode 1920x1080@60.000Hz
+		transform normal
+		position 0,534
+		adaptive_sync off
+	}
+{% elif kanshi_version.split('.') | map('int') | list >= [1, 4, 0] %}
+	output "{{ conf.vertical }}" mode 1920x1080@60.000Hz transform 270 position 1920,0 adaptive_sync off
+	output "{{ conf.horizontal }}" mode 1920x1080@60.000Hz transform normal position 0,534 adaptive_sync off
+{% else %}
 	output "{{ conf.vertical }}" mode 1920x1080@60.000Hz transform 270 position 1920,0
 	output "{{ conf.horizontal }}" mode 1920x1080@60.000Hz transform normal position 0,534
+{% endif %}
 	output "eDP-1" disable
 	exec ~/.config/kanshi/notify.sh 'work-dock-right-{{ loop.index }}'
 }

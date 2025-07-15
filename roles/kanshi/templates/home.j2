@@ -1,0 +1,76 @@
+# Profile used at home with the white tower
+profile white-tower {
+{% if kanshi_version.split('.') | map('int') | list >= [1, 6, 0] %}
+	output "ASUSTek COMPUTER INC VG248 M1LMQS118673" {
+		mode 1920x1080@164.917Hz
+		transform 90
+		position 0,0
+		adaptive_sync on
+	}
+	output "ASUSTek COMPUTER INC VG248 M1LMQS118675" {
+		mode 1920x1080@164.917Hz
+		transform normal
+		position 1080,420
+		adaptive_sync on
+	}
+{% elif kanshi_version.split('.') | map('int') | list >= [1, 4, 0] %}
+	output "ASUSTek COMPUTER INC VG248 M1LMQS118673" mode 1920x1080@164.917Hz transform 90 position 0,0 adaptive_sync on
+	output "ASUSTek COMPUTER INC VG248 M1LMQS118675" mode 1920x1080@164.917Hz transform normal position 1080,420 adaptive_sync on
+{% else %}
+	output "ASUSTek COMPUTER INC VG248 M1LMQS118673" mode 1920x1080@164.917Hz transform 90 position 0,0
+	output "ASUSTek COMPUTER INC VG248 M1LMQS118675" mode 1920x1080@164.917Hz transform normal position 1080,420
+{% endif %}
+	exec ~/.config/kanshi/notify.sh 'white-tower'
+}
+
+# Profile used at home when connected to the dock on T480
+profile home-dock {
+{% if kanshi_version.split('.') | map('int') | list >= [1, 6, 0] %}
+	output "ASUSTek COMPUTER INC VG248 M1LMQS118673" {
+		mode 1920x1080@60.000Hz
+		transform 90
+		position 0,0
+		adaptive_sync off
+	}
+	output "ASUSTek COMPUTER INC VG248 M1LMQS118675" {
+		mode 1920x1080@60.000Hz
+		transform normal
+		position 1080,420
+		adaptive_sync off
+	}
+{% elif kanshi_version.split('.') | map('int') | list >= [1, 4, 0] %}
+	output "ASUSTek COMPUTER INC VG248 M1LMQS118673" mode 1920x1080@60.000Hz transform 90 position 0,0 adaptive_sync off
+	output "ASUSTek COMPUTER INC VG248 M1LMQS118675" mode 1920x1080@60.000Hz transform normal position 1080,420 adaptive_sync off
+{% else %}
+	output "ASUSTek COMPUTER INC VG248 M1LMQS118673" mode 1920x1080@60.000Hz transform 90 position 0,0
+	output "ASUSTek COMPUTER INC VG248 M1LMQS118675" mode 1920x1080@60.000Hz transform normal position 1080,420
+{% endif %}
+	output "eDP-1" disable
+	exec ~/.config/kanshi/notify.sh 'home-dock'
+}
+
+# Profile used at home when connected to the dock on Latitude 5400
+profile home-dock-2 {
+{% if kanshi_version.split('.') | map('int') | list >= [1, 6, 0] %}
+	output "Unknown VG248 M1LMQS118673" {
+		mode 1920x1080@60.000Hz
+		transform 90
+		position 0,0
+		adaptive_sync off
+	}
+	output "Unknown VG248 M1LMQS118675" {
+		mode 1920x1080@60.000Hz
+		transform normal
+		position 1080,420
+		adaptive_sync off
+	}
+{% elif kanshi_version.split('.') | map('int') | list >= [1, 4, 0] %}
+	output "Unknown VG248 M1LMQS118673" mode 1920x1080@60.000Hz transform 90 position 0,0 adaptive_sync off
+	output "Unknown VG248 M1LMQS118675" mode 1920x1080@60.000Hz transform normal position 1080,420 adaptive_sync off
+{% else %}
+	output "Unknown VG248 M1LMQS118673" mode 1920x1080@60.000Hz transform 90 position 0,0
+	output "Unknown VG248 M1LMQS118675" mode 1920x1080@60.000Hz transform normal position 1080,420
+{% endif %}
+	output "eDP-1" disable
+	exec ~/.config/kanshi/notify.sh 'home-dock'
+}
