@@ -1,0 +1,30 @@
+---
+- name: "Cava | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: cava
+
+- name: "Cava | Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ cava_packages }}"
+    state: present
+  tags: cava
+
+- name: "Cava | Copy configuration files"
+  tags: cava
+  block:
+    - name: "Cava | Ensure configuration directory exists"
+      ansible.builtin.file:
+        path: "{{ cava_config_dir }}"
+        mode: "0755"
+        state: "directory"
+
+    - name: "Cava | Copy configuration file"
+      ansible.builtin.copy:
+        src: "config"
+        dest: "{{ cava_config_dir }}"
+        mode: "0644"
