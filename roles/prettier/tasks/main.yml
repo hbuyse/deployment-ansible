@@ -27,4 +27,4 @@
     no_optional: true
   tags: [prettier, formatter]
   loop: "{{ prettier_npm_packages }}"
-  when: prettier_packages is not defined
+  when: (prettier_packages is not defined) or prettier_force_source_install

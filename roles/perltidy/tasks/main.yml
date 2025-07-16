@@ -22,4 +22,4 @@
     name: "Perl::Tidy"
     notest: true
   tags: [perltidy, formatter]
-  when: perltidy_packages is not defined
+  when: (perltidy_packages is not defined) or perltidy_force_source_install

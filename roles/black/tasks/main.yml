@@ -23,4 +23,4 @@
     state: latest
     global: true
   tags: [black, formatter]
-  when: black_packages is not defined
+  when: (black_packages is not defined) or black_force_source_install

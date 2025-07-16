@@ -1,3 +1,4 @@
 ---
 shfmt_github_user: "mvdan"
 shfmt_github_repo: "sh"
+shfmt_force_source_install: false
