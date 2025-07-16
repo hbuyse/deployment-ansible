@@ -5,7 +5,7 @@
     - files:
         - "{{ ansible_os_family | lower }}.yml"
       skip: true
-  tags: [perltidy, formatter, formatters]
+  tags: [perltidy, formatter]
 
 - name: "Perl-Tidy | Install from package manager"
   become: true
@@ -13,7 +13,7 @@
     name: "{{ codespell_packages }}"
     update_cache: true
     state: present
-  tags: [perltidy, formatter, formatters]
+  tags: [perltidy, formatter]
   when: perltidy_packages is defined
 
 - name: "Perl-Tidy | Install from source"
@@ -21,5 +21,5 @@
   community.general.cpanm:
     name: "Perl::Tidy"
     notest: true
-  tags: [perltidy, formatter, formatters]
+  tags: [perltidy, formatter]
   when: perltidy_packages is not defined
