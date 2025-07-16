@@ -1,1 +1,0 @@
-[ ] Try to use ansible.builtin.lineinfile for mimeapps.list file generation
