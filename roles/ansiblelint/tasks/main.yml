@@ -5,7 +5,7 @@
     - files:
         - "{{ ansible_os_family | lower }}.yml"
       skip: true
-  tags: lint
+  tags: [ansiblelint, linter]
 
 - name: "Ansible Lint | Install from package manager"
   become: true
@@ -13,7 +13,7 @@
   ansible.builtin.package:
     name: "{{ ansiblelint_packages }}"
     state: present
-  tags: lint
+  tags: [ansiblelint, linter]
 
 - name: "Ansible Lint | Install from PIP"
   become: true
@@ -22,4 +22,4 @@
     name: "{{ ansiblelint_pip_package }}"
     global: true
     state: latest
-  tags: lint
+  tags: [ansiblelint, linter]

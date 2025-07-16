@@ -5,7 +5,7 @@
     - files:
         - "{{ ansible_os_family | lower }}.yml"
       skip: true
-  tags: lsp
+  tags: [jsonls, lsp]
 
 - name: "JSON Language Server | Install from package manager"
   become: true
@@ -13,7 +13,7 @@
   ansible.builtin.package:
     name: "{{ jsonls_package }}"
     state: present
-  tags: lsp
+  tags: [jsonls, lsp]
 
 - name: "JSON Language Server | Install from Node Package Manager"
   become: true
@@ -25,4 +25,4 @@
     path: "/usr/local"
     production: true
     no_optional: true
-  tags: lsp
+  tags: [jsonls, lsp]
