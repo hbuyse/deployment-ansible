@@ -1,11 +1,13 @@
 ---
 - name: "TMux | Install from package manager"
   become: true
+  tags: tmux
   ansible.builtin.package:
     name: tmux
     state: present
 
 - name: "TMux | Ensure config directories exists"
+  tags: tmux
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
@@ -15,12 +17,14 @@
     - "{{ ansible_user_dir }}/.config/tmux/plugins"
 
 - name: "TMux | Copy static files in configuration directory"
+  tags: tmux
   ansible.builtin.copy:
     src: "{{ role_path }}/files/"
     dest: "{{ ansible_user_dir }}/.config/tmux"
     mode: "0644"
 
 - name: "TMux | Download TMux plugins manager"
+  tags: tmux
   ansible.builtin.git:
     repo: "{{ item.repo }}"
     dest: "{{ ansible_user_dir }}/.config/tmux/plugins/{{ item.plugin_dir }}"
