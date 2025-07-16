@@ -26,4 +26,14 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
+-- Highlight when copying
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight when yanking (copying) text',
+  group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
+  callback = function()
+    -- Highlight during <timeout> ms
+    vim.hl.on_yank({ timeout = 300 })
+  end,
+})
+
 -- vim: set ts=2 sw=2 tw=0 et ft=lua :
