@@ -1,8 +1,7 @@
 -- Autojump to last known position in the file
-local autojump_gid = vim.api.nvim_create_augroup('AutoJump', {})
 vim.api.nvim_create_autocmd('BufReadPost', {
-  group = autojump_gid,
   desc = 'Autojump to last known position in the file',
+  group = vim.api.nvim_create_augroup('AutoJump', { clear = true }),
   pattern = '*',
   callback = function(_)
     local last_pos = vim.fn.line('\'"')
