@@ -123,6 +123,10 @@ export FZF_DEFAULT_OPTS=" \
 --color=selected-bg:#45475a \
 --multi"
 
+# Change FZF C-t to C-p
+bindkey -r '^T'
+bindkey '^P' fzf-file-widget
+
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
 # else
