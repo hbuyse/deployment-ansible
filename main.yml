@@ -57,6 +57,7 @@
     - role: "spotify_player"
     - role: "youtube"
     - role: "discord"
+    - role: "zoom"
     - role: "qemu_kvm"
     # LSP Servers
     - role: "ansiblels"

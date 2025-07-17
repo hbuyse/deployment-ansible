@@ -1,0 +1,2 @@
+---
+zoom_latest_package_url: "{{ zoom_latest_url }}/zoom_amd64.deb"

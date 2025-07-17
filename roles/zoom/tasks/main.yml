@@ -1,0 +1,20 @@
+---
+- name: "Zoom | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ ansible_os_family | lower }}.yml"
+  tags: zoom
+
+- name: "Zoom | Install from URI using package manager"
+  become: true
+  tags: zoom
+  block:
+    - name: "Zoom | Install from URI using APT"
+      ansible.builtin.apt:
+        deb: "{{ zoom_latest_package_url }}"
+        state: present
+      when: ansible_os_family == 'Debian'
+
+    - name: "Zoom | Install from URI using package manager"
+      ansible.builtin.package:
+        name: "{{ zoom_latest_package_url }}"
+        state: present
+      when: ansible_os_family != 'Debian'
