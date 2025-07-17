@@ -87,3 +87,11 @@
     state: "present"
     virtualenv: "{{ waybar_config_dir }}/scripts/.venv"
   tags: waybar
+
+- name: "Waybar | Add '{{ waybar_groups }}' group to user" # noqa: name[template]
+  become: true
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    groups: "{{ waybar_groups }}"
+    append: true
+  tags: waybar
