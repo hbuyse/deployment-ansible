@@ -1,5 +1,7 @@
 ---
 waybar_config_dir: "{{ ansible_user_dir }}/.config/waybar"
+waybar_groups:
+  - input
 
 waybar_pip_packages:
   - requests
