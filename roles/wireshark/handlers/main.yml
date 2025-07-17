@@ -1,0 +1,10 @@
+---
+- name: "Wireshark | Enable non-privileged users to run wireshark"
+  become: true
+  when: ansible_os_family == 'Debian'
+  ansible.builtin.debconf:
+    name: wireshark-common
+    question: wireshark-common/install-setuid
+    value: "true"
+    vtype: boolean
+  tags: wireshark

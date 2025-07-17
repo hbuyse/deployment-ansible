@@ -20,6 +20,7 @@
     name: "{{ wireshark_packages }}"
     state: "present"
   when: wireshark_packages is defined
+  notify: "Wireshark | Allow users to sniff packets"
   tags: wireshark
 
 - name: "Wireshark | Install configuration files"
