@@ -9,7 +9,7 @@ repos:
         args: [--unsafe]
       - id: check-added-large-files
   - repo: https://github.com/ansible/ansible-lint.git
-    rev: v25.1.3
+    rev: v25.6.1
     hooks:
       - id: ansible-lint
         files: \.(yaml|yml)$
