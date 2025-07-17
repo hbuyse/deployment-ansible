@@ -384,11 +384,13 @@
     "on-click": "playerctl --player=spotify_player play-pause"
   },
   "custom/disk_aio": {
+	"interval": 30,
 {% if waybar_current_version.split('.') | map('int') | list >= [0, 12, 0] %}
     "format": "{text}",
 {% else %}
-    "tooltip": true,
+    "format": "{}",
 {% endif %}
+    "tooltip": true,
     "return-type": "json",
     "escape": false,
     // Filter player based on name
