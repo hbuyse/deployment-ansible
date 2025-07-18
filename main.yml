@@ -58,6 +58,7 @@
     - role: "youtube"
     - role: "discord"
     - role: "zoom"
+      when: ansible_hostname == "hbuyse-latitude5400"
     - role: "qemu_kvm"
     # LSP Servers
     - role: "ansiblels"
