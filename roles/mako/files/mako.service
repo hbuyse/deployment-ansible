@@ -6,7 +6,8 @@ PartOf=wayland-session.target
 After=wayland-session.target
 
 [Service]
-Type=simple
+Type=dbus
+BusName=org.freedesktop.Notifications
 ExecStart=/usr/bin/mako
 Restart=on-failure
 RestartSec=5
