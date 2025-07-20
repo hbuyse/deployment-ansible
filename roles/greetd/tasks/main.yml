@@ -1,0 +1,25 @@
+---
+- name: "GreetD | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: greetd
+
+- name: "GreetD | Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ greetd_packages }}"
+    update_cache: true
+    state: present
+  tags: greetd
+  when: greetd_packages is defined
+
+- name: "GreetD | Enable and restart service"
+  become: true
+  ansible.builtin.systemd:
+    name: "greetd"
+    daemon_reload: true
+    enabled: true
+    scope: "system"

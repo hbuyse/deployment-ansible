@@ -1,0 +1,25 @@
+---
+- name: "TuiGreet | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: [tuigreet, greetd]
+
+- name: "TuiGreet | Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ tuigreet_packages }}"
+    update_cache: true
+    state: present
+  tags: [tuigreet, greetd]
+  when: tuigreet_packages is defined
+
+- name: "TuiGreet | Copy configuration to /etc/greetd"
+  become: true
+  ansible.builtin.copy:
+    src: "config.toml"
+    dest: "/etc/greetd/config.toml"
+    mode: "0644"
+  tags: [tuigreet, greetd]
