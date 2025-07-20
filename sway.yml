@@ -16,9 +16,6 @@
           tags: always
       tags: always
   roles:
-    # - role: "lightdm"
-    #   vars:
-    #     lightdm_active_monitor: "DP-3"
     - role: "greetd"
     - role: "tuigreet"
     - role: "alacritty"
