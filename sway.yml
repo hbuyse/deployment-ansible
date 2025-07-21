@@ -17,7 +17,9 @@
       tags: always
   roles:
     - role: "greetd"
+      when: ansible_hostname != "hbuyse-latitude5400"
     - role: "tuigreet"
+      when: ansible_hostname != "hbuyse-latitude5400"
     - role: "alacritty"
     - role: "zsh"
     - role: "oh_my_posh"
