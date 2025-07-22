@@ -29,27 +29,29 @@ return {
       },
       formatters_by_ft = {
         c = { 'clang-format' },
-        json = { 'prettier' },
         lua = { 'stylua' },
-        -- Conform will run multiple formatters sequentially
+        perl = { 'perltidy' },
+        -- You can use a function here to determine the formatters dynamically
         python = function(bufnr)
-          if require("conform").get_formatter_info("ruff_format", bufnr).available then
+          if require('conform').get_formatter_info('ruff_format', bufnr).available then
             return { 'ruff_format' }
           else
+            -- Conform will run multiple formatters sequentially
             return { 'isort', 'black' }
           end
         end,
         rust = { 'rustfmt' },
         sh = { 'shfmt' },
+        toml = { 'tombi' },
+        -- Prettier
         css = { 'prettier' },
-        yaml = { 'prettier' },
         html = { 'prettier' },
+        json = { 'prettier' },
         jsonc = { 'prettier' },
         markdown = { 'prettier' },
-        perl = { 'perltidy' },
-        toml = { 'tombi' },
         sass = { 'prettier' },
         scss = { 'prettier' },
+        yaml = { 'prettier' },
         -- Use the "*" filetype to run formatters on all filetypes.
         ['*'] = { 'codespell' },
         -- Use the "_" filetype to run formatters on filetypes that don't have other formatters configured.
