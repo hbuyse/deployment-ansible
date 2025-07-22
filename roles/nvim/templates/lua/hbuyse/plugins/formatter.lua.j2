@@ -22,6 +22,10 @@ return {
             },
           },
         },
+        codespell = {
+          -- Run codespell only if the .codespellrc file exists in the project
+          require_cwd = true,
+        },
       },
       formatters_by_ft = {
         c = { 'clang-format' },
@@ -77,6 +81,11 @@ return {
         }
       end,
     },
+    config = function(_, opts)
+      -- Add configuration file for codespell
+      opts.formatters.codespell['cwd'] = require('conform.util').root_file({ '.codespellrc' })
+      require('conform').setup(opts)
+    end,
     init = function()
       vim.api.nvim_create_user_command('FormatDisable', function(args)
         if args.bang then
