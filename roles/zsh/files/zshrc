@@ -150,3 +150,43 @@ alias v="nvim"
 [[ ! -f "$HOME/.external.zsh" ]] || source "$HOME/.external.zsh"
 
 eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/config.omp.yaml)"
+
+autoload -Uz add-zsh-hook
+function current_dir() {
+    local current_dir=$PWD
+    if [[ $current_dir == $HOME ]]; then
+        current_dir="~"
+    else
+        current_dir=${current_dir##*/}
+    fi
+
+    echo $current_dir
+}
+
+function zellij_rename_tab_title() {
+    if [[ -n "${ZELLIJ}" ]] && [[ -n "${1}" ]]; then
+        command nohup zellij action rename-tab "${1}" >/dev/null 2>&1
+    fi
+}
+
+function set_tab_to_working_dir() {
+    local result=$?
+    local title=$(current_dir)
+
+    # uncomment the following to show the exit code after a failed command
+    # if [[ $result -gt 0 ]]; then
+    #     title="$title [$result]"
+    # fi
+
+    zellij_rename_tab_title $title
+}
+
+function set_tab_to_command_line() {
+    local name="$(echo "${1}" | awk '{print $1}')"
+    zellij_rename_tab_title $name
+}
+
+if [[ -n $ZELLIJ ]]; then
+    add-zsh-hook precmd set_tab_to_working_dir
+    add-zsh-hook preexec set_tab_to_command_line
+fi
