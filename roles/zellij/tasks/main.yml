@@ -75,3 +75,5 @@
           repo: dj95/zjstatus
         - name: zj-docker
           repo: dj95/zj-docker
+        - name: zellij_forgot
+          repo: karimould/zellij-forgot

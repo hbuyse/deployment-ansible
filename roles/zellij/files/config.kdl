@@ -204,8 +204,6 @@ keybinds {
     shared_except "locked" {
         bind "Ctrl g" { SwitchToMode "Locked"; }
         bind "Ctrl q" { Quit; }
-        bind "Alt c" { NewTab; }
-        bind "Alt n" { NewPane; }
         bind "Alt h" "Alt Left" { MoveFocusOrTab "Left"; }
         bind "Alt l" "Alt Right" { MoveFocusOrTab "Right"; }
         bind "Alt j" "Alt Down" { MoveFocus "Down"; }
@@ -220,12 +218,20 @@ keybinds {
             // Lock Zellij.
             SwitchToMode "Locked";
         }
+        bind "Ctrl y" {
+        LaunchOrFocusPlugin "file:~/.config/zellij/plugins/zellij_forgot.wasm" {
+            "LOAD_ZELLIJ_BINDINGS" "true"
+            floating true
+        }
+    }
+
     }
     shared_except "normal" "locked" {
         bind "Enter" "Esc" { SwitchToMode "Normal"; }
     }
     shared_except "pane" "locked" {
         unbind "Ctrl p";
+        bind "Alt n" { NewPane; }
     }
     shared_except "resize" "locked" {
         bind "Ctrl n" { SwitchToMode "Resize"; }
@@ -238,6 +244,7 @@ keybinds {
     }
     shared_except "tab" "locked" {
         bind "Ctrl t" { SwitchToMode "Tab"; }
+        bind "Alt c" { NewTab; }
     }
     shared_except "move" "locked" {
         bind "Ctrl h" { SwitchToMode "Move"; }
