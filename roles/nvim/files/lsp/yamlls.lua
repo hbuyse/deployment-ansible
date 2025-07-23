@@ -4,11 +4,17 @@ return {
   filetypes = { 'yaml', 'yaml.docker-compose', 'yaml.gitlab' },
   settings = {
     yaml = {
-      schemas = {
-        ['https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.1/schema.json'] = 'api.yaml',
-      },
       -- https://github.com/redhat-developer/vscode-redhat-telemetry#how-to-disable-telemetry-reporting
       redhat = { telemetry = { enabled = false } },
+      validate = true,
+      schemaStore = {
+        enable = true,
+        url = 'https://www.schemastore.org/api/json/catalog.json',
+      },
+      format = { enabled = false },
+      schemas = {
+        ['http://json.schemastore.org/prettierrc'] = '.prettierrc.{yml,yaml}',
+      },
     },
   },
 }
