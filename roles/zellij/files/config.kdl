@@ -3,9 +3,26 @@ keybinds {
     normal {
         // uncomment this and adjust key if using copy_on_select=false
         // bind "Alt c" { Copy; }
+
+        // Intercept `Enter`.
+        bind "Enter" {
+            // Passthru `Enter`.
+            WriteChars "\u{000D}";
+            // Invoke autolock to immediately assess proper lock state.
+            // (This provides a snappier experience compared to
+            // solely relying on `reaction_seconds` to elapse.)
+            MessagePlugin "autolock" {};
+        }
     }
+
     locked {
         bind "Ctrl g" { SwitchToMode "Normal"; }
+        bind "Alt z" {
+            // Disable the autolock plugin.
+            MessagePlugin "autolock" {payload "disable";};
+            // Unlock Zellij.
+            SwitchToMode "Normal";
+        }
     }
     resize {
         bind "Ctrl n" { SwitchToMode "Normal"; }
@@ -179,6 +196,10 @@ keybinds {
         bind "Alt 9" { GoToTab 9; SwitchToMode "Normal"; }
         bind "Alt -" { NewPane "Down"; SwitchToMode "Normal"; }
         bind "Alt \\" { NewPane "Right"; SwitchToMode "Normal"; }
+        bind "Alt Shift z" {
+            // Enable the autolock plugin.
+            MessagePlugin "autolock" {payload "enable";};
+        }
 	}
     shared_except "locked" {
         bind "Ctrl g" { SwitchToMode "Locked"; }
@@ -193,6 +214,12 @@ keybinds {
         bind "Alt -" { Resize "Decrease"; }
         bind "Alt [" { PreviousSwapLayout; }
         bind "Alt ]" { NextSwapLayout; }
+        bind "Alt z" {
+            // Disable the autolock plugin.
+            MessagePlugin "autolock" {payload "disable";};
+            // Lock Zellij.
+            SwitchToMode "Locked";
+        }
     }
     shared_except "normal" "locked" {
         bind "Enter" "Esc" { SwitchToMode "Normal"; }
@@ -241,8 +268,16 @@ plugins {
 // Plugins to load in the background when a new session starts
 load_plugins {
 	// Switch to Locked mode when using vim-like programs
-	"file:~/.config/zellij/plugins/zjswitcher.wasm" {
-        programs_in_locked_mode "vim, nvim, v"
+	"file:~/.config/zellij/plugins/zellij-autolock.wasm" {
+        // Enabled at start?
+        is_enabled true
+        // Lock when any open these programs open.
+        triggers "nvim|vim|vi"
+        // Reaction to input occurs after this many seconds. (default=0.3)
+        // (An existing scheduled reaction prevents additional reactions.)
+        reaction_seconds "0.2"
+        // Print to Zellij log? (default=false)
+        print_to_log false
     }
 	"file:~/.config/zellij/plugins/zj-docker.wasm"
 }
