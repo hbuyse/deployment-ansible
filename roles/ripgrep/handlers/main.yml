@@ -1,3 +1,9 @@
 ---
 - name: "Ripgrep | Install completions"
-  ansible.builtin.include_tasks: extras.yml
+  ansible.builtin.include_tasks:
+    file: completions.yml
+  loop:
+    - shell: zsh
+      filepath: "/usr/local/share/zsh/site-functions/_ripgrep"
+    - shell: bash
+      filepath: "/usr/local/share/bash-completion/completions/ripgrep"
