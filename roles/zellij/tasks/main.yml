@@ -20,25 +20,28 @@
     PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"
   when: zellij_packages is not defined
   tags: zellij
-
-- name: "Zellij | Include OS specific tasks"
-  ansible.builtin.include_tasks:
-    file: "{{ item }}"
-    apply:
-      tags: zellij
-  with_first_found:
-    - files:
-        - "{{ ansible_os_family | lower }}.yml"
-      skip: true
-  tags: zellij
+  notify: "Zellij | Install completion files"
 
 - name: "Zellij | Install from package manager"
-  become: true
-  ansible.builtin.package:
-    name: "{{ zellij_packages }}"
-    state: present
   when: zellij_packages is defined
   tags: zellij
+  block:
+    - name: "Zellij | Include OS specific tasks"
+      ansible.builtin.include_tasks:
+        file: "{{ item }}"
+        apply:
+          tags: zellij
+      with_first_found:
+        - files:
+            - "{{ ansible_os_family | lower }}.yml"
+          skip: true
+
+    - name: "Zellij | Install from package manager"
+      become: true
+      ansible.builtin.package:
+        name: "{{ zellij_packages }}"
+        state: present
+      notify: "Zellij | Install completion files"
 
 - name: "Zellij | Copy configuration files"
   tags: zellij
