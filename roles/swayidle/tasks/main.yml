@@ -19,15 +19,16 @@
   block:
     - name: "Swayidle | Ensure directory exist"
       ansible.builtin.file:
-        path: "{{ ansible_user_dir }}/.config/swayidle"
+        path: "{{ swayidle_config_dir }}"
         state: directory
         mode: "0755"
 
     - name: "Swayidle | Copy configuration"
       ansible.builtin.copy:
         src: "config"
-        dest: "{{ ansible_user_dir }}/.config/swayidle/config"
+        dest: "{{ swayidle_config_dir }}"
         mode: "0644"
+      notify: "Swayidle | Enable and restart service"
 
 - name: "Swayidle | Install service file"
   become: true
@@ -35,22 +36,13 @@
   block:
     - name: "Swayidle | Ensure directory exist"
       ansible.builtin.file:
-        path: "/usr/local/lib/systemd/user/"
+        path: "{{ swayidle_service_dir }}"
         state: directory
         mode: "0755"
 
     - name: "Swayidle | Copy service file"
       ansible.builtin.copy:
         src: "swayidle.service"
-        dest: "/usr/local/lib/systemd/user/swayidle.service"
+        dest: "{{ swayidle_service_dir }}"
         mode: "0644"
-      tags: swayidle
-
-    - name: "Swayidle | Enable service"
-      become: false
-      ansible.builtin.systemd:
-        name: "swayidle"
-        daemon_reload: true
-        enabled: true
-        scope: user
-      tags: swayidle
+      notify: "Swayidle | Enable and restart service"

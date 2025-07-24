@@ -1,0 +1,10 @@
+---
+- name: "Swayidle | Enable and restart service"
+  become: false
+  ansible.builtin.systemd:
+    name: "swayidle"
+    daemon_reload: true
+    state: "restarted"
+    enabled: true
+    scope: user
+  tags: swayidle
