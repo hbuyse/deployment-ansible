@@ -200,6 +200,8 @@ keybinds {
             // Enable the autolock plugin.
             MessagePlugin "autolock" {payload "enable";};
         }
+        bind "Ctrl PageUp" { GoToPreviousTab; SwitchToMode "Normal"; }
+        bind "Ctrl PageDown" { GoToNextTab; SwitchToMode "Normal"; }
 	}
     shared_except "locked" {
         bind "Ctrl g" { SwitchToMode "Locked"; }
