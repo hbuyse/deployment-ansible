@@ -39,6 +39,7 @@
     - role: "nvim"
     - role: "vscode"
     - role: "git_delta"
+    - role: "lazygit"
     - role: "direnv"
     - role: "clang"
     - role: "docker"
