@@ -1,0 +1,5 @@
+[codespell]
+skip = roles/wireshark/files/preferences
+count =
+quiet-level = 3
+;  vim: set ts=4 sw=4 tw=0 noet ft=dosini :

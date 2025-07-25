@@ -8,6 +8,10 @@ repos:
       - id: check-yaml
         args: [--unsafe]
       - id: check-added-large-files
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.4.1
+    hooks:
+      - id: codespell
   - repo: https://github.com/ansible/ansible-lint.git
     rev: v25.6.1
     hooks:
@@ -17,7 +21,3 @@ repos:
         description: Run configurations on .ansible-lint file
         verbose: true
         args: [-p, -q]
-  - repo: https://github.com/codespell-project/codespell
-    rev: v2.4.1
-    hooks:
-      - id: codespell
