@@ -5,9 +5,11 @@ repos:
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
-      - id: check-yaml
-        args: [--unsafe]
       - id: check-added-large-files
+  - repo: https://github.com/google/yamlfmt
+    rev: v0.17.2
+    hooks:
+      - id: yamlfmt
   - repo: https://github.com/codespell-project/codespell
     rev: v2.4.1
     hooks:
@@ -20,4 +22,6 @@ repos:
         name: Ansible Lint
         description: Run configurations on .ansible-lint file
         verbose: true
-        args: [-p, -q]
+        args:
+          - -p
+          - -q
