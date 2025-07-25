@@ -57,7 +57,7 @@
         state: directory
         mode: "0755"
 
-    - name: "Kanshi | Generate configuration [{{ item }}]"
+    - name: "Kanshi | Generate basic configuration"
       ansible.builtin.template:
         src: "{{ item }}"
         dest: "{{ kanshi_config_dir }}/config.d/{{ item | replace('.j2', '') }}"
@@ -67,7 +67,7 @@
         - "home.j2"
         - "one-screen.j2"
 
-    - name: "Kanshi | Generate configuration [{{ item }}]"
+    - name: "Kanshi | Generate work configuration"
       ansible.builtin.template:
         src: "{{ item }}"
         dest: "{{ kanshi_config_dir }}/config.d/{{ item | replace('.j2', '') }}"
