@@ -1,3 +1,5 @@
 ---
 # defaults file for nerdfonts
 nerdfonts_font_dir_prefix: "/usr/local/share/fonts"
+nerdfonts_list:
+  - "Iosevka"
