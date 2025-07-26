@@ -37,6 +37,7 @@
     - role: "kanshi"
     - role: "mako"
     - role: "wofi"
+    - role: "fuzzel"
     - role: "wireplumber"
     - role: "tuned"
     - role: "wlprop"
