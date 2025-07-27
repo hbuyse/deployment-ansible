@@ -45,7 +45,9 @@
         mode: "0644"
 
 - name: "NcSpot | Copy librespot credentials"
-  tags: [ncspot, librespot]
+  tags:
+    - ncspot
+    - librespot
   block:
     - name: "NcSpot | Ensure librespot cache directory exists"
       ansible.builtin.file:

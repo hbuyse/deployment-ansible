@@ -5,7 +5,9 @@
     - files:
         - "{{ ansible_os_family | lower }}.yml"
       skip: true
-  tags: [markdownls, lsp]
+  tags:
+    - markdownls
+    - lsp
 
 - name: "Markdown Language Server | Install from package manager"
   become: true
@@ -13,7 +15,9 @@
   ansible.builtin.package:
     name: "{{ markdownls_package }}"
     state: present
-  tags: [markdownls, lsp]
+  tags:
+    - markdownls
+    - lsp
 
 - name: "Markdown Language Server | Install from Node Package Manager"
   become: true
@@ -25,4 +29,6 @@
     path: "/usr/local"
     production: true
     no_optional: true
-  tags: [markdownls, lsp]
+  tags:
+    - markdownls
+    - lsp

@@ -5,7 +5,9 @@
     - files:
         - "{{ ansible_os_family | lower }}.yml"
       skip: true
-  tags: [codespell, formatter]
+  tags:
+    - codespell
+    - formatter
 
 - name: "CodeSpell | Install from package manager"
   become: true
@@ -13,7 +15,9 @@
     name: "{{ codespell_packages }}"
     update_cache: true
     state: present
-  tags: [codespell, formatter]
+  tags:
+    - codespell
+    - formatter
   when: codespell_packages is defined
 
 - name: "CodeSpell | Install from source"
@@ -22,5 +26,7 @@
     name: "codespell"
     state: latest
     global: true
-  tags: [codespell, formatter]
+  tags:
+    - codespell
+    - formatter
   when: (codespell_packages is not defined) or codespell_force_source_install

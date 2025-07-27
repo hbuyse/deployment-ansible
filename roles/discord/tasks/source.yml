@@ -43,7 +43,8 @@
 
     - name: "Discord | Extract archive"
       ansible.builtin.unarchive:
-        src: "{{ discord_apps_url }}/{{ ansible_system | lower }}/{{ discord_latest_version }}/discord-{{ discord_latest_version }}.tar.gz"
+        src: "{{ discord_apps_url }}/{{ ansible_system | lower }}/{{ discord_latest_version }}/discord-{{ discord_latest_version
+          }}.tar.gz"
         dest: "{{ discord_install_dir }}"
         owner: "root"
         group: "root"

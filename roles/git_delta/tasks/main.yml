@@ -5,7 +5,9 @@
     - files:
         - "{{ ansible_os_family | lower }}.yml"
       skip: true
-  tags: [git, git-delta]
+  tags:
+    - git
+    - git-delta
 
 - name: "Git Delta | Install package [Rolling Release]"
   become: true
@@ -13,7 +15,9 @@
     name: "{{ git_delta_packages }}"
     state: present
   when: git_delta_packages is defined
-  tags: [git, git-delta]
+  tags:
+    - git
+    - git-delta
 
 - name: "Git Delta | Install package [Debian]"
   when: git_delta_packages is not defined
@@ -27,11 +31,15 @@
     RUSTUP_HOME: "{{ ansible_user_dir }}/.rustup"
     CARGO_HOME: "{{ ansible_user_dir }}/.cargo"
     PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"
-  tags: [git, git-delta]
+  tags:
+    - git
+    - git-delta
   notify: "Git Delta | Install completion files"
 
 - name: "Git Delta | Install configuration"
-  tags: [git, git-delta]
+  tags:
+    - git
+    - git-delta
   block:
     - name: "Git Delta | Ensure git directory exists"
       ansible.builtin.file:
@@ -46,7 +54,9 @@
         mode: "0644"
 
 - name: "Git Delta | Install themes"
-  tags: [git, git-delta]
+  tags:
+    - git
+    - git-delta
   block:
     - name: "Git Delta | Ensure themes directory exists"
       ansible.builtin.file:

@@ -23,9 +23,8 @@
 
     - name: "Lua Language Server | Install executable"
       ansible.builtin.unarchive:
-        src:
-          "https://github.com/{{ luals_github_user }}/{{ luals_github_repo }}/releases/download/{{ luals_latest_version }}/\
-          lua-language-server-{{ luals_latest_version }}-{{ ansible_system | lower }}-x64.tar.gz"
+        src: "https://github.com/{{ luals_github_user }}/{{ luals_github_repo }}/releases/download/{{ luals_latest_version
+          }}/lua-language-server-{{ luals_latest_version }}-{{ ansible_system | lower }}-x64.tar.gz"
         dest: "{{ luals_install_dir }}"
         remote_src: true
         owner: root

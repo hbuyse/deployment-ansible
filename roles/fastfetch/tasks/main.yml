@@ -5,7 +5,9 @@
     - files:
         - "{{ ansible_os_family | lower }}.yml"
       skip: true
-  tags: [discord, messaging]
+  tags:
+    - discord
+    - messaging
 
 - name: "Fastfetch | Install from package manager"
   become: true

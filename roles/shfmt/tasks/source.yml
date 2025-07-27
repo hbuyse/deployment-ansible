@@ -15,8 +15,7 @@
 - name: "ShFmt | Install executable"
   become: true
   ansible.builtin.get_url:
-    url:
-      "https://github.com/{{ shfmt_github_user }}/{{ shfmt_github_repo }}/releases/download/{{ shfmt_latest_version }}/\
-      shfmt_{{ shfmt_latest_version }}_{{ ansible_system | lower }}_{{ alt_arch }}"
+    url: "https://github.com/{{ shfmt_github_user }}/{{ shfmt_github_repo }}/releases/download/{{ shfmt_latest_version }}/shfmt_{{
+      shfmt_latest_version }}_{{ ansible_system | lower }}_{{ alt_arch }}"
     dest: "/usr/local/bin/shfmt"
     mode: "0755"

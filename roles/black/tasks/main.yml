@@ -5,7 +5,9 @@
     - files:
         - "{{ ansible_os_family | lower }}.yml"
       skip: true
-  tags: [black, formatter]
+  tags:
+    - black
+    - formatter
 
 - name: "Black | Install from package manager"
   become: true
@@ -13,7 +15,9 @@
     name: "{{ black_packages }}"
     update_cache: true
     state: present
-  tags: [black, formatter]
+  tags:
+    - black
+    - formatter
   when: black_packages is defined
 
 - name: "Black | Install from source"
@@ -22,5 +26,7 @@
     name: "black"
     state: latest
     global: true
-  tags: [black, formatter]
+  tags:
+    - black
+    - formatter
   when: (black_packages is not defined) or black_force_source_install

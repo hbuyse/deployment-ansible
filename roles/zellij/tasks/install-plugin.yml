@@ -1,3 +1,4 @@
+---
 - name: "Zellij | Get latest version number for '{{ item.name }}'"
   register: latest_json
   ansible.builtin.uri:

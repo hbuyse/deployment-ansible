@@ -5,7 +5,9 @@
     - files:
         - "{{ ansible_os_family | lower }}.yml"
       skip: true
-  tags: [prettier, formatter]
+  tags:
+    - prettier
+    - formatter
 
 - name: "Prettier | Install from package manager"
   become: true
@@ -13,7 +15,9 @@
     name: "{{ prettier_packages }}"
     update_cache: true
     state: present
-  tags: [prettier, formatter]
+  tags:
+    - prettier
+    - formatter
   when: prettier_packages is defined
 
 - name: "Prettier | Install from Node Package Manager"
@@ -25,6 +29,8 @@
     path: "/usr/local"
     production: true
     no_optional: true
-  tags: [prettier, formatter]
+  tags:
+    - prettier
+    - formatter
   loop: "{{ prettier_npm_packages }}"
   when: (prettier_packages is not defined) or prettier_force_source_install

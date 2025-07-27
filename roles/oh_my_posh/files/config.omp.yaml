@@ -95,23 +95,23 @@ common:
     style: plain
     background: p:surface0
   project: &project
-    <<: *element
+    !!merge <<: *element
     foreground: p:sky
 
 blocks:
   - alignment: left
     segments:
       - foreground: p:text
-        <<: *element
+        !!merge <<: *element
         template: " {{ if .WSL }}WSL at {{ end }}{{.Icon}} "
         type: os
       - foreground: p:red
-        <<: *element
+        !!merge <<: *element
         template: "  <#bac2de></>"
         type: root
         comment: Show when the current user is root or when in an elevated shell (Windows)
       - foreground: p:sapphire
-        <<: *element
+        !!merge <<: *element
         properties:
           style: full
           edge_format: "<b>%s</b>"
@@ -122,7 +122,7 @@ blocks:
           - "{{ if not .Writable }} {{ end }}"
         type: path
       - foreground: p:green
-        <<: *element
+        !!merge <<: *element
         templates:
           - "<#bac2de></> {{ .HEAD }}"
           - "{{ if .BranchStatus }} {{ .BranchStatus }} {{ end }}"
@@ -164,7 +164,7 @@ blocks:
         template: ""
         type: text
       - foreground: p:green
-        <<: *element
+        !!merge <<: *element
         foreground_templates:
           - "{{ if .Error }}p:red{{ end }}"
         templates:
@@ -174,26 +174,27 @@ blocks:
           status_template: "{{ reason .Code }}"
         type: status
       - foreground: p:subtext0
-        <<: *element
+        !!merge <<: *element
         type: executiontime
         templates:
           - " {{ .FormattedMs }}"
-          - " 󱦟"
+          - " \U000F199F"
           - " <#bac2de></>"
         properties:
           threshold: 500
           style: austin
       - type: text
-        <<: *element
+        !!merge <<: *element
         foreground: p:yellow
         template: "{{ if .Env.DIRENV_FILE }}  <#bac2de></>{{ end }}"
       - type: project
-        <<: *project
+        !!merge <<: *project
         templates:
-          - " {{ if .Error }}{{ .Error }}{{ else }}{{ if .Name }}{{ .Name }}{{ end }} {{ if .Version }}{{.Version}} {{ end }}{{ end }}"
+          - " {{ if .Error }}{{ .Error }}{{ else }}{{ if .Name }}{{ .Name }}{{ end }} {{ if .Version }}{{.Version}} {{ end
+            }}{{ end }}"
           - " <#bac2de></>"
       - type: cmake
-        <<: *project
+        !!merge <<: *project
         templates:
           - " {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
           - "  "
@@ -204,44 +205,44 @@ blocks:
             - "CMakeLists.txt"
             - "CMakeCache.txt"
       - type: python
-        <<: *project
+        !!merge <<: *project
         templates:
           - " {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }}"
           - " "
           - " <#bac2de></>"
       - type: rust
-        <<: *project
+        !!merge <<: *project
         templates:
           - " {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
           - " "
           - " <#bac2de></>"
       - type: lua
-        <<: *project
+        !!merge <<: *project
         templates:
           - " {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
           - " "
           - " <#bac2de></>"
       - type: perl
-        <<: *project
+        !!merge <<: *project
         templates:
           - " {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
           - " "
           - " <#bac2de></>"
       - type: go
-        <<: *project
+        !!merge <<: *project
         templates:
           - " {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
           - " "
           - " <#bac2de></>"
       - foreground: p:yellow
-        <<: *element
+        !!merge <<: *element
         templates:
           - " {{ .UserName }}@{{ .HostName }}"
           - " {{ if .SSHSession }}{{ else if .Root }}{{ else }}{{ end }}"
           - " <#bac2de></>"
         type: session
       - foreground: p:subtext1
-        <<: *element
+        !!merge <<: *element
         properties:
           time_format: "15:04:05"
         template: " {{ .CurrentDate | date .Format }}  "

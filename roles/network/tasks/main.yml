@@ -5,14 +5,18 @@
     - files:
         - "{{ ansible_os_family | lower }}.yml"
       skip: true
-  tags: [networkmanager, nmcli]
+  tags:
+    - networkmanager
+    - nmcli
 
 - name: "Network Manager | Install dependencies"
   become: true
   ansible.builtin.package:
     name: "{{ network_packages }}"
     state: "present"
-  tags: [networkmanager, nmcli]
+  tags:
+    - networkmanager
+    - nmcli
 
 - name: "Network Manager | Enable service"
   become: true
@@ -20,7 +24,9 @@
     name: "NetworkManager.service"
     enabled: true
     state: "started"
-  tags: [networkmanager, nmcli]
+  tags:
+    - networkmanager
+    - nmcli
 
 - name: "Network Manager | Install ethernet configurations"
   become: true
@@ -32,7 +38,9 @@
     method6: auto
     state: present
   loop: "{{ network_ethernet_connections }}"
-  tags: [networkmanager, nmcli]
+  tags:
+    - networkmanager
+    - nmcli
 
 - name: "Network Manager | Install wifi configurations"
   community.general.nmcli:
@@ -45,4 +53,6 @@
     autoconnect: "{{ item.autoconnect }}"
     state: present
   loop: "{{ network_wifi_connections }}"
-  tags: [networkmanager, nmcli]
+  tags:
+    - networkmanager
+    - nmcli

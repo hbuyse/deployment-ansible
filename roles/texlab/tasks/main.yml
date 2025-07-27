@@ -5,7 +5,9 @@
     - files:
         - "{{ ansible_os_family | lower }}.yml"
       skip: true
-  tags: [lsp, texlab]
+  tags:
+    - lsp
+    - texlab
 
 - name: "TexLab Language Server | Install from package manager"
   become: true
@@ -13,11 +15,15 @@
   ansible.builtin.package:
     name: "{{ texlab_package }}"
     state: present
-  tags: [lsp, texlab]
+  tags:
+    - lsp
+    - texlab
 
 - name: "TexLab Language Server | Install from GitHub"
   when: texlab_package is not defined
-  tags: [lsp, texlab]
+  tags:
+    - lsp
+    - texlab
   block:
     - name: "TexLab Language Server | Get latest version number"
       register: latest_json
@@ -35,9 +41,8 @@
     - name: "TexLab Language Server | Install executable"
       become: true
       ansible.builtin.unarchive:
-        src:
-          "https://github.com/{{ texlab_github_user }}/{{ texlab_github_repo }}/releases/download/v{{ texlab_latest_version }}/\
-          texlab-{{ ansible_architecture }}-{{ ansible_system | lower }}.tar.gz"
+        src: "https://github.com/{{ texlab_github_user }}/{{ texlab_github_repo }}/releases/download/v{{ texlab_latest_version
+          }}/texlab-{{ ansible_architecture }}-{{ ansible_system | lower }}.tar.gz"
         dest: "/usr/local/bin"
         mode: "0755"
         include:

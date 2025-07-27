@@ -5,7 +5,9 @@
     - files:
         - "{{ ansible_os_family | lower }}.yml"
       skip: true
-  tags: [yamlfmt, formatter]
+  tags:
+    - yamlfmt
+    - formatter
 
 - name: "YamlFmt | Install from package manager"
   become: true
@@ -13,13 +15,19 @@
     name: "{{ yamlfmt_packages }}"
     update_cache: true
     state: present
-  tags: [yamlfmt, formatter]
+  tags:
+    - yamlfmt
+    - formatter
   when: yamlfmt_packages is defined
 
 - name: "YamlFmt | Install from source"
   ansible.builtin.include_tasks:
     file: "source.yml"
     apply:
-      tags: [yamlfmt, formatter]
-  tags: [yamlfmt, formatter]
+      tags:
+        - yamlfmt
+        - formatter
+  tags:
+    - yamlfmt
+    - formatter
   when: (yamlfmt_packages is not defined) or yamlfmt_force_source_install

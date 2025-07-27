@@ -27,7 +27,8 @@
   block:
     - name: "Polybar | Extract polybar source code [v{{ polybar_latest_version }}]"
       ansible.builtin.unarchive:
-        src: "https://github.com/polybar/polybar/releases/download/{{ polybar_latest_version }}/polybar-{{ polybar_latest_version }}.tar.gz"
+        src: "https://github.com/polybar/polybar/releases/download/{{ polybar_latest_version }}/polybar-{{ polybar_latest_version
+          }}.tar.gz"
         dest: "/tmp/"
         remote_src: true
       notify:
@@ -41,7 +42,8 @@
 
     - name: "Polybar | Configure polybar compilation"
       ansible.builtin.command:
-        cmd: "cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DBUILD_POLYBAR=yes -DBUILD_POLYBAR_MSG=yes -DBUILD_DOC=yes -DBUILD_DOC_MAN=yes -DBUILD_SHELL=yes .."
+        cmd: "cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DBUILD_POLYBAR=yes -DBUILD_POLYBAR_MSG=yes -DBUILD_DOC=yes -DBUILD_DOC_MAN=yes
+          -DBUILD_SHELL=yes .."
         chdir: "/tmp/polybar-{{ polybar_latest_version }}/build"
       changed_when: false
 

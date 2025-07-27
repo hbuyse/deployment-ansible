@@ -35,7 +35,9 @@
   tags: clang
 
 - name: "Clangd | Copy configuration file"
-  tags: [clang, clangd]
+  tags:
+    - clang
+    - clangd
   block:
     - name: "Clangd | Ensure configuration directory exists"
       ansible.builtin.file:

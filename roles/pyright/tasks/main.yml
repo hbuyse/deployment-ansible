@@ -5,7 +5,9 @@
     - files:
         - "{{ ansible_os_family | lower }}.yml"
       skip: true
-  tags: [pyright, lsp]
+  tags:
+    - pyright
+    - lsp
 
 - name: "Pyright Language Server | Install from package manager"
   become: true
@@ -13,7 +15,9 @@
   ansible.builtin.package:
     name: "{{ pyright_package }}"
     state: present
-  tags: [pyright, lsp]
+  tags:
+    - pyright
+    - lsp
 
 - name: "Pyright Language Server | Install from Node Package Manager"
   become: true
@@ -25,4 +29,6 @@
     path: "/usr/local"
     production: true
     no_optional: true
-  tags: [pyright, lsp]
+  tags:
+    - pyright
+    - lsp

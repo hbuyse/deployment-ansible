@@ -5,7 +5,11 @@
     - files:
         - "{{ ansible_os_family | lower }}.yml"
       skip: true
-  tags: [tombi, lsp, formatter, linter]
+  tags:
+    - tombi
+    - lsp
+    - formatter
+    - linter
 
 - name: "Tombi | Install from package manager"
   become: true
@@ -13,7 +17,11 @@
   ansible.builtin.package:
     name: "{{ tombi_package }}"
     state: present
-  tags: [tombi, lsp, formatter, linter]
+  tags:
+    - tombi
+    - lsp
+    - formatter
+    - linter
 
 - name: "Tombi | Install from Node Package Manager"
   become: true
@@ -25,4 +33,8 @@
     path: "/usr/local"
     production: true
     no_optional: true
-  tags: [tombi, lsp, formatter, linter]
+  tags:
+    - tombi
+    - lsp
+    - formatter
+    - linter

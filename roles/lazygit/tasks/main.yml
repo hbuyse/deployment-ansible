@@ -7,28 +7,35 @@
     return_content: true
     status_code: 200
     body_format: json
-  tags: [lazygit, git]
+  tags:
+    - lazygit
+    - git
 
 - name: "LazyGit | Set facts"
   ansible.builtin.set_fact:
     lazygit_latest_version: "{{ latest_json.json.tag_name[1:] }}"
-  tags: [lazygit, git]
+  tags:
+    - lazygit
+    - git
 
 - name: "LazyGit | Install executable"
   become: true
   ansible.builtin.unarchive:
-    src:
-      "https://github.com/{{ lazygit_github_user }}/{{ lazygit_github_repo }}/releases/download/v{{ lazygit_latest_version }}/\
-      lazygit_{{ lazygit_latest_version }}_{{ ansible_system }}_{{ ansible_architecture }}.tar.gz"
+    src: "https://github.com/{{ lazygit_github_user }}/{{ lazygit_github_repo }}/releases/download/v{{ lazygit_latest_version
+      }}/lazygit_{{ lazygit_latest_version }}_{{ ansible_system }}_{{ ansible_architecture }}.tar.gz"
     dest: "/usr/local/bin"
     mode: "0755"
     include:
       - "lazygit"
     remote_src: true
-  tags: [lazygit, git]
+  tags:
+    - lazygit
+    - git
 
 - name: "LazyGit | Install configuration"
-  tags: [lazygit, git]
+  tags:
+    - lazygit
+    - git
   block:
     - name: "LazyGit | Ensure configuration directory exists"
       ansible.builtin.file:

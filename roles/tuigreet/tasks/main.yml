@@ -5,7 +5,9 @@
     - files:
         - "{{ ansible_os_family | lower }}.yml"
       skip: true
-  tags: [tuigreet, greetd]
+  tags:
+    - tuigreet
+    - greetd
 
 - name: "TuiGreet | Install from package manager"
   become: true
@@ -13,7 +15,9 @@
     name: "{{ tuigreet_packages }}"
     update_cache: true
     state: present
-  tags: [tuigreet, greetd]
+  tags:
+    - tuigreet
+    - greetd
   when: tuigreet_packages is defined
 
 - name: "TuiGreet | Copy configuration to /etc/greetd"
@@ -22,4 +26,6 @@
     src: "config.toml"
     dest: "/etc/greetd/config.toml"
     mode: "0644"
-  tags: [tuigreet, greetd]
+  tags:
+    - tuigreet
+    - greetd

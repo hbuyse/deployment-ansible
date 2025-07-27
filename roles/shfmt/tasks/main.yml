@@ -5,7 +5,9 @@
     - files:
         - "{{ ansible_os_family | lower }}.yml"
       skip: true
-  tags: [shfmt, formatter]
+  tags:
+    - shfmt
+    - formatter
 
 - name: "ShFmt | Install from package manager"
   become: true
@@ -13,13 +15,19 @@
     name: "{{ shfmt_packages }}"
     update_cache: true
     state: present
-  tags: [shfmt, formatter]
+  tags:
+    - shfmt
+    - formatter
   when: shfmt_packages is defined
 
 - name: "ShFmt | Install from source"
   ansible.builtin.include_tasks:
     file: "source.yml"
     apply:
-      tags: [shfmt, formatter]
-  tags: [shfmt, formatter]
+      tags:
+        - shfmt
+        - formatter
+  tags:
+    - shfmt
+    - formatter
   when: (shfmt_packages is not defined) or shfmt_force_source_install

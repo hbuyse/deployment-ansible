@@ -5,7 +5,9 @@
     - files:
         - "{{ ansible_os_family | lower }}.yml"
       skip: true
-  tags: [isort, formatter]
+  tags:
+    - isort
+    - formatter
 
 - name: "Isort | Install from package manager"
   become: true
@@ -13,7 +15,9 @@
     name: "{{ isort_packages }}"
     update_cache: true
     state: present
-  tags: [isort, formatter]
+  tags:
+    - isort
+    - formatter
   when: isort_packages is defined
 
 - name: "Isort | Install from source"
@@ -22,5 +26,7 @@
     name: "isort"
     state: latest
     global: true
-  tags: [isort, formatter]
+  tags:
+    - isort
+    - formatter
   when: (isort_packages is not defined) or isort_force_source_install

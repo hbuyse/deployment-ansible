@@ -15,9 +15,8 @@
 - name: "FZF | Install binary file [v{{ fzf_latest_version }}]"
   become: true
   ansible.builtin.unarchive:
-    src:
-      "https://github.com/junegunn/fzf/releases/download/v{{ fzf_latest_version }}/\
-      fzf-{{ fzf_latest_version }}-{{ ansible_system | lower }}_{{ alt_arch }}.tar.gz"
+    src: "https://github.com/junegunn/fzf/releases/download/v{{ fzf_latest_version }}/fzf-{{ fzf_latest_version }}-{{ ansible_system
+      | lower }}_{{ alt_arch }}.tar.gz"
     dest: "{{ fzf_bin_install_dir }}"
     remote_src: true
 

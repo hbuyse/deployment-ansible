@@ -54,4 +54,6 @@
     daemon_reload: true
     enabled: true
     scope: "user"
-  tags: [sway, lxpolkit]
+  tags:
+    - sway
+    - lxpolkit

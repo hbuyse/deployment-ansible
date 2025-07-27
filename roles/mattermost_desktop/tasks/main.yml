@@ -5,14 +5,18 @@
     - files:
         - "{{ ansible_os_family | lower }}.yml"
       skip: true
-  tags: [mattermost, messaging]
+  tags:
+    - mattermost
+    - messaging
 
 - name: "Mattermost Desktop | Uninstall from Snap"
   become: true
   community.general.snap:
     name: "mattermost-desktop"
     state: absent
-  tags: [mattermost, messaging]
+  tags:
+    - mattermost
+    - messaging
 
 - name: "Mattermost Desktop | Install from package manager"
   become: true
@@ -20,13 +24,19 @@
     name: "{{ mattermost_desktop_packages }}"
     update_cache: true
     state: present
-  tags: [mattermost, messaging]
+  tags:
+    - mattermost
+    - messaging
   when: mattermost_desktop_packages is defined
 
 - name: "Mattermost Desktop | Install from source"
   ansible.builtin.include_tasks:
     file: "source.yml"
     apply:
-      tags: [mattermost, messaging]
-  tags: [mattermost, messaging]
+      tags:
+        - mattermost
+        - messaging
+  tags:
+    - mattermost
+    - messaging
   when: mattermost_desktop_packages is not defined

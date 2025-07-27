@@ -33,7 +33,7 @@
     - xfce
     - xfce4
 
-- name: "Xfce4 | Copy configuration files" # noqa risky-file-permissions
+- name: "Xfce4 | Copy configuration files"  # noqa risky-file-permissions
   ansible.builtin.copy:
     src: "{{ role_path }}/files/"
     dest: "{{ ansible_user_dir }}/.config/xfce4"
