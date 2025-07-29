@@ -258,3 +258,11 @@ label:focus {
 #language {
   border-bottom-color: @yellow;
 }
+
+menu {
+  padding: 5px;
+}
+
+menuitem {
+  padding: 3px;
+}
