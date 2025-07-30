@@ -4,6 +4,7 @@ sway_packages:
   - xwayland
   - lxsession
   - Thunar
+  - thunar-archive-plugin
   - thunar-volman
   - NetworkManager-tui
   # Screenshots

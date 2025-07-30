@@ -3,6 +3,7 @@ sway_packages:
   - sway
   - lxsession
   - thunar
+  - thunar-archive-plugin
   - thunar-volman
   - network-manager
   # Screenshots
