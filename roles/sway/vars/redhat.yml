@@ -3,6 +3,7 @@ sway_packages:
   - sway
   - lxsession
   - Thunar
+  - thunar-volman
   - NetworkManager-tui
   # Screenshots
   - grim
