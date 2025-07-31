@@ -44,14 +44,14 @@ return {
         sh = { 'shfmt' },
         toml = { 'tombi' },
         -- Prettier
-        css = { 'prettier' },
-        html = { 'prettier' },
-        json = { 'prettier' },
-        jsonc = { 'prettier' },
-        markdown = { 'prettier' },
-        sass = { 'prettier' },
-        scss = { 'prettier' },
-        yaml = { 'prettier' },
+        css = { 'prettierd', 'prettier', stop_after_first = true },
+        html = { 'prettierd', 'prettier', stop_after_first = true },
+        json = { 'prettierd', 'prettier', stop_after_first = true },
+        jsonc = { 'prettierd', 'prettier', stop_after_first = true },
+        markdown = { 'prettierd', 'prettier', stop_after_first = true },
+        sass = { 'prettierd', 'prettier', stop_after_first = true },
+        scss = { 'prettierd', 'prettier', stop_after_first = true },
+        yaml = { 'yamlfmt', 'prettierd', 'prettier', stop_after_first = true },
         -- Use the "*" filetype to run formatters on all filetypes.
         ['*'] = { 'codespell' },
         -- Use the "_" filetype to run formatters on filetypes that don't have other formatters configured.
