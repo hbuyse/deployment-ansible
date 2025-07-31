@@ -38,6 +38,7 @@
     - role: "mako"
     - role: "wofi"
     - role: "fuzzel"
+      when: ansible_os_family not in ["Debian"]
     - role: "wireplumber"
     - role: "tuned"
     - role: "wlprop"
