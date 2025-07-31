@@ -80,7 +80,11 @@ return {
 
         -- These options will be passed to conform.format()
         return {
+{% if ansible_hostname == 'T480' %}
+          timeout_ms = 1000,
+{% else %}
           timeout_ms = 500,
+{% endif %}
           lsp_fallback = false,
         }
       end,
