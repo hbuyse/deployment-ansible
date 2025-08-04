@@ -11,3 +11,9 @@
     dest: "{{ ansible_user_dir }}/.config/sway/"
     mode: "preserve"
     directory_mode: "0755"
+
+- name: "Sway | Copy dynamic configuration files"
+  ansible.builtin.template:
+    src: "sway/variables.j2"
+    dest: "{{ ansible_user_dir }}/.config/sway/variables"
+    mode: "0644"
