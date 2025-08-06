@@ -2,6 +2,7 @@ return {
   {
     'catppuccin/nvim',
     name = 'catppuccin',
+    version = '*', -- Stable only
     priority = 1000,
     config = function()
       require('catppuccin').setup({
@@ -10,6 +11,7 @@ return {
           light = 'latte',
           dark = 'mocha',
         },
+        auto_integrations = true,
       })
       vim.cmd.colorscheme('catppuccin-mocha')
     end,
