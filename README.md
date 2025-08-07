@@ -2,9 +2,10 @@
 
 System configuration based on Ansible
 
-```sh
-pip install ansible ansible-core watchdog
-if grep -q "ID_LIKE=debian" /etc/os-release; then
-    pip install python-debian
-fi
+```bash
+git clone https://github.com/hbuyse/deployment-ansible
+cd deployment-ansible
+bash ./install.sh
 ```
+
+> [!WARNING] Do not forget to specify some variables in the host_vars/localhost.yml file
