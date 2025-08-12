@@ -10,7 +10,7 @@
 - name: "Web Applications | Install from package manager"
   become: true
   ansible.builtin.package:
-    name: "{{ youtube_packages }}"
+    name: "{{ webapplications_packages }}"
     state: present
   tags: webapplications
 
