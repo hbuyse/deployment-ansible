@@ -24,6 +24,7 @@
     - role: "rustup"
     - role: "mimeapps"
     - role: "git"
+    - role: "cargo_cache"
     - role: "alacritty"
     - role: "zsh"
     - role: "oh_my_posh"
