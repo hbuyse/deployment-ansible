@@ -1,8 +1,9 @@
 [Desktop Entry]
-Name=Youtube
-Comment=Youtube browser window
+Name=Youtube WebApp
+StartupWMClass=youtube
+Comment=Youtube Web Application
 Exec=chromium-browser --app=https://youtube.com
+Icon=youtube
 Terminal=false
 Type=Application
-Icon=youtube
 Categories=AudioVideo;Audio;Video;Player

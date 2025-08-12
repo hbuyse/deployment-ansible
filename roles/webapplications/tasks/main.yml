@@ -1,0 +1,39 @@
+---
+- name: "Web Applications | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: webapplications
+
+- name: "Web Applications | Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ youtube_packages }}"
+    state: present
+  tags: webapplications
+
+- name: "Web Applications | Copy desktop files"
+  tags: webapplications
+  become: true
+  block:
+    - name: "Web Applications | Ensure applications directory exist"
+      ansible.builtin.file:
+        path: "/usr/local/share/applications"
+        state: directory
+        owner: "root"
+        group: "root"
+        mode: "0755"
+
+    - name: "Web Applications | Copy desktop files"
+      ansible.builtin.copy:
+        src: "com.{{ item }}.webapp.desktop"
+        dest: "/usr/local/share/applications/com.{{ item }}.webapp.desktop"
+        owner: "root"
+        group: "root"
+        mode: "0644"
+      loop:
+        - discord
+        - youtube
+        - spotify

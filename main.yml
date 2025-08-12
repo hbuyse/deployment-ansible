@@ -56,7 +56,7 @@
     - role: "keymapp"
     - role: "nextcloud"
     - role: "spotify_player"
-    - role: "youtube"
+    - role: "webapplications"
     - role: "discord"
     - role: "zoom"
       when: ansible_hostname == "hbuyse-latitude5400"
