@@ -190,9 +190,10 @@ blocks:
       - type: project
         !!merge <<: *project
         templates:
-          - " {{ if .Error }}{{ .Error }}{{ else }}{{ if .Name }}{{ .Name }}{{ end }} {{ if .Version }}{{.Version}} {{ end
-            }}{{ end }}"
-          - " <#bac2de></>"
+          - ' {{ if .Error }}{{ .Error }}{{ else }}{{ .Type }}{{ if .Name }} - {{ .Name }}{{ end }}{{ if .Version }} {{ .Version
+            }}{{ end }}{{ end }}'
+          - ' '
+          - ' <#bac2de></>'
       - type: cmake
         !!merge <<: *project
         templates:
