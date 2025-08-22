@@ -5,13 +5,13 @@ PROGRAM="$(command -v tuned-adm)"
 
 declare -A PROFILE_SWITCHER
 PROFILE_SWITCHER["powersave"]="balanced"
-PROFILE_SWITCHER["balanced"]="accelerator-performance"
-PROFILE_SWITCHER["accelerator-performance"]="powersave"
+PROFILE_SWITCHER["balanced"]="throughput-performance"
+PROFILE_SWITCHER["throughput-performance"]="powersave"
 
 declare -A ICONS
 ICONS["powersave"]=" "
 ICONS["balanced"]=" "
-ICONS["accelerator-performance"]=" "
+ICONS["throughput-performance"]=" "
 
 send_signal() {
     pkill -x -SIGRTMIN+7 'waybar'
@@ -52,9 +52,20 @@ get() {
     fi
 }
 
+apply() {
+    if ! [ "${PROFILE_SWITCHER[$1]+muahaha}" ]; then
+        return
+    fi
+    ${PROGRAM} profile "$1"
+}
+
 case "$1" in
 'get')
     get
+    ;;
+'set')
+    apply "$2"
+    send_signal
     ;;
 'switch')
     switch
