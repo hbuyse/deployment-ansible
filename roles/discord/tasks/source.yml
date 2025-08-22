@@ -1,6 +1,6 @@
 ---
 - name: "Discord | Get latest version number"
-  register: latest_json
+  register: discord_latest_json
   ansible.builtin.uri:
     url: "{{ discord_version_url }}"
     method: GET
@@ -11,7 +11,7 @@
 
 - name: "Discord | Set latest version"
   ansible.builtin.set_fact:
-    discord_latest_version: "{{ latest_json.json.name }}"
+    discord_latest_version: "{{ discord_latest_json.json.name }}"
 
 - name: "Discord | Try to load version file"
   block:

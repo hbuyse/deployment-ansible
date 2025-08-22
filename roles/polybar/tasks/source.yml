@@ -1,6 +1,6 @@
 ---
 - name: "Polybar | Get latest version number"
-  register: latest_json
+  register: polybar_latest_json
   ansible.builtin.uri:
     url: "https://api.github.com/repos/polybar/polybar/releases/latest"
     method: GET
@@ -11,7 +11,7 @@
 
 - name: "Polybar | Set facts"
   ansible.builtin.set_fact:
-    polybar_latest_version: "{{ latest_json.json.tag_name }}"
+    polybar_latest_version: "{{ polybar_latest_json.json.tag_name }}"
   tags: polybar
 
 - name: "Polybar | Get current version"

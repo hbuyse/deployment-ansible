@@ -33,12 +33,12 @@
 - name: "Mako | Check if AppArmor profile exists"
   ansible.builtin.stat:
     path: "/etc/apparmor.d/fr.emersion.Mako"
-  register: profile_result
+  register: mako_profile_result
   tags: mako
 
 - name: "Mako | Disable AppArmor profile"
   become: true
-  when: profile_result.stat.exists
+  when: mako_profile_result.stat.exists
   tags: mako
   block:
     - name: "Mako | Link AppArmor profile to 'disable' folder"

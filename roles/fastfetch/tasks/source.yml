@@ -1,6 +1,6 @@
 ---
 - name: "Fastfetch | Get latest version number"
-  register: latest_json
+  register: fastfetch_latest_json
   ansible.builtin.uri:
     url: "https://api.github.com/repos/fastfetch-cli/fastfetch/releases/latest"
     method: GET
@@ -10,7 +10,7 @@
 
 - name: "Fastfetch | Set facts"
   ansible.builtin.set_fact:
-    fastfetch_latest_version: "{{ latest_json.json.tag_name }}"
+    fastfetch_latest_version: "{{ fastfetch_latest_json.json.tag_name }}"
 
 - name: "Fastfetch | Install fastfetch from GitHub [v{{ fastfetch_latest_version }}]"
   become: true

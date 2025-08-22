@@ -1,6 +1,6 @@
 ---
 - name: "ShFmt | Get latest version number"
-  register: latest_json
+  register: shfmt_latest_json
   ansible.builtin.uri:
     url: "https://api.github.com/repos/{{ shfmt_github_user }}/{{ shfmt_github_repo }}/releases/latest"
     method: GET
@@ -10,7 +10,7 @@
 
 - name: "ShFmt | Set facts"
   ansible.builtin.set_fact:
-    shfmt_latest_version: "{{ latest_json.json.tag_name }}"
+    shfmt_latest_version: "{{ shfmt_latest_json.json.tag_name }}"
 
 - name: "ShFmt | Install executable"
   become: true

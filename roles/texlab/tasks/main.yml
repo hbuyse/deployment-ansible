@@ -26,7 +26,7 @@
     - texlab
   block:
     - name: "TexLab Language Server | Get latest version number"
-      register: latest_json
+      register: texlab_latest_json
       ansible.builtin.uri:
         url: "https://api.github.com/repos/{{ texlab_github_user }}/{{ texlab_github_repo }}/releases/latest"
         method: GET
@@ -36,7 +36,7 @@
 
     - name: "TexLab Language Server | Set facts"
       ansible.builtin.set_fact:
-        texlab_latest_version: "{{ latest_json.json.tag_name[1:] }}"
+        texlab_latest_version: "{{ texlab_latest_json.json.tag_name[1:] }}"
 
     - name: "TexLab Language Server | Install executable"
       become: true

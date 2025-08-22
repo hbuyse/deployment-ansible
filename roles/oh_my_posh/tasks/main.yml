@@ -1,6 +1,6 @@
 ---
 - name: "Oh My Posh | Get latest version number"
-  register: latest_json
+  register: oh_my_posh_latest_json
   ansible.builtin.uri:
     url: "https://api.github.com/repos/JanDeDobbeleer/oh-my-posh/releases/latest"
     method: GET
@@ -13,7 +13,7 @@
 
 - name: "Oh My Posh | Set facts"
   ansible.builtin.set_fact:
-    oh_my_posh_latest_version: "{{ latest_json.json.tag_name[1:] }}"
+    oh_my_posh_latest_version: "{{ oh_my_posh_latest_json.json.tag_name[1:] }}"
   tags:
     - oh_my_posh
     - shell

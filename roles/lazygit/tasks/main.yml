@@ -1,6 +1,6 @@
 ---
 - name: "LazyGit | Get latest version number"
-  register: latest_json
+  register: lazygit_latest_json
   ansible.builtin.uri:
     url: "https://api.github.com/repos/{{ lazygit_github_user }}/{{ lazygit_github_repo }}/releases/latest"
     method: GET
@@ -13,7 +13,7 @@
 
 - name: "LazyGit | Set facts"
   ansible.builtin.set_fact:
-    lazygit_latest_version: "{{ latest_json.json.tag_name[1:] }}"
+    lazygit_latest_version: "{{ lazygit_latest_json.json.tag_name[1:] }}"
   tags:
     - lazygit
     - git

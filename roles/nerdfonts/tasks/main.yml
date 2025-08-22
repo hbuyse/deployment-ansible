@@ -1,6 +1,6 @@
 ---
 - name: "Nerdfonts | Get latest version number"
-  register: latest_json
+  register: nerdfonts_latest_json
   ansible.builtin.uri:
     url: "https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest"
     method: GET
@@ -11,7 +11,7 @@
 
 - name: "Nerdfonts | Set facts"
   ansible.builtin.set_fact:
-    nerdfonts_latest_version: "{{ latest_json.json.tag_name[1:] }}"
+    nerdfonts_latest_version: "{{ nerdfonts_latest_json.json.tag_name[1:] }}"
   tags: nerdfonts
 
 - name: "Nerdfonst | Download fonts"

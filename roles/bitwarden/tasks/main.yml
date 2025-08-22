@@ -1,6 +1,6 @@
 ---
 - name: "Bitwarden Desktop | Get latest version number"
-  register: releases_json
+  register: bitwarden_releases_json
   ansible.builtin.uri:
     url: "https://api.github.com/repos/{{ bitwarden_owner }}/{{ bitwarden_repo }}/releases"
     method: GET
@@ -11,9 +11,9 @@
 
 - name: "Bitwarden Desktop | Set facts"
   ansible.builtin.set_fact:
-    bitwarden_desktop_latest_tag: "{{ (releases_json.json | selectattr('tag_name', 'search', '^desktop') | first).tag_name
+    bitwarden_desktop_latest_tag: "{{ (bitwarden_releases_json.json | selectattr('tag_name', 'search', '^desktop') | first).tag_name
       }}"
-    bitwarden_desktop_latest_version: "{{ (releases_json.json | selectattr('tag_name', 'search', '^desktop') | first).tag_name[9:]
+    bitwarden_desktop_latest_version: "{{ (bitwarden_releases_json.json | selectattr('tag_name', 'search', '^desktop') | first).tag_name[9:]
       }}"
   tags: bitwarden
 

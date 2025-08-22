@@ -4,11 +4,11 @@
   community.general.snap:
     name: firefox
     state: absent
-  register: snap_uninstall
+  register: web_browsers_snap_uninstall
 
 - name: "Web Browsers | Reinstall firefox as debian package"  # no-qa: no-handler
   become: true
-  when: snap_uninstall.changed  # noqa: no-handler
+  when: web_browsers_snap_uninstall.changed  # noqa: no-handler
   block:
     - name: "Web Browsers | Uninstall Firefox debian package"
       ansible.builtin.package:

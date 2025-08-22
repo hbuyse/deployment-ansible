@@ -1,6 +1,6 @@
 ---
 - name: "Lua Language Server | Get latest version number"
-  register: latest_json
+  register: luals_latest_json
   ansible.builtin.uri:
     url: "https://api.github.com/repos/{{ luals_github_user }}/{{ luals_github_repo }}/releases/latest"
     method: GET
@@ -10,7 +10,7 @@
 
 - name: "Lua Language Server | Set facts"
   ansible.builtin.set_fact:
-    luals_latest_version: "{{ latest_json.json.tag_name }}"
+    luals_latest_version: "{{ luals_latest_json.json.tag_name }}"
 
 - name: "Lua Language Server | Install latest version"
   become: true
