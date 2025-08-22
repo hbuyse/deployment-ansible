@@ -187,12 +187,11 @@ blocks:
         !!merge <<: *element
         foreground: p:yellow
         template: "{{ if .Env.DIRENV_FILE }}  <#bac2de></>{{ end }}"
-      - type: project
+      - type: node
         !!merge <<: *project
         templates:
-          - ' {{ if .Error }}{{ .Error }}{{ else }}{{ .Type }}{{ if .Name }} - {{ .Name }}{{ end }}{{ if .Version }} {{ .Version
-            }}{{ end }}{{ end }}'
-          - ' '
+          - ' {{ if .Error }}{{ .Error }}{{ else }}{{ .PackageManagerName }}{{ if .Full }} {{ .Full }}{{ end }}{{ end }}'
+          - ' {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }}{{ else }}{{ end }}'
           - ' <#bac2de></>'
       - type: cmake
         !!merge <<: *project
