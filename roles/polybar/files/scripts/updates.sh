@@ -30,7 +30,7 @@ fi
 
 # Display
 if [[ "${1}" == "notify" ]] && command -v notify-send > /dev/null 2>&1; then
-    notify-send "Updates available" "$(
+    notify-send -a polybar "Updates available" "$(
         IFS=$'\n'
         echo "${LIST[*]}"
         IFS=$' \t\n'

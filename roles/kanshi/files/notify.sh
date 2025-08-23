@@ -9,5 +9,5 @@ cmdexists() {
 }
 
 if cmdexists notify-send; then
-    notify-send "Kanshi" "Using profile '${PROFILE}'"
+    notify-send -a kanshi "Kanshi" "Using profile '${PROFILE}'"
 fi

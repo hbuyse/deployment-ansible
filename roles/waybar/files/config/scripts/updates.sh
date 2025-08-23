@@ -4,14 +4,6 @@ check() {
     command -v "$1" 1> /dev/null
 }
 
-notify() {
-    check notify-send && {
-        notify-send "$@"
-        return
-    }
-    echo "$@"
-}
-
 stringToLen() {
     STRING="$1"
     LEN="$2"

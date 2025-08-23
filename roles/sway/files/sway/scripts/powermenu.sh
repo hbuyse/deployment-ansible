@@ -75,11 +75,11 @@ function run() {
         case "${1}" in
         "Uncaffeinate")
             systemctl --user start swayidle.service
-            notify-send "Screen saver" "Enabled"
+            notify-send -a screensaver "Screen saver" "Enabled"
             ;;
         "Caffeinate")
             systemctl --user stop swayidle.service
-            notify-send "Screen saver" "Disabled"
+            notify-send -a screensaver "Screen saver" "Disabled"
             ;;
         "Lock")
             lock
@@ -98,7 +98,7 @@ function run() {
             ;;
         "Do Disturb")
             makoctl mode -r do-not-disturb > /dev/null 2>&1
-            notify-send "Do Not Disturb" "Disabled"
+            notify-send -a mako "Do Not Disturb" "Disabled"
             ;;
         "Do Not Disturb")
             makoctl mode -a do-not-disturb > /dev/null 2>&1

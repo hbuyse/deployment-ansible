@@ -16,7 +16,7 @@ countdown() {
 notify() {
     line=$1
     shift
-    notify-send "Recording" "${line}" -i /usr/share/icons/Papirus-Dark/32x32/devices/camera-video.svg "$*"
+    notify-send -a sway "Recording" "${line}" -i /usr/share/icons/Papirus-Dark/32x32/devices/camera-video.svg "$*"
 }
 
 send_signal() {

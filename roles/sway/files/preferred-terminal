@@ -39,6 +39,6 @@ case "${XDG_SESSION_TYPE}-${XDG_SESSION_DESKTOP}" in
     i3-nagbar -m "${0} could not find a terminal emulator. Please install one."
     ;;
 *)
-    notify-send "${0}" "Unknown XDG_SESSION_TYPE-XDG_SESSION_DESKTOP (${XDG_SESSION_TYPE}-${XDG_SESSION_DESKTOP})"
+    notify-send -a sway "${0}" "Unknown XDG_SESSION_TYPE-XDG_SESSION_DESKTOP (${XDG_SESSION_TYPE}-${XDG_SESSION_DESKTOP})"
     ;;
 esac

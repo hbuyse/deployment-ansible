@@ -1,4 +1,4 @@
-timeout 270 'notify-send -u critical "swaylock" "Will lock in 30 seconds"'
+timeout 270 'notify-send -a swayidle -u critical "swaylock" "Will lock in 30 seconds"'
 timeout 300 'systemctl --user start swaylock'
 timeout 310 'brightnessctl -q -s && brightnessctl -q set 10' resume 'brightnessctl -q -r'
 before-sleep 'playerctl --all-players pause'
