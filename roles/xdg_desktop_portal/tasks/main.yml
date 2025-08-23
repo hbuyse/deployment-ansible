@@ -1,0 +1,40 @@
+---
+- name: "XDG Desktop Portal | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags:
+    - xdg_desktop_portal
+
+- name: "XDG Desktop Portal | Install packages"
+  become: true
+  ansible.builtin.package:
+    name: "{{ xdg_desktop_portal_packages }}"
+    state: "present"
+  tags:
+    - xdg_desktop_portal
+
+- name: "XDG Desktop Portal | Copy configuration"
+  tags:
+    - xdg_desktop_portal
+  block:
+    - name: "XDG Desktop Portal | Ensure configuration directory exists"
+      ansible.builtin.file:
+        path: "{{ xdg_desktop_portal_wlr_user_dir }}"
+        state: "directory"
+        mode: "0755"
+
+    - name: "XDG Desktop Portal | Copy configuration files"
+      ansible.builtin.copy:
+        src: "xdg-desktop-portal-wlr/config"
+        dest: "{{ xdg_desktop_portal_wlr_user_dir }}"
+        mode: "0644"
+      notify: "XDG Desktop Portal | Restart XDG Desktop Portal Wlr service"
+
+    - name: "XDG Desktop Portal | Copy script"
+      ansible.builtin.copy:
+        src: "xdg-desktop-portal-wlr/script.sh"
+        dest: "{{ xdg_desktop_portal_wlr_user_dir }}"
+        mode: "0755"

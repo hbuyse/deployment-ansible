@@ -1,0 +1,2 @@
+---
+xdg_desktop_portal_wlr_user_dir: "{{ ansible_user_dir }}/.config/xdg-desktop-portal-wlr"

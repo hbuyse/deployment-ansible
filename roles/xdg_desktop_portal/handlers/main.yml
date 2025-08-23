@@ -1,0 +1,6 @@
+---
+- name: "XDG Desktop Portal | Restart XDG Desktop Portal Wlr service"
+  ansible.builtin.systemd:
+    name: "xdg-desktop-portal-wlr"
+    state: "restarted"
+    scope: "user"

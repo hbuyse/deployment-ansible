@@ -1,0 +1,8 @@
+[screencast]
+output_name=
+max_fps=30
+exec_before=script.sh enable
+exec_after=script.sh disable
+chooser_type=simple
+chooser_cmd=slurp -f %o -or
+;  vim: set ts=4 sw=4 tw=0 noet ft=dosini :

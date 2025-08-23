@@ -39,6 +39,7 @@
     - role: "wofi"
     - role: "fuzzel"
       when: ansible_os_family not in ["Debian"]
+    - role: "xdg_desktop_portal"
     - role: "wireplumber"
     - role: "tuned"
     - role: "wlprop"

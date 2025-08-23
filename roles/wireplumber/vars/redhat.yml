@@ -6,5 +6,3 @@ wireplumber_packages:
   - pulseaudio-utils
   - wireplumber
   - wireplumber-doc
-  - xdg-desktop-portal-wlr
-  - xdg-desktop-portal-gtk
