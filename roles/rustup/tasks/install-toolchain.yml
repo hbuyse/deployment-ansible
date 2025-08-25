@@ -2,8 +2,8 @@
 - name: "Rustup | Get active toolchain version"
   ansible.builtin.shell:
     cmd: |
-      rustup default | sed -n 's#\([^-]\+\).*#\1#p'
-  register: rustup_default_output
+      rustup default | awk '{ print $1 }'
+  register: rustup_get_default_output
   environment:
     RUSTUP_HOME: "{{ ansible_user_dir }}/.rustup"
     CARGO_HOME: "{{ ansible_user_dir }}/.cargo"
@@ -11,24 +11,28 @@
   changed_when: false
   ignore_errors: true
 
-- name: "Rustup | Get currently active toolchain if installed and set"
-  when:
-    - rustup_default_output is failed
-  block:
-    - name: "Rustup | Print current / active toolchain version"
-      ansible.builtin.debug:
-        msg: "{{ rustup_default_output.stdout_lines[0] }}"
-
-    - name: "Rustup | Set active_rustup_toolchain_version as fact"
-      ansible.builtin.set_fact:
-        rustup_active_rustup_toolchain_version: "{{ rustup_default_output.stdout_lines[0] }}"
-
 - name: "Rustup | Set default toolchain version"
-  changed_when: false
-  when: (rustup_active_rustup_toolchain_version is undefined) or (rustup_active_rustup_toolchain_version != rustup_default_version)
   ansible.builtin.command:
     cmd: rustup default "{{ rustup_default_version }}"
   environment:
     RUSTUP_HOME: "{{ ansible_user_dir }}/.rustup"
     CARGO_HOME: "{{ ansible_user_dir }}/.cargo"
     PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"
+  register: rustup_set_default_output
+  failed_when: rustup_set_default_output.rc != 0
+  changed_when:
+    - rustup_set_default_output.rc == 0
+    - "'unchanged' not in rustup_set_default_output.stdout"
+
+- name: "Rustup | Update Rust toolchain"
+  ansible.builtin.command:
+    cmd: "rustup update"
+  environment:
+    RUSTUP_HOME: "{{ ansible_user_dir }}/.rustup"
+    CARGO_HOME: "{{ ansible_user_dir }}/.cargo"
+    PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"
+  register: rustup_update
+  failed_when: rustup_update.rc != 0
+  changed_when:
+    - rustup_update.rc == 0
+    - (rustup_get_default_output.stdout_lines[0] ~ " updated") in rustup_update.stdout
