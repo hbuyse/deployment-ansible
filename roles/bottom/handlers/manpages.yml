@@ -14,6 +14,6 @@
     dest: "/usr/local/share/man/man1"
     mode: "0755"
     include:
-      - "{{ bat_archive_name }}/btm.1.gz"
+      - "./btm.1.gz"
     extra_opts:
       - "--strip-components=1"

@@ -11,7 +11,7 @@
   become: true
   ansible.builtin.unarchive:
     src: "/tmp/completion.tar.gz"
-    dest: "{{ install_dir }}"
+    dest: "{{ item.install_dir }}"
     mode: "0644"
     include:
       - "./{{ item.src_file }}"
