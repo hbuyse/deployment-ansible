@@ -19,6 +19,8 @@
       }}/yamlfmt_{{ yamlfmt_latest_version }}_{{ ansible_system }}_{{ ansible_architecture }}.tar.gz"
     dest: "/usr/local/bin"
     mode: "0755"
+    owner: "root"
+    group: "root"
     include:
       - "yamlfmt"
     remote_src: true

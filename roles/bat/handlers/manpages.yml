@@ -11,6 +11,8 @@
   ansible.builtin.unarchive:
     src: "/tmp/{{ bat_archive_fullname }}"
     dest: "/usr/local/share/man/man1"
+    owner: "root"
+    group: "root"
     mode: "0755"
     include:
       - "{{ bat_archive_name }}/bat.1"

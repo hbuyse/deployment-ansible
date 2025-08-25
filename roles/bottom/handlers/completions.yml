@@ -13,6 +13,8 @@
     src: "/tmp/completion.tar.gz"
     dest: "{{ item.install_dir }}"
     mode: "0644"
+    owner: "root"
+    group: "root"
     include:
       - "./{{ item.src_file }}"
     extra_opts:
@@ -26,6 +28,8 @@
       ansible.builtin.copy:
         src: "{{ item.install_dir }}/{{ item.src_file }}"
         dest: "{{ item.install_dir }}/{{ item.dst_file }}"
+        owner: "root"
+        group: "root"
         mode: "0644"
 
     - name: "Bottom | Remove old one"

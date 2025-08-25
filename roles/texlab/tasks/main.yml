@@ -44,6 +44,8 @@
         src: "https://github.com/{{ texlab_github_user }}/{{ texlab_github_repo }}/releases/download/v{{ texlab_latest_version
           }}/texlab-{{ ansible_architecture }}-{{ ansible_system | lower }}.tar.gz"
         dest: "/usr/local/bin"
+        owner: "root"
+        group: "root"
         mode: "0755"
         include:
           - "texlab"

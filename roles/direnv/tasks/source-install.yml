@@ -34,6 +34,8 @@
     dest: "{{ direnv_man_install_dir }}/man1"
     remote_src: true
     keep_newer: true
+    owner: "root"
+    group: "root"
     mode: "0644"
     include:
       - "direnv-{{ direnv_latest_version }}/man/direnv.1"

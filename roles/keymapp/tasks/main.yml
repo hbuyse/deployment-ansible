@@ -40,6 +40,8 @@
     src: "/tmp/keymapp-latest.tar.gz"
     dest: "{{ item.dest }}"
     mode: "{{ item.mode }}"
+    owner: "root"
+    group: "root"
     include:
       - "{{ item.file }}"
   loop:

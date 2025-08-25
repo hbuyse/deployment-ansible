@@ -12,6 +12,8 @@
     src: "/tmp/completions-{{ eza_latest_version }}.tar.gz"
     dest: "{{ item.install_dir }}"
     mode: "0644"
+    owner: "root"
+    group: "root"
     include:
       - "./target/completions-{{ eza_latest_version }}/{{ item.completion_file }}"
     extra_opts:

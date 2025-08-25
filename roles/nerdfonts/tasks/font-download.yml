@@ -14,4 +14,6 @@
     dest: "{{ nerdfonts_font_dir_prefix }}/{{ item }}"
     mode: "0644"
     remote_src: true
+    owner: "root"
+    group: "root"
   notify: "Nerdfonts | Build font information caches"
