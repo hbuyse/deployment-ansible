@@ -14,6 +14,10 @@ repos:
     rev: v2.4.1
     hooks:
       - id: codespell
+  - repo: https://github.com/lunarmodules/luacheck/
+    rev: v1.2.0
+    hooks:
+      - id: luacheck
   - repo: https://github.com/ansible/ansible-lint.git
     rev: v25.8.2
     hooks:
