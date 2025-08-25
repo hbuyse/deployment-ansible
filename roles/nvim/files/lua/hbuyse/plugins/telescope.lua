@@ -73,7 +73,7 @@ return {
         require('telescope').load_extension('aerial')
       end
     end,
-    keys = function(plugin, keys)
+    keys = function(_, _)
       local nkeymaps = {
         { '<C-p>', require('telescope.builtin').find_files, desc = 'Search Files' },
         { '<leader>b', require('telescope.builtin').buffers, desc = '[B]uffers' },

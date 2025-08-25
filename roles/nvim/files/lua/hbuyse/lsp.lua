@@ -180,7 +180,7 @@ local function on_attach(client, bufnr)
       string.format('Inlay hints (buffer-local) is %s', vim.b.inlay_hint_enabled and 'enabled' or 'disabled'),
       vim.log.levels.INFO
     )
-  end, opts)
+  end, {})
 
   -- Toggle (global)
   vim.keymap.set('n', '\\H', function()
@@ -190,7 +190,7 @@ local function on_attach(client, bufnr)
       string.format('Inlay hints (global) is %s', vim.g.inlay_hint_enabled and 'enabled' or 'disabled'),
       vim.log.levels.INFO
     )
-  end, opts)
+  end, {})
 
   -- Lsp progress
   -- require('rockyz.lsp.progress')
