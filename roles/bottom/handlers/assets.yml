@@ -14,7 +14,7 @@
 
 - name: "Bottom | Download bottom archives"
   ansible.builtin.get_url:
-    url: "https://github.com/ClementTsang/bottom/releases/download/v{{ bottom_latest_version }}/{{ item }}.tar.gz"
+    url: "https://github.com/ClementTsang/bottom/releases/download/{{ bottom_latest_version }}/{{ item }}.tar.gz"
     dest: "/tmp/"
     mode: "0644"
   loop:
