@@ -19,6 +19,7 @@
     # Terminals
     - role: "foot"
     - role: "alacritty"
+    - role: "themes"
     # Sway
     - role: "sway"
     - role: "wayland_sessions"

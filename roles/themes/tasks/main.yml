@@ -1,0 +1,35 @@
+---
+- name: "Themes | Ensure directory exist"
+  ansible.builtin.file:
+    path: "{{ themes_dir }}"
+    state: directory
+    mode: "0755"
+  tags:
+    - themes
+    - theming
+
+- name: "Themes | Copy static files"
+  tags:
+    - themes
+    - theming
+  ansible.builtin.copy:
+    src: "{{ item }}.gtk3.css"
+    dest: "{{ themes_dir }}"
+    mode: "0644"
+    owner: "{{ ansible_user_uid }}"
+    group: "{{ ansible_user_gid }}"
+  loop: "{{ themes_list | list }}"
+
+- name: "Themes | Download files"
+  tags:
+    - themes
+    - theming
+  ansible.builtin.get_url:
+    url: "{{ item.url }}"
+    dest: "{{ themes_dir }}/{{ item.destname }}"
+    mode: "0644"
+    owner: "{{ ansible_user_uid }}"
+    group: "{{ ansible_user_gid }}"
+  loop:
+    - url: "https://cdn.jsdelivr.net/npm/@catppuccin/palette/css/catppuccin.css"
+      destname: "catppuccin.gtk4.css"
