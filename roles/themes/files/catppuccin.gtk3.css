@@ -1,0 +1,35 @@
+/* Catppuccin colors */
+@define rosewater #f5e0dc;
+@define flamingo  #f2cdcd;
+@define pink      #f5c2e7;
+@define mauve     #cba6f7;
+@define red       #f38ba8;
+@define maroon    #eba0ac;
+@define peach     #fab387;
+@define yellow    #f9e2af;
+@define green     #a6e3a1;
+@define teal      #94e2d5;
+@define sky       #89dceb;
+@define sapphire  #74c7ec;
+@define blue      #89b4fa;
+@define lavender  #b4befe;
+
+/* Catppuccin text colors */
+@define text      #cdd6f4;
+@define subtext1  #bac2de;
+@define subtext0  #a6adc8;
+
+/* Catppuccin overlay colors */
+@define overlay2  #9399b2;
+@define overlay1  #7f849c;
+@define overlay0  #6c7086;
+
+/* Catppuccin surface colors */
+@define surface2  #585b70;
+@define surface1  #45475a;
+@define surface0  #313244;
+
+/* Catppuccin base colors */
+@define base      #1e1e2e;
+@define mantle    #181825;
+@define crust     #11111b;
