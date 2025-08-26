@@ -1,3 +1,4 @@
 ---
+themes_dir: "{{ ansible_user_dir }}/.config/themes"
 themes_list:
   - catppuccin

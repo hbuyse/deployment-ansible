@@ -16,6 +16,7 @@
           tags: always
       tags: always
   roles:
+    - role: "themes"
     - role: "greetd"
       when: ansible_hostname == "white-tower"
     - role: "tuigreet"
