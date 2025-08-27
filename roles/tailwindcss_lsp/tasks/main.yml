@@ -1,0 +1,34 @@
+---
+- name: "Tailwind CSS Language Server | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags:
+    - tailwindcss
+    - lsp
+
+- name: "Tailwind CSS Language Server | Install from package manager"
+  become: true
+  when: tailwindcss_lsp_package is defined
+  ansible.builtin.package:
+    name: "{{ tailwindcss_lsp_package }}"
+    state: present
+  tags:
+    - tailwindcss
+    - lsp
+
+- name: "Tailwind CSS Language Server | Install from Node Package Manager"
+  become: true
+  when: tailwindcss_lsp_package is not defined
+  community.general.npm:
+    name: "{{ tailwindcss_lsp_npm_package }}"
+    global: true
+    state: latest
+    path: "/usr/local"
+    production: true
+    no_optional: true
+  tags:
+    - tailwindcss
+    - lsp

@@ -75,6 +75,7 @@
     - role: "pyright"
     - role: "ruff"
     - role: "rust_analyzer"
+    - role: "tailwindcss_lsp"
     - role: "texlab"
     - role: "tombi"
     - role: "yamlls"

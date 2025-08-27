@@ -251,4 +251,5 @@ vim.lsp.enable({
   'ansiblels', -- Ansible
   'composels', -- Docker compose
   'tombi', -- Toml
+  'tailwindcss', -- Tailwindcss
 })
