@@ -37,3 +37,15 @@
         - discord
         - youtube
         - spotify
+
+    - name: "Web Applications | Copy secret desktop files"
+      ansible.builtin.copy:
+        src: "com.{{ item }}.webapp.desktop"
+        dest: "/usr/local/share/applications/com.{{ item }}.webapp.desktop"
+        owner: "root"
+        group: "root"
+        mode: "0644"
+      when: ansible_os_family in ['Debian']
+      loop:
+        - webmail
+        - mattermost
