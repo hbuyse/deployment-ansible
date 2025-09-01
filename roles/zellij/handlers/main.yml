@@ -1,5 +1,5 @@
 ---
-- name: "Zellij | Install completion"
+- name: "Zellij | Install completion files"
   ansible.builtin.include_tasks:
     file: completions.yml
   loop:
