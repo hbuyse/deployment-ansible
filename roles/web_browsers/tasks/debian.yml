@@ -28,6 +28,6 @@
 
     - name: "Web Browsers | Add preferences file for Firefox"
       ansible.builtin.copy:
-        src: "preferences"
-        dest: "/etc/apt/preferences.d/firefox-deb-nosnap"
+        src: "firefox.pref"
+        dest: "/etc/apt/preferences.d/firefox.pref"
         mode: "0644"
