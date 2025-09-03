@@ -1,3 +1,3 @@
-Package: {{ item }}
+Package: nsolid nodejs
 Pin: origin deb.nodesource.com
 Pin-Priority: 600
