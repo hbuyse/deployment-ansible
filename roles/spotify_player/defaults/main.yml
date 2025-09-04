@@ -7,4 +7,5 @@ spotify_player_features:
   - "daemon"
   - "image"
   - "sixel"
+  - "pixelate"
   - "fzf"
