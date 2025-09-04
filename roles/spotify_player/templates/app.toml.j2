@@ -1,6 +1,9 @@
 theme = "catppuccin_mocha"
 client_id = "{{ spotify_player_client_id }}"
 client_secret = "{{ spotify_player_client_secret }}"
+
+# If there is an error, check the Spotifey Developer Panel for the correct login_redirect_uri
+# https://github.com/aome510/spotify-player/blob/e600c476ca7481eca0e8c6a81faa22d908314d2a/README.md?plain=1#L163-L171
 login_redirect_uri = "http://127.0.0.1:8989/login"
 client_port = 8080
 tracks_playback_limit = 50
