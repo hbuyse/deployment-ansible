@@ -14,7 +14,8 @@
 
 - name: "Kanshi | Gather the package facts"
   ansible.builtin.package_facts:
-    manager: auto
+    manager: "{{ (ansible_os_family == 'RedHat') | ansible.builtin.ternary('dnf5', 'auto') }}"
+    strategy: first
   tags: kanshi
 
 - name: "Kanshi | Store version as fact"
