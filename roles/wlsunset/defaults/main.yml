@@ -1,0 +1,7 @@
+---
+wlsunset_config:
+  latitude: 48.86
+  longitude: 2.33
+  temp_low: 4000
+  temp_high: 6500
+  duration: 900

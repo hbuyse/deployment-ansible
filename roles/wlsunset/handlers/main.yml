@@ -1,0 +1,7 @@
+---
+- name: "Wlsunset | Restart service"
+  ansible.builtin.systemd:
+    name: "wlsunset"
+    daemon_reload: true
+    enabled: true
+    scope: user

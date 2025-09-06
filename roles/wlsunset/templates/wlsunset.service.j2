@@ -1,0 +1,15 @@
+[Unit]
+Description=wlsunset - Day/night gamma adjustments for Wayland compositors supporting wlr-gamma-control-unstable-v1
+Documentation=man:wlsunset(1)
+PartOf=wayland-session.target
+After=wayland-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/wlsunset -l {{ wlsunset_config.latitude }} -L {{ wlsunset_config.longitude }} -t {{ wlsunset_config.temp_low }} -T {{ wlsunset_config.temp_high }} -d {{ wlsunset_config.duration }}
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=wayland-session.target
+;  vim: set ts=4 sw=4 tw=0 noet ft=systemd :

@@ -43,3 +43,4 @@
     - role: "wireplumber"
     - role: "tuned"
     - role: "wlprop"
+    - role: "wlsunset"

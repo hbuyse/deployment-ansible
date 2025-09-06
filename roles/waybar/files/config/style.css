@@ -266,3 +266,7 @@ menu {
 menuitem {
   padding: 3px;
 }
+
+#custom-sunset.activated {
+    color: @maroon;
+}

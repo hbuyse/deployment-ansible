@@ -1,0 +1,41 @@
+---
+- name: "SSH | Check that the email for the public key is populated"
+  ansible.builtin.assert:
+    that:
+      - wlsunset_config.latitude is defined
+      - wlsunset_config.longitude is defined
+    fail_msg: "wlsunset_config.latitude and wlsunset_config.longitude must not be empty (check your host_vars/localhost.yml)"
+    quiet: true
+  tags: wlsunset
+
+- name: "Wlsunset | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: wlsunset
+
+- name: "Wlsunset | Install packages"
+  become: true
+  ansible.builtin.package:
+    name: "{{ wlsunset_packages }}"
+    state: present
+  tags: wlsunset
+
+- name: "Wlsunset | Install service file"
+  become: true
+  tags: wlsunset
+  block:
+    - name: "Wlsunset | Ensure directory exist"
+      ansible.builtin.file:
+        path: "/usr/local/lib/systemd/user/"
+        state: directory
+        mode: "0755"
+
+    - name: "Wlsunset | Copy service file"
+      ansible.builtin.template:
+        src: "wlsunset.service.j2"
+        dest: "/usr/local/lib/systemd/user/wlsunset.service"
+        mode: "0644"
+      notify: "Wlsunset | Restart service"
