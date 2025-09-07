@@ -28,7 +28,9 @@
         src: "config"
         dest: "{{ ansible_user_dir }}/.config/mako/config"
         mode: "0644"
-      notify: "Mako | Restart service"
+      notify:
+        - "Mako | Disable 'dunst' service if exists"
+        - "Mako | Restart service"
 
 - name: "Mako | Check if AppArmor profile exists"
   ansible.builtin.stat:
@@ -68,19 +70,6 @@
         src: "mako.service"
         dest: "/usr/local/lib/systemd/user/mako.service"
         mode: "0644"
-
-    - name: "Mako | Disable 'dunst' service if exists"
-      ansible.builtin.systemd:
-        name: "dunst"
-        enabled: false
-        state: "stopped"
-        scope: user
-      when: "'dunst' in services"
-
-    - name: "Mako | Enable service"
-      ansible.builtin.systemd:
-        name: "mako"
-        daemon_reload: true
-        enabled: true
-        state: "started"
-        scope: user
+      notify:
+        - "Mako | Disable 'dunst' service if exists"
+        - "Mako | Restart service"

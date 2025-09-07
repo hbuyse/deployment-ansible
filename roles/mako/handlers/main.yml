@@ -1,6 +1,15 @@
 ---
+- name: "Mako | Disable 'dunst' service if exists"
+  ansible.builtin.systemd:
+    name: "dunst"
+    enabled: false
+    state: "stopped"
+    scope: user
+  when: "'dunst' in services"
+
 - name: "Mako | Restart service"
   ansible.builtin.systemd:
     name: "mako"
     state: "restarted"
+    enabled: true
     scope: user
