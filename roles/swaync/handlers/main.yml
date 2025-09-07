@@ -1,0 +1,9 @@
+---
+- name: "Sway Notification Center | Enable service"
+  become: false
+  ansible.builtin.systemd:
+    name: "swaync.service"
+    daemon_reload: true
+    enabled: true
+    state: "restarted"
+    scope: "user"

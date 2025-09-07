@@ -1,0 +1,41 @@
+// General slide bar
+scale {
+  margin: 0;
+  padding: 0px;
+
+  trough { // codespell:ignore trough
+    margin: 0rem 1rem;
+    min-height: 4px;
+    min-width: 70px;
+    border-radius: 12.6px;
+
+    /* Right color in slider */
+    background-color: var(--slider-right-color);
+
+    /* Left color in slider */
+    highlight {
+      background-color: var(--slider-left-color);
+    }
+
+    /* The slider */
+    slider {
+      margin: -10px;
+      border-radius: 100%;
+      box-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
+      transition: all 0.2s ease;
+      background: var(--slider-button-color);
+      &:hover {
+        box-shadow:
+          0 0 2px rgba(0, 0, 0, 0.8),
+          0 0 8px var(--slider-button-color);
+      }
+    }
+  }
+}
+
+// Slide bar widget customization
+.widget-slider {
+  label {
+    font-size: inherit;
+  }
+}

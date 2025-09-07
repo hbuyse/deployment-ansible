@@ -13,3 +13,12 @@
     state: "restarted"
     enabled: true
     scope: user
+  when: "'swaync' not in role_names"
+
+- name: "Mako | Disable and stop service"
+  ansible.builtin.systemd:
+    name: "mako"
+    state: "stopped"
+    enabled: false
+    scope: user
+  when: "'swaync' in role_names"

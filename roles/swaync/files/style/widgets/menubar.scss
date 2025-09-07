@@ -1,0 +1,57 @@
+.widget-menubar {
+  & > .menu-button-bar {
+    font-size: 24px;
+    margin-top: $margin;
+    margin-bottom: $margin;
+
+    /* The left button container */
+    & > .start {
+      margin-left: $margin / 2;
+    }
+
+    /* The right button container */
+    & > .end {
+      margin-right: $margin / 2;
+    }
+
+    /* The left and right button container */
+    & > .widget-menubar-container {
+      button {
+        border-radius: var(--border-radius);
+        margin: 0 $margin / 2;
+      }
+    }
+  }
+
+  /* The revealer buttons */
+  & > revealer {
+    * {
+      margin-top: $margin;
+
+      button {
+        border-radius: var(--border-radius);
+        margin: $margin;
+        margin-top: 0;
+      }
+      label {
+        font-weight: normal;
+      }
+    }
+  }
+
+  // .AnyName { Name defined in config after #
+  //   background-color: rgba(var(--noti-bg), 1.0);
+  //   padding: 8px;
+  //   margin: 8px;
+  //   border-radius: 12px;
+  // }
+
+  // .AnyName>button {
+  //   background: transparent;
+  //   border: none;
+  // }
+
+  // .AnyName>button:hover {
+  //   background-color: var(--noti-bg-hover);
+  // }
+}

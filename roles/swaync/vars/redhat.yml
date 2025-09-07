@@ -1,0 +1,6 @@
+---
+swaync_packages:
+  - SwayNotificationCenter
+  - SwayNotificationCenter-bash-completion
+  - SwayNotificationCenter-zsh-completion
+  - sassc

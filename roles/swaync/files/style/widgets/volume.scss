@@ -1,0 +1,32 @@
+:root {
+  --widget-volume-icon-size: 32px;
+  --widget-volume-expand-icon-size: 24px;
+  --widget-volume-row-icon-size: 24px;
+}
+
+.widget-volume {
+  margin: $margin;
+
+  & > box {
+    & > label {
+      margin-left: 4px;
+      font-size: var(--widget-volume-icon-size);
+      -gtk-icon-size: var(--widget-volume-icon-size);
+    }
+
+    & > button {
+      font-size: var(--widget-volume-expand-icon-size);
+      font-weight: bold;
+    }
+  }
+
+  /* Each row app icon */
+  row image {
+    -gtk-icon-size: var(--widget-volume-row-icon-size);
+  }
+}
+
+.per-app-volume {
+  background-color: var(--noti-bg-alt);
+  border-radius: var(--border-radius);
+}

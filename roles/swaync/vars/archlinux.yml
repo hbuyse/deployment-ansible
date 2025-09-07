@@ -1,0 +1,4 @@
+---
+swaync_packages:
+  - swaync
+  - sassc

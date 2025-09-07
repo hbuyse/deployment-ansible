@@ -1,0 +1,6 @@
+---
+- name: "Sway Notification Center | Add COPR repo"
+  become: true
+  community.general.copr:
+    name: "erikreider/SwayNotificationCenter"
+    state: "enabled"

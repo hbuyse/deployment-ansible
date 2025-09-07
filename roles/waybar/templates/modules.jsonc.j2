@@ -307,9 +307,9 @@
 {% else %}
     "format": "{}",
 {% endif %}
-    "exec": "~/.config/waybar/scripts/tuned-switcher.sh get",
-    "on-click": "~/.config/waybar/scripts/tuned-switcher.sh switch",
-    "exec-if": "~/.config/waybar/scripts/tuned-switcher.sh check",
+    "exec": "~/.config/sway/scripts/tuned-switcher.sh get",
+    "on-click": "~/.config/sway/scripts/tuned-switcher.sh switch",
+    "exec-if": "~/.config/sway/scripts/tuned-switcher.sh check",
     "signal": 7
   },
   "hyprland/language": {
@@ -408,5 +408,25 @@
     "format-warning": " {temperatureC:>3}°C",
 {% endif %}
     "tooltip": false
+  },
+  "custom/notification": {
+    "tooltip": true,
+    "format": "{icon} ",
+    "format-icons": {
+      "notification": "",
+      "none": "",
+      "dnd-notification": "",
+      "dnd-none": "",
+      "inhibited-notification": "",
+      "inhibited-none": "",
+      "dnd-inhibited-notification": "",
+      "dnd-inhibited-none": "",
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
   }
 }

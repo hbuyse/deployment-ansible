@@ -1,0 +1,88 @@
+---
+- name: "Sway Notification Center | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ ansible_os_family | lower }}.yml"
+  tags: swaync
+
+- name: "Sway Notification Center | Include OS specific tasks"
+  ansible.builtin.include_tasks:
+    file: "{{ item }}"
+    apply:
+      tags: zellij
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: swaync
+
+- name: "Sway Notification Center | Install packages"
+  become: true
+  ansible.builtin.package:
+    name: "{{ swaync_packages }}"
+    state: "present"
+  tags: swaync
+  notify: "Sway Notification Center | Enable service"
+
+- name: "Sway Notification Center | Get version"
+  ansible.builtin.command:
+    cmd: "swaync --version"
+  register: swaync_version
+  changed_when: swaync_version.rc != 0
+  tags: swaync
+
+- name: "Sway Notification Center | Extract version"
+  ansible.builtin.set_fact:
+    swaync_current_version: "{{ swaync_version.stdout | regex_search('[0-9]+.[0-9]+.[0-9]+') }}"
+  tags: swaync
+
+- name: "Sway Notification Center | Install service file"
+  become: true
+  tags: swaync
+  block:
+    - name: "Sway Notification Center | Ensure directories exists"
+      ansible.builtin.file:
+        path: "/usr/local/lib/systemd/user"
+        state: "directory"
+        mode: "0755"
+
+    - name: "Sway Notification Center | Copy service file"
+      ansible.builtin.copy:
+        src: "swaync.service"
+        dest: "/usr/local/lib/systemd/user"
+        mode: "0644"
+      notify: "Sway Notification Center | Enable service"
+
+- name: "Sway Notification Center | Install configuration files"
+  tags: swaync
+  notify: "Sway Notification Center | Enable service"
+  block:
+    - name: "Sway Notification Center | Ensure directories exists"
+      ansible.builtin.file:
+        path: "{{ swaync_config_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: "Sway Notification Center | Copy static configuration files"
+      ansible.builtin.copy:
+        src: "config/"
+        dest: "{{ swaync_config_dir }}"
+        mode: "preserve"
+        directory_mode: "0755"
+
+    - name: "Sway Notification Center | Copy dynamic configuration files"
+      ansible.builtin.template:
+        src: "config.json.j2"
+        dest: "{{ swaync_config_dir }}/config.json"
+        mode: "0644"
+
+    - name: "Sway Notification Center | Download catppuccin theme"
+      ansible.builtin.get_url:
+        url: "https://cdn.jsdelivr.net/npm/@catppuccin/palette/css/catppuccin.css"
+        dest: "{{ swaync_config_dir }}/themes"
+        mode: "0644"
+
+    - name: "Sway Notification Center | Copy dynamic configuration files"
+      ansible.builtin.command:
+        cmd: "sassc -t expanded {{ role_path }}/files/style/style.scss {{ swaync_config_dir }}/style.css"
+      register: swaync_sassc
+      changed_when: swaync_sassc.rc == 0
+      failed_when: swaync_sassc.rc != 0

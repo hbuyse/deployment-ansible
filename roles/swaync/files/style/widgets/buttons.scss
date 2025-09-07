@@ -1,0 +1,14 @@
+.widget-buttons-grid {
+  font-size: 24px;
+
+  & flowboxchild > button {
+    border-radius: var(--border-radius);
+
+    &.toggle:checked {
+      /* style given to the active toggle button */
+    }
+
+    &:hover {
+    }
+  }
+}

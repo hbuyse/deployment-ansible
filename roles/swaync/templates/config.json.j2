@@ -1,0 +1,173 @@
+{
+  "$schema": "/etc/xdg/swaync/configSchema.json",
+  "positionX": "right",
+  "positionY": "top",
+  "control-center-margin-top": 2,
+  "control-center-margin-bottom": 2,
+  "control-center-margin-right": 0,
+  "control-center-margin-left": 0,
+{% if swaync_current_version.split('.') | map('int') | list <= [0, 12, 0] %}
+  "notification-icon-size": 48,
+{% endif %}
+  "notification-body-image-height": 160,
+  "notification-body-image-width": 200,
+  "timeout": 10,
+  "timeout-low": 5,
+  "timeout-critical": 0,
+  "fit-to-screen": true,
+  "control-center-width": 400,
+  "notification-window-width": 386,
+  "keyboard-shortcuts": true,
+  "image-visibility": "when-available",
+  "transition-time": 100,
+  "hide-on-clear": false,
+  "hide-on-action": true,
+  "script-fail-notify": true,
+  "scripts": {
+    "example-script": {
+      "exec": "echo 'Do something...'",
+      "urgency": "Normal"
+    }
+  },
+  "notification-visibility": {
+    "spotify": {
+      "state": "muted",
+      "urgency": "Low",
+      "app-name": "Spotify"
+    },
+    "spotify_player": {
+      "state": "muted",
+      "urgency": "Low",
+      "app-name": "spotify_player"
+    }
+  },
+  "widgets": [
+    "menubar",
+    "buttons-grid",
+{% if ansible_form_factor in ["Portable", "Laptop", "Notebook"] %}
+    "backlight",
+{% endif %}
+    "volume",
+    "mpris",
+    "title",
+    "dnd",
+    "notifications"
+  ],
+  "widget-config": {
+    "title": {
+      "text": "Notifications",
+      "clear-all-button": true,
+      "button-text": "Clear All"
+    },
+    "dnd": {
+      "text": "Do Not Disturb"
+    },
+    "mpris": {
+{% if swaync_current_version.split('.') | map('int') | list <= [0, 12, 0] %}
+      "image-size": 96,
+      "image-radius": 6
+{% else %}
+      "loop-carousel": true
+{% endif %}
+    },
+    "backlight": {
+      "label": "󱩒 ",
+      "device": "intel_backlight",
+      "min": 5
+    },
+    "volume": {
+      "label": "",
+      "show-per-app": true,
+      "expand-button-label": "",
+      "collapse-button-label": ""
+    },
+    "menubar": {
+      "menu#power-buttons": {
+        "label": "",
+        "position": "right",
+        "actions": [
+          {
+            "label": "  Lock",
+            "command": "systemctl --user start swaylock"
+          },
+          {
+            "label": "  Logout",
+            "command": "loginctl terminate-session ${XDG_SESSION_ID-}"
+          },
+          {
+            "label": "  Shut down",
+            "command": "systemctl poweroff"
+          },
+          {
+            "label": "  Reboot",
+            "command": "systemctl reboot"
+          }
+        ]
+      },
+      "menu#powermode-buttons": {
+        "label": "",
+        "position": "left",
+        "actions": [
+          {
+            "label": "Performance",
+            "command": "$HOME/.config/waybar/scripts/tuned-switcher.sh set throughput-performance"
+          },
+          {
+            "label": "Balanced",
+            "command": "$HOME/.config/waybar/scripts/tuned-switcher.sh set balanced"
+          },
+          {
+            "label": "Power-saver",
+            "command": "$HOME/.config/waybar/scripts/tuned-switcher.sh set powersave"
+          }
+        ]
+      },
+      "menu#screenshot-buttons": {
+        "label": "󰄀",
+        "position": "left",
+        "actions": [
+          {
+            "label": "  Entire screen",
+            "command": "swaync-client --close-panel && sleep 1 && $HOME/.config/sway/scripts/screenshot.sh screen"
+          },
+          {
+            "label": "  Select a region",
+            "command": "swaync-client -cp && sleep 1 && $HOME/.config/sway/scripts/screenshot.sh area"
+          },
+          {
+            "label": "  Open screenshot folder",
+            "command": "thunar ~/Pictures/"
+          }
+        ]
+      }
+    },
+    "buttons-grid": {
+{% if swaync_current_version.split('.') | map('int') | list >= [0, 12, 0] %}
+      "buttons-per-row": 3,
+{% endif %}
+      "actions": [
+        {
+          "label": "",
+          "type": "toggle",
+          "active": true,
+          "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && nmcli radio wifi on || nmcli radio wifi off'",
+          "update-command": "sh -c '[[ $(nmcli radio wifi) == \"enabled\" ]] && echo true || echo false'"
+        },
+        {
+          "label": "",
+          "type": "toggle",
+          "active": false,
+          "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && systemctl --user stop swayidle || systemctl --user start swayidle'",
+          "update-command": "sh -c 'systemctl --user is-active -q swayidle && echo false || echo true'"
+        },
+        {
+          "label": "",
+          "type": "toggle",
+          "active": false,
+          "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && systemctl --user start wlsunset || systemctl --user stop wlsunset'",
+          "update-command": "sh -c 'systemctl --user is-active -q wlsunset && echo true || echo false'"
+        }
+      ]
+    }
+  }
+}

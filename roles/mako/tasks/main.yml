@@ -30,6 +30,7 @@
         mode: "0644"
       notify:
         - "Mako | Disable 'dunst' service if exists"
+        - "Mako | Disable and stop service"
         - "Mako | Restart service"
 
 - name: "Mako | Check if AppArmor profile exists"
@@ -72,4 +73,5 @@
         mode: "0644"
       notify:
         - "Mako | Disable 'dunst' service if exists"
+        - "Mako | Disable and stop service"
         - "Mako | Restart service"

@@ -34,6 +34,11 @@ case "$1" in
 "all")
     grim "${filepath}"
     ;;
+"screen")
+    if ! slurp -o | grim -g - "${filepath}"; then
+        exit 0 # Cancelled
+    fi
+    ;;
 "window")
     swaymsg -t get_tree | jq -r '.. | (.nodes? // empty)[] | select(.focused) | "\(.rect.x),\(.rect.y) \(.rect.width)x\(.rect.height)"' | grim -g - "${filepath}"
     ;;

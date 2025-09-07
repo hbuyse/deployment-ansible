@@ -36,6 +36,9 @@
     - role: "waybar"
     - role: "kanshi"
     - role: "mako"
+      when: ansible_os_family in ["Debian"]
+    - role: "swaync"
+      when: ansible_os_family not in ["Debian"]
     - role: "wofi"
       when: ansible_os_family in ["Debian"]
     - role: "fuzzel"

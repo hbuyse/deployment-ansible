@@ -102,6 +102,7 @@ window#waybar.hidden {
 #custom-media,
 #custom-menu,
 #custom-ncspot,
+#custom-notification,
 #custom-playerctl,
 #custom-power,
 #custom-sunset,
@@ -268,5 +269,13 @@ menuitem {
 }
 
 #custom-sunset.activated {
-    color: @maroon;
+  color: @maroon;
+}
+
+#custom-notification {
+  border-bottom: 2px solid @red;
+}
+
+#custom-notification.notification {
+  color: @red;
 }
