@@ -12,6 +12,10 @@
     /* The right button container */
     & > .end {
       margin-right: $margin / 2;
+
+      & > button:nth-child(1) label {
+        color: var(--ctp-#{$theme}-red);
+      }
     }
 
     /* The left and right button container */
