@@ -1,0 +1,11 @@
+---
+- name: "Web Browsers | Add Vivaldi repo"
+  become: true
+  ansible.builtin.yum_repository:
+    name: vivaldi
+    description: "Vivaldi repo - $basearch"
+    file: vivaldi
+    baseurl: "http://repo.vivaldi.com/archive/rpm/$basearch"
+    gpgkey: "http://repo.vivaldi.com/archive/linux_signing_key.pub"
+    gpgcheck: true
+    enabled: true
