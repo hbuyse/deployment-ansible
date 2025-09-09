@@ -80,7 +80,7 @@
         dest: "{{ swaync_config_dir }}/themes"
         mode: "0644"
 
-    - name: "Sway Notification Center | Copy dynamic configuration files"
+    - name: "Sway Notification Center | Generated CSS"
       ansible.builtin.command:
         cmd: "sassc -t expanded {{ role_path }}/files/style/style.scss {{ swaync_config_dir }}/style.css"
       register: swaync_sassc
