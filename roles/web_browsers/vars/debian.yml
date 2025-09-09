@@ -4,4 +4,3 @@ web_browsers_packages:
   - chromium-browser-l10n
   - firefox
   - firefox-l10n-fr
-  - vivaldi-stable

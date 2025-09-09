@@ -31,20 +31,3 @@
         src: "firefox.pref"
         dest: "/etc/apt/preferences.d/firefox.pref"
         mode: "0644"
-
-- name: "Web Browsers | Add Vivaldi repo"
-  become: true
-  ansible.builtin.deb822_repository:
-    name: vivaldi
-    types:
-      - deb
-    uris: "https://repo.vivaldi.com/stable/deb/"
-    architectures:
-      - amd64
-    components:
-      - main
-    suites:
-      - stable
-    signed_by: https://repo.vivaldi.com/stable/linux_signing_key.pub
-    state: present
-    enabled: true

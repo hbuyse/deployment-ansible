@@ -32,7 +32,6 @@
   ansible.builtin.package:
     name: "{{ web_browsers_packages }}"
     state: present
-    update_cache: true
   tags:
     - web
     - browser
