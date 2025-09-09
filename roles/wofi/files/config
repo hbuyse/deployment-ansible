@@ -27,7 +27,7 @@ hide_scroll=true
 no_actions=true
 
 # If true enables case insensitive search, default is false
-insensitive=false
+insensitive=true
 
 # Specifies whether wofi should be dynamically shrunk to fit the number of visible lines or if it should
 # always stay the same size. Default is false.
