@@ -25,6 +25,7 @@
       | lower }}-{{ alt_arch }}"
     dest: "/usr/local/bin/oh-my-posh"
     mode: "0755"
+  notify: "Oh My Posh | Clear cache"
   tags:
     - oh_my_posh
     - shell
