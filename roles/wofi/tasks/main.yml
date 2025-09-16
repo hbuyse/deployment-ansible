@@ -23,17 +23,15 @@
         state: directory
         mode: "0755"
 
-    - name: "Wofi | Copy static configuration files"
+    - name: "Wofi | Copy configuration files"
       ansible.builtin.copy:
-        src: "{{ role_path }}/files/"
-        dest: "{{ wofi_config_dir }}"
+        src: "config"
+        dest: "{{ wofi_config_dir }}/config"
         mode: "0644"
 
-    - name: "Wofi | Copy dynamic configuration files"
-      ansible.builtin.template:
-        src: "{{ item }}.j2"
-        dest: "{{ wofi_config_dir }}/{{ item }}"
-        mode: "0644"
-      loop:
-        - colors.css
-        - style.css
+    - name: "Wofi | Generated CSS"
+      ansible.builtin.command:
+        cmd: "sassc -t expanded {{ role_path }}/files/style.scss {{ wofi_config_dir }}/style.css"
+      register: wofi_sassc
+      changed_when: wofi_sassc.rc == 0
+      failed_when: wofi_sassc.rc != 0
