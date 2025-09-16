@@ -33,6 +33,9 @@ $wm_icon_bg: #{$text};
 $warning_color: #{$peach};
 $error_color: #{$red};
 
+$font_family: "Iosevka Nerd Font";
+$font_family_monospace: "Iosevka Nerd Font Mono";
+
 @keyframes blink-warning {
   70% {
     color: #{"" + $wm_icon_bg};
@@ -69,7 +72,7 @@ $error_color: #{$red};
 #waybar {
   background: #{"" + $theme_bg_color};
   color: #{"" + $theme_fg_color};
-  font-family: "Iosevka Nerd Font", "Ubuntu", "Font Awesome";
+  font-family: #{$font_family};
   font-size: 14px;
 }
 
@@ -78,12 +81,12 @@ tooltip {
   background: #{"" + $theme_bg_color};
   opacity: 0.95;
   border-radius: 10px;
-}
 
-tooltip label {
-  font-family: "Iosevka Nerd Font Mono", "Ubuntu Mono", "monospace";
-  font-size: 13px;
-  margin: 10px;
+  & label {
+    font-family: #{$font_family_monospace};
+    font-size: 13px;
+    margin: 10px;
+  }
 }
 
 window#waybar.hidden {
@@ -94,29 +97,28 @@ window#waybar.hidden {
   background: #{"" + $theme_selected_bg_color};
   color: #{"" + $theme_selected_fg_color};
   border: 1px solid #{"" + $theme_bg_color};
-  border-bottom: 2px solid #{"" + $theme_bg_color};
+  border-bottom-width: 2px;
   padding: 1px 10px;
   margin: 4px 2px;
-}
 
-/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
-#workspaces button:hover {
-  border-color: #{"" + $peach};
-  box-shadow: inherit;
-  text-shadow: inherit;
-}
+  &:hover {
+    /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+    border-color: #{"" + $peach};
+    box-shadow: inherit;
+    text-shadow: inherit;
+  }
 
-#workspaces button.active, /* active in hyprland */
-#workspaces button.focused, /* active in sway */
-#workspaces button.visible, /* visible: on screen but not focused */
-#workspaces button.selected {
-  border-bottom-color: #{"" + $peach};
-}
+  &.active, /* active in hyprland */
+  &.focused, /* active in sway */
+  &.visible, /* visible: on screen but not focused */
+  &.selected {
+    border-bottom-color: #{"" + $peach};
+  }
 
-#workspaces button.urgent {
-  border: 1px solid #{"" + $error_color};
-  border-bottom-width: 2px;
-  color: #{"" + $error_color};
+  &.urgent {
+    border-color: #{"" + $error_color};
+    color: #{"" + $error_color};
+  }
 }
 
 #backlight,
@@ -148,7 +150,7 @@ window#waybar.hidden {
 #systemd-failed-units,
 #temperature,
 #tray {
-  /* top and bottom | left and right */
+  // top and bottom | left and right
   padding: 1px 10px;
   margin: 4px 2px;
   background: #{"" + $theme_selected_bg_color};
@@ -157,7 +159,6 @@ window#waybar.hidden {
 }
 
 #custom-power {
-  background: #{"" + $theme_selected_bg_color};
   color: #{"" + $red};
 }
 
@@ -176,24 +177,27 @@ window#waybar.hidden {
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   animation-direction: alternate;
+
+  &.warning {
+    color: #{"" + $warning_color};
+  }
 }
 
-#battery.warning,
-#custom-battery.warning {
-  color: #{"" + $warning_color};
+#custom-disk_aio {
+  &.warning {
+    border-bottom-color: #{"" + $warning_color};
+  }
+
+  &.critical {
+    border-bottom-color: #{"" + $error_color};
+  }
 }
 
-#custom-disk_aio.warning {
-  border-bottom: 2px solid #{"" + $warning_color};
-}
-
-#custom-disk_aio.critical {
-  border-bottom: 2px solid #{"" + $error_color};
-}
-
-#battery.critical,
-#custom-battery.critical {
-  color: #{"" + $error_color};
+#battery,
+#custom-battery {
+  &.critical {
+    color: #{"" + $error_color};
+  }
 }
 
 #battery.warning.discharging,
@@ -208,13 +212,15 @@ window#waybar.hidden {
   animation-duration: 2s;
 }
 
-#temperature.critical {
-  border-bottom: 2px solid #{"" + $error_color};
-  color: #{"" + $error_color};
-}
+#temperature {
+  &.critical {
+    border-bottom: 2px solid #{"" + $error_color};
+    color: #{"" + $error_color};
+  }
 
-#temperature.warning {
-  border-bottom: 2px solid #{"" + $warning_color};
+  &.warning {
+    border-bottom: 2px solid #{"" + $warning_color};
+  }
 }
 
 label:focus {
@@ -222,7 +228,7 @@ label:focus {
 }
 
 #pulseaudio.muted {
-  /* border: 1px solid #{"" + $error_color}; */
+  // border: 1px solid #{"" + $error_color};
   color: #{"" + $overlay0};
 }
 
@@ -231,53 +237,50 @@ label:focus {
   padding-right: 10px;
 }
 
-#clock,
-#cpu,
-#language,
-#memory,
-#network {
-  border-bottom-width: 2px;
-  border-bottom-style: solid;
-}
-
 #network {
   border-bottom-color: #{"" + $teal};
-}
 
-#network.wifi {
-  border-bottom-color: #{"" + $mauve};
-}
+  &.wifi {
+    border-bottom-color: #{"" + $mauve};
+  }
 
-#network.disabled {
-  color: #{"" + $red};
-  text-decoration: line-through;
-}
+  &.disabled {
+    color: #{"" + $red};
+    text-decoration: line-through;
+  }
 
-#network.disconnected,
-#network.linked {
-  color: #{"" + $surface2};
-}
+  &.disconnected,
+  &.linked {
+    color: #{"" + $surface2};
+  }
 
-#network.disconnected {
-  text-decoration: line-through;
+  &.disconnected {
+    text-decoration: line-through;
+  }
 }
 
 #memory {
   border-bottom-color: #{"" + $green};
+
+  &.warning {
+    color: #{"" + $warning_color};
+  }
+
+  &.critical {
+    color: #{"" + $error_color};
+  }
 }
 
 #cpu {
   border-bottom-color: #{"" + $red};
-}
 
-#cpu.warning,
-#memory.warning {
-  color: #{"" + $warning_color};
-}
+  &.warning {
+    color: #{"" + $warning_color};
+  }
 
-#cpu.critical,
-#memory.critical {
-  color: #{"" + $error_color};
+  &.critical {
+    color: #{"" + $error_color};
+  }
 }
 
 #clock {
@@ -302,8 +305,8 @@ menuitem {
 
 #custom-notification {
   border-bottom: 2px solid #{"" + $red};
-}
 
-#custom-notification.notification {
-  color: #{"" + $red};
+  &.notification {
+    color: #{"" + $red};
+  }
 }
