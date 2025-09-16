@@ -1,0 +1,88 @@
+/* Catppuccin */
+$rosewater: #f5e0dc;
+$flamingo: #f2cdcd;
+$pink: #f5c2e7;
+$mauve: #cba6f7;
+$red: #f38ba8;
+$maroon: #eba0ac;
+$peach: #fab387;
+$yellow: #f9e2af;
+$green: #a6e3a1;
+$teal: #94e2d5;
+$sky: #89dceb;
+$sapphire: #74c7ec;
+$blue: #89b4fa;
+$lavender: #b4befe;
+$text: #cdd6f4;
+$subtext1: #bac2de;
+$subtext0: #a6adc8;
+$overlay2: #9399b2;
+$overlay1: #7f849c;
+$overlay0: #6c7086;
+$surface2: #585b70;
+$surface1: #45475a;
+$surface0: #313244;
+$base: #1e1e2e;
+$mantle: #181825;
+$crust: #11111b;
+
+/* Sass thinks we're using the colors in the variables as strings and may shoot
+ * warning, it's innocuous and can be defeated by using "" + $var
+ */
+
+* {
+  font-family: "Iosevka Nerd Font Mono", "DejaVu Sans", "Font Awesome 5 Free";
+  font-size: 1em;
+}
+
+#window {
+  margin: 0px;
+  background-color: #{$base};
+  border-radius: 0px 10px 10px 0px;
+}
+
+#outer-box {
+  margin: 5px;
+  background-color: #{$base};
+}
+
+#input {
+  padding: 0.5em;
+  margin: 5px;
+  border-radius: 0px;
+  border: none;
+  background-color: transparent;
+  color: #{$subtext1};
+
+  & > image.left {
+    -gtk-icon-transform: scaleX(0);
+  }
+}
+
+#inner-box {
+  background-color: transparent;
+}
+
+#scroll {
+  margin: 0px;
+  border: none;
+}
+
+#entry {
+  padding: 10px;
+  margin: 5px;
+  &:selected {
+    background-color: #{$surface0};
+    border-right: 5px solid #{$yellow};
+  }
+}
+
+#expander-box {
+  background-color: transparent;
+}
+
+#text {
+  margin: 5px 5px 5px 20px;
+  color: #{$subtext1};
+}
+/* vim: set ts=4 sw=4 tw=0 noet ft=css :*/
