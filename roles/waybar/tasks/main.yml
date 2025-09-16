@@ -64,6 +64,13 @@
         mode: "preserve"
         directory_mode: "0755"
 
+    - name: "Waybar | Generated CSS"
+      ansible.builtin.command:
+        cmd: "sassc -t expanded {{ role_path }}/files/style.scss {{ waybar_config_dir }}/style.css"
+      register: waybar_sassc
+      changed_when: waybar_sassc.rc == 0
+      failed_when: waybar_sassc.rc != 0
+
     - name: "Waybar | Copy dynamic configuration files"
       ansible.builtin.template:
         src: "{{ item }}.j2"
