@@ -1,8 +1,8 @@
 ---
-- name: "Alacritty | Ensure directory exists: {{ item.dest | basename }}"
+- name: "Alacritty | Ensure directory exists: {{ item.destdir }}"
   become: true
   ansible.builtin.file:
-    path: "{{ item.dest }}"
+    path: "{{ item.destdir }}"
     state: directory
     mode: "0755"
 
@@ -10,19 +10,23 @@
   become: true
   ansible.builtin.get_url:
     url: "{{ item.url }}"
-    dest: "{{ item.dest }}"
+    dest: "{{ item.destdir }}/{{ item.url | basename }}"
     mode: "0644"
 
 - name: "Alacritty | Rename file"
+  become: true
   when: item.name is defined
+  vars:
+    oldfilepath: "{{ item.destdir }}/{{ item.url | basename }}"
+    newfilepath: "{{ item.destdir }}/{{ item.name }}"
   block:
     - name: "Alacritty | Copy file"
       ansible.builtin.copy:
-        src: "{{ item.dest }}"
-        dest: "{{ item.dest | dirname }}/{{ item.name }}"
+        src: "{{ oldfilepath }}"
+        dest: "{{ newfilepath }}"
         mode: "0644"
 
-    - name: "Alacritty | Remove old file {{ item.dest }}"
+    - name: "Alacritty | Remove old file {{ oldfilepath }}"
       ansible.builtin.file:
-        path: "{{ item.dest }}"
+        path: "{{ oldfilepath }}"
         state: "absent"
