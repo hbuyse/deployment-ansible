@@ -16,18 +16,17 @@
       skip: true
   tags: wlsunset
 
-- name: "Wlsunset | Install packages"
-  become: true
-  ansible.builtin.package:
-    name: "{{ wlsunset_packages }}"
-    state: present
-  tags: wlsunset
-
-- name: "Wlsunset | Install service file"
+- name: "Wlsunset | Install"
   become: true
   tags: wlsunset
+  when: wlsunset_packages is defined
   block:
-    - name: "Wlsunset | Ensure directory exist"
+    - name: "Wlsunset | Install packages"
+      ansible.builtin.package:
+        name: "{{ wlsunset_packages }}"
+        state: present
+
+    - name: "Wlsunset | Ensure systemd directory exist"
       ansible.builtin.file:
         path: "/usr/local/lib/systemd/user/"
         state: directory
