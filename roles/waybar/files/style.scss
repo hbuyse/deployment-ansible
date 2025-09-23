@@ -129,7 +129,6 @@ window#waybar.hidden {
 #custom-battery,
 #custom-clipboard,
 #custom-disk_aio,
-#custom-idle_inhibitor,
 #custom-media,
 #custom-menu,
 #custom-ncspot,
@@ -140,6 +139,7 @@ window#waybar.hidden {
 #custom-tuned,
 #custom-updates,
 #custom-weather,
+#inhibitor,
 #language,
 #memory,
 #network,
@@ -167,9 +167,11 @@ window#waybar.hidden {
   border-bottom: 2px solid #1ed760;
 }
 
-#custom-idle_inhibitor.activated,
-#idle_inhibitor.activated {
-  border: 1px solid #{"" + $peach};
+#inhibitor {
+  border: 1px solid #{"" + $theme_bg_color};
+  &.activated {
+    border-color: #{"" + $peach};
+  }
 }
 
 #battery,

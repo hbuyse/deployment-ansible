@@ -203,20 +203,14 @@
     "exec": "~/.config/waybar/scripts/updates.sh",
     "return-type": "json"
   },
-
-  "custom/idle_inhibitor": {
-    "interval": 60,
-    "return-type": "json",
+  "inhibitor": {
+    "what": ["idle"],
     "format": "{icon}",
     "format-icons": {
       "activated": " ",
       "deactivated": " "
     },
-    "exec": "~/.config/sway/scripts/inhibit-idle.sh",
-    "exec-if": "~/.config/sway/scripts/inhibit-idle.sh check",
-    "on-click": "~/.config/sway/scripts/inhibit-idle.sh off; ~/.config/sway/scripts/inhibit-idle.sh interactive",
-    "on-click-middle": "~/.config/sway/scripts/inhibit-idle.sh off",
-    "signal": 15
+    "tooltip": false
   },
   "systemd-failed-units": {
     "hide-on-ok": true,
