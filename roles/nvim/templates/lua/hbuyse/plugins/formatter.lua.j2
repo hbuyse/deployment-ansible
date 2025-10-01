@@ -33,12 +33,20 @@ return {
         perl = { 'perltidy' },
         -- You can use a function here to determine the formatters dynamically
         python = function(bufnr)
-          if require('conform').get_formatter_info('ruff_format', bufnr).available then
-            return { 'ruff_format' }
-          else
-            -- Conform will run multiple formatters sequentially
-            return { 'isort', 'black' }
+          local formatters = {}
+
+          for _, formatter in ipairs({ 'ruff_organize_imports', 'ruff_fix' }) do
+            if require('conform').get_formatter_info(formatter, bufnr).available then
+              table.insert(formatters, formatter)
+            end
           end
+
+          -- Check if 'formatters' table is empty
+          if next(formatters) == nil then
+            -- Conform will run multiple formatters sequentially
+            formatters = { 'isort', 'black' }
+          end
+          return formatters
         end,
         rust = { 'rustfmt' },
         sh = { 'shfmt' },
