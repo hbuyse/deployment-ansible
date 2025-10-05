@@ -114,7 +114,11 @@
           },
           {
             "label": "Balanced",
+{% if ansible_form_factor in ["Portable", "Laptop", "Notebook"] %}
+            "command": "$HOME/.config/sway/scripts/tuned-switcher.sh set balanced-battery"
+{% else %}
             "command": "$HOME/.config/sway/scripts/tuned-switcher.sh set balanced"
+{% endif %}
           },
           {
             "label": "Power-saver",

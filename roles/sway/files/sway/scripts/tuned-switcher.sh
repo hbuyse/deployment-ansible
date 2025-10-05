@@ -3,14 +3,22 @@
 SERVICE="tuned.service"
 PROGRAM="$(command -v tuned-adm)"
 
+FORM_FACTOR=$(cat /sys/devices/virtual/dmi/id/chassis_type)
+
 declare -A PROFILE_SWITCHER
-PROFILE_SWITCHER["powersave"]="balanced"
-PROFILE_SWITCHER["balanced"]="throughput-performance"
+if grep -qi 'Discharging' "/sys/class/power_supply/BAT*/status"; then
+    PROFILE_SWITCHER["powersave"]="balanced-battery"
+    PROFILE_SWITCHER["balanced-battery"]="throughput-performance"
+else
+    PROFILE_SWITCHER["powersave"]="balanced"
+    PROFILE_SWITCHER["balanced"]="throughput-performance"
+fi
 PROFILE_SWITCHER["throughput-performance"]="powersave"
 
 declare -A ICONS
 ICONS["powersave"]=" "
 ICONS["balanced"]=" "
+ICONS["balanced-battery"]=" "
 ICONS["throughput-performance"]=" "
 
 send_signal() {
