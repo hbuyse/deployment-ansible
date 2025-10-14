@@ -3,8 +3,6 @@
 SERVICE="tuned.service"
 PROGRAM="$(command -v tuned-adm)"
 
-FORM_FACTOR=$(cat /sys/devices/virtual/dmi/id/chassis_type)
-
 declare -A PROFILE_SWITCHER
 if grep -qi 'Discharging' /sys/class/power_supply/BAT*/status; then
     PROFILE_SWITCHER["powersave"]="balanced-battery"
