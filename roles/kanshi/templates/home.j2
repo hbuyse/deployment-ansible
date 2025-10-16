@@ -2,23 +2,25 @@
 profile white-tower {
 {% if kanshi_version.split('.') | map('int') | list >= [1, 6, 0] %}
 	output "ASUSTek COMPUTER INC VG248 M1LMQS118673" {
+        enable
 		mode 1920x1080@164.917Hz
 		transform 90
 		position 0,0
 		adaptive_sync off
 	}
 	output "ASUSTek COMPUTER INC VG248 M1LMQS118675" {
+        enable
 		mode 1920x1080@164.917Hz
 		transform normal
 		position 1080,420
 		adaptive_sync off
 	}
 {% elif kanshi_version.split('.') | map('int') | list >= [1, 4, 0] %}
-	output "ASUSTek COMPUTER INC VG248 M1LMQS118673" mode 1920x1080@164.917Hz transform 90 position 0,0 adaptive_sync off
-	output "ASUSTek COMPUTER INC VG248 M1LMQS118675" mode 1920x1080@164.917Hz transform normal position 1080,420 adaptive_sync off
+	output "ASUSTek COMPUTER INC VG248 M1LMQS118673" enable mode 1920x1080@164.917Hz transform 90 position 0,0 adaptive_sync off
+	output "ASUSTek COMPUTER INC VG248 M1LMQS118675" enable mode 1920x1080@164.917Hz transform normal position 1080,420 adaptive_sync off
 {% else %}
-	output "ASUSTek COMPUTER INC VG248 M1LMQS118673" mode 1920x1080@164.917Hz transform 90 position 0,0
-	output "ASUSTek COMPUTER INC VG248 M1LMQS118675" mode 1920x1080@164.917Hz transform normal position 1080,420
+	output "ASUSTek COMPUTER INC VG248 M1LMQS118673" enable mode 1920x1080@164.917Hz transform 90 position 0,0
+	output "ASUSTek COMPUTER INC VG248 M1LMQS118675" enable mode 1920x1080@164.917Hz transform normal position 1080,420
 {% endif %}
 	exec ~/.config/kanshi/notify.sh 'white-tower'
 }
@@ -34,23 +36,25 @@ profile white-tower {
 profile home-dock {
 {% if kanshi_version.split('.') | map('int') | list >= [1, 6, 0] %}
 	output "{{ ns.manufacturer }} VG248 M1LMQS118673" {
+        enable
 		mode 1920x1080@60.000Hz
 		transform 90
 		position 0,0
 		adaptive_sync off
 	}
 	output "{{ ns.manufacturer }} VG248 M1LMQS118675" {
+        enable
 		mode 1920x1080@60.000Hz
 		transform normal
 		position 1080,420
 		adaptive_sync off
 	}
 {% elif kanshi_version.split('.') | map('int') | list >= [1, 4, 0] %}
-	output "{{ ns.manufacturer }} VG248 M1LMQS118673" mode 1920x1080@60.000Hz transform 90 position 0,0 adaptive_sync off
-	output "{{ ns.manufacturer }} VG248 M1LMQS118675" mode 1920x1080@60.000Hz transform normal position 1080,420 adaptive_sync off
+	output "{{ ns.manufacturer }} VG248 M1LMQS118673" enable mode 1920x1080@60.000Hz transform 90 position 0,0 adaptive_sync off
+	output "{{ ns.manufacturer }} VG248 M1LMQS118675" enable mode 1920x1080@60.000Hz transform normal position 1080,420 adaptive_sync off
 {% else %}
-	output "{{ ns.manufacturer }} VG248 M1LMQS118673" mode 1920x1080@60.000Hz transform 90 position 0,0
-	output "{{ ns.manufacturer }} VG248 M1LMQS118675" mode 1920x1080@60.000Hz transform normal position 1080,420
+	output "{{ ns.manufacturer }} VG248 M1LMQS118673" enable mode 1920x1080@60.000Hz transform 90 position 0,0
+	output "{{ ns.manufacturer }} VG248 M1LMQS118675" enable mode 1920x1080@60.000Hz transform normal position 1080,420
 {% endif %}
 	output "eDP-1" disable
 	exec ~/.config/kanshi/notify.sh 'home-dock'
