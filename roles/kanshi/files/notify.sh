@@ -9,5 +9,9 @@ cmdexists() {
 }
 
 if cmdexists notify-send; then
-    notify-send -a kanshi "Kanshi" "Using profile '${PROFILE}'"
+    notify-send \
+        --urgency=low \
+        --app-name=kanshi \
+        --icon=/usr/share/icons/Papirus/128x128/apps/preferences-desktop-display.svg \
+        "Kanshi" "Using profile '${PROFILE}'"
 fi
