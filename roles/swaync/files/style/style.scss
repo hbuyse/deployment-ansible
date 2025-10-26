@@ -43,6 +43,10 @@ $accentuation: "peach";
   --slider-button-color: var(--ctp-#{$theme}-blue);
   --slider-left-color: var(--ctp-#{$theme}-text);
   --slider-right-color: var(--ctp-#{$theme}-surface1);
+
+  --priority-low: var(--ctp-#{$theme}-green);
+  --priority-normal: var(--ctp-#{$theme}-blue);
+  --priority-critical:var(--ctp-#{$theme}-red);
 }
 
 @import "pre-gtk4-variables";
@@ -93,21 +97,23 @@ $margin: 4px;
     .notification {
       /* The actual notification */
       border-radius: var(--border-radius);
-      border: var(--border);
       padding: 3px;
       transition: var(--hover-tranistion);
       background: var(--noti-bg) var(--noti-bg-alpha);
 
       &.low {
         /* Low Priority Notification */
+        border-left: 3px solid var(--priority-low);
       }
 
       &.normal {
         /* Normal Priority Notification */
+        border-left: 3px solid var(--priority-normal);
       }
 
       &.critical {
         /* Critical Priority Notification */
+        border-left: 3px solid var(--priority-critical);
       }
 
       .notification-default-action {
