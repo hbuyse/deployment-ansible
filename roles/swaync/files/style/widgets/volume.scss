@@ -17,6 +17,14 @@
     & > button {
       font-size: var(--widget-volume-expand-icon-size);
       font-weight: bold;
+
+      &.toggle {
+        /* style given to the active toggle button */
+        &:checked,
+        &:active {
+          background: var(--noti-bg-hover);
+        }
+      }
     }
   }
 

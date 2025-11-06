@@ -5,8 +5,12 @@
     & > button {
       border-radius: var(--border-radius);
 
-      &.toggle:checked {
+      &.toggle {
         /* style given to the active toggle button */
+        &:checked,
+        &:active {
+          background: var(--noti-bg-hover);
+        }
       }
 
       &:hover {

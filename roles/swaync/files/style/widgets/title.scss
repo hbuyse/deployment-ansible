@@ -8,5 +8,11 @@
   & > button {
     margin-left: $margin;
     border-radius: var(--border-radius);
+
+    /* style given to the active toggle button */
+    &:checked,
+    &:active {
+      background: var(--noti-bg-hover);
+    }
   }
 }
