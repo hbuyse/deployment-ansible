@@ -67,8 +67,8 @@ from collections import OrderedDict
 import yaml
 from ansible import constants as C
 from ansible import context
-from ansible.module_utils._text import to_text
 from ansible.module_utils.common._collections_compat import Mapping
+from ansible.module_utils.common.text.converters import to_text
 from ansible.plugins.callback import CallbackBase
 from ansible.template import Templar
 from ansible.utils.color import stringc
