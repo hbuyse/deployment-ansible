@@ -60,8 +60,6 @@ DOCUMENTATION = """---
 """
 
 import json
-import locale
-import os
 import re
 import textwrap
 from collections import OrderedDict
@@ -69,26 +67,21 @@ from collections import OrderedDict
 import yaml
 from ansible import constants as C
 from ansible import context
-from ansible.executor.task_result import TaskResult
-from ansible.module_utils._text import to_bytes, to_text
+from ansible.module_utils._text import to_text
 from ansible.module_utils.common._collections_compat import Mapping
-from ansible.parsing.utils.yaml import from_yaml
 from ansible.plugins.callback import CallbackBase
 from ansible.template import Templar
-from ansible.utils.color import colorize, hostcolor, stringc
+from ansible.utils.color import stringc
 from ansible.vars.clean import module_response_deepcopy, strip_internal_keys
-from ansible.vars.hostvars import HostVarsVars
 
 try:
     from collections.abc import Sequence
 except:
     from collections import Sequence
 
-from numbers import Number
-from os.path import basename, isdir
+from os.path import basename
 
-from watchdog.events import EVENT_TYPE_CREATED, FileSystemEventHandler
-from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
 
 _symbol = {
     "success": to_text("✔ "),
@@ -1206,7 +1199,7 @@ class CallbackModule(CallbackBase, FileSystemEventHandler):
                     if not task.evaluate_conditional(templar, host_vars):
                         score = 0.0
                         break
-                except Exception as e:
+                except Exception:
                     exception = True
             else:
                 if not exception:
@@ -1278,7 +1271,7 @@ class CallbackModule(CallbackBase, FileSystemEventHandler):
 
         try:
             textobj = json.loads(text)
-        except Exception as e:
+        except Exception:
             try:
                 textobj = yaml.load(text, Loader=yaml.SafeLoader)
             except Exception:
