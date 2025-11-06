@@ -2,7 +2,8 @@
 # $schema: https://raw.githubusercontent.com/google/yamlfmt/refs/heads/main/schema.json
 continue_on_error: false
 doublestar: false
-exclude: []
+exclude:
+  - roles/oh_my_posh/files/config.omp.yaml
 extensions:
   - yaml
   - yml

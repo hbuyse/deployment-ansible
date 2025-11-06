@@ -1,265 +1,306 @@
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
-
-palettes:
-  template: catppuccin-mocha
-  list:
-    catppuccin-mocha:
-      rosewater: "#f5e0dc"
-      flamingo: "#f2cdcd"
-      pink: "#f5c2e7"
-      mauve: "#cba6f7"
-      red: "#f38ba8"
-      maroon: "#eba0ac"
-      peach: "#fab387"
-      yellow: "#f9e2af"
-      green: "#a6e3a1"
-      teal: "#94e2d5"
-      sky: "#89dceb"
-      sapphire: "#74c7ec"
-      blue: "#89b4fa"
-      lavender: "#b4befe"
-      text: "#cdd6f4"
-      subtext1: "#bac2de"
-      subtext0: "#a6adc8"
-      overlay2: "#9399b2"
-      overlay1: "#7f849c"
-      overlay0: "#6c7086"
-      surface2: "#585b70"
-      surface1: "#45475a"
-      surface0: "#313244"
-      base: "#1e1e2e"
-      mantle: "#181825"
-      crust: "#11111b"
-    catppuccin-macchiato:
-      rosewater: "#f4dbd6"
-      flamingo: "#f0c6c6"
-      pink: "#f5bde6"
-      mauve: "#c6a0f6"
-      red: "#ed8796"
-      maroon: "#ee99a0"
-      peach: "#f5a97f"
-      yellow: "#eed49f"
-      green: "#a6da95"
-      teal: "#8bd5ca"
-      sky: "#91d7e3"
-      sapphire: "#7dc4e4"
-      blue: "#8aadf4"
-      lavender: "#b7bdf8"
-      text: "#cad3f5"
-      subtext1: "#b8c0e0"
-      subtext0: "#a5adcb"
-      overlay2: "#939ab7"
-      overlay1: "#8087a2"
-      overlay0: "#6e738d"
-      surface2: "#5b6078"
-      surface1: "#494d64"
-      surface0: "#363a4f"
-      base: "#24273a"
-      mantle: "#1e2030"
-      crust: "#181926"
-    catppuccin-frappe:
-      rosewater: "#f2d5cf"
-      flamingo: "#eebebe"
-      pink: "#f4b8e4"
-      mauve: "#ca9ee6"
-      red: "#e78284"
-      maroon: "#ea999c"
-      peach: "#ef9f76"
-      yellow: "#e5c890"
-      green: "#a6d189"
-      teal: "#81c8be"
-      sky: "#99d1db"
-      sapphire: "#85c1dc"
-      blue: "#8caaee"
-      lavender: "#babbf1"
-      text: "#c6d0f5"
-      subtext1: "#b5bfe2"
-      subtext0: "#a5adce"
-      overlay2: "#949cbb"
-      overlay1: "#838ba7"
-      overlay0: "#737994"
-      surface2: "#626880"
-      surface1: "#51576d"
-      surface0: "#414559"
-      base: "#303446"
-      mantle: "#292c3c"
-      crust: "#232634"
-
 palette:
-  status-fg-success: "#5faf00"
-  status-fg-error: "#FF5252"
-
-common:
-  element: &element
-    style: plain
-    background: p:surface0
-  project: &project
-    !!merge <<: *element
-    foreground: p:sky
-
+  status-fg-error: '#FF5252'
+  status-fg-success: '#5faf00'
+palettes:
+  list:
+    catppuccin-frappe:
+      base: '#303446'
+      blue: '#8caaee'
+      crust: '#232634'
+      flamingo: '#eebebe'
+      green: '#a6d189'
+      lavender: '#babbf1'
+      mantle: '#292c3c'
+      maroon: '#ea999c'
+      mauve: '#ca9ee6'
+      overlay0: '#737994'
+      overlay1: '#838ba7'
+      overlay2: '#949cbb'
+      peach: '#ef9f76'
+      pink: '#f4b8e4'
+      red: '#e78284'
+      rosewater: '#f2d5cf'
+      sapphire: '#85c1dc'
+      sky: '#99d1db'
+      subtext0: '#a5adce'
+      subtext1: '#b5bfe2'
+      surface0: '#414559'
+      surface1: '#51576d'
+      surface2: '#626880'
+      teal: '#81c8be'
+      text: '#c6d0f5'
+      yellow: '#e5c890'
+    catppuccin-macchiato:
+      base: '#24273a'
+      blue: '#8aadf4'
+      crust: '#181926'
+      flamingo: '#f0c6c6'
+      green: '#a6da95'
+      lavender: '#b7bdf8'
+      mantle: '#1e2030'
+      maroon: '#ee99a0'
+      mauve: '#c6a0f6'
+      overlay0: '#6e738d'
+      overlay1: '#8087a2'
+      overlay2: '#939ab7'
+      peach: '#f5a97f'
+      pink: '#f5bde6'
+      red: '#ed8796'
+      rosewater: '#f4dbd6'
+      sapphire: '#7dc4e4'
+      sky: '#91d7e3'
+      subtext0: '#a5adcb'
+      subtext1: '#b8c0e0'
+      surface0: '#363a4f'
+      surface1: '#494d64'
+      surface2: '#5b6078'
+      teal: '#8bd5ca'
+      text: '#cad3f5'
+      yellow: '#eed49f'
+    catppuccin-mocha:
+      base: '#1e1e2e'
+      blue: '#89b4fa'
+      crust: '#11111b'
+      flamingo: '#f2cdcd'
+      green: '#a6e3a1'
+      lavender: '#b4befe'
+      mantle: '#181825'
+      maroon: '#eba0ac'
+      mauve: '#cba6f7'
+      overlay0: '#6c7086'
+      overlay1: '#7f849c'
+      overlay2: '#9399b2'
+      peach: '#fab387'
+      pink: '#f5c2e7'
+      red: '#f38ba8'
+      rosewater: '#f5e0dc'
+      sapphire: '#74c7ec'
+      sky: '#89dceb'
+      subtext0: '#a6adc8'
+      subtext1: '#bac2de'
+      surface0: '#313244'
+      surface1: '#45475a'
+      surface2: '#585b70'
+      teal: '#94e2d5'
+      text: '#cdd6f4'
+      yellow: '#f9e2af'
+  template: catppuccin-mocha
 blocks:
-  - alignment: left
+  - type: prompt
+    alignment: left
     segments:
-      - foreground: p:text
-        !!merge <<: *element
-        template: " {{ if .WSL }}WSL at {{ end }}{{.Icon}} "
+      - properties:
+          cache_duration: none
+        template: ' {{ if .WSL }}WSL at {{ end }}{{.Icon}} '
+        foreground: p:text
+        background: p:surface0
         type: os
-      - foreground: p:red
-        !!merge <<: *element
-        template: "  <#bac2de></>"
+        style: plain
+      - properties:
+          cache_duration: none
+        template: '  <#bac2de></>'
+        foreground: p:red
+        background: p:surface0
         type: root
-        comment: Show when the current user is root or when in an elevated shell (Windows)
-      - foreground: p:sapphire
-        !!merge <<: *element
-        properties:
-          style: full
-          edge_format: "<b>%s</b>"
+        style: plain
+      - properties:
+          cache_duration: none
+          edge_format: <b>%s</b>
           max_width: 80
-        templates:
-          - "  "
-          - "{{ .Path }} "
-          - "{{ if not .Writable }} {{ end }}"
+          style: full
+        foreground: p:sapphire
+        background: p:surface0
         type: path
-      - foreground: p:green
-        !!merge <<: *element
+        style: plain
         templates:
-          - "<#bac2de></> {{ .HEAD }}"
-          - "{{ if .BranchStatus }} {{ .BranchStatus }} {{ end }}"
-          - "{{ if .Staging.Changed }}  {{ .Staging.String }} {{ end }}"
-          - "{{ if .Working.Changed }}  {{ .Working.String }} {{ end }}"
-          - "{{ if gt .StashCount 0 }}  {{ .StashCount }} {{ end }}"
-        properties:
+          - '  '
+          - '{{ .Path }} '
+          - '{{ if not .Writable }} {{ end }}'
+      - properties:
+          branch_ahead_icon: 
+          branch_behind_icon: 
+          branch_gone_icon: 
+          branch_icon: ' '
+          branch_identical_icon: 
           branch_max_length: 0
-          branch_icon: " "
-          branch_identical_icon: ""
-          branch_gone_icon: ""
-          branch_behind_icon: ""
-          branch_ahead_icon: ""
+          cache_duration: none
+          cherry_pick_icon: ' '
+          commit_icon: ' '
           fetch_stash_count: true
           fetch_status: true
           fetch_upstream_icon: true
-          tag_icon: " "
-          rebase_icon: " "
-          git_icon: " "
-          merge_icon: " "
-          commit_icon: " "
-          revert_icon: " "
-          no_commits_icon: " "
-          cherry_pick_icon: " "
           full_branch_path: true
+          git_icon: ' '
+          merge_icon: ' '
+          no_commits_icon: ' '
+          rebase_icon: ' '
+          revert_icon: ' '
+          tag_icon: ' '
+        foreground: p:green
+        background: p:surface0
         type: git
-      - background: transparent
+        style: plain
+        templates:
+          - <#bac2de></> {{ .HEAD }}
+          - '{{ if .BranchStatus }} {{ .BranchStatus }} {{ end }}'
+          - '{{ if .Staging.Changed }}  {{ .Staging.String }} {{ end }}'
+          - '{{ if .Working.Changed }}  {{ .Working.String }} {{ end }}'
+          - '{{ if gt .StashCount 0 }}  {{ .StashCount }} {{ end }}'
+      - properties:
+          cache_duration: none
+        template: 
         foreground: p:surface0
-        style: plain
-        template: ""
-        type: text
-    type: prompt
-  - alignment: right
-    filler: "<#313244,transparent>·</>"
-    segments:
-      - foreground: p:surface0
         background: transparent
-        style: plain
-        template: ""
         type: text
-      - foreground: p:green
-        !!merge <<: *element
-        foreground_templates:
-          - "{{ if .Error }}p:red{{ end }}"
-        templates:
-          - "{{ if .Error }} {{ .String }}  {{ end }}"
-          - "<#bac2de></>"
-        properties:
-          status_template: "{{ reason .Code }}"
+        style: plain
+  - type: prompt
+    alignment: right
+    filler: <#313244,transparent>·</>
+    overflow: hide
+    segments:
+      - properties:
+          cache_duration: none
+        template: 
+        foreground: p:surface0
+        background: transparent
+        type: text
+        style: plain
+      - properties:
+          cache_duration: none
+          status_template: '{{ reason .Code }}'
+        foreground: p:green
+        background: p:surface0
         type: status
-      - foreground: p:subtext0
-        !!merge <<: *element
-        type: executiontime
+        style: plain
+        foreground_templates:
+          - '{{ if .Error }}p:red{{ end }}'
         templates:
-          - " {{ .FormattedMs }}"
-          - " \U000F199F"
-          - " <#bac2de></>"
-        properties:
-          threshold: 500
+          - '{{ if .Error }} {{ .String }}  {{ end }}'
+          - <#bac2de></>
+      - properties:
+          cache_duration: none
           style: austin
-      - type: text
-        !!merge <<: *element
+          threshold: 500
+        foreground: p:subtext0
+        background: p:surface0
+        type: executiontime
+        style: plain
+        templates:
+          - ' {{ .FormattedMs }}'
+          - " \U000F199F"
+          - ' <#bac2de></>'
+      - properties:
+          cache_duration: none
+        template: '{{ if .Env.DIRENV_FILE }}  <#bac2de></>{{ end }}'
         foreground: p:yellow
-        template: "{{ if .Env.DIRENV_FILE }}  <#bac2de></>{{ end }}"
-      - type: node
-        !!merge <<: *project
+        background: p:surface0
+        type: text
+        style: plain
+      - properties:
+          cache_duration: none
+        foreground: p:sky
+        background: p:surface0
+        type: node
+        style: plain
         templates:
           - ' {{ if .Error }}{{ .Error }}{{ else }}{{ .PackageManagerName }}{{ if .Full }} {{ .Full }}{{ end }}{{ end }}'
           - ' {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }}{{ else }}{{ end }}'
           - ' <#bac2de></>'
-      - type: cmake
-        !!merge <<: *project
-        templates:
-          - " {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
-          - "  "
-          - " <#bac2de></>"
-        properties:
+      - properties:
+          cache_duration: none
           extensions:
-            - "*.cmake"
-            - "CMakeLists.txt"
-            - "CMakeCache.txt"
-      - type: python
-        !!merge <<: *project
-        templates:
-          - " {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }}"
-          - " "
-          - " <#bac2de></>"
-      - type: rust
-        !!merge <<: *project
-        templates:
-          - " {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
-          - " "
-          - " <#bac2de></>"
-      - type: lua
-        !!merge <<: *project
-        templates:
-          - " {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
-          - " "
-          - " <#bac2de></>"
-      - type: perl
-        !!merge <<: *project
-        templates:
-          - " {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
-          - " "
-          - " <#bac2de></>"
-      - type: go
-        !!merge <<: *project
-        templates:
-          - " {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
-          - " "
-          - " <#bac2de></>"
-      - foreground: p:yellow
-        !!merge <<: *element
-        templates:
-          - " {{ .UserName }}@{{ .HostName }}"
-          - " {{ if .SSHSession }}{{ else if .Root }}{{ else }}{{ end }}"
-          - " <#bac2de></>"
-        type: session
-      - foreground: p:subtext1
-        !!merge <<: *element
-        properties:
-          time_format: "15:04:05"
-        template: " {{ .CurrentDate | date .Format }}  "
-        type: time
-    type: prompt
-    overflow: hide
-  - alignment: left
-    newline: true
-    segments:
-      - foreground: p:green
-        foreground_templates:
-          - "{{ if .Error }}p:red{{ end }}"
-        background: transparent
-        properties:
-          always_enabled: true
+            - '*.cmake'
+            - CMakeLists.txt
+            - CMakeCache.txt
+        foreground: p:sky
+        background: p:surface0
+        type: cmake
         style: plain
-        template: "❯ "
+        templates:
+          - ' {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}'
+          - '  '
+          - ' <#bac2de></>'
+      - properties:
+          cache_duration: none
+        foreground: p:sky
+        background: p:surface0
+        type: python
+        style: plain
+        templates:
+          - ' {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }}'
+          - ' '
+          - ' <#bac2de></>'
+      - properties:
+          cache_duration: none
+        foreground: p:sky
+        background: p:surface0
+        type: rust
+        style: plain
+        templates:
+          - ' {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}'
+          - ' '
+          - ' <#bac2de></>'
+      - properties:
+          cache_duration: none
+        foreground: p:sky
+        background: p:surface0
+        type: lua
+        style: plain
+        templates:
+          - ' {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}'
+          - ' '
+          - ' <#bac2de></>'
+      - properties:
+          cache_duration: none
+        foreground: p:sky
+        background: p:surface0
+        type: perl
+        style: plain
+        templates:
+          - ' {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}'
+          - ' '
+          - ' <#bac2de></>'
+      - properties:
+          cache_duration: none
+        foreground: p:sky
+        background: p:surface0
+        type: go
+        style: plain
+        templates:
+          - ' {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}'
+          - ' '
+          - ' <#bac2de></>'
+      - properties:
+          cache_duration: none
+        foreground: p:yellow
+        background: p:surface0
+        type: session
+        style: plain
+        templates:
+          - ' {{ .UserName }}@{{ .HostName }}'
+          - ' {{ if .SSHSession }}{{ else if .Root }}{{ else }}{{ end }}'
+          - ' <#bac2de></>'
+      - properties:
+          cache_duration: none
+          time_format: "15:04:05"
+        template: ' {{ .CurrentDate | date .Format }}  '
+        foreground: p:subtext1
+        background: p:surface0
+        type: time
+        style: plain
+  - type: prompt
+    alignment: left
+    segments:
+      - properties:
+          always_enabled: true
+          cache_duration: none
+        template: '❯ '
+        foreground: p:green
+        background: transparent
         type: status
-    type: prompt
-version: 2
+        style: plain
+        foreground_templates:
+          - '{{ if .Error }}p:red{{ end }}'
+    newline: true
+version: 3
