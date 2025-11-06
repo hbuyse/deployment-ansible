@@ -1,4 +1,12 @@
 ---
+- name: "Post-tasks | Ensure that we do not wait for Network at startup"
+  ansible.builtin.systemd:
+    name: "NetworkManager-wait-online"
+    enabled: false
+    scope: "system"
+  tags: always
+  when: ansible_service_mgr == "systemd"
+
 - name: "Post-tasks | Always run tasks that are OS specific"
   ansible.builtin.include_tasks:
     file: "{{ item }}"
