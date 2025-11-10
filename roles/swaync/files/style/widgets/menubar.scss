@@ -23,10 +23,11 @@
       button {
         border-radius: var(--border-radius);
         margin: 0 $margin / 2;
+        background: var(--ctp-#{$theme}-surface1);
 
         &:checked,
         &:active {
-          background: var(--noti-bg);
+          background: var(--ctp-#{$theme}-base);
         }
       }
     }
@@ -41,10 +42,11 @@
         border-radius: var(--border-radius);
         margin: $margin;
         margin-top: 0;
+        background: var(--ctp-#{$theme}-surface1);
 
         &:checked,
         &:active {
-          background: var(--noti-bg);
+          background: var(--ctp-#{$theme}-base);
         }
       }
       label {
