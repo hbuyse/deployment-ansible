@@ -7,9 +7,13 @@
 
       &.toggle {
         /* style given to the active toggle button */
+        background: var(--ctp-#{$theme}-base);
+        color: var(--ctp-#{$theme}-overlay2);
+
         &:checked,
         &:active {
-          background: var(--noti-bg-hover);
+          background: var(--ctp-#{$theme}-surface1);
+          color: var(--ctp-#{$theme}-text);
         }
       }
 
