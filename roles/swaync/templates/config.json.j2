@@ -1,5 +1,8 @@
 {
   "$schema": "/etc/xdg/swaync/configSchema.json",
+{% if swaync_current_version.split('.') | map('int') | list >= [0, 12, 1] %}
+  "ignore-gtk-theme": true,
+{% endif %}
   "positionX": "right",
   "positionY": "top",
   "control-center-margin-top": 2,
