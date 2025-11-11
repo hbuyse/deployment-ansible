@@ -23,11 +23,15 @@
       button {
         border-radius: var(--border-radius);
         margin: 0 $margin / 2;
-        background: var(--ctp-#{$theme}-surface1);
+        background: var(--ctp-#{$theme}-base);
 
         &:checked,
         &:active {
-          background: var(--ctp-#{$theme}-base);
+          background: var(--ctp-#{$theme}-surface0);
+        }
+
+        &:hover {
+          background: var(--ctp-#{$theme}-surface1);
         }
       }
     }
@@ -42,12 +46,8 @@
         border-radius: var(--border-radius);
         margin: $margin;
         margin-top: 0;
-        background: var(--ctp-#{$theme}-surface1);
 
-        &:checked,
-        &:active {
-          background: var(--ctp-#{$theme}-base);
-        }
+        @include toggle-button-background;
       }
       label {
         font-weight: normal;
