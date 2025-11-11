@@ -1,5 +1,6 @@
 ---
 - name: "Post-tasks | Ensure that we do not wait for Network at startup"
+  become: true
   ansible.builtin.systemd:
     name: "NetworkManager-wait-online"
     enabled: false
