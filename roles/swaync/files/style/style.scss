@@ -5,7 +5,7 @@ $accentuation: "peach";
 
 :root {
   /* Control center */
-  --cc-bg: var(--ctp-#{$theme}-surface0);
+  --cc-bg: var(--ctp-#{$theme}-mantle);
 
   --noti-border-color: var(--ctp-#{$theme}-#{$accentuation});
   --noti-bg: var(--cc-bg);
@@ -46,7 +46,7 @@ $accentuation: "peach";
 
   --priority-low: var(--ctp-#{$theme}-green);
   --priority-normal: var(--ctp-#{$theme}-blue);
-  --priority-critical:var(--ctp-#{$theme}-red);
+  --priority-critical: var(--ctp-#{$theme}-red);
 }
 
 @import "pre-gtk4-variables";
@@ -55,6 +55,7 @@ $margin: 4px;
 
 * {
   font-family: "Iosevka NerdFont Mono";
+  transition: 200ms;
 }
 
 .close-button {
@@ -140,7 +141,7 @@ $margin: 4px;
         .notification-content {
           background: transparent;
           border-radius: var(--border-radius);
-          $margin: 4px;
+          margin: 4px;
           padding: 0;
 
           .image {
@@ -344,7 +345,7 @@ $margin: 4px;
 
 .control-center {
   /* The Control Center which contains the old notifications + widgets */
-  background: var(--cc-bg);
+  background-color: var(--cc-bg);
   color: var(--text-color);
   border-radius: var(--border-radius);
   border: 1px solid var(--noti-bg-hover);
@@ -387,6 +388,19 @@ $margin: 4px;
   margin: $margin;
   padding: $margin;
   border-radius: var(--border-radius);
+}
+
+@mixin toggle-button-background {
+  background: var(--ctp-#{$theme}-base);
+
+  &:checked,
+  &:active {
+    background: var(--ctp-#{$theme}-surface0);
+  }
+
+  &:hover {
+    margin: 3px solid green;
+  }
 }
 
 /* Title widget */

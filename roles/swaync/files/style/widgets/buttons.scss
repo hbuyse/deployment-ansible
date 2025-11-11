@@ -6,13 +6,14 @@
       border-radius: var(--border-radius);
 
       &.toggle {
+        @include toggle-button-background;
         /* style given to the active toggle button */
-        background: var(--ctp-#{$theme}-base);
+        background: var(--ctp-#{$theme}-crust);
         color: var(--ctp-#{$theme}-overlay2);
 
         &:checked,
         &:active {
-          background: var(--ctp-#{$theme}-surface1);
+          background: var(--ctp-#{$theme}-base);
           color: var(--ctp-#{$theme}-text);
         }
       }
