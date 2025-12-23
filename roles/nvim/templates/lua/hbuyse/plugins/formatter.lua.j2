@@ -35,7 +35,7 @@ return {
         python = function(bufnr)
           local formatters = {}
 
-          for _, formatter in ipairs({ 'ruff_organize_imports', 'ruff_fix' }) do
+          for _, formatter in ipairs({ 'ruff_organize_imports', 'ruff_fix', 'ruff_format' }) do
             if require('conform').get_formatter_info(formatter, bufnr).available then
               table.insert(formatters, formatter)
             end
