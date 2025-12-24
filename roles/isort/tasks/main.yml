@@ -21,7 +21,7 @@
   when: isort_packages is defined
 
 - name: "Isort | Install from source"
-  community.general.pipx:
+  ansible.builtin.pip:
     name: "isort"
     state: latest
   tags:

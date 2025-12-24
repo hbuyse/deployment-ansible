@@ -21,7 +21,7 @@
 
 - name: "Ansible Lint | Install from PIP"
   when: ansiblelint_packages is not defined
-  community.general.pipx:
+  ansible.builtin.pip:
     name: "{{ ansiblelint_pip_package }}"
     state: latest
   tags:
