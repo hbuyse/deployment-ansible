@@ -8,16 +8,10 @@
   tags: zellij
 
 - name: "Zellij | Install Rust package with locked dependencies"
-  become: true
   community.general.cargo:
     name: zellij
     state: latest
     locked: true
-    path: "/usr/local"
-  environment:
-    RUSTUP_HOME: "{{ ansible_user_dir }}/.rustup"
-    CARGO_HOME: "{{ ansible_user_dir }}/.cargo"
-    PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"
   when: zellij_packages is not defined
   tags: zellij
   notify: "Zellij | Install completion files"

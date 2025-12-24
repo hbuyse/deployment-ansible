@@ -20,7 +20,6 @@
     - spotify_player
 
 - name: "Spotify Player | Install Rust package with locked dependencies"
-  become: true
   tags: spotify_player
   when: spotify_player_packages is not defined
   block:
@@ -34,12 +33,7 @@
         name: "spotify_player"
         state: "latest"
         locked: true
-        path: "/usr/local"
         features: "{{ spotify_player_features }}"
-      environment:
-        RUSTUP_HOME: "{{ ansible_user_dir }}/.rustup"
-        CARGO_HOME: "{{ ansible_user_dir }}/.cargo"
-        PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"
       notify:
         - "Spotify Player | Install zsh completion file"
         - "Spotify Player | Install bash completion file"

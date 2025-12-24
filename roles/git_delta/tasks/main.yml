@@ -21,16 +21,10 @@
 
 - name: "Git Delta | Install package [Debian]"
   when: git_delta_packages is not defined
-  become: true
   community.general.cargo:
     name: "{{ git_delta_cargo_package }}"
     state: latest
     locked: true
-    path: "/usr/local"
-  environment:
-    RUSTUP_HOME: "{{ ansible_user_dir }}/.rustup"
-    CARGO_HOME: "{{ ansible_user_dir }}/.cargo"
-    PATH: "{{ ansible_env.PATH }}:{{ ansible_user_dir }}/.cargo/bin"
   tags:
     - git
     - git-delta
