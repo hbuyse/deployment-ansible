@@ -26,17 +26,6 @@
   tags:
     - alacritty
 
-- name: "Alacritty | Add to alternatives"
-  become: true
-  community.general.alternatives:
-    name: x-terminal-emulator
-    path: "{{ alacritty_packages is defined | ternary('/usr/bin/alacritty', '/usr/local/bin/alacritty') }}"
-    link: /usr/bin/x-terminal-emulator
-    priority: 100
-    state: present
-  tags:
-    - alacritty
-
 - name: "Alacritty | Ensure config directory exists"
   ansible.builtin.file:
     path: "{{ ansible_user_dir }}/.config/alacritty"
