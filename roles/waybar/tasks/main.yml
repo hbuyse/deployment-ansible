@@ -28,14 +28,14 @@
   block:
     - name: "Waybar | Ensure directories exists"
       ansible.builtin.file:
-        path: "/usr/local/lib/systemd/user"
+        path: "{{ ansible_user_dir }}/.local/lib/systemd/user"
         state: "directory"
         mode: "0755"
 
     - name: "Waybar | Copy service file"
       ansible.builtin.copy:
         src: "waybar.service"
-        dest: "/usr/local/lib/systemd/user"
+        dest: "{{ ansible_user_dir }}/.local/lib/systemd/user"
         mode: "0644"
 
     - name: "Waybar | Enable service"

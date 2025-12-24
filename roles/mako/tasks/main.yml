@@ -61,7 +61,7 @@
     - name: "Mako | Ensure directory exist"
       become: true
       ansible.builtin.file:
-        path: "/usr/local/lib/systemd/user/"
+        path: "{{ ansible_user_dir }}/.local/lib/systemd/user/"
         state: directory
         mode: "0755"
 
@@ -69,7 +69,7 @@
       become: true
       ansible.builtin.copy:
         src: "mako.service"
-        dest: "/usr/local/lib/systemd/user/mako.service"
+        dest: "{{ ansible_user_dir }}/.local/lib/systemd/user/mako.service"
         mode: "0644"
       notify:
         - "Mako | Disable 'dunst' service if exists"

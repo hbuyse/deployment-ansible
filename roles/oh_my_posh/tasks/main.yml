@@ -23,7 +23,7 @@
   ansible.builtin.get_url:
     url: "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v{{ oh_my_posh_latest_version }}/posh-{{ ansible_system
       | lower }}-{{ alt_arch }}"
-    dest: "/usr/local/bin/oh-my-posh"
+    dest: "{{ ansible_user_dir }}/.local/bin/oh-my-posh"
     mode: "0755"
   notify: "Oh My Posh | Clear cache"
   tags:

@@ -2,7 +2,7 @@
 - name: "Bottom | Ensure that manpages directory exists [man1]"
   become: true
   ansible.builtin.file:
-    path: "/usr/local/share/man/man1"
+    path: "{{ ansible_user_dir }}/.local/share/man/man1"
     state: "directory"
     mode: "0755"
     recurse: true
@@ -11,7 +11,7 @@
   become: true
   ansible.builtin.unarchive:
     src: "/tmp/manpage.tar.gz"
-    dest: "/usr/local/share/man/man1"
+    dest: "{{ ansible_user_dir }}/.local/share/man/man1"
     owner: "root"
     group: "root"
     mode: "0644"

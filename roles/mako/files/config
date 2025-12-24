@@ -22,7 +22,7 @@ format=<b>%s</b>\n%b
 anchor=top-right
 text-alignment=left
 
-icon-path=/usr/local/share/icons/Papirus
+icon-path={{ ansible_user_dir }}/.local/share/icons/Papirus
 
 [urgency="high"]
 border-color=#fab387

@@ -48,13 +48,13 @@
   block:
     - name: "Swaylock | Ensure directory exist"
       ansible.builtin.file:
-        path: "/usr/local/lib/systemd/user/"
+        path: "{{ ansible_user_dir }}/.local/lib/systemd/user/"
         state: directory
         mode: "0755"
 
     - name: "Swaylock | Copy service file"
       ansible.builtin.copy:
         src: "swaylock.service"
-        dest: "/usr/local/lib/systemd/user/swaylock.service"
+        dest: "{{ ansible_user_dir }}/.local/lib/systemd/user/swaylock.service"
         mode: "0644"
       tags: swaylock

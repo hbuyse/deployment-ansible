@@ -33,14 +33,14 @@
   block:
     - name: "Nextcloud | Ensure directory exists"
       ansible.builtin.file:
-        path: "/usr/local/lib/systemd/user"
+        path: "{{ ansible_user_dir }}/.local/lib/systemd/user"
         state: directory
         mode: "0755"
 
     - name: "Nextcloud | Copy service file"
       ansible.builtin.copy:
         src: "nextcloud.service"
-        dest: "/usr/local/lib/systemd/user"
+        dest: "{{ ansible_user_dir }}/.local/lib/systemd/user"
         mode: "0644"
 
     - name: "Nextcloud | Enable service"

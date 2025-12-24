@@ -22,7 +22,7 @@
   ansible.builtin.get_url:
     url: "https://github.com/{{ bitwarden_owner }}/{{ bitwarden_repo }}/releases/download/{{ bitwarden_desktop_latest_tag
       }}/Bitwarden-{{ bitwarden_desktop_latest_version }}-{{ ansible_architecture }}.AppImage"
-    dest: "/usr/local/bin/bitwarden"
+    dest: "{{ ansible_user_dir }}/.local/bin/bitwarden"
     mode: "0755"
   tags: bitwarden
 
@@ -30,6 +30,6 @@
   become: true
   ansible.builtin.get_url:
     url: "https://raw.githubusercontent.com/bitwarden/clients/refs/heads/main/apps/desktop/resources/com.bitwarden.desktop.desktop"
-    dest: "/usr/local/share/applications/"
+    dest: "{{ ansible_user_dir }}/.local/share/applications/"
     mode: "0644"
   tags: bitwarden
