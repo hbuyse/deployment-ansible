@@ -18,6 +18,6 @@
 - name: "Pre-commit | Install using Pipx"
   ansible.builtin.pip:
     name: "pre-commit"
-    state: latest
+    state: present
   when: pre_commit_packages is not defined
   tags: pre-commit

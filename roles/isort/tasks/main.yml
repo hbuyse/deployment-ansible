@@ -23,7 +23,7 @@
 - name: "Isort | Install from source"
   ansible.builtin.pip:
     name: "isort"
-    state: latest
+    state: present
   tags:
     - isort
     - formatter

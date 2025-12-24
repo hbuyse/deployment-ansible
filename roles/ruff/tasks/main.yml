@@ -27,7 +27,7 @@
   when: ruff_package is not defined
   ansible.builtin.pip:
     name: "{{ ruff_pip_package }}"
-    state: latest
+    state: present
   tags:
     - ruff
     - lsp
