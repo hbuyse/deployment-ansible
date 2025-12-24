@@ -20,13 +20,11 @@
     - lsp
 
 - name: "YAML Language Server | Install from Node Package Manager"
-  become: true
   when: yamlls_package is not defined
   community.general.npm:
     name: "{{ yamlls_npm_package }}"
     global: true
     state: latest
-    path: "/usr/local"
     production: true
     no_optional: true
   tags:

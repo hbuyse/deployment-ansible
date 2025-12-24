@@ -24,13 +24,11 @@
     - linter
 
 - name: "Tombi | Install from Node Package Manager"
-  become: true
   when: tombi_package is not defined
   community.general.npm:
     name: "{{ tombi_npm_package }}"
     global: true
     state: latest
-    path: "/usr/local"
     production: true
     no_optional: true
   tags:
