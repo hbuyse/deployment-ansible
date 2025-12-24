@@ -19,7 +19,6 @@
     - role: "netrc"
     - role: "ssh"
     - role: "python"
-    - role: "pipx"
     - role: "npmrc"
     - role: "nodejs"
     - role: "rustup"

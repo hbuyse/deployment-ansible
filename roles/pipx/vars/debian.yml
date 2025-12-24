@@ -1,4 +1,0 @@
----
-pipx_packages:
-  - python3-venv
-  - pipx
