@@ -24,11 +24,9 @@
     - linter
 
 - name: "Ruff | Install from PIP"
-  become: true
   when: ruff_package is not defined
   community.general.pipx:
     name: "{{ ruff_pip_package }}"
-    global: true
     state: latest
   tags:
     - ruff

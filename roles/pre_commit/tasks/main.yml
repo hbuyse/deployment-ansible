@@ -16,10 +16,8 @@
   tags: pre-commit
 
 - name: "Pre-commit | Install using Pipx"
-  become: true
   community.general.pipx:
     name: "pre-commit"
     state: latest
-    global: true
   when: pre_commit_packages is not defined
   tags: pre-commit

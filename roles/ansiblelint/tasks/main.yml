@@ -20,11 +20,9 @@
     - linter
 
 - name: "Ansible Lint | Install from PIP"
-  become: true
   when: ansiblelint_packages is not defined
   community.general.pipx:
     name: "{{ ansiblelint_pip_package }}"
-    global: true
     state: latest
   tags:
     - ansiblelint

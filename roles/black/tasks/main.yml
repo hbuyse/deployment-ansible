@@ -21,11 +21,9 @@
   when: black_packages is defined
 
 - name: "Black | Install from source"
-  become: true
   community.general.pipx:
     name: "black"
     state: latest
-    global: true
   tags:
     - black
     - formatter

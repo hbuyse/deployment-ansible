@@ -21,11 +21,9 @@
   when: isort_packages is defined
 
 - name: "Isort | Install from source"
-  become: true
   community.general.pipx:
     name: "isort"
     state: latest
-    global: true
   tags:
     - isort
     - formatter
