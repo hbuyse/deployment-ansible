@@ -21,5 +21,5 @@
     remote_src: true
     extra_opts:
       - "--strip-components=2"
-    owner: root
-    group: root
+    owner: "{{ ansible_user_uid }}"
+    group: "{{ ansible_user_gid }}"

@@ -40,8 +40,8 @@
     src: "/tmp/keymapp-latest.tar.gz"
     dest: "{{ item.dest }}"
     mode: "{{ item.mode }}"
-    owner: "root"
-    group: "root"
+    owner: "{{ ansible_user_uid }}"
+    group: "{{ ansible_user_gid }}"
     include:
       - "{{ item.file }}"
   loop:

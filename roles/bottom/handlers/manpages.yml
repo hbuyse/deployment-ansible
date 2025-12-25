@@ -12,8 +12,8 @@
   ansible.builtin.unarchive:
     src: "/tmp/manpage.tar.gz"
     dest: "{{ ansible_user_dir }}/.local/share/man/man1"
-    owner: "root"
-    group: "root"
+    owner: "{{ ansible_user_uid }}"
+    group: "{{ ansible_user_gid }}"
     mode: "0644"
     include:
       - "./btm.1.gz"

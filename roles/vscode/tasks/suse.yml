@@ -11,5 +11,5 @@
     src: "vscode.repo"
     dest: "/etc/zypp/repos.d/vscode.repo"
     mode: "0644"
-    owner: root
-    group: root
+    owner: "root"
+    group: "root"

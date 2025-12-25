@@ -22,16 +22,16 @@
       ansible.builtin.file:
         path: "{{ ansible_user_dir }}/.local/share/applications"
         state: directory
-        owner: "root"
-        group: "root"
+        owner: "{{ ansible_user_uid }}"
+        group: "{{ ansible_user_gid }}"
         mode: "0755"
 
     - name: "Web Applications | Copy desktop files"
       ansible.builtin.copy:
         src: "com.{{ item }}.webapp.desktop"
         dest: "{{ ansible_user_dir }}/.local/share/applications/com.{{ item }}.webapp.desktop"
-        owner: "root"
-        group: "root"
+        owner: "{{ ansible_user_uid }}"
+        group: "{{ ansible_user_gid }}"
         mode: "0644"
       loop:
         - discord
@@ -42,8 +42,8 @@
       ansible.builtin.copy:
         src: "com.{{ item }}.webapp.desktop"
         dest: "{{ ansible_user_dir }}/.local/share/applications/com.{{ item }}.webapp.desktop"
-        owner: "root"
-        group: "root"
+        owner: "{{ ansible_user_uid }}"
+        group: "{{ ansible_user_gid }}"
         mode: "0644"
       when: ansible_os_family in ['Debian']
       loop:

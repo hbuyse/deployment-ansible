@@ -61,16 +61,16 @@
           ansible.builtin.file:
             path: "{{ ansible_user_dir }}/.local/share/applications"
             state: directory
-            owner: "root"
-            group: "root"
+            owner: "{{ ansible_user_uid }}"
+            group: "{{ ansible_user_gid }}"
             mode: "0755"
 
         - name: "Mattermost Desktop | Copy desktop file"
           ansible.builtin.template:
             src: "mattermost-desktop.desktop.j2"
             dest: "{{ ansible_user_dir }}/.local/share/applications/mattermost-desktop.desktop"
-            owner: "root"
-            group: "root"
+            owner: "{{ ansible_user_uid }}"
+            group: "{{ ansible_user_gid }}"
             mode: "0644"
 
     - name: "Mattermost Desktop | Write version in custom file"

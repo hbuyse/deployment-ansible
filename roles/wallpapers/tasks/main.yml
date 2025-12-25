@@ -15,7 +15,6 @@
   tags: wallpapers
 
 - name: "Wallpapers | Ensure wallpaper directory exists"
-  become: "{{ (wallpapers_user == 'root') | bool }}"
   ansible.builtin.file:
     path: "{{ wallpapers_install_dir }}"
     state: directory
@@ -23,7 +22,6 @@
   tags: wallpapers
 
 - name: "Wallpapers | Install SVG files"
-  become: "{{ (wallpapers_user == 'root') | bool }}"
   tags: wallpapers
   block:
     - name: "Wallpapers | Generate SVG file with colors"
@@ -42,15 +40,14 @@
       ansible.builtin.file:
         src: "{{ wallpapers_install_dir }}/coding.svg"
         dest: "{{ wallpapers_install_dir }}/{{ item }}.svg"
-        owner: "{{ wallpapers_user }}"
-        group: "{{ wallpapers_user }}"
+        owner: "{{ ansible_user_uid }}"
+        group: "{{ ansible_user_gid }}"
         state: "link"
       loop:
         - "wallpaper"
         - "locker"
 
 - name: "Wallpapers | Install PNG files"
-  become: "{{ (wallpapers_user == 'root') | bool }}"
   tags: wallpapers
   block:
     - name: "Wallpapers | Convert SVG to PNG files"
@@ -62,8 +59,8 @@
       ansible.builtin.file:
         src: "{{ wallpapers_install_dir }}/coding.png"
         dest: "{{ wallpapers_install_dir }}/{{ item }}.png"
-        owner: "{{ wallpapers_user }}"
-        group: "{{ wallpapers_user }}"
+        owner: "{{ ansible_user_uid }}"
+        group: "{{ ansible_user_gid }}"
         state: "link"
       loop:
         - "wallpaper"

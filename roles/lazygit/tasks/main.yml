@@ -25,8 +25,8 @@
       }}/lazygit_{{ lazygit_latest_version }}_{{ ansible_system }}_{{ ansible_architecture }}.tar.gz"
     dest: "{{ ansible_user_dir }}/.local/bin"
     mode: "0755"
-    owner: "root"
-    group: "root"
+    owner: "{{ ansible_user_uid }}"
+    group: "{{ ansible_user_gid }}"
     include:
       - "lazygit"
     remote_src: true
