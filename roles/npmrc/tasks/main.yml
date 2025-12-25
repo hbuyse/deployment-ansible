@@ -1,0 +1,14 @@
+---
+- name: "NPMrc | Install NPM configuration file"
+  tags: npmrc
+  ansible.builtin.template:
+    src: "npmrc.j2"
+    dest: "{{ ansible_user_dir }}/.npmrc"
+    mode: "0644"
+
+- name: "NPMrc | Create packages directory"
+  tags: npmrc
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.npm-packages"
+    state: directory
+    mode: "0755"
