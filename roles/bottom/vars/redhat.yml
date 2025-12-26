@@ -1,0 +1,5 @@
+---
+bottom_packages:
+  - bottom
+  - bottom-bash-completion
+  - bottom-zsh-completion
