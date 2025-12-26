@@ -24,3 +24,12 @@
   loop_control:
     loop_var: repo
   tags: rpmfusion
+
+- name: "Terra | Add repository"
+  become: true
+  ansible.builtin.yum_repository:
+    name: "terra-release"
+    description: "Terra repository"
+    baseurl: "https://repos.fyralabs.com/terra$releasever"
+    gpgcheck: false
+  tags: terra
