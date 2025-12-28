@@ -14,7 +14,7 @@
   ansible.builtin.package:
     name: "{{ isort_packages }}"
     update_cache: true
-    state: present
+    state: "present"
   tags:
     - isort
     - formatter
@@ -23,7 +23,7 @@
 - name: "Isort | Install from source"
   community.general.pipx:
     name: "isort"
-    state: latest
+    state: "latest"
   tags:
     - isort
     - formatter

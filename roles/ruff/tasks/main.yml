@@ -16,7 +16,7 @@
   when: ruff_package is defined
   ansible.builtin.package:
     name: "{{ ruff_package }}"
-    state: present
+    state: "present"
   tags:
     - ruff
     - lsp
@@ -27,7 +27,7 @@
   when: ruff_package is not defined
   community.general.pipx:
     name: "ruff"
-    state: latest
+    state: "latest"
   tags:
     - ruff
     - lsp

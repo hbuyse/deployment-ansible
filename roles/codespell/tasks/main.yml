@@ -14,7 +14,7 @@
   ansible.builtin.package:
     name: "{{ codespell_packages }}"
     update_cache: true
-    state: present
+    state: "present"
   tags:
     - codespell
     - formatter
@@ -23,7 +23,7 @@
 - name: "CodeSpell | Install from source"
   community.general.pipx:
     name: "codespell"
-    state: latest
+    state: "latest"
   tags:
     - codespell
     - formatter

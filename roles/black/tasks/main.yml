@@ -14,7 +14,7 @@
   ansible.builtin.package:
     name: "{{ black_packages }}"
     update_cache: true
-    state: present
+    state: "present"
   tags:
     - black
     - formatter
@@ -23,7 +23,7 @@
 - name: "Black | Install from source"
   community.general.pipx:
     name: "black"
-    state: latest
+    state: "latest"
   tags:
     - black
     - formatter

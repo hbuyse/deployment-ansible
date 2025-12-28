@@ -14,7 +14,7 @@
   when: ansiblelint_packages is defined
   ansible.builtin.package:
     name: "{{ ansiblelint_packages }}"
-    state: present
+    state: "present"
   tags:
     - ansiblelint
     - linter
@@ -23,7 +23,7 @@
   when: ansiblelint_packages is not defined
   community.general.pipx:
     name: "ansible-lint"
-    state: latest
+    state: "latest"
   tags:
     - ansiblelint
     - linter
