@@ -23,7 +23,7 @@
 - name: "Black | Install from source"
   community.general.pipx:
     name: "black"
-    state: present
+    state: latest
   tags:
     - black
     - formatter

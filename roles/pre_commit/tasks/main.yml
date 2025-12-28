@@ -18,6 +18,6 @@
 - name: "Pre-commit | Install using Pipx"
   community.general.pipx:
     name: "pre-commit"
-    state: present
+    state: latest
   when: pre_commit_packages is not defined
   tags: pre-commit

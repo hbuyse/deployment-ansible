@@ -23,7 +23,7 @@
   when: ansiblelint_packages is not defined
   community.general.pipx:
     name: "ansible-lint"
-    state: present
+    state: latest
   tags:
     - ansiblelint
     - linter

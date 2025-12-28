@@ -23,7 +23,7 @@
 - name: "Isort | Install from source"
   community.general.pipx:
     name: "isort"
-    state: present
+    state: latest
   tags:
     - isort
     - formatter

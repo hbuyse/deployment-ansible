@@ -23,7 +23,7 @@
 - name: "CodeSpell | Install from source"
   community.general.pipx:
     name: "codespell"
-    state: present
+    state: latest
   tags:
     - codespell
     - formatter

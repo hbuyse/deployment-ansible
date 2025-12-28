@@ -27,7 +27,7 @@
   when: ruff_package is not defined
   community.general.pipx:
     name: "ruff"
-    state: present
+    state: latest
   tags:
     - ruff
     - lsp
