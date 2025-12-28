@@ -38,7 +38,7 @@
         - "Spotify Player | Install zsh completion file"
         - "Spotify Player | Install bash completion file"
 
-- name: "Spotify Player | Install from package manager"
+- name: "Spotify Player | Install from package manager"  # noqa: package-latest
   become: true
   ansible.builtin.package:
     name: "{{ spotify_player_packages }}"

@@ -15,7 +15,7 @@
   when: pipx_packages is defined
   tags: pipx
 
-- name: "Pipx | Install from PIP"
+- name: "Pipx | Install from PIP"  # noqa: package-latest
   ansible.builtin.pip:
     name: "pipx"
     state: "latest"
