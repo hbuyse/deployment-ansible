@@ -1,0 +1,3 @@
+---
+pipx_packages:
+  - python{{ ansible_python.version.major }}{{ ansible_python.version.minor }}-pipx
