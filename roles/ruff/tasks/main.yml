@@ -26,7 +26,7 @@
 - name: "Ruff | Install from PIP"
   when: ruff_package is not defined
   community.general.pipx:
-    name: "{{ ruff_pip_package }}"
+    name: "ruff"
     state: present
   tags:
     - ruff
