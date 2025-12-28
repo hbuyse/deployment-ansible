@@ -18,18 +18,20 @@
   tags: bitwarden
 
 - name: "Bitwarden Desktop | Install man pages"
-  become: true
   ansible.builtin.get_url:
     url: "https://github.com/{{ bitwarden_owner }}/{{ bitwarden_repo }}/releases/download/{{ bitwarden_desktop_latest_tag
       }}/Bitwarden-{{ bitwarden_desktop_latest_version }}-{{ ansible_architecture }}.AppImage"
     dest: "{{ ansible_user_dir }}/.local/bin/bitwarden"
     mode: "0755"
+    owner: "{{ ansible_user_uid }}"
+    group: "{{ ansible_user_gid }}"
   tags: bitwarden
 
 - name: "Bitwarden Desktop | Install desktop file"
-  become: true
   ansible.builtin.get_url:
     url: "https://raw.githubusercontent.com/bitwarden/clients/refs/heads/main/apps/desktop/resources/com.bitwarden.desktop.desktop"
     dest: "{{ ansible_user_dir }}/.local/share/applications/"
     mode: "0644"
+    owner: "{{ ansible_user_uid }}"
+    group: "{{ ansible_user_gid }}"
   tags: bitwarden
