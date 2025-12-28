@@ -11,5 +11,14 @@
   become: true
   ansible.builtin.package:
     name: "{{ pipx_packages }}"
-    state: present
+    state: "present"
+  when: pipx_packages is defined
+  tags: pipx
+
+- name: "Pipx | Install from PIP"
+  ansible.builtin.pip:
+    name: "pipx"
+    state: "latest"
+    extra_args: "--user"
+  when: pipx_packages is not defined
   tags: pipx
