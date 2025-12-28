@@ -25,7 +25,7 @@
 
 - name: "Ruff | Install from PIP"
   when: ruff_package is not defined
-  ansible.builtin.pip:
+  community.general.pipx:
     name: "{{ ruff_pip_package }}"
     state: present
   tags:

@@ -21,7 +21,7 @@
   when: codespell_packages is defined
 
 - name: "CodeSpell | Install from source"
-  ansible.builtin.pip:
+  community.general.pipx:
     name: "codespell"
     state: present
   tags:
