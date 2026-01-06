@@ -5,5 +5,5 @@
       - oh-my-posh
       - cache
       - clear
-  register: output
-  changed_when: output.rc == 0
+  register: oh_my_posh_output
+  changed_when: oh_my_posh_output.rc == 0

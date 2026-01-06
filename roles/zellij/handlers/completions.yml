@@ -12,5 +12,5 @@
   become: true
   ansible.builtin.shell:
     cmd: "zellij setup --generate-completion {{ item.shell }} > {{ item.filepath }}"
-  register: output
-  changed_when: output.rc != 0
+  register: zellij_output
+  changed_when: zellij_output.rc != 0

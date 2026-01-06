@@ -2,5 +2,5 @@
 - name: "Nerdfonts | Build font information caches"
   become: true
   ansible.builtin.command: fc-cache --force --verbose
-  register: res
+  register: nerdfonts_res
   changed_when: "'fc-cache: succeeded' in res.stdout"

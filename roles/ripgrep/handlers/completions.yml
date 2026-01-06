@@ -11,6 +11,6 @@
 - name: "Ripgrep | Install completion file [{{ item.shell }}]"
   become: true
   ansible.builtin.shell:
-    cmd: "zellij setup --generate-completion {{ item.shell }} > {{ item.filepath }}"
-  register: output
-  changed_when: output.rc != 0
+    cmd: "rg --generate complete-{{ item.shell }} > {{ item.filepath }}"
+  register: ripgrep_output
+  changed_when: ripgrep_output.rc != 0

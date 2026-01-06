@@ -9,5 +9,5 @@
 
 - name: "Bat | Rebuild cache"
   ansible.builtin.command: "bat cache --build"
-  register: out
-  changed_when: out.rc != 0
+  register: bat_out
+  changed_when: bat_out.rc != 0
