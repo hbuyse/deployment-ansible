@@ -1,0 +1,31 @@
+---
+- name: "Yazi | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ ansible_os_family | lower }}.yml"
+  tags: yazi
+
+- name: "Yazi | Include OS specific tasks"
+  ansible.builtin.include_tasks:
+    file: "{{ item }}"
+    apply:
+      tags: zellij
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: yazi
+
+- name: "Yazi | Install packages"
+  become: true
+  ansible.builtin.package:
+    name: "{{ yazi_packages }}"
+    state: "present"
+  when: yazi_packages is defined
+  tags: yazi
+
+- name: "Yazi | Install Rust package with locked dependencies"
+  community.general.cargo:
+    name: yazi-build
+    state: latest
+    locked: true
+  tags: yazi
+  when: yazi_packages is not defined

@@ -1,0 +1,12 @@
+---
+yazi_packages:
+  - yazi
+  - ffmpeg7
+  - p7zip
+  - jq
+  - poppler
+  - fd
+  - ripgrep
+  - fzf
+  - zoxide
+  - ImageMagick
