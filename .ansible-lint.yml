@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible-lint-config.json
 # .ansible-lint
 
 # Profiles gradually increase the strictness of rules as your Ansible content lifecycle.
@@ -20,7 +21,6 @@ exclude_paths:
   - collections/
   - roles/*/files/
 
-parseable: true
 quiet: true
 # strict: true
 verbosity: 0
