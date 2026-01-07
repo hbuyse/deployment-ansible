@@ -1,0 +1,10 @@
+---
+sway_packages:
+  - x11-wm/sway
+  - x11-wm/lxsession
+  - x11-fm/Thunar
+  - archivers/thunar-archive-plugin
+  - NetworkManager-tui
+  # Screenshots
+  - x11/grim
+  - x11/slurp

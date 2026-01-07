@@ -1,0 +1,3 @@
+---
+fuzzel_packages:
+  - x11/fuzzel

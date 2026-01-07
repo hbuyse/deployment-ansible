@@ -1,0 +1,4 @@
+---
+nodejs_packages:
+  - www/node
+  - www/npm
