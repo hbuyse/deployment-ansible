@@ -29,5 +29,5 @@
         src: "lightdm-gtk-greeter.conf.j2"
         dest: "{{ lightdm_config_path }}"
         owner: "root"
-        group: "root"
+        group: "{{ root_primary_group | int }}"
         mode: "0644"
