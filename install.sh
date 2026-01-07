@@ -143,6 +143,7 @@ declare -A PACKAGES=(
     ["linux-ubuntu"]="git ansible python3-watchdog python3-debian"
     ["linux-debian"]="git ansible python3-watchdog python3-debian"
     ["linux-fedora"]="git ansible python3-watchdog"
+    ["freebsd-freebsd"]="devel/git sysutils/ansible devel/py-watchdog"
 )
 
 install_packages ${PACKAGES["${OS}-${ID}"]}
