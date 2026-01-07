@@ -1,0 +1,4 @@
+---
+xdg_desktop_portal_packages:
+  - x11/xdg-desktop-portal-wlr
+  - x11/xdg-desktop-portal-gtk

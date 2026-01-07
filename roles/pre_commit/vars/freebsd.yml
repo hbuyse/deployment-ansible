@@ -1,0 +1,3 @@
+---
+pre_commit_packages:
+  - devel/py-pre-commit
