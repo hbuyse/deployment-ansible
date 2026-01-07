@@ -18,6 +18,8 @@
   roles:
     # Terminals
     - role: "foot"
+    - role: "lightdm"
+      when: ansible_facts.system == "FreeBSD"
     - role: "alacritty"
     - role: "ghostty"
     - role: "themes"
