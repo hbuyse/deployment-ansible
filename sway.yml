@@ -50,7 +50,6 @@
     - role: "swaync"
       when: ansible_os_family not in ["Debian"]
     - role: "wofi"
-      when: ansible_os_family in ["Debian"]
     - role: "fuzzel"
       when: ansible_os_family not in ["Debian"]
     - role: "xdg_desktop_portal"
