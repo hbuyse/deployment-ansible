@@ -55,5 +55,6 @@
     - role: "xdg_desktop_portal"
     - role: "wireplumber"
     - role: "tuned"
+      when: ansible_system != "FreeBSD"
     - role: "wlprop"
     - role: "wlsunset"
