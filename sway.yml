@@ -16,6 +16,9 @@
           tags: always
       tags: always
   roles:
+    # - role: "lightdm"
+    #   vars:
+    #     lightdm_active_monitor: "DP-3"
     - role: "greetd"
       when: ansible_hostname != "hbuyse-latitude5400"
     - role: "tuigreet"

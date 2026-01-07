@@ -1,0 +1,6 @@
+---
+lightdm_packages:
+  - lightdm
+  - lightdm-gtk-greeter
+  - lightdm-gtk-greeter-settings
+  - materia-gtk-theme
