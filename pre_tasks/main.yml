@@ -7,6 +7,15 @@
 - name: "Pre-tasks | Get list of services"
   ansible.builtin.service_facts:
 
+- name: "Pre-tasks | Get root user info"
+  ansible.builtin.getent:
+    database: passwd
+    key: root
+
+- name: "Pre-tasks | Set root_primary_group fact"
+  ansible.builtin.set_fact:
+    root_primary_group: "{{ ansible_facts.getent_passwd.root[2] }}"
+
 - name: "Pre-tasks | Run some OS specific tasks [{{ ansible_os_family }}]"
   ansible.builtin.include_tasks:
     file: "{{ item }}"
