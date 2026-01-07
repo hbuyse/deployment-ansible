@@ -1,0 +1,4 @@
+---
+swaync_packages:
+  - x11/swaync
+  - textproc/sassc

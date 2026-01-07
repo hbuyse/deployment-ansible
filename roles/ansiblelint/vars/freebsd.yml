@@ -1,0 +1,3 @@
+---
+ansiblelint_packages:
+  - sysutils/py-ansible-lint
