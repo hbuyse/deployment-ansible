@@ -20,14 +20,14 @@
   block:
     - name: "LightDM | Ensure config directory exists"
       ansible.builtin.file:
-        path: "/etc/lightdm"
+        path: "{{ lightdm_config_path | ansible.builtin.dirname }}"
         state: directory
         mode: "0755"
 
     - name: "LightDM | Update configuration"
       ansible.builtin.template:
         src: "lightdm-gtk-greeter.conf.j2"
-        dest: "/etc/lightdm/lightdm-gtk-greeter.conf"
+        dest: "{{ lightdm_config_path }}"
         owner: "root"
         group: "root"
         mode: "0644"
