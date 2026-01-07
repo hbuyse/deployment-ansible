@@ -20,9 +20,15 @@
     #   vars:
     #     lightdm_active_monitor: "DP-3"
     - role: "greetd"
-      when: ansible_hostname != "hbuyse-latitude5400"
+      when:
+        - ansible_hostname != "hbuyse-latitude5400"
+        - ansible_system != "FreeBSD"
     - role: "tuigreet"
-      when: ansible_hostname != "hbuyse-latitude5400"
+      when:
+        - ansible_hostname != "hbuyse-latitude5400"
+        - ansible_system != "FreeBSD"
+    - role: "lightdm"
+      when: ansible_system == "FreeBSD"
     - role: "alacritty"
     - role: "zsh"
     - role: "oh_my_posh"
