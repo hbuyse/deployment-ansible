@@ -10,5 +10,5 @@
 - name: "ZSH | Ensure zsh is the default shell"
   ansible.builtin.user:
     name: "{{ ansible_user_id }}"
-    shell: "/usr/bin/zsh"
+    shell: "{{ (ansible_system == 'FreeBSD') | ternary('/usr/local/bin/zsh', '/usr/bin/zsh') }}"
   become: true
