@@ -1,0 +1,6 @@
+---
+waybar_packages:
+  - x11/waybar
+  - accessibility/wlsunset
+  - x11-fonts/noto-emoji
+  - devel/py-pygobject

@@ -1,0 +1,4 @@
+---
+wireplumber_packages:
+  - multimedia/pipewire
+  - wireplumber/wireplumber
