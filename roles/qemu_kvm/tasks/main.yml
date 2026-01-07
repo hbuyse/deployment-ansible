@@ -1,4 +1,10 @@
 ---
+
+- name: "QEMU-KVM | Check that it is supported by the OS"
+  ansible.builtin.assert:
+    that:
+      - ansible_system == "Linux"
+
 - name: "QEMU-KVM | Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
