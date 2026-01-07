@@ -36,6 +36,7 @@
     - role: "swaylock"
     - role: "swayidle"
     - role: "brightnessctl"
+      when: ansible_system != "FreeBSD"
     # Wayland tools
     - role: "waybar"
     - role: "kanshi"
