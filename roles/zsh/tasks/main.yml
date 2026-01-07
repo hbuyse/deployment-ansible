@@ -23,14 +23,14 @@
     - zsh
     - omz
 
-- name: "Shell | Copy configuration file"
+- name: "ZSH | Copy configuration file"
   tags:
     - shell
     - zsh
     - omz
     - p10k
   block:
-    - name: "Shell | Copy static configuration file"
+    - name: "ZSH | Copy static configuration file"
       ansible.builtin.copy:
         src: "{{ item }}"
         dest: "{{ ansible_user_dir }}/.{{ item }}"
@@ -43,7 +43,7 @@
         - xprofile
         - Xresources
 
-    - name: "Shell | Copy dynamic configuration file"
+    - name: "ZSH | Copy dynamic configuration file"
       ansible.builtin.template:
         src: "{{ item }}.j2"
         dest: "{{ ansible_user_dir }}/.{{ item }}"

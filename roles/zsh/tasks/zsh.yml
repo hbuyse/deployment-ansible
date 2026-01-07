@@ -1,13 +1,13 @@
 ---
 # tasks file for shell
-- name: "Shell | Install zsh package"
+- name: "ZSH | Install zsh package"
   become: true
   ansible.builtin.package:
     name:
       - zsh
     state: present
 
-- name: "Shell | Ensure zsh is the default shell"
+- name: "ZSH | Ensure zsh is the default shell"
   ansible.builtin.user:
     name: "{{ ansible_user_id }}"
     shell: "/usr/bin/zsh"
