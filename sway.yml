@@ -50,3 +50,4 @@
     - role: "xdg_desktop_portal"
     - role: "wireplumber"
     - role: "tuned"
+      when: ansible_facts.system != "FreeBSD"
