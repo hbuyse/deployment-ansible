@@ -1,0 +1,34 @@
+---
+- name: "LightDM | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: lightdm
+
+- name: "LightDM | Install package"
+  become: true
+  ansible.builtin.package:
+    name: "{{ lightdm_packages }}"
+    update_cache: true
+    state: present
+  tags: lightdm
+
+- name: "LightDM | Copy configuration"
+  become: true
+  tags: lightdm
+  block:
+    - name: "LightDM | Ensure config directory exists"
+      ansible.builtin.file:
+        path: "/etc/lightdm"
+        state: directory
+        mode: "0755"
+
+    - name: "LightDM | Update configuration"
+      ansible.builtin.template:
+        src: "lightdm-gtk-greeter.conf.j2"
+        dest: "/etc/lightdm/lightdm-gtk-greeter.conf"
+        owner: "root"
+        group: "root"
+        mode: "0644"

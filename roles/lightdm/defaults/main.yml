@@ -1,0 +1,6 @@
+---
+lightdm_background: "/usr/local/share/backgrounds/wallpaper.png"
+lightdm_user_background: "true"
+lightdm_theme_name: "Materia-dark-compact"
+lightdm_icon_theme_name: "Papirus-Dark"
+lightdm_font_name: "Iosevka Nerd Font Regular 10"
