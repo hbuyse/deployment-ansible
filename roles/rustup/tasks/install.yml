@@ -29,7 +29,7 @@
       ansible.builtin.shell: "{{ rustup_tmp_dir }}/sh.rustup.rs -y"
       args:
         creates: "{{ ansible_facts.user_dir }}/.cargo/bin/rustup"
-        executable: /bin/bash
+        executable: /bin/sh
       environment:
         RUSTUP_HOME: "{{ ansible_facts.user_dir }}/.rustup"
         CARGO_HOME: "{{ ansible_facts.user_dir }}/.cargo"
