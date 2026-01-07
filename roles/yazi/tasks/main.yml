@@ -29,3 +29,17 @@
     locked: true
   tags: yazi
   when: yazi_packages is not defined
+
+- name: "Yazi | Ensure configuration directory exists"
+  ansible.builtin.file:
+    path: "{{ yazi_config_dir }}"
+    state: "directory"
+    mode: "0755"
+  tags: yazi
+
+- name: "Yazi | Copy configuration files"
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/"
+    dest: "{{ yazi_config_dir }}"
+    mode: "0644"
+  tags: yazi
