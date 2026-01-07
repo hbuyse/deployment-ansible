@@ -38,7 +38,7 @@
         path: "{{ discord_install_dir }}"
         state: directory
         owner: "root"
-        group: "root"
+        group: "{{ root_primary_group | int }}"
         mode: "0755"
 
     - name: "Discord | Extract archive"
@@ -47,7 +47,7 @@
           }}.tar.gz"
         dest: "{{ discord_install_dir }}"
         owner: "root"
-        group: "root"
+        group: "{{ root_primary_group | int }}"
         exclude:
           - "Discord/postinst.sh"
           - "Discord/discord.desktop"
@@ -62,7 +62,7 @@
             path: "{{ ansible_user_dir }}/.local/share/applications"
             state: directory
             owner: "root"
-            group: "root"
+            group: "{{ root_primary_group | int }}"
             mode: "0755"
 
         - name: "Discord | Copy desktop file"
@@ -70,7 +70,7 @@
             src: "discord.desktop.j2"
             dest: "{{ ansible_user_dir }}/.local/share/applications/discord.desktop"
             owner: "root"
-            group: "root"
+            group: "{{ root_primary_group | int }}"
             mode: "0644"
 
     - name: "Discord | Write version in custom file"
@@ -78,5 +78,5 @@
         src: "version.j2"
         dest: "{{ discord_version_filepath }}"
         owner: "root"
-        group: "root"
+        group: "{{ root_primary_group | int }}"
         mode: "0644"
