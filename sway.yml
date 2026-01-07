@@ -38,6 +38,7 @@
     - role: "nerdfonts"
     - role: "wallpapers"
     - role: "brightnessctl"
+      when: ansible_system != "FreeBSD"
     - role: "wayland_sessions"
     - role: "swaylock"
     - role: "swayidle"
