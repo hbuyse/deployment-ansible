@@ -1,0 +1,6 @@
+---
+- name: "Yazi | Download Catppuccin Mocha theme (peach variant)"
+  ansible.builtin.get_url:
+    url: "https://raw.githubusercontent.com/catppuccin/yazi/refs/heads/main/themes/mocha/catppuccin-mocha-peach.toml"
+    dest: "{{ yazi_config_dir }}/theme.toml"
+    mode: "0644"

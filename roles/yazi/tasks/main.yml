@@ -35,6 +35,8 @@
     path: "{{ yazi_config_dir }}"
     state: "directory"
     mode: "0755"
+  notify:
+    - "Yazi | Download Catppuccin Mocha theme (peach variant)"
   tags: yazi
 
 - name: "Yazi | Copy configuration files"
