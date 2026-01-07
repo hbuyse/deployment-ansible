@@ -1,38 +1,54 @@
 ---
-- name: "LazyGit | Get latest version number"
-  register: lazygit_latest_json
-  ansible.builtin.uri:
-    url: "https://api.github.com/repos/{{ lazygit_github_user }}/{{ lazygit_github_repo }}/releases/latest"
-    method: GET
-    return_content: true
-    status_code: 200
-    body_format: json
+- name: "LazyGit | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
   tags:
     - lazygit
     - git
 
-- name: "LazyGit | Set facts"
-  ansible.builtin.set_fact:
-    lazygit_latest_version: "{{ lazygit_latest_json.json.tag_name[1:] }}"
+- name: "LazyGit | Install from package manager"
+  when: lazygit_packages is defined
   tags:
     - lazygit
     - git
+  ansible.builtin.package:
+    name: "{{ lazygit_packages }}"
+    state: "present"
 
-- name: "LazyGit | Install executable"
-  become: true
-  ansible.builtin.unarchive:
-    src: "https://github.com/{{ lazygit_github_user }}/{{ lazygit_github_repo }}/releases/download/v{{ lazygit_latest_version
-      }}/lazygit_{{ lazygit_latest_version }}_{{ ansible_system }}_{{ ansible_architecture }}.tar.gz"
-    dest: "{{ ansible_user_dir }}/.local/bin"
-    mode: "0755"
-    owner: "{{ ansible_user_uid }}"
-    group: "{{ ansible_user_gid }}"
-    include:
-      - "lazygit"
-    remote_src: true
+- name: "LazyGit | Install from source"
+  when: lazygit_packages is not defined
   tags:
     - lazygit
     - git
+  block:
+    - name: "LazyGit | Get latest version number"
+      register: lazygit_latest_json
+      ansible.builtin.uri:
+        url: "https://api.github.com/repos/{{ lazygit_github_user }}/{{ lazygit_github_repo }}/releases/latest"
+        method: GET
+        return_content: true
+        status_code: 200
+        body_format: json
+
+    - name: "LazyGit | Set facts"
+      ansible.builtin.set_fact:
+        lazygit_latest_version: "{{ lazygit_latest_json.json.tag_name[1:] }}"
+
+    - name: "LazyGit | Install executable"
+      become: true
+      ansible.builtin.unarchive:
+        src: "https://github.com/{{ lazygit_github_user }}/{{ lazygit_github_repo }}/releases/download/v{{ lazygit_latest_version
+          }}/lazygit_{{ lazygit_latest_version }}_{{ ansible_system }}_{{ ansible_architecture }}.tar.gz"
+        dest: "{{ ansible_user_dir }}/.local/bin"
+        mode: "0755"
+        owner: "{{ ansible_user_uid }}"
+        group: "{{ ansible_user_gid }}"
+        include:
+          - "lazygit"
+        remote_src: true
 
 - name: "LazyGit | Install configuration"
   tags:
