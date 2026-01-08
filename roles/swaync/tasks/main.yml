@@ -40,14 +40,14 @@
   block:
     - name: "Sway Notification Center | Ensure directories exists"
       ansible.builtin.file:
-        path: "{{ ansible_user_dir }}/.local/lib/systemd/user"
+        path: "{{ ansible_user_dir }}/.config/systemd/user"
         state: "directory"
         mode: "0755"
 
     - name: "Sway Notification Center | Copy service file"
       ansible.builtin.copy:
         src: "swaync.service"
-        dest: "{{ ansible_user_dir }}/.local/lib/systemd/user"
+        dest: "{{ ansible_user_dir }}/.config/systemd/user"
         mode: "0644"
       notify: "Sway Notification Center | Enable service"
 

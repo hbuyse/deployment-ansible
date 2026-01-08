@@ -3,4 +3,4 @@
   become: true
   ansible.builtin.command: fc-cache --force --verbose
   register: nerdfonts_res
-  changed_when: "'fc-cache: succeeded' in res.stdout"
+  changed_when: "'fc-cache: succeeded' in nerdfonts_res.stdout"

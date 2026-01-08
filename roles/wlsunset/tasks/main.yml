@@ -28,13 +28,13 @@
 
     - name: "Wlsunset | Ensure systemd directory exist"
       ansible.builtin.file:
-        path: "{{ ansible_user_dir }}/.local/lib/systemd/user/"
+        path: "{{ ansible_user_dir }}/.config/systemd/user/"
         state: directory
         mode: "0755"
 
     - name: "Wlsunset | Copy service file"
       ansible.builtin.template:
         src: "wlsunset.service.j2"
-        dest: "{{ ansible_user_dir }}/.local/lib/systemd/user/wlsunset.service"
+        dest: "{{ ansible_user_dir }}/.config/systemd/user/wlsunset.service"
         mode: "0644"
       notify: "Wlsunset | Restart service"
