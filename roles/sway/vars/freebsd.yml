@@ -4,7 +4,9 @@ sway_packages:
   - x11-wm/lxsession
   - x11-fm/thunar
   - archivers/thunar-archive-plugin
-  # - NetworkManager-tui
+  - net/networkmgr
   # Screenshots
   - x11/grim
   - x11/slurp
+  - sysutils/seatd
+  - graphics/drm-kmod
