@@ -1,4 +1,9 @@
 ---
+- name: "Podman | Check that it is supported by the OS"
+  ansible.builtin.assert:
+    that:
+      - ansible_system == "Linux"
+
 - name: "Podman | Add repository [Debian]"
   ansible.builtin.include_tasks:
     file: debian.yml
