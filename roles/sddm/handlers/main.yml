@@ -1,0 +1,13 @@
+---
+- name: "SDDM | Enable service"
+  become: true
+  ansible.builtin.systemd:
+    name: "sddm"
+    daemon_reload: true
+    enabled: true
+    scope: "system"
+
+- name: "SDDM | Remove downloaded catppuccin theme"
+  ansible.builtin.file:
+    path: "/tmp/{{ sddm_catppuccin_obj.name }}"
+    state: "absent"

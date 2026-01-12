@@ -16,6 +16,8 @@
           tags: always
       tags: always
   roles:
+    - role: "sddm"
+      when: ansible_facts.hostname == "T480"
     # Terminals
     - role: "foot"
     - role: "alacritty"
