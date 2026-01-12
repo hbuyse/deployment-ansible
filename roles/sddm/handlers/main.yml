@@ -1,0 +1,8 @@
+---
+- name: "SDDM | Enable service"
+  become: true
+  ansible.builtin.systemd:
+    name: "sddm"
+    daemon_reload: true
+    enabled: true
+    scope: "system"
