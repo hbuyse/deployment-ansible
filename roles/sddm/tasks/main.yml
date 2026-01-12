@@ -1,0 +1,16 @@
+---
+- name: "SDDM | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: sddm
+
+- name: "SDDM | Install packages"
+  become: true
+  ansible.builtin.package:
+    state: present
+    name: "{{ sddm_packages }}"
+  notify: "SDDM | Enable service"
+  tags: sddm

@@ -1,0 +1,6 @@
+---
+sddm_packages:
+  - sddm
+  # Themes
+  - sddm-breeze
+  - sddm-wayland-sway

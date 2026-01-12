@@ -1,0 +1,3 @@
+---
+sddm_config_dir: "/etc/sddm.conf.d"
+sddm_themes_dir: "/usr/share/sddm/themes"
