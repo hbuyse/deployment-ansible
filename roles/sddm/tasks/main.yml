@@ -32,7 +32,6 @@
     - name: "SDDM | Set facts"
       ansible.builtin.set_fact:
         sddm_catppuccin_latest_version: "{{ sddm_catppuccin_latest_json.json.tag_name[1:] }}"
-      tags: nerdfonts
 
     - name: "SDDM | Install Catppuccin theme"
       ansible.builtin.unarchive:
