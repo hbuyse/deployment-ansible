@@ -37,7 +37,7 @@
       ansible.builtin.unarchive:
         src: "https://github.com/{{ sddm_theme_catppuccin_gh_user }}/{{ sddm_theme_catppuccin_gh_repo }}/releases/download/v{{
           sddm_catppuccin_latest_version }}/catppuccin-{{ sddm_theme_catppuccin_flavor }}-{{ sddm_theme_catppuccin_variant
-          }}.zip"
+          }}-sddm.zip"
         dest: "{{ sddm_themes_dir }}"
         owner: "root"
         group: "root"
