@@ -17,13 +17,13 @@
 
 - name: "SDDM | Setup Catppuccin theme"
   become: true
-  when: sddm_theme.catppuccin.enabled
+  when: sddm_theme_catppuccin_enabled
   tags: sddm
   block:
     - name: "SDDM | Get latest version number"
       register: sddm_catppuccin_latest_json
       ansible.builtin.uri:
-        url: "https://api.github.com/repos/{{ sddm_theme.catppuccin.gh_user }}/{{ sddm_theme.catppuccin.gh_repo }}/releases/latest"
+        url: "https://api.github.com/repos/{{ sddm_theme_catppuccin_gh_user }}/{{ sddm_theme_catppuccin_gh_repo }}/releases/latest"
         method: GET
         return_content: true
         status_code: 200
@@ -35,14 +35,14 @@
 
     - name: "SDDM | Install Catppuccin theme"
       ansible.builtin.unarchive:
-        src: "https://github.com/{{ sddm_theme.catppuccin.gh_user }}/{{ sddm_theme.catppuccin.gh_repo }}/releases/download/v{{
-          sddm_catppuccin_latest_version }}/catppuccin-{{ sddm_theme.catppuccin.flavor }}-{{ sddm_theme.catppuccin.variant
+        src: "https://github.com/{{ sddm_theme_catppuccin_gh_user }}/{{ sddm_theme_catppuccin_gh_repo }}/releases/download/v{{
+          sddm_catppuccin_latest_version }}/catppuccin-{{ sddm_theme_catppuccin_flavor }}-{{ sddm_theme_catppuccin_variant
           }}.zip"
         dest: "{{ sddm_themes_dir }}"
         owner: "root"
         group: "root"
         exclude:
-          - "catppuccin-{{ sddm_theme.catppuccin.flavor }}-{{ sddm_theme.catppuccin.variant }}/preview.png"
+          - "catppuccin-{{ sddm_theme_catppuccin_flavor }}-{{ sddm_theme_catppuccin_variant }}/preview.png"
         remote_src: true
 
     - name: "SDDM | Install configuration file"
