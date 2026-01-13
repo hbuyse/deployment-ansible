@@ -17,7 +17,7 @@
 
 - name: "SDDM | Setup Catppuccin theme"
   become: true
-  when: sddm_theme.install.enabled
+  when: sddm_theme.catppuccin.enabled
   tags: sddm
   block:
     - name: "SDDM | Get latest version number"
