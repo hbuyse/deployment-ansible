@@ -1,3 +1,12 @@
 ---
+sddm_config_file: "/etc/sddm.conf"
 sddm_config_dir: "/etc/sddm.conf.d"
 sddm_themes_dir: "/usr/share/sddm/themes"
+
+sddm_theme:
+  catppuccin:
+    enabled: false
+    gh_user: "catppuccin"
+    gh_repo: "sddm"
+    flavor: "mocha"
+    variant: "peach"
