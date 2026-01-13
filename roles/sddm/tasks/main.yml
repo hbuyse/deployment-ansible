@@ -44,3 +44,13 @@
         exclude:
           - "catppuccin-{{ sddm_theme.catppuccin.flavor }}-{{ sddm_theme.catppuccin.variant }}/preview.png"
         remote_src: true
+
+    - name: "SDDM | Install configuration file"
+      ansible.builtin.template:
+        src: "{{ item }}.j2"
+        dest: "{{ sddm_config_dir }}/{{ item }}"
+        owner: "root"
+        group: "root"
+        mode: "0644"
+      loop:
+        - "10-catppuccin-theme.conf"
