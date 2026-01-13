@@ -1,0 +1,7 @@
+---
+sddm_packages:
+  - sddm
+  # Themes dependencies
+  - qt6-svg
+  - qt6-declarative
+  - qt5-quickcontrols2

@@ -1,0 +1,9 @@
+---
+sddm_packages:
+  - sddm
+  # Themes
+  - sddm-breeze
+  - sddm-wayland-sway
+  # Themes dependencies
+  - libQt6Svg6
+  - libqt5-qtquickcontrols2
