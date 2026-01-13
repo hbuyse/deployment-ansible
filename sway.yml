@@ -16,7 +16,12 @@
           tags: always
       tags: always
   roles:
+    - role: "greetd"
+      when: ansible_hostname == "white-tower"
+    - role: "tuigreet"
+      when: ansible_hostname == "white-tower"
     - role: "sddm"
+      when: ansible_hostname == "T480"
     - role: "alacritty"
     - role: "nvidia"
       when: nvidia_detection.rc == 0
