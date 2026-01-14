@@ -15,8 +15,30 @@
   notify: "SDDM | Enable service"
   tags: sddm
 
-- name: "SDDM | Setup Catppuccin theme"
+- name: "SDDM | Setup global configuration"
   become: true
+  tags: sddm
+  block:
+    - name: "SDDM | Create local configuration directory"
+      ansible.builtin.file:
+        path: "{{ sddm_config_dir }}"
+        state: "directory"
+        owner: "root"
+        group: "root"
+        recurse: true
+
+    - name: "SDDM | Copy static configuration files"
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "{{ sddm_config_dir }}/{{ item }}"
+        owner: "root"
+        group: "root"
+        mode: "0644"
+      loop:
+        - 01-themes-directory.conf
+        - 02-virtualkbd.conf
+
+- name: "SDDM | Install Catppuccin Mocha theme"
   when: sddm_theme_catppuccin_enabled
   tags: sddm
   block:
@@ -31,13 +53,35 @@
 
     - name: "SDDM | Set facts"
       ansible.builtin.set_fact:
-        sddm_catppuccin_latest_version: "{{ sddm_catppuccin_latest_json.json.tag_name[1:] }}"
+        sddm_catppuccin_obj: "{{ sddm_catppuccin_latest_json.json.assets | selectattr('name', '==', sddm_catppuccin_zip_name)
+          | first }}"
+      vars:
+        sddm_catppuccin_zip_name: "catppuccin-{{ sddm_theme_catppuccin_flavor }}-{{ sddm_theme_catppuccin_variant }}-sddm.zip"
+
+    - name: "SDDM | Download Catppuccin theme"
+      ansible.builtin.get_url:
+        url: "{{ sddm_catppuccin_obj.browser_download_url }}"
+        dest: "/tmp/{{ sddm_catppuccin_obj.name }}"
+        owner: "{{ ansible_user_uid }}"
+        group: "{{ ansible_user_gid }}"
+        mode: "0644"
+        checksum: "{{ sddm_catppuccin_obj.digest }}"
+      when: sddm_catppuccin_obj
+      notify: "SDDM | Remove downloaded catppuccin theme"
+
+    - name: "SDDM | Ensure themes directory exist"
+      become: true
+      ansible.builtin.file:
+        path: "{{ sddm_themes_dir }}"
+        state: "directory"
+        owner: "root"
+        group: "root"
+        recurse: true
 
     - name: "SDDM | Install Catppuccin theme"
+      become: true
       ansible.builtin.unarchive:
-        src: "https://github.com/{{ sddm_theme_catppuccin_gh_user }}/{{ sddm_theme_catppuccin_gh_repo }}/releases/download/v{{
-          sddm_catppuccin_latest_version }}/catppuccin-{{ sddm_theme_catppuccin_flavor }}-{{ sddm_theme_catppuccin_variant
-          }}-sddm.zip"
+        src: "/tmp/{{ sddm_catppuccin_obj.name }}"
         dest: "{{ sddm_themes_dir }}"
         owner: "root"
         group: "root"
@@ -45,7 +89,8 @@
           - "catppuccin-{{ sddm_theme_catppuccin_flavor }}-{{ sddm_theme_catppuccin_variant }}/preview.png"
         remote_src: true
 
-    - name: "SDDM | Install configuration file"
+    - name: "SDDM | Copy dynamic configuration files"
+      become: true
       ansible.builtin.template:
         src: "{{ item }}.j2"
         dest: "{{ sddm_config_dir }}/{{ item }}"
