@@ -4,6 +4,13 @@
     alt_arch: "{{ ansible_machine | replace('x86_64', 'amd64') | replace('aarch64', 'arm64') }}"
   tags: always
 
+- name: "Pre-tasks | Detect NVIDIA GPU"
+  ansible.builtin.shell:
+    cmd: "set -o pipefail && lspci | grep -qoE '(VGA|3D).*NVIDIA'"
+    executable: /bin/bash
+  register: nvidia_detection
+  tags: always
+
 - name: "Pre-tasks | Get list of services"
   ansible.builtin.service_facts:
 

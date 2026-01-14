@@ -1,0 +1,16 @@
+---
+- name: "NVIDIA | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: nvidia
+
+- name: "NVIDIA | Install packages"
+  become: true
+  ansible.builtin.package:
+    name: "{{ nvidia_packages }}"
+    state: "present"
+  when: nvidia_packages is defined
+  tags: nvidia

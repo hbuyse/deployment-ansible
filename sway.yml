@@ -21,6 +21,8 @@
     - role: "tuigreet"
       when: ansible_hostname == "white-tower"
     - role: "alacritty"
+    - role: "nvidia"
+      when: nvidia_detection.rc == 0
     - role: "zsh"
     - role: "oh_my_posh"
     - role: "fastfetch"
