@@ -35,7 +35,6 @@
         group: "root"
         mode: "0644"
       loop:
-        - 01-themes-directory.conf
         - 02-virtualkbd.conf
 
 - name: "SDDM | Install Catppuccin Mocha theme"
