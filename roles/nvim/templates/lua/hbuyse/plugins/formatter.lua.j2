@@ -26,6 +26,9 @@ return {
           -- Run codespell only if the .codespellrc file exists in the project
           require_cwd = true,
         },
+        xmlformatter = {
+            prepend_args = {'--blanks', '--selfclose'}
+        }
       },
       formatters_by_ft = {
         c = { 'clang-format' },
@@ -59,7 +62,7 @@ return {
         markdown = { 'prettierd', 'prettier', stop_after_first = true },
         sass = { 'prettierd', 'prettier', stop_after_first = true },
         scss = { 'prettierd', 'prettier', stop_after_first = true },
-        xml = { 'xmllint', 'xmlformatter' },
+        xml = { 'xmlformatter' },
         yaml = { 'yamlfmt', 'prettierd', 'prettier', stop_after_first = true },
         -- Use the "*" filetype to run formatters on all filetypes.
         ['*'] = { 'codespell' },
