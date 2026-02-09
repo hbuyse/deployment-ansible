@@ -57,6 +57,8 @@
     - role: "zellij"
     - role: "keymapp"
     - role: "nextcloud"
+    - role: "owncloud_client"
+      when: ansible_hostname == "hbuyse-latitude5400"
     - role: "spotify_player"
     - role: "webapplications"
     - role: "discord"

@@ -1,0 +1,3 @@
+---
+owncloud_client_packages:
+  - owncloud-client

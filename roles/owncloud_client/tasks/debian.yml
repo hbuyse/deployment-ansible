@@ -1,0 +1,14 @@
+---
+- name: "Owncloud Client | Install repository [Debian]"
+  become: true
+  ansible.builtin.deb822_repository:
+    name: owncloud-client
+    enabled: true
+    types: deb
+    uris: "https://download.owncloud.com/desktop/ownCloud/stable/latest/linux/{{ ansible_distribution }}_{{ ansible_distribution_version
+      }}/"
+    suites: "/"
+    architectures:
+      - "{{ deb_arch }}"
+    signed_by: "https://download.owncloud.com/desktop/ownCloud/stable/latest/linux/{{ ansible_distribution }}_{{ ansible_distribution_version
+      }}/Release.key"

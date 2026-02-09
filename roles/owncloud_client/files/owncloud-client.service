@@ -1,0 +1,13 @@
+[Unit]
+Description=Owncloud client
+Documentation=https://download.owncloud.com/desktop/ownCloud/stable/latest/linux/download/
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+ExecStart=owncloud
+Restart=always
+RestartSec=12
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,7 @@
+---
+- name: "Owncloud Client | Restart service"
+  ansible.builtin.systemd:
+    name: "owncloud-client"
+    enabled: true
+    state: "restarted"
+    scope: "user"

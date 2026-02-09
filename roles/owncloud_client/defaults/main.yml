@@ -1,0 +1,2 @@
+---
+owncloud_client_service_dir: "{{ ansible_user_dir }}/.config/systemd/user"
