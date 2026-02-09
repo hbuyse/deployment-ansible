@@ -1,9 +1,11 @@
 ---
 - name: "Git | Add PPA"
   become: true
-  ansible.builtin.apt_repository:
-    filename: git-core
-    repo: "ppa:git-core/ppa"
-    codename: "{{ ansible_distribution_release }}"
-    state: present
-    update_cache: false
+  ansible.builtin.deb822_repository:
+    name: git-core
+    enabled: true
+    types: deb
+    uris: "https://ppa.launchpadcontent.net/git-core/ppa/ubuntu"
+    suites: "{{ ansible_distribution_release | lower }}"
+    components:
+      - main
