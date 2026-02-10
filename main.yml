@@ -53,6 +53,7 @@
     - role: "ripgrep"
     - role: "bat"
     - role: "fd"
+    - role: "yazi"
     - role: "bottom"
     - role: "zellij"
     - role: "keymapp"
