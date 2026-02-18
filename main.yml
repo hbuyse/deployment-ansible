@@ -83,6 +83,7 @@
     - role: "texlab"
     - role: "tombi"
     - role: "yamlls"
+    - role: "perlnavigator"
     # End LSP Servers
     # Formatters
     - role: "black"
