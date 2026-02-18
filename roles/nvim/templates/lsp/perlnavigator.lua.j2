@@ -1,0 +1,20 @@
+return {
+  cmd = { 'perlnavigator' },
+  filetypes = { 'perl' },
+  settings = {
+    perlnavigator = {
+      includePaths = {
+        '~/perl5/lib/perl5',
+{% for dir in nvim_perlnavigator_include_paths %}
+        '{{ dir }}',
+{% endfor %}
+      },
+      perltidyProfile = '~/.perltidyrc',
+      perlEnvAdd = false,
+      perlEnv = {},
+      perlcriticEnabled = true,
+      enableWarnings = true,
+    },
+  },
+}
+--  vim: set ts=4 sw=4 tw=120 et ft=lua :
