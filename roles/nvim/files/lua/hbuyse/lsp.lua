@@ -252,4 +252,5 @@ vim.lsp.enable({
   'composels', -- Docker compose
   'tombi', -- Toml
   'tailwindcss', -- Tailwindcss
+  'perlnavigator', -- Perl
 })

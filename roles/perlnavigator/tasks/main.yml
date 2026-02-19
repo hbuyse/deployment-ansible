@@ -1,0 +1,59 @@
+---
+- name: "PerlNavigator | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags:
+    - perlnavigator
+    - lsp
+
+- name: "PerlNavigator | Install program from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ perlnavigator_package }}"
+    state: present
+  when: perlnavigator_package is defined
+  tags:
+    - lsp
+    - perlnavigator
+
+- name: "PerlNavigator | Install program from static binary"
+  when: perlnavigator_package is not defined
+  tags:
+    - lsp
+    - perlnavigator
+  block:
+    - name: "PerlNavigator | Get latest version number"
+      register: perlnavigator_latest_json
+      ansible.builtin.uri:
+        url: "https://api.github.com/repos/{{ perlnavigator_github_user }}/{{ perlnavigator_github_repo }}/releases/latest"
+        method: GET
+        return_content: true
+        status_code: 200
+        body_format: json
+
+    - name: "PerlNavigator | Create temporary directory to extract zip"
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: perlnavigator
+      register: perlnavigator_tmpdir
+      notify: "PerlNavigator | Remove temporary directory"
+
+    - name: "PerlNavigator | Install program from static binary [{{ perlnavigator_latest_json.json.tag_name }}]"
+      ansible.builtin.unarchive:
+        src: "https://github.com/{{ perlnavigator_github_user }}/{{ perlnavigator_github_repo }}/releases/download/{{ perlnavigator_latest_json.json.tag_name
+          }}/perlnavigator-linux-{{ ansible_architecture }}.zip"
+        dest: "{{ perlnavigator_tmpdir.path }}"
+        owner: "{{ ansible_user_uid }}"
+        group: "{{ ansible_user_gid }}"
+        remote_src: true
+
+    - name: "PerlNavigator | Move binary file"
+      ansible.builtin.copy:
+        src: "{{ perlnavigator_tmpdir.path }}/perlnavigator-linux-{{ ansible_architecture }}/perlnavigator"
+        dest: "{{ perlnavigator_bin_dir }}/perlnavigator"
+        owner: "{{ ansible_user_uid }}"
+        group: "{{ ansible_user_gid }}"
+        mode: "0755"
