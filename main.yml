@@ -55,7 +55,6 @@
     - role: "fd"
     - role: "yazi"
     - role: "bottom"
-    - role: "zellij"
     - role: "keymapp"
     - role: "nextcloud"
     - role: "owncloud_client"
