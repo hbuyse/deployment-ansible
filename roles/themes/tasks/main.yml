@@ -1,12 +1,15 @@
 ---
 - name: "Themes | Ensure directory exist"
   ansible.builtin.file:
-    path: "{{ themes_dir }}"
+    path: "{{ item }}"
     state: directory
     mode: "0755"
   tags:
     - themes
     - theming
+  loop:
+    - "{{ themes_dir }}"
+    - "{{ themes_gtk_dir }}"
 
 - name: "Themes | Copy static files"
   tags:
@@ -33,3 +36,27 @@
   loop:
     - url: "https://cdn.jsdelivr.net/npm/@catppuccin/palette/css/catppuccin.css"
       destname: "catppuccin.gtk4.css"
+
+- name: "Themes | Install dependencies"
+  become: true
+  ansible.builtin.package:
+    state: present
+    name: "{{ themes_packages_dependencies }}"
+  when: themes_packages_dependencies is defined
+  tags:
+    - themes
+    - theming
+
+- name: "Themes | Install"
+  ansible.builtin.include_tasks:
+    file: "{{ item }}.yml"
+    apply:
+      tags:
+        - themes
+        - theming
+  loop:
+    - matcha
+    - catppuccin
+  tags:
+    - themes
+    - theming
