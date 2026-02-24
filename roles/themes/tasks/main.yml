@@ -1,0 +1,35 @@
+---
+- name: "Themes | Ensure directory exist"
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+  tags:
+    - themes
+    - theming
+  loop:
+    - "{{ themes_gtk_dir }}"
+
+- name: "Themes | Install dependencies"
+  become: true
+  ansible.builtin.package:
+    state: present
+    name: "{{ themes_packages_dependencies }}"
+  when: themes_packages_dependencies is defined
+  tags:
+    - themes
+    - theming
+
+- name: "Themes | Install"
+  ansible.builtin.include_tasks:
+    file: "{{ item }}.yml"
+    apply:
+      tags:
+        - themes
+        - theming
+  loop:
+    - matcha
+    - catppuccin
+  tags:
+    - themes
+    - theming
