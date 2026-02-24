@@ -1,4 +1,14 @@
 ---
+- name: "Themes | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags:
+    - themes
+    - theming
+
 - name: "Themes | Ensure directory exist"
   ansible.builtin.file:
     path: "{{ item }}"
@@ -47,16 +57,29 @@
     - themes
     - theming
 
+- name: "Themes | Get Gnome Shell version"
+  ansible.builtin.shell:
+    cmd: "set -o pipefail && gnome-shell --version | grep -oE '[0-9]+\\.[0-9]+'"
+    executable: /bin/bash
+  register: themes_gnome_shell_version
+  changed_when: themes_gnome_shell_version.rc != 0
+  tags:
+    - themes
+    - theming
+
 - name: "Themes | Install"
   ansible.builtin.include_tasks:
-    file: "{{ item }}.yml"
+    file: "{{ item.task_file }}.yml"
     apply:
       tags:
         - themes
         - theming
+  when: "themes_gnome_shell_version.stdout_lines[0] is version(item.gnome_version_min, '>=')"
   loop:
-    - matcha
-    - catppuccin
+    - task_file: "matcha"
+      gnome_version_min: "42.0"
+    - task_file: "catppuccin"
+      gnome_version_min: "49.0"
   tags:
     - themes
     - theming
