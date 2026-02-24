@@ -2,3 +2,4 @@
 themes_packages_dependencies:
   - "gtk-murrine-engine"
   - "gtk2-engines"
+  - lxappearance
