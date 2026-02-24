@@ -1,0 +1,38 @@
+---
+- name: "Matcha GTK Theme | Get latest version number"
+  register: themes_matcha_latest_json
+  ansible.builtin.uri:
+    url: "https://api.github.com/repos/{{ themes_matcha_github_user }}/{{ themes_matcha_github_repo }}/releases/latest"
+    method: GET
+    return_content: true
+    status_code: 200
+    body_format: json
+
+- name: "Matcha GTK Theme | Set facts"
+  ansible.builtin.set_fact:
+    themes_matcha_latest_version: "{{ themes_matcha_latest_json.json.tag_name }}"
+
+- name: "Matcha GTK Theme | Create temporary directory"
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: _matcha_gtk_theme
+  register: themes_matcha_tmpdir
+  notify: "Matcha GTK Theme | Remove temporary directory"
+
+- name: "Matcha GTK Theme | Decompress archive"
+  ansible.builtin.unarchive:
+    src: "https://github.com/{{ themes_matcha_github_user }}/{{ themes_matcha_github_repo }}/archive/refs/tags/{{ themes_matcha_latest_version
+      }}.tar.gz"
+    dest: "{{ themes_matcha_tmpdir.path }}"
+    owner: "{{ ansible_user_uid }}"
+    group: "{{ ansible_user_gid }}"
+    extra_opts:
+      - "--strip-components=1"
+    remote_src: true
+
+- name: "Matcha GTK Theme | Install theme with all variants"
+  ansible.builtin.command:
+    cmd: "./install.sh --dest '{{ themes_gtk_dir }}'"
+    chdir: "{{ themes_matcha_tmpdir.path }}"
+  register: themes_matcha_cmd_out
+  changed_when: themes_matcha_cmd_out.rc != 0

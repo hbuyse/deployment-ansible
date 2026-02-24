@@ -1,0 +1,34 @@
+---
+- name: "Catppuccin | Get Gnome Shell version"
+  ansible.builtin.shell:
+    cmd: "set -o pipefail && gnome-shell --version | grep -oE '[0-9]+\\.[0-9]+'"
+    executable: /bin/bash
+  register: themes_gnome_shell_version
+  changed_when: themes_gnome_shell_version.rc != 0
+
+- name: "Catppuccin | Install themes"
+  when: "themes_gnome_shell_version.stdout_lines[0] is version('49.0', '>=')"
+  block:
+    - name: "Catppuccin | Create temporary directory"
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: _catppuccin_gtk_theme
+      register: themes_catppuccin_tmpdir
+      notify: "Catppuccin | Remove temporary directory"
+
+    - name: "Catppuccin | Decompress archive"
+      ansible.builtin.unarchive:
+        src: "https://github.com/{{ themes_catppuccin_github_user }}/{{ themes_catppuccin_github_repo }}/archive/refs/heads/main.tar.gz"
+        dest: "{{ themes_catppuccin_tmpdir.path }}"
+        owner: "{{ ansible_user_uid }}"
+        group: "{{ ansible_user_gid }}"
+        extra_opts:
+          - "--strip-components=1"
+        remote_src: true
+
+    - name: "Catppuccin | Install theme with all variants"
+      ansible.builtin.command:
+        cmd: "./install.sh --dest '{{ themes_gtk_dir }}' --color dark --theme all --size compact --tweaks outline "
+        chdir: "{{ themes_catppuccin_tmpdir.path }}/themes"
+      register: themes_catppuccin_cmd_out
+      changed_when: themes_catppuccin_cmd_out.rc != 0

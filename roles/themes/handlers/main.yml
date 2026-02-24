@@ -1,0 +1,12 @@
+---
+- name: "Matcha GTK Theme | Remove temporary directory"
+  ansible.builtin.file:
+    path: "{{ themes_matcha_tmpdir.path }}"
+    state: "absent"
+  when: themes_matcha_tmpdir.path is defined
+
+- name: "Catppuccin | Remove temporary directory"
+  ansible.builtin.file:
+    path: "{{ themes_catppuccin_tmpdir.path }}"
+    state: "absent"
+  when: themes_catppuccin_tmpdir.path is defined
