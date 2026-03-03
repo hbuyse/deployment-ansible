@@ -1,0 +1,28 @@
+---
+- name: "VSCodium | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: vscodium
+
+- name: "VSCodium | Add dependencies and repo"
+  ansible.builtin.include_tasks:
+    file: "{{ item }}"
+    apply:
+      tags: vscodium
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: vscodium
+
+- name: "VSCodium | Install packages"
+  become: true
+  ansible.builtin.package:
+    update_cache: true
+    state: present
+    name: "{{ vscodium_packages }}"
+  tags:
+    - vscodium

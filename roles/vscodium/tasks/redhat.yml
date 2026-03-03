@@ -1,0 +1,13 @@
+---
+- name: "VSCodium | Add yum repository"
+  become: true
+  ansible.builtin.yum_repository:
+    file: vscodium
+    name: vscodium
+    description: VSCodium repository
+    baseurl: "https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/rpms/"
+    gpgkey: "https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg"
+    gpgcheck: true
+    enabled: true
+    repo_gpgcheck: true
+    metadata_expire: "1h"
