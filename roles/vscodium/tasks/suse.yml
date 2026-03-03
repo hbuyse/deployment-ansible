@@ -1,0 +1,15 @@
+---
+- name: "VSCodium | Install key [{{ ansible_os_family }}]"
+  become: true
+  ansible.builtin.rpm_key:
+    state: present
+    key: "https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg"
+
+- name: "VSCodium | Add repository configuration [{{ ansible_os_family }}]"
+  become: true
+  ansible.builtin.copy:
+    src: "vscodium.repo"
+    dest: "/etc/zypp/repos.d/vscodium.repo"
+    mode: "0644"
+    owner: "root"
+    group: "root"
