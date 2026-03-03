@@ -11,13 +11,11 @@ local function get_clangd_executable()
     return 'clangd'
   end
 
-  local list_clangd = {
-    'clangd-devel',
-    'clangd20',
-    'clangd-20',
-    'clangd18',
-    'clangd-18',
-  }
+  local list_clangd = { 'clangd', 'clangd-devel' }
+  for i = 21, 18, -1 do
+    table.insert(list_clangd, 'clangd' .. tostring(i))
+    table.insert(list_clangd, 'clangd-' .. tostring(i))
+  end
 
   -- gmatch returns an iterator function
   for path in paths:gmatch('([^:]+)') do
