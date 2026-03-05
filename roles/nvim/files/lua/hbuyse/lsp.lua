@@ -180,22 +180,6 @@ local function on_attach(client, bufnr)
     )
   end, {})
 
-  -- Lsp progress
-  -- require('rockyz.lsp.progress')
-
-  -- Show a lightbulb when code actions are available under the cursor
-  -- require('rockyz.lsp.lightbulb')
-
-  -- Enable code lens
-  -- if client and client.server_capabilities.codeLensProvider then
-  --     vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'InsertLeave' }, {
-  --         buffer = bufnr,
-  --         callback = function()
-  --             vim.lsp.codelens.refresh({ bufnr = 0 })
-  --         end,
-  --     })
-  -- end
-
   -- Document highlight
   if client:supports_method('textDocument/InlayHint') then
     lsp_inlay_hints(bufnr)
