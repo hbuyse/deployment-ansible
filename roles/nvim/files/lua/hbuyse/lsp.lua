@@ -190,6 +190,10 @@ local function on_attach(client, bufnr)
   -- Document highlight
   if client:supports_method('textDocument/documentHighlight') then
     lsp_document_highlight(bufnr)
+  end
+
+  -- Nvim-navic automatic attachment
+  if client.server_capabilities.documentSymbolProvider then
     require('nvim-navic').attach(client, bufnr)
   end
 end
