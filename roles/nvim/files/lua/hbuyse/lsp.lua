@@ -84,13 +84,6 @@ local function lsp_keymaps(_, bufnr)
   end, '[D]iagnostic [E]nable')
 
   -- LSP keymaps
-  kmap('n', 'gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-  kmap('n', 'gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-  kmap('n', 'gi', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-  kmap('n', '<leader>ds', vim.lsp.buf.document_symbol, '[D]ocument [S]ymbols')
-  kmap('n', '<leader>ws', vim.lsp.buf.workspace_symbol, '[W]orkspace [S]ymbols')
-  kmap('n', 'gr', vim.lsp.buf.references, '[G]oto [R]eferences')
-  kmap('n', 'gt', vim.lsp.buf.type_definition, '[G]oto [T]ype definition')
   kmap('n', 'K', vim.lsp.buf.hover, 'Hover Documentation')
   kmap('n', '<c-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
   kmap('n', '<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')

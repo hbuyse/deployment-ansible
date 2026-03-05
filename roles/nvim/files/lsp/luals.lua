@@ -22,7 +22,7 @@ return {
       },
       diagnostics = {
         enable = true,
-        globals = { 'vim' },
+        globals = { 'vim', 'Snacks' },
       },
       workspace = {
         checkThirdParty = false,
