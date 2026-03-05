@@ -96,4 +96,5 @@
     # End Formatters
     # Linters
     - role: "ansiblelint"
+    - role: "continue"
   # End Linters

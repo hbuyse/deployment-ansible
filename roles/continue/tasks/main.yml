@@ -1,0 +1,29 @@
+---
+- name: "Continue CLI | Install package"
+  community.general.npm:
+    name: "{{ continue_npm_package }}"
+    global: true
+    state: latest
+    production: true
+    no_optional: true
+  tags:
+    - continue
+    - ai
+
+- name: "Continue CLI | Ensure config directory exist"
+  ansible.builtin.file:
+    path: "{{ continue_config_dir }}"
+    state: directory
+    mode: "0755"
+  tags:
+    - continue
+    - ai
+
+- name: "Continue CLI | Copy configuration"
+  ansible.builtin.template:
+    src: "config.yaml.j2"
+    dest: "{{ continue_config_file }}"
+    mode: "0644"
+  tags:
+    - continue
+    - ai
