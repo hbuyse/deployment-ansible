@@ -12,6 +12,8 @@ return {
         lsp = { enabled = true },
         blink = { enabled = true },
       },
+      file_types = { 'markdown', 'Avante' },
     },
+    ft = { 'markdown', 'Avante' },
   },
 }
