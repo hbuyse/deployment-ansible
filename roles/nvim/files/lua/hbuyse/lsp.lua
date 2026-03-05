@@ -59,7 +59,7 @@ end
 --- Setup mapping when attaching LSP server
 ---@param client table LSP client
 ---@param bufnr integer Buffer number
-local function lsp_keymaps(client, bufnr)
+local function lsp_keymaps(_, bufnr)
   --- Wrapper function to set keymap
   ---@param m string|table The modes
   ---@param lhs string Keymap
@@ -68,13 +68,6 @@ local function lsp_keymaps(client, bufnr)
   local kmap = function(m, lhs, rhs, desc)
     local opts = { remap = false, silent = true, buffer = bufnr, desc = desc }
     vim.keymap.set(m, lhs, rhs, opts)
-  end
-
-  -- Set some keybinds conditional on server capabilities
-  if client:supports_method('textDocument/formatting') then
-    kmap('n', '<leader>f', function()
-      vim.lsp.buf.format({ async = true })
-    end, 'Format current buffer with LSP')
   end
 
   -- Diagnostics keymaps
@@ -160,11 +153,6 @@ end
 
 local function on_attach(client, bufnr)
   lsp_keymaps(client, bufnr)
-
-  -- Format
-  -- vim.keymap.set({ 'n', 'x' }, '<leader>F', function()
-  --     vim.lsp.buf.format({ async = true })
-  -- end, opts)
 
   -- Inlay hints
   if vim.g.inlay_hint_enabled then
