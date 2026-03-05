@@ -146,6 +146,7 @@ bindkey '^P' fzf-file-widget
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias v="nvim"
 alias lg="lazygit"
+alias aichat="cn --config ${HOME}/.continue/config.yaml --readonly"
 
 # Add external zsh feature if file available
 [[ ! -f "$HOME/.external.zsh" ]] || source "$HOME/.external.zsh"

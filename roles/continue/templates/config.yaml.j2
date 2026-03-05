@@ -1,0 +1,11 @@
+---
+name: Continue Config
+version: 0.0.1
+{% if continue_models %}
+models:
+    {{ continue_models | to_yaml(indent=4) }}
+{% endif %}
+{% if continue_contexts %}
+context:
+    {{ continue_contexts | to_yaml(indent=4) }}
+{% endif %}

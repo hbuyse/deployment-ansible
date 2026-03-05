@@ -1,0 +1,7 @@
+---
+continue_npm_package: "@continuedev/cli"
+continue_models: []
+continue_contexts: []
+
+continue_config_dir: "{{ ansible_user_dir }}/.continue"
+continue_config_file: "{{ continue_config_dir }}/config.yaml"
