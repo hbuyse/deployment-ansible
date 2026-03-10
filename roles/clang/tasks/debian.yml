@@ -3,7 +3,7 @@
   become: true
   ansible.builtin.get_url:
     url: "https://apt.llvm.org/llvm-snapshot.gpg.key"
-    dest: "/etc/apt/trusted.gpg.d/apt.llvm.org.asc"
+    dest: "/etc/apt/keyrings/apt.llvm.org.asc"
     mode: "0644"
 
 - name: "Clang | Install source repository"
@@ -16,5 +16,5 @@
     suites: "llvm-toolchain-{{ ansible_distribution_release }}-{{ item }}"
     components: main
     state: present
-    signed_by: "/etc/apt/trusted.gpg.d/apt.llvm.org.asc"
+    signed_by: "/etc/apt/keyrings/apt.llvm.org.asc"
   loop: "{{ clang_llvm_versions }}"
