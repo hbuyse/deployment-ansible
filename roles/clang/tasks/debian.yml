@@ -9,12 +9,14 @@
 - name: "Clang | Install source repository"
   become: true
   ansible.builtin.deb822_repository:
-    name: "llvm-{{ item }}"
+    name: "llvm-{{ version }}"
     enabled: true
     types: deb
     uris: "http://apt.llvm.org/{{ ansible_distribution_release }}"
-    suites: "llvm-toolchain-{{ ansible_distribution_release }}-{{ item }}"
+    suites: "llvm-toolchain-{{ ansible_distribution_release }}-{{ version }}"
     components: main
     state: present
     signed_by: "/etc/apt/keyrings/apt.llvm.org.asc"
   loop: "{{ clang_llvm_versions }}"
+  loop_control:
+    loop_var: version
