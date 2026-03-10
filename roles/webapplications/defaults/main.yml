@@ -1,0 +1,20 @@
+---
+webapplications_apps:
+  discord:
+    url: "https://discord.com"
+    categories:
+      - "Network"
+      - "InstantMessaging"
+  spotify:
+    url: "https://open.spotify.com"
+    categories:
+      - "AudioVideo"
+      - "Audio"
+      - "Player"
+  youtube:
+    url: "https://youtube.com"
+    categories:
+      - "AudioVideo"
+      - "Audio"
+      - "Video"
+      - "Player"

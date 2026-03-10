@@ -1,3 +1,5 @@
 ---
 webapplications_packages:
   - chromium
+
+webapplications_program: "chromium"

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name={{ item.key | title }} WebApp
+StartupWMClass={{ item.key }}
+Comment={{ item.key | title }} Web Application
+Exec={{ webapplications_program }} --app={{ item.value.url }}
+Icon={{ item.value.icon | default(item.key) }}
+Terminal=false
+Type=Application
+Categories={{ item.value.categories | join(';') }}
