@@ -1,14 +1,4 @@
 -- Diagnostic config
-
---
--- Diagnostic is displayed as: diagnostic.source: diagnostic.message [diagnostic.code]
--- Virtual text, virtual lines and float should all follow this format
---
-
-local function format(d)
-  return string.format('%s: %s', d.source and d.source or 'Unknown', d.message)
-end
-
 local function suffix(d)
   return string.format(' [%s]', d.code and d.code or 'Unknown')
 end
@@ -18,14 +8,12 @@ vim.diagnostic.config({
     source = false,
     border = 'double',
     severity_sort = true,
-    format = format,
     suffix = suffix,
   },
   virtual_text = {
     source = true,
     prefix = '●',
     spacing = 4,
-    format = format,
     suffix = suffix,
     virt_text_pos = 'eol',
     hl_mode = 'combine',
