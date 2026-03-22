@@ -1,0 +1,107 @@
+---
+- name: "Foot | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: foot
+
+- name: "Foot | Check that the package list is not empty"
+  ansible.builtin.assert:
+    that:
+      - foot_packages is defined
+      - foot_packages | length > 0
+    fail_msg: "foot_packages must not be empty (check your roles/foot/vars/{{ ansible_os_family | lower }}.yml)"
+    quiet: true
+  tags: foot
+
+- name: "Foot | Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ foot_packages }}"
+  tags: foot
+
+- name: "Foot | Add to alternatives"
+  become: true
+  community.general.alternatives:
+    name: x-terminal-emulator
+    path: /usr/bin/foot
+    link: /usr/bin/x-terminal-emulator
+    priority: 100
+    state: present
+  when: ansible_os_family in ["Debian", "Redhat"]
+  tags: foot
+
+- name: "Foot | Get version"
+  ansible.builtin.command:
+    cmd: "foot --version"
+  register: foot_version
+  changed_when: foot_version.rc != 0
+  tags: foot
+
+- name: "Foot | Extract version"
+  ansible.builtin.set_fact:
+    foot_current_version: "{{ foot_version.stdout | regex_search('[0-9]+.[0-9]+.[0-9]+') }}"
+  tags: foot
+
+- name: "Foot | Ensure configuration directories exist"
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+  loop:
+    - "{{ foot_config_dir }}"
+    - "{{ foot_themes_dir }}"
+  tags: foot
+
+- name: "Foot | Copy configuration file"
+  ansible.builtin.template:
+    src: foot.ini.j2
+    dest: "{{ foot_config_dir }}/foot.ini"
+    mode: "0644"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_gid }}"
+  tags: foot
+
+- name: "Foot | Download catppuccin themes"
+  ansible.builtin.get_url:
+    url: "https://raw.githubusercontent.com/catppuccin/foot/refs/heads/main/themes/catppuccin-{{ item }}.ini"
+    dest: "{{ foot_themes_dir }}"
+    mode: "0644"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_gid }}"
+  loop:
+    - mocha
+    - macchiato
+    - latte
+    - frappe
+  tags: foot
+
+- name: "Foot | Modify theme"
+  when: "foot_current_version is ansible.builtin.version('1.13.0', '<')"
+  ansible.builtin.replace:
+    dest: "{{ foot_themes_dir }}/catppuccin-{{ item }}.ini"
+    regexp: "^search-box-no-match"
+    replace: "# search-box-no-match"
+    mode: "0644"
+  loop:
+    - mocha
+    - macchiato
+    - latte
+    - frappe
+  tags: foot
+
+- name: "Foot | Modify theme part 2"
+  when: "foot_current_version is ansible.builtin.version('1.13.0', '<')"
+  ansible.builtin.replace:
+    dest: "{{ foot_themes_dir }}/catppuccin-{{ item }}.ini"
+    regexp: "^search-box-match"
+    replace: "# search-box-match"
+    mode: "0644"
+  loop:
+    - mocha
+    - macchiato
+    - latte
+    - frappe
+  tags: foot

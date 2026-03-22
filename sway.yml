@@ -29,6 +29,7 @@
     - role: "tmux"
     - role: "fzf"
     - role: "nerdfonts"
+    - role: "foot"
     - role: "wallpapers"
     - role: "brightnessctl"
     - role: "wayland_sessions"
