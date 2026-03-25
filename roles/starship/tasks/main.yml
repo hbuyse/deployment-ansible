@@ -1,0 +1,53 @@
+---
+- name: "Starship | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: starship
+
+- name: "Starship | Install packages"
+  become: true
+  ansible.builtin.package:
+    name: "{{ starship_packages }}"
+    state: present
+  when: starship_packages is defined
+  tags: starship
+
+- name: "Starship | Install from source"
+  when: starship_packages is not defined
+  tags: starship
+  block:
+    - name: "Starship | Get latest version number"
+      register: starship_latest_json
+      ansible.builtin.uri:
+        url: "https://api.github.com/repos/{{ starship_github_user }}/{{ starship_github_repo }}/releases/latest"
+        method: GET
+        return_content: true
+        status_code: 200
+        body_format: json
+
+    - name: "Starship | Set facts"
+      ansible.builtin.set_fact:
+        starship_latest_version: "{{ starship_latest_json.json.tag_name[1:] }}"
+
+    - name: "Starship | Install from source"
+      become: true
+      ansible.builtin.unarchive:
+        src: "https://github.com/{{ starship_github_user }}/{{ starship_github_repo }}/releases/download/v{{ starship_latest_json
+          }}/starship-{{ ansible_architecture }}-unknown-{{ ansible_system | lower }}{{ suffix }}.tar.gz"
+        dest: "{{ ansible_user_dir }}/.local/bin"
+        owner: "{{ ansible_user_uid }}"
+        group: "{{ ansible_user_gid }}"
+        mode: "0755"
+        remote_src: true
+      vars:
+        suffix: "{{ (ansible_system == 'Linux') | ternary('-gnu', '') }}"
+
+- name: "Starship | Ensure configuration directory exists"
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.config"
+    state: directory
+    mode: "0755"
+  tags: starship
