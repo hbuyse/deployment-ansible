@@ -88,9 +88,11 @@ palettes:
       yellow: '#f9e2af'
   template: catppuccin-mocha
 blocks:
+  # Left part of the first line of the prompt
   - type: prompt
     alignment: left
     segments:
+      # OS icon
       - options:
           cache_duration: none
         template: ' {{ if .WSL }}WSL at {{ end }}{{.Icon}} '
@@ -98,6 +100,7 @@ blocks:
         background: p:surface0
         type: os
         style: plain
+      # Root icon
       - options:
           cache_duration: none
         template: '  <#bac2de></>'
@@ -105,6 +108,7 @@ blocks:
         background: p:surface0
         type: root
         style: plain
+      # Current directory path
       - options:
           cache_duration: none
           edge_format: <b>%s</b>
@@ -118,6 +122,7 @@ blocks:
           - '  '
           - '{{ .Path }} '
           - '{{ if not .Writable }} {{ end }}'
+      # Git information
       - options:
           branch_ahead_icon: 
           branch_behind_icon: 
@@ -148,6 +153,7 @@ blocks:
           - '{{ if .Staging.Changed }}  {{ .Staging.String }} {{ end }}'
           - '{{ if .Working.Changed }}  {{ .Working.String }} {{ end }}'
           - '{{ if gt .StashCount 0 }}  {{ .StashCount }} {{ end }}'
+      # Just an text block
       - options:
           cache_duration: none
         template: 
@@ -155,11 +161,13 @@ blocks:
         background: transparent
         type: text
         style: plain
+  # Right part of the first line of the prompt
   - type: prompt
     alignment: right
     filler: <#313244,transparent>·</>
     overflow: hide
     segments:
+      # Just an text block
       - options:
           cache_duration: none
         template: 
@@ -167,6 +175,7 @@ blocks:
         background: transparent
         type: text
         style: plain
+      # Last command error code
       - options:
           cache_duration: none
           status_template: '{{ reason .Code }}'
@@ -179,6 +188,7 @@ blocks:
         templates:
           - '{{ if .Error }} {{ .String }}  {{ end }}'
           - <#bac2de></>
+      # Last command execution time
       - options:
           cache_duration: none
           style: austin
@@ -191,6 +201,7 @@ blocks:
           - ' {{ .FormattedMs }}'
           - " \U000F199F"
           - ' <#bac2de></>'
+      # Direnv icon
       - options:
           cache_duration: none
         template: '{{ if .Env.DIRENV_FILE }}  <#bac2de></>{{ end }}'
@@ -198,6 +209,7 @@ blocks:
         background: p:surface0
         type: text
         style: plain
+      # Node version
       - options:
           cache_duration: none
         foreground: p:sky
@@ -208,6 +220,7 @@ blocks:
           - ' {{ if .Error }}{{ .Error }}{{ else }}{{ .PackageManagerName }}{{ if .Full }} {{ .Full }}{{ end }}{{ end }}'
           - ' {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }}{{ else }}{{ end }}'
           - ' <#bac2de></>'
+      # CMake version
       - options:
           cache_duration: none
           extensions:
@@ -222,6 +235,7 @@ blocks:
           - ' {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}'
           - '  '
           - ' <#bac2de></>'
+      # Python version
       - options:
           cache_duration: none
         foreground: p:sky
@@ -232,6 +246,7 @@ blocks:
           - ' {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }}'
           - ' '
           - ' <#bac2de></>'
+      # Rust version
       - options:
           cache_duration: none
         foreground: p:sky
@@ -242,6 +257,7 @@ blocks:
           - ' {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}'
           - ' '
           - ' <#bac2de></>'
+      # Lua version
       - options:
           cache_duration: none
         foreground: p:sky
@@ -252,6 +268,7 @@ blocks:
           - ' {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}'
           - ' '
           - ' <#bac2de></>'
+      # Perl version
       - options:
           cache_duration: none
         foreground: p:sky
@@ -262,6 +279,7 @@ blocks:
           - ' {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}'
           - ' '
           - ' <#bac2de></>'
+      # Go version
       - options:
           cache_duration: none
         foreground: p:sky
@@ -272,6 +290,7 @@ blocks:
           - ' {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}'
           - ' '
           - ' <#bac2de></>'
+      # Session (username@hostname) and other information (SSH and/or root)
       - options:
           cache_duration: none
         foreground: p:yellow
@@ -282,6 +301,7 @@ blocks:
           - ' {{ .UserName }}@{{ .HostName }}'
           - ' {{ if .SSHSession }}{{ else if .Root }}{{ else }}{{ end }}'
           - ' <#bac2de></>'
+      # Time
       - options:
           cache_duration: none
           time_format: "15:04:05"
@@ -290,9 +310,11 @@ blocks:
         background: p:surface0
         type: time
         style: plain
+  # Left part of the second line of the prompt
   - type: prompt
     alignment: left
     segments:
+      # Arrow with colors based on last error code
       - options:
           always_enabled: true
           cache_duration: none
