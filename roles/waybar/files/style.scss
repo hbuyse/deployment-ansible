@@ -290,6 +290,14 @@ label:focus {
   border-bottom-color: #{"" + $blue};
 }
 
+#keyboard-state {
+  & label {
+    &.locked {
+      color: red;
+    }
+  }
+}
+
 #language {
   border-bottom-color: #{"" + $yellow};
 }
