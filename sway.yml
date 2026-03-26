@@ -25,6 +25,7 @@
       when: nvidia_detection.rc == 0
     - role: "zsh"
     - role: "oh_my_posh"
+    - role: "starship"
     - role: "fastfetch"
     - role: "tmux"
     - role: "fzf"
