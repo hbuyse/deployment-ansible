@@ -1,3 +1,4 @@
+---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
 palette:
   status-fg-error: '#FF5252'
@@ -90,21 +91,21 @@ blocks:
   - type: prompt
     alignment: left
     segments:
-      - properties:
+      - options:
           cache_duration: none
         template: ' {{ if .WSL }}WSL at {{ end }}{{.Icon}} '
         foreground: p:text
         background: p:surface0
         type: os
         style: plain
-      - properties:
+      - options:
           cache_duration: none
         template: '  <#bac2de></>'
         foreground: p:red
         background: p:surface0
         type: root
         style: plain
-      - properties:
+      - options:
           cache_duration: none
           edge_format: <b>%s</b>
           max_width: 80
@@ -117,7 +118,7 @@ blocks:
           - '  '
           - '{{ .Path }} '
           - '{{ if not .Writable }} {{ end }}'
-      - properties:
+      - options:
           branch_ahead_icon: 
           branch_behind_icon: 
           branch_gone_icon: 
@@ -147,7 +148,7 @@ blocks:
           - '{{ if .Staging.Changed }}  {{ .Staging.String }} {{ end }}'
           - '{{ if .Working.Changed }}  {{ .Working.String }} {{ end }}'
           - '{{ if gt .StashCount 0 }}  {{ .StashCount }} {{ end }}'
-      - properties:
+      - options:
           cache_duration: none
         template: 
         foreground: p:surface0
@@ -159,14 +160,14 @@ blocks:
     filler: <#313244,transparent>·</>
     overflow: hide
     segments:
-      - properties:
+      - options:
           cache_duration: none
         template: 
         foreground: p:surface0
         background: transparent
         type: text
         style: plain
-      - properties:
+      - options:
           cache_duration: none
           status_template: '{{ reason .Code }}'
         foreground: p:green
@@ -178,7 +179,7 @@ blocks:
         templates:
           - '{{ if .Error }} {{ .String }}  {{ end }}'
           - <#bac2de></>
-      - properties:
+      - options:
           cache_duration: none
           style: austin
           threshold: 500
@@ -190,14 +191,14 @@ blocks:
           - ' {{ .FormattedMs }}'
           - " \U000F199F"
           - ' <#bac2de></>'
-      - properties:
+      - options:
           cache_duration: none
         template: '{{ if .Env.DIRENV_FILE }}  <#bac2de></>{{ end }}'
         foreground: p:yellow
         background: p:surface0
         type: text
         style: plain
-      - properties:
+      - options:
           cache_duration: none
         foreground: p:sky
         background: p:surface0
@@ -207,7 +208,7 @@ blocks:
           - ' {{ if .Error }}{{ .Error }}{{ else }}{{ .PackageManagerName }}{{ if .Full }} {{ .Full }}{{ end }}{{ end }}'
           - ' {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }}{{ else }}{{ end }}'
           - ' <#bac2de></>'
-      - properties:
+      - options:
           cache_duration: none
           extensions:
             - '*.cmake'
@@ -221,7 +222,7 @@ blocks:
           - ' {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}'
           - '  '
           - ' <#bac2de></>'
-      - properties:
+      - options:
           cache_duration: none
         foreground: p:sky
         background: p:surface0
@@ -231,7 +232,7 @@ blocks:
           - ' {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }}'
           - ' '
           - ' <#bac2de></>'
-      - properties:
+      - options:
           cache_duration: none
         foreground: p:sky
         background: p:surface0
@@ -241,7 +242,7 @@ blocks:
           - ' {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}'
           - ' '
           - ' <#bac2de></>'
-      - properties:
+      - options:
           cache_duration: none
         foreground: p:sky
         background: p:surface0
@@ -251,7 +252,7 @@ blocks:
           - ' {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}'
           - ' '
           - ' <#bac2de></>'
-      - properties:
+      - options:
           cache_duration: none
         foreground: p:sky
         background: p:surface0
@@ -261,7 +262,7 @@ blocks:
           - ' {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}'
           - ' '
           - ' <#bac2de></>'
-      - properties:
+      - options:
           cache_duration: none
         foreground: p:sky
         background: p:surface0
@@ -271,7 +272,7 @@ blocks:
           - ' {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}'
           - ' '
           - ' <#bac2de></>'
-      - properties:
+      - options:
           cache_duration: none
         foreground: p:yellow
         background: p:surface0
@@ -281,7 +282,7 @@ blocks:
           - ' {{ .UserName }}@{{ .HostName }}'
           - ' {{ if .SSHSession }}{{ else if .Root }}{{ else }}{{ end }}'
           - ' <#bac2de></>'
-      - properties:
+      - options:
           cache_duration: none
           time_format: "15:04:05"
         template: ' {{ .CurrentDate | date .Format }}  '
@@ -292,7 +293,7 @@ blocks:
   - type: prompt
     alignment: left
     segments:
-      - properties:
+      - options:
           always_enabled: true
           cache_duration: none
         template: '❯ '
