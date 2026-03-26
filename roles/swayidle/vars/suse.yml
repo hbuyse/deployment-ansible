@@ -1,5 +1,0 @@
----
-swayidle_packages:
-  - swayidle
-  - swayidle-bash-completion
-  - swayidle-zsh-completion

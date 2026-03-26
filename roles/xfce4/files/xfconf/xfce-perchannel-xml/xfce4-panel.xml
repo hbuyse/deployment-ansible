@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <channel name="xfce4-panel" version="1.0">
   <property name="configver" type="empty"/>
   <property name="panels" type="array">
@@ -45,12 +44,9 @@
       <property name="favorites" type="array">
         <value type="string" value="thunar.desktop"/>
         <value type="string" value="firefox.desktop"/>
-        <value type="string" value="org.opensuse.YaST.desktop"/>
-        <value type="string" value="org.opensuse.yast.Packager.desktop"/>
         <value type="string" value="xfce4-terminal-emulator.desktop"/>
       </property>
-      <property name="recent" type="array">
-      </property>
+      <property name="recent" type="array"></property>
       <property name="button-icon" type="string" value="org.xfce.panel.whiskermenu"/>
       <property name="button-title" type="string" value=" Apps"/>
       <property name="show-button-title" type="bool" value="false"/>

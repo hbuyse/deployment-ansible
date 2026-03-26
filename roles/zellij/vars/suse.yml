@@ -1,5 +1,0 @@
----
-zellij_packages:
-  - zellij
-  - zellij-zsh-completion
-  - zellij-bash-completion

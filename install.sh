@@ -105,17 +105,6 @@ function install_packages() {
         done
         ;;
 
-    "linux-opensuse-tumbleweed")
-        install_cmd="zypper --quiet --non-interactive install"
-        # Check that package is installed
-        for pkg in "${packages_to_install[@]}"; do
-            # Check if already installed
-            if ! zypper --quiet search --installed-only --match-exact "${pkg}" > /dev/null 2>&1; then
-                packages_not_installed+=("${pkg}")
-            fi
-        done
-        ;;
-
     "linux-fedora")
         install_cmd="dnf --assumeyes --quiet install --skip-unavailable"
         # Check that package is installed
@@ -154,7 +143,6 @@ declare -A PACKAGES=(
     ["linux-ubuntu"]="git ansible python3-watchdog python3-debian"
     ["linux-debian"]="git ansible python3-watchdog python3-debian"
     ["linux-fedora"]="git ansible python3-watchdog"
-    ["linux-opensuse-tumbleweed"]="git ansible python3-watchdog"
 )
 
 install_packages ${PACKAGES["${OS}-${ID}"]}

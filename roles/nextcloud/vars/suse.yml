@@ -1,5 +1,0 @@
----
-nextcloud_packages:
-  - nextcloud-desktop
-  - gnome-keyring
-  - seahorse

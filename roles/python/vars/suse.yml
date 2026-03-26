@@ -1,5 +1,0 @@
----
-python_packages:
-  - python3
-  - python-virtualenv
-  - python-virtualenvwrapper

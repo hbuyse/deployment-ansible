@@ -1,5 +1,0 @@
----
-ripgrep_packages:
-  - ripgrep
-  - ripgrep-zsh-completion
-  - ripgrep-bash-completion
