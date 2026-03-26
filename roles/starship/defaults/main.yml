@@ -2,3 +2,5 @@
 starship_install_url: "https://starship.rs/install.sh"
 starship_github_user: "starship"
 starship_github_repo: "starship"
+starship_config_dir: "{{ ansible_user_dir }}/.config"
+starship_config_file: "{{ starship_config_dir }}/starship.toml"

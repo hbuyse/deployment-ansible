@@ -33,9 +33,8 @@
         starship_latest_version: "{{ starship_latest_json.json.tag_name[1:] }}"
 
     - name: "Starship | Install from source"
-      become: true
       ansible.builtin.unarchive:
-        src: "https://github.com/{{ starship_github_user }}/{{ starship_github_repo }}/releases/download/v{{ starship_latest_json
+        src: "https://github.com/{{ starship_github_user }}/{{ starship_github_repo }}/releases/download/v{{ starship_latest_version
           }}/starship-{{ ansible_architecture }}-unknown-{{ ansible_system | lower }}{{ suffix }}.tar.gz"
         dest: "{{ ansible_user_dir }}/.local/bin"
         owner: "{{ ansible_user_uid }}"
@@ -45,9 +44,19 @@
       vars:
         suffix: "{{ (ansible_system == 'Linux') | ternary('-gnu', '') }}"
 
-- name: "Starship | Ensure configuration directory exists"
-  ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.config"
-    state: directory
-    mode: "0755"
+- name: "Starship | Copy configuration"
   tags: starship
+  block:
+    - name: "Starship | Ensure configuration directory exists"
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/.config"
+        state: directory
+        mode: "0755"
+
+    - name: "Starship | Install configuration file"
+      ansible.builtin.template:
+        src: "starship.toml.j2"
+        dest: "{{ starship_config_file }}"
+        owner: "{{ ansible_user_uid }}"
+        group: "{{ ansible_user_gid }}"
+        mode: "0755"
