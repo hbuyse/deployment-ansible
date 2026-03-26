@@ -6,9 +6,19 @@ add_newline = false
 # Palettes must be defined _after_ this line
 palette = "catppuccin_mocha"
 
-# Replace the '❯' symbol in the prompt with '➜'
-[character]  # The name of the module we are configuring is 'character'
-success_symbol = "[➜](bold green)"  # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
+# Starship modules
+[character]
+# Note the use of Catppuccin color 'peach'
+success_symbol = "[[󰄛](green) ❯](peach)"
+error_symbol = "[[󰄛](red) ❯](peach)"
+vimcmd_symbol = "[󰄛 ❮](subtext1)"  # For use with zsh-vi-mode
+
+[git_branch]
+style = "bold mauve"
+
+[directory]
+truncation_length = 4
+style = "bold lavender"
 
 # Disable the package module, hiding it from the prompt completely
 [package]
