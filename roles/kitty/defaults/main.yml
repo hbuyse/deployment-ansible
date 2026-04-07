@@ -1,0 +1,9 @@
+---
+kitty_config_dir: "{{ ansible_user_dir }}/.config/kitty"
+kitty_config_subdir: "{{ ansible_user_dir }}/.config/kitty/kitty.d"
+
+# Root directory where the latest version of compiled Kitty will be extracted
+kitty_latest_dir: "{{ ansible_user_dir }}/.local"
+
+kitty_gh_owner: "kovidgoyal"
+kitty_gh_repo: "kitty"

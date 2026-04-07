@@ -1,0 +1,83 @@
+---
+- name: "Kitty | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags: kitty
+
+- name: "Kitty | Install packages"
+  become: true
+  ansible.builtin.package:
+    name: "{{ kitty_packages }}"
+    update_cache: true
+    state: present
+  tags: kitty
+  when: kitty_packages is defined
+
+- name: "Kitty | Install from source"
+  tags: kitty
+  when: kitty_packages is not defined
+  block:
+    - name: "Kitty | Get latest version number"
+      register: kitty_latest_json
+      ansible.builtin.uri:
+        url: "https://api.github.com/repos/{{ kitty_gh_owner }}/{{ kitty_gh_repo }}/releases/latest"
+        method: GET
+        return_content: true
+        status_code: 200
+        body_format: json
+
+    - name: "Kitty | Set facts"
+      ansible.builtin.set_fact:
+        kitty_latest_version: "{{ kitty_latest_json.json.tag_name }}"
+        kitty_archive_fullname: "kitty-{{ kitty_latest_json.json.tag_name[1:] }}-{{ ansible_architecture }}.txz"
+
+    - name: "Kitty | Extract from archive"
+      ansible.builtin.unarchive:
+        src: "https://github.com/{{ kitty_gh_owner }}/{{ kitty_gh_repo }}/releases/download/{{ kitty_latest_version }}/{{
+          kitty_archive_fullname }}"
+        dest: "{{ kitty_latest_dir }}"
+        remote_src: true
+        keep_newer: true
+        owner: "{{ ansible_user_id }}"
+        group: "{{ ansible_user_gid }}"
+
+- name: "Kitty | Copy configuration files"
+  tags: kitty
+  block:
+    - name: "Kitty | Create configuration directories"
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: "directory"
+        mode: "0755"
+      loop:
+        - "{{ kitty_config_dir }}"
+        - "{{ kitty_config_subdir }}"
+
+    - name: "Kitty | Copy main configuration file"
+      ansible.builtin.copy:
+        src: "kitty.conf"
+        dest: "{{ kitty_config_dir }}"
+        owner: "{{ ansible_user_id }}"
+        group: "{{ ansible_user_gid }}"
+        mode: "0644"
+
+    - name: "Kitty | Copy sub-configuration files"
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "{{ kitty_config_subdir }}"
+        owner: "{{ ansible_user_id }}"
+        group: "{{ ansible_user_gid }}"
+        mode: "0644"
+      loop:
+        - "01-fonts.conf"
+
+    - name: "Kitty | Download Catppuccin Mocha theme"
+      ansible.builtin.get_url:
+        url: "https://raw.githubusercontent.com/catppuccin/kitty/refs/heads/main/themes/mocha.conf"
+        dest: "{{ kitty_config_subdir }}/catppuccin-mocha.conf"
+        owner: "{{ ansible_user_id }}"
+        group: "{{ ansible_user_gid }}"
+        mode: "0644"
