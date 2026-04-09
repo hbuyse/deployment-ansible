@@ -3,6 +3,18 @@ local function suffix(d)
   return string.format(' [%s]', d.code and d.code or 'Unknown')
 end
 
+local function on_jump(diagnostic, bufnr)
+  if not diagnostic then
+    return
+  end
+  vim.diagnostic.show(
+    diagnostic.namespace,
+    bufnr,
+    { diagnostic },
+    { virtual_lines = { current_line = true }, virtual_text = false }
+  )
+end
+
 vim.diagnostic.config({
   float = {
     source = false,
@@ -30,7 +42,7 @@ vim.diagnostic.config({
   underline = true,
   severity_sort = true,
   jump = {
-    float = true,
+    on_jump = on_jump,
   },
   update_in_insert = false,
 })
