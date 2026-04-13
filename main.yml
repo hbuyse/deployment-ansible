@@ -39,6 +39,7 @@
     - role: "icons"
     - role: "user"
     - role: "network"
+    - role: "treesitter"
     - role: "nvim"
     - role: "vscode"
     - role: "git_delta"
