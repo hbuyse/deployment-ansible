@@ -6,9 +6,6 @@ return {
     opts = {
       snippet_engine = 'luasnip',
     },
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter',
-    },
     keys = {
       {
         '<leader>nf',
