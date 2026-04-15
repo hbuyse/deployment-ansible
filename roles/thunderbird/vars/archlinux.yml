@@ -1,0 +1,5 @@
+---
+thunderbird_packages:
+  - thunderbird
+  - thunderbird-i18n-en-us
+  - thunderbird-i18n-fr

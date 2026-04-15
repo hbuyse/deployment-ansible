@@ -1,0 +1,28 @@
+---
+- name: "Thunderbird | Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family | lower }}.yml"
+      skip: true
+  tags:
+    - thunderbird
+
+- name: "Thunderbird | Install packages"
+  become: true
+  ansible.builtin.package:
+    name: "{{ thunderbird_packages }}"
+    state: "present"
+  when: thunderbird_packages is defined
+  tags:
+    - thunderbird
+
+- name: "Thunderbird | Install packages with Snap"
+  become: true
+  community.general.snap:
+    name: "{{ thunderbird_snap_package }}"
+    state: "present"
+    channel: "{{ thunderbird_snap_channel }}"
+  when: thunderbird_packages is not defined
+  tags:
+    - thunderbird

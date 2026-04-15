@@ -1,0 +1,3 @@
+---
+thunderbird_snap_package: "thunderbird"
+thunderbird_snap_channel: "monthly/stable"

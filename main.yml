@@ -34,6 +34,7 @@
     - role: "fzf"
     - role: "nerdfonts"
     - role: "web_browsers"
+    - role: "thunderbird"
     - role: "wallpapers"
     - role: "icons"
     - role: "user"
