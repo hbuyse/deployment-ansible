@@ -15,6 +15,7 @@ return {
       -- Enable or disable features when big file detected
       ---@param ctx {buf: number, ft:string}
       setup = function(ctx)
+        vim.treesitter.stop()
         Snacks.util.wo(0, { foldmethod = 'manual', statuscolumn = '', conceallevel = 0 })
         vim.b.completion = false
         vim.b.minianimate_disable = true
