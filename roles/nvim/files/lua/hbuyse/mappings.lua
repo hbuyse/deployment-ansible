@@ -50,10 +50,8 @@ local modes = {
   'i', -- Insert
 }
 local characters = { '<Up>', '<Down>', '<Right>', '<Left>', '<PageUp>', '<PageDown>' }
-for _, mode in ipairs(modes) do
   for _, c in ipairs(characters) do
-    kmap(mode, c, '<nop>', 'Disable key ' .. c)
-  end
+  kmap(modes, c, '<nop>', 'Disable key ' .. c)
 end
 
 -- In INSERT mode, doing 'jk' is equivalent to <Esc> (return to NORMAL mode)
