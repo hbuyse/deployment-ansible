@@ -1,0 +1,38 @@
+---
+- name: "Terminal tools | Installation"
+  hosts: localhost
+  pre_tasks:
+    - name: "Terminal tools | Prepare installation"
+      ansible.builtin.include_tasks:
+        file: pre_tasks/main.yml
+        apply:
+          tags: always
+      tags: always
+  post_tasks:
+    - name: "Terminal tools | Finalize installation"
+      ansible.builtin.include_tasks:
+        file: post_tasks/main.yml
+        apply:
+          tags: always
+      tags: always
+  roles:
+    - role: "nerdfonts"
+    - role: "rustup"
+    - role: "zsh"
+    - role: "foot"
+    - role: "alacritty"
+    - role: "oh_my_posh"
+    - role: "fastfetch"
+    - role: "tmux"
+    - role: "fzf"
+    - role: "eza"
+    - role: "bat"
+    - role: "fd"
+    - role: "ripgrep"
+    - role: "yazi"
+    - role: "bottom"
+    - role: "git"
+    - role: "git_delta"
+    - role: "lazygit"
+    - role: "direnv"
+    - role: "minicom"

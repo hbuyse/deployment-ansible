@@ -1,0 +1,39 @@
+---
+- name: "Development | Installation"
+  hosts: localhost
+  pre_tasks:
+    - name: "Development | Prepare installation"
+      ansible.builtin.include_tasks:
+        file: pre_tasks/main.yml
+        apply:
+          tags: always
+      tags: always
+  post_tasks:
+    - name: "Development | Finalize installation"
+      ansible.builtin.include_tasks:
+        file: post_tasks/main.yml
+        apply:
+          tags: always
+      tags: always
+  roles:
+    - role: "netrc"
+    - role: "ssh"
+    - role: "python"
+    - role: "pipx"
+    - role: "npmrc"
+    - role: "nodejs"
+    - role: "rustup"
+    - role: "clang"
+    - role: "cargo_cache"
+    - role: "ripgrep"
+    - role: "fd"
+    - role: "treesitter"
+    - role: "nvim"
+    - role: "vscode"
+    - role: "git"
+    - role: "git_delta"
+    - role: "lazygit"
+    - role: "direnv"
+    - role: "docker"
+    - role: "podman"
+    - role: "pre_commit"
