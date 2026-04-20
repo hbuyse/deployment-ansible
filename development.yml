@@ -1,0 +1,65 @@
+---
+- name: "Dotfiles | Installation"
+  hosts: localhost
+  pre_tasks:
+    - name: "Dotfiles | Prepare installation"
+      ansible.builtin.include_tasks:
+        file: pre_tasks/main.yml
+        apply:
+          tags: always
+      tags: always
+  post_tasks:
+    - name: "Dotfiles | Finalize installation"
+      ansible.builtin.include_tasks:
+        file: post_tasks/main.yml
+        apply:
+          tags: always
+      tags: always
+  roles:
+    - role: "python"
+    - role: "npmrc"
+    - role: "nodejs"
+    - role: "git"
+    - role: "treesitter"
+    - role: "nvim"
+    - role: "vscode"
+    - role: "git_delta"
+    - role: "lazygit"
+    - role: "direnv"
+    - role: "clang"
+    - role: "docker"
+    - role: "podman"
+    - role: "pre_commit"
+    - role: "ripgrep"
+    - role: "fd"
+    # LSP Servers
+    - role: "ansiblels"
+    - role: "bashls"
+    - role: "composels"
+    - role: "cssls"
+    - role: "htmlls"
+    - role: "jsonls"
+    - role: "luals"
+    - role: "markdownls"
+    - role: "pyright"
+    - role: "ruff"
+    - role: "rust_analyzer"
+    - role: "tailwindcss_lsp"
+    - role: "texlab"
+    - role: "tombi"
+    - role: "yamlls"
+    - role: "perlnavigator"
+    # End LSP Servers
+    # Formatters
+    - role: "black"
+    - role: "codespell"
+    - role: "isort"
+    - role: "perltidy"
+    - role: "prettier"
+    - role: "shfmt"
+    - role: "stylua"
+    - role: "yamlfmt"
+    # End Formatters
+    # Linters
+    - role: "ansiblelint"
+# End Linters
