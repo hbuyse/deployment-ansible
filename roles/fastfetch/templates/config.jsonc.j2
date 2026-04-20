@@ -55,7 +55,7 @@
       "type": "cpu",
       "temp": true
     },
-{% for mount in ansible_mounts|selectattr('fstype','in','ext4,vfat')|sort(attribute='mount') %}
+{% for mount in ansible_facts['mounts']|selectattr('fstype','in','ext4,vfat')|sort(attribute='mount') %}
     {
       "key": "│           │\u001b[11D\u001b[34m󰉉 disk",
       "type": "disk",
