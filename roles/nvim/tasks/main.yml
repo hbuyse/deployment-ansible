@@ -41,7 +41,7 @@
     - name: "Neovim | Install program from static binary [v{{ nvim_latest_version }}]"
       become: true
       ansible.builtin.unarchive:
-        src: "https://github.com/neovim/neovim/releases/download/v{{ nvim_latest_version }}/nvim-linux-{{ ansible_architecture
+        src: "https://github.com/neovim/neovim/releases/download/v{{ nvim_latest_version }}/nvim-linux-{{ ansible_facts['architecture']
           }}.tar.gz"
         dest: "{{ ansible_user_dir }}/.local"
         owner: "{{ ansible_user_uid }}"

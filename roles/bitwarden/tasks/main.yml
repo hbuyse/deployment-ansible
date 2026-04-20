@@ -20,7 +20,7 @@
 - name: "Bitwarden Desktop | Install man pages"
   ansible.builtin.get_url:
     url: "https://github.com/{{ bitwarden_owner }}/{{ bitwarden_repo }}/releases/download/{{ bitwarden_desktop_latest_tag
-      }}/Bitwarden-{{ bitwarden_desktop_latest_version }}-{{ ansible_architecture }}.AppImage"
+      }}/Bitwarden-{{ bitwarden_desktop_latest_version }}-{{ ansible_facts['architecture'] }}.AppImage"
     dest: "{{ ansible_user_dir }}/.local/bin/bitwarden"
     mode: "0755"
     owner: "{{ ansible_user_uid }}"

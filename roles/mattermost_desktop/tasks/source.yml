@@ -12,7 +12,7 @@
   ansible.builtin.set_fact:
     mattermost_desktop_latest_version: "{{ mattermost_desktop_latest_json.json.tag_name[1:] }}"
     mattermost_desktop_root_folder: "mattermost-desktop-{{ mattermost_desktop_latest_json.json.tag_name[1:] }}-{{ ansible_facts['system']
-      | lower }}-{{ (ansible_architecture == 'x86_64') | ternary('x64', 'arm64') }}"
+      | lower }}-{{ (ansible_facts['architecture'] == 'x86_64') | ternary('x64', 'arm64') }}"
 
 - name: "Mattermost Desktop | Try to load version file"
   block:
