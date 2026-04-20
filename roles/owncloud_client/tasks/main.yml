@@ -46,6 +46,6 @@
         src: "owncloud-client.service"
         dest: "{{ owncloud_client_service_dir }}"
         owner: "{{ ansible_facts['user_id'] }}"
-        group: "{{ ansible_user_gid }}"
+        group: "{{ ansible_facts['user_gid'] }}"
         mode: "0644"
       notify: "Owncloud Client | Restart service"

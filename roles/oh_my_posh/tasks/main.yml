@@ -25,7 +25,7 @@
     dest: "{{ ansible_user_dir }}/.local/bin/oh-my-posh"
     mode: "0755"
     owner: "{{ ansible_user_uid }}"
-    group: "{{ ansible_user_gid }}"
+    group: "{{ ansible_facts['user_gid'] }}"
   notify: "Oh My Posh | Clear cache"
   tags:
     - oh_my_posh

@@ -47,7 +47,7 @@
           }}/perlnavigator-linux-{{ ansible_facts['architecture'] }}.zip"
         dest: "{{ perlnavigator_tmpdir.path }}"
         owner: "{{ ansible_user_uid }}"
-        group: "{{ ansible_user_gid }}"
+        group: "{{ ansible_facts['user_gid'] }}"
         remote_src: true
 
     - name: "PerlNavigator | Move binary file"
@@ -55,5 +55,5 @@
         src: "{{ perlnavigator_tmpdir.path }}/perlnavigator-linux-{{ ansible_facts['architecture'] }}/perlnavigator"
         dest: "{{ perlnavigator_bin_dir }}/perlnavigator"
         owner: "{{ ansible_user_uid }}"
-        group: "{{ ansible_user_gid }}"
+        group: "{{ ansible_facts['user_gid'] }}"
         mode: "0755"

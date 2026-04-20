@@ -23,7 +23,7 @@
         path: "{{ ansible_user_dir }}/.local/share/applications"
         state: directory
         owner: "{{ ansible_user_uid }}"
-        group: "{{ ansible_user_gid }}"
+        group: "{{ ansible_facts['user_gid'] }}"
         mode: "0755"
 
     - name: "Web Applications | Copy desktop files"
@@ -31,7 +31,7 @@
         src: "webapp.desktop.j2"
         dest: "{{ ansible_user_dir }}/.local/share/applications/com.{{ item.key | lower }}.webapp.desktop"
         owner: "{{ ansible_user_uid }}"
-        group: "{{ ansible_user_gid }}"
+        group: "{{ ansible_facts['user_gid'] }}"
         mode: "0644"
       loop: "{{ webapplications_apps | dict2items }}"
       loop_control:

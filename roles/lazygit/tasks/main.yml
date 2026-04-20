@@ -45,7 +45,7 @@
         dest: "{{ ansible_user_dir }}/.local/bin"
         mode: "0755"
         owner: "{{ ansible_user_uid }}"
-        group: "{{ ansible_user_gid }}"
+        group: "{{ ansible_facts['user_gid'] }}"
         include:
           - "lazygit"
         remote_src: true

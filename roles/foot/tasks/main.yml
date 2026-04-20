@@ -61,7 +61,7 @@
     dest: "{{ foot_config_dir }}/foot.ini"
     mode: "0644"
     owner: "{{ ansible_facts['user_id'] }}"
-    group: "{{ ansible_user_gid }}"
+    group: "{{ ansible_facts['user_gid'] }}"
   tags: foot
 
 - name: "Foot | Download catppuccin themes"
@@ -70,7 +70,7 @@
     dest: "{{ foot_themes_dir }}"
     mode: "0644"
     owner: "{{ ansible_facts['user_id'] }}"
-    group: "{{ ansible_user_gid }}"
+    group: "{{ ansible_facts['user_gid'] }}"
   loop:
     - mocha
     - macchiato

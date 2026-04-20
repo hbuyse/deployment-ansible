@@ -15,5 +15,5 @@
     mode: "0644"
     remote_src: true
     owner: "{{ ansible_user_uid }}"
-    group: "{{ ansible_user_gid }}"
+    group: "{{ ansible_facts['user_gid'] }}"
   notify: "Nerdfonts | Build font information caches"

@@ -36,7 +36,7 @@
         dest: "{{ ansible_user_dir }}/.{{ item }}"
         mode: "0644"
         owner: "{{ ansible_user_uid }}"
-        group: "{{ ansible_user_gid }}"
+        group: "{{ ansible_facts['user_gid'] }}"
       loop:
         - zshrc
         - p10k.zsh

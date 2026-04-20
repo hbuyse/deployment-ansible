@@ -28,5 +28,5 @@
         dest: "{{ luals_install_dir }}"
         remote_src: true
         owner: "{{ ansible_user_uid }}"
-        group: "{{ ansible_user_gid }}"
+        group: "{{ ansible_facts['user_gid'] }}"
         mode: "u=rwX,g=rwX,o=rwX"
