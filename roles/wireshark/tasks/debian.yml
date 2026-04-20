@@ -6,6 +6,6 @@
     enabled: true
     types: deb
     uris: "https://ppa.launchpadcontent.net/wireshark-dev/stable/ubuntu"
-    suites: "{{ ansible_distribution_release | lower }}"
+    suites: "{{ ansible_facts['distribution_release'] | lower }}"
     components:
       - main
