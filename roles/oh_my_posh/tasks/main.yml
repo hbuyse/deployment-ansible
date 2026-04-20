@@ -22,7 +22,7 @@
   ansible.builtin.get_url:
     url: "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v{{ oh_my_posh_latest_version }}/posh-{{ ansible_facts['system']
       | lower }}-{{ alt_arch }}"
-    dest: "{{ ansible_user_dir }}/.local/bin/oh-my-posh"
+    dest: "{{ ansible_facts['user_dir'] }}/.local/bin/oh-my-posh"
     mode: "0755"
     owner: "{{ ansible_facts['user_uid'] }}"
     group: "{{ ansible_facts['user_gid'] }}"
@@ -33,7 +33,7 @@
 
 - name: "Oh My Posh | Ensure config directory exists"
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.config/oh-my-posh"
+    path: "{{ ansible_facts['user_dir'] }}/.config/oh-my-posh"
     state: directory
     mode: "0755"
   tags:
@@ -43,7 +43,7 @@
 - name: "Oh My Posh | Copy configuration file"
   ansible.builtin.copy:
     src: "config.omp.yaml"
-    dest: "{{ ansible_user_dir }}/.config/oh-my-posh"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/oh-my-posh"
     mode: "0644"
   notify: "Oh My Posh | Clear cache"
   tags:

@@ -1,2 +1,2 @@
 ---
-cava_config_dir: "{{ ansible_user_dir }}/.config/cava"
+cava_config_dir: "{{ ansible_facts['user_dir'] }}/.config/cava"

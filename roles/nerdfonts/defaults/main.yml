@@ -1,5 +1,5 @@
 ---
 # defaults file for nerdfonts
-nerdfonts_font_dir_prefix: "{{ ansible_user_dir }}/.local/share/fonts"
+nerdfonts_font_dir_prefix: "{{ ansible_facts['user_dir'] }}/.local/share/fonts"
 nerdfonts_list:
   - "Iosevka"

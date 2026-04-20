@@ -1,4 +1,4 @@
 ---
-wallpapers_install_prefix: "{{ ansible_user_dir }}/.local"
+wallpapers_install_prefix: "{{ ansible_facts['user_dir'] }}/.local"
 wallpapers_install_dir: "{{ wallpapers_install_prefix }}/share/backgrounds"
 wallpapers_install_bin: "{{ wallpapers_install_prefix }}/bin"

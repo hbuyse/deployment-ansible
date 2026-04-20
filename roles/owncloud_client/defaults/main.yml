@@ -1,2 +1,2 @@
 ---
-owncloud_client_service_dir: "{{ ansible_user_dir }}/.config/systemd/user"
+owncloud_client_service_dir: "{{ ansible_facts['user_dir'] }}/.config/systemd/user"

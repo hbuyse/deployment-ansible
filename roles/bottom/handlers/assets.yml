@@ -29,11 +29,11 @@
     - dst_file: _btm
       src_file: _btm
       shell: zsh
-      install_dir: "{{ ansible_user_dir }}/.local/share/zsh/site-functions"
+      install_dir: "{{ ansible_facts['user_dir'] }}/.local/share/zsh/site-functions"
     - dst_file: btm
       src_file: btm.bash
       shell: bash
-      install_dir: "{{ ansible_user_dir }}/.local/share/bash-completion/completions"
+      install_dir: "{{ ansible_facts['user_dir'] }}/.local/share/bash-completion/completions"
 
 - name: "Bottom | Install manpages"
   ansible.builtin.include_tasks:

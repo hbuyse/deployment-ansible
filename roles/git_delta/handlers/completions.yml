@@ -17,14 +17,14 @@
   block:
     - name: "Git Delta | Ensure config directory exists"
       ansible.builtin.file:
-        path: "{{ ansible_user_dir }}/.local/share/bash-completion/completions"
+        path: "{{ ansible_facts['user_dir'] }}/.local/share/bash-completion/completions"
         state: directory
         mode: "0755"
 
     - name: "Git Delta | Install completion file"
       ansible.builtin.get_url:
         url: "https://raw.githubusercontent.com/dandavison/delta/refs/tags/{{ git_delta_latest_version }}/etc/completion/completion.bash"
-        dest: "{{ ansible_user_dir }}/.local/share/bash-completion/completions/delta"
+        dest: "{{ ansible_facts['user_dir'] }}/.local/share/bash-completion/completions/delta"
         mode: "0644"
 
 - name: "Git Delta | Install zsh completion file"
@@ -32,12 +32,12 @@
   block:
     - name: "Git Delta | Ensure config directory exists"
       ansible.builtin.file:
-        path: "{{ ansible_user_dir }}/.local/share/zsh/site-functions"
+        path: "{{ ansible_facts['user_dir'] }}/.local/share/zsh/site-functions"
         state: directory
         mode: "0755"
 
     - name: "Git Delta | Install completion file"
       ansible.builtin.get_url:
         url: "https://raw.githubusercontent.com/dandavison/delta/refs/tags/{{ git_delta_latest_version }}/etc/completion/completion.zsh"
-        dest: "{{ ansible_user_dir }}/.local/share/zsh/site-functions/_delta"
+        dest: "{{ ansible_facts['user_dir'] }}/.local/share/zsh/site-functions/_delta"
         mode: "0644"

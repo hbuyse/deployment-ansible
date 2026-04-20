@@ -20,7 +20,7 @@
   block:
     - name: "Web Applications | Ensure applications directory exist"
       ansible.builtin.file:
-        path: "{{ ansible_user_dir }}/.local/share/applications"
+        path: "{{ ansible_facts['user_dir'] }}/.local/share/applications"
         state: directory
         owner: "{{ ansible_facts['user_uid'] }}"
         group: "{{ ansible_facts['user_gid'] }}"
@@ -29,7 +29,7 @@
     - name: "Web Applications | Copy desktop files"
       ansible.builtin.template:
         src: "webapp.desktop.j2"
-        dest: "{{ ansible_user_dir }}/.local/share/applications/com.{{ item.key | lower }}.webapp.desktop"
+        dest: "{{ ansible_facts['user_dir'] }}/.local/share/applications/com.{{ item.key | lower }}.webapp.desktop"
         owner: "{{ ansible_facts['user_uid'] }}"
         group: "{{ ansible_facts['user_gid'] }}"
         mode: "0644"

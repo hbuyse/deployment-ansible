@@ -28,11 +28,11 @@
     - dst_file: _bat
       src_file: bat.zsh
       shell: zsh
-      install_dir: "{{ ansible_user_dir }}/.local/share/zsh/site-functions"
+      install_dir: "{{ ansible_facts['user_dir'] }}/.local/share/zsh/site-functions"
     - dst_file: bat
       src_file: bat.bash
       shell: bash
-      install_dir: "{{ ansible_user_dir }}/.local/share/bash-completions"
+      install_dir: "{{ ansible_facts['user_dir'] }}/.local/share/bash-completions"
 
 - name: "Bat | Install manpages"
   ansible.builtin.include_tasks:

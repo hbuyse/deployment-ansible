@@ -1,4 +1,4 @@
 ---
 perlnavigator_github_user: "bscan"
 perlnavigator_github_repo: "PerlNavigator"
-perlnavigator_bin_dir: "{{ ansible_user_dir }}/.local/bin"
+perlnavigator_bin_dir: "{{ ansible_facts['user_dir'] }}/.local/bin"

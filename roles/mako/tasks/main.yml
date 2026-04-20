@@ -19,14 +19,14 @@
   block:
     - name: "Mako | Ensure directory exist"
       ansible.builtin.file:
-        path: "{{ ansible_user_dir }}/.config/mako"
+        path: "{{ ansible_facts['user_dir'] }}/.config/mako"
         state: directory
         mode: "0755"
 
     - name: "Mako | Copy configuration"
       ansible.builtin.template:
         src: "config.j2"
-        dest: "{{ ansible_user_dir }}/.config/mako/config"
+        dest: "{{ ansible_facts['user_dir'] }}/.config/mako/config"
         mode: "0644"
       notify:
         - "Mako | Disable 'dunst' service if exists"
@@ -61,7 +61,7 @@
     - name: "Mako | Ensure directory exist"
       become: true
       ansible.builtin.file:
-        path: "{{ ansible_user_dir }}/.config/systemd/user/"
+        path: "{{ ansible_facts['user_dir'] }}/.config/systemd/user/"
         state: directory
         mode: "0755"
 
@@ -69,7 +69,7 @@
       become: true
       ansible.builtin.copy:
         src: "mako.service"
-        dest: "{{ ansible_user_dir }}/.config/systemd/user/mako.service"
+        dest: "{{ ansible_facts['user_dir'] }}/.config/systemd/user/mako.service"
         mode: "0644"
       notify:
         - "Mako | Disable 'dunst' service if exists"

@@ -30,7 +30,7 @@
   block:
     - name: "Bottom | Ensure configuration folder exists"
       ansible.builtin.file:
-        path: "{{ ansible_user_dir }}/.config/bottom"
+        path: "{{ ansible_facts['user_dir'] }}/.config/bottom"
         state: "directory"
         mode: "0755"
         recurse: true
@@ -38,5 +38,5 @@
     - name: "Bottom | Copy configuration file"
       ansible.builtin.copy:
         src: "bottom.toml"
-        dest: "{{ ansible_user_dir }}/.config/bottom/bottom.toml"
+        dest: "{{ ansible_facts['user_dir'] }}/.config/bottom/bottom.toml"
         mode: "0644"

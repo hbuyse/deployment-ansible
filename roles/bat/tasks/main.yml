@@ -30,14 +30,14 @@
   block:
     - name: "Bat | Ensure configuration folder exists"
       ansible.builtin.file:
-        path: "{{ ansible_user_dir }}/.config/bat"
+        path: "{{ ansible_facts['user_dir'] }}/.config/bat"
         state: "directory"
         mode: "0755"
 
     - name: "Bat | Copy configuration file"
       ansible.builtin.copy:
         src: "config"
-        dest: "{{ ansible_user_dir }}/.config/bat"
+        dest: "{{ ansible_facts['user_dir'] }}/.config/bat"
         mode: "0644"
 
 - name: "Bat | Install catppuccin themes"
@@ -45,14 +45,14 @@
   block:
     - name: "Bat | Ensure themes folder exists"
       ansible.builtin.file:
-        path: "{{ ansible_user_dir }}/.config/bat/themes"
+        path: "{{ ansible_facts['user_dir'] }}/.config/bat/themes"
         state: "directory"
         mode: "0755"
 
     - name: "Bat | Download catppuccin themes"
       ansible.builtin.get_url:
         url: "https://raw.githubusercontent.com/catppuccin/bat/refs/heads/main/themes/Catppuccin%20{{ item }}.tmTheme"
-        dest: "{{ ansible_user_dir }}/.config/bat/themes/Catppuccin {{ item }}.tmTheme"
+        dest: "{{ ansible_facts['user_dir'] }}/.config/bat/themes/Catppuccin {{ item }}.tmTheme"
         mode: "0644"
       loop:
         - Frappe

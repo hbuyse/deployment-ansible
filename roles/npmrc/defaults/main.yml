@@ -1,2 +1,2 @@
 ---
-npmrc_prefix_npm_packages: "{{ ansible_user_dir }}/.npm-packages"
+npmrc_prefix_npm_packages: "{{ ansible_facts['user_dir'] }}/.npm-packages"

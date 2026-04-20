@@ -59,7 +59,7 @@
       block:
         - name: "Mattermost Desktop | Ensure applications directory exist"
           ansible.builtin.file:
-            path: "{{ ansible_user_dir }}/.local/share/applications"
+            path: "{{ ansible_facts['user_dir'] }}/.local/share/applications"
             state: directory
             owner: "{{ ansible_facts['user_uid'] }}"
             group: "{{ ansible_facts['user_gid'] }}"
@@ -68,7 +68,7 @@
         - name: "Mattermost Desktop | Copy desktop file"
           ansible.builtin.template:
             src: "mattermost-desktop.desktop.j2"
-            dest: "{{ ansible_user_dir }}/.local/share/applications/mattermost-desktop.desktop"
+            dest: "{{ ansible_facts['user_dir'] }}/.local/share/applications/mattermost-desktop.desktop"
             owner: "{{ ansible_facts['user_uid'] }}"
             group: "{{ ansible_facts['user_gid'] }}"
             mode: "0644"

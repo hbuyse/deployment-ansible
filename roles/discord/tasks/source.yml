@@ -59,7 +59,7 @@
       block:
         - name: "Discord | Ensure applications directory exist"
           ansible.builtin.file:
-            path: "{{ ansible_user_dir }}/.local/share/applications"
+            path: "{{ ansible_facts['user_dir'] }}/.local/share/applications"
             state: directory
             owner: "root"
             group: "root"
@@ -68,7 +68,7 @@
         - name: "Discord | Copy desktop file"
           ansible.builtin.template:
             src: "discord.desktop.j2"
-            dest: "{{ ansible_user_dir }}/.local/share/applications/discord.desktop"
+            dest: "{{ ansible_facts['user_dir'] }}/.local/share/applications/discord.desktop"
             owner: "root"
             group: "root"
             mode: "0644"

@@ -29,10 +29,10 @@
   loop:
     - completion_file: _eza
       shell: zsh
-      install_dir: "{{ ansible_user_dir }}/.local/share/zsh/site-functions"
+      install_dir: "{{ ansible_facts['user_dir'] }}/.local/share/zsh/site-functions"
     - completion_file: eza
       shell: bash
-      install_dir: "{{ ansible_user_dir }}/.local/share/bash-completion/completions"
+      install_dir: "{{ ansible_facts['user_dir'] }}/.local/share/bash-completion/completions"
 
 - name: "Eza | Install manpage files"
   ansible.builtin.include_tasks:

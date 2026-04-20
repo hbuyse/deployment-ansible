@@ -4,6 +4,6 @@
     file: completions.yml
   loop:
     - shell: zsh
-      filepath: "{{ ansible_user_dir }}/.local/share/zsh/site-functions/_zellij"
+      filepath: "{{ ansible_facts['user_dir'] }}/.local/share/zsh/site-functions/_zellij"
     - shell: bash
-      filepath: "{{ ansible_user_dir }}/.local/share/bash-completion/completions/zellij"
+      filepath: "{{ ansible_facts['user_dir'] }}/.local/share/bash-completion/completions/zellij"
