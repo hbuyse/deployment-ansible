@@ -18,7 +18,7 @@ if [ -f "$HOME/.cargo/env" ]; then
     . "$HOME/.cargo/env"
 fi
 
-{% if ansible_system | lower == "linux" %}
+{% if ansible_facts['system'] | lower == "linux" %}
 # Docker socket
 DOCKER_SOCKET="/var/run/docker.sock"
 if [ -S "${DOCKER_SOCKET}" ]; then
@@ -31,6 +31,6 @@ if [ -d "/opt/luals/bin" ]; then
     PATH=$PATH:"/opt/luals/bin"
 fi
 
-export PATH {% if ansible_system | lower == "linux" %}DOCKER_HOST{% endif %}
+export PATH {% if ansible_facts['system'] | lower == "linux" %}DOCKER_HOST{% endif %}
 
 #  vim: set ts=4 sw=4 tw=0 noet ft=sh :
