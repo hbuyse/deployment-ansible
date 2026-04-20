@@ -21,7 +21,7 @@
   ansible.builtin.package:
     name: "pipewire-media-session-docs"
     state: "absent"
-  ignore_errors: "{{ ansible_check_mode }}"
+  ignore_errors: "{{ ansible_facts['check_mode'] }}"
   tags:
     - wireplumber
 
