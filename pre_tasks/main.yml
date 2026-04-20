@@ -1,7 +1,7 @@
 ---
 - name: "Pre-tasks | Define alternative architecture naming [Common]"
   ansible.builtin.set_fact:
-    alt_arch: "{{ ansible_machine | replace('x86_64', 'amd64') | replace('aarch64', 'arm64') }}"
+    alt_arch: "{{ ansible_facts['machine'] | replace('x86_64', 'amd64') | replace('aarch64', 'arm64') }}"
   tags: always
 
 - name: "Pre-tasks | Detect NVIDIA GPU"

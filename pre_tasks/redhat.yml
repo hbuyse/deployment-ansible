@@ -15,8 +15,8 @@
 - name: "RPM Fusion | Install repo package"
   become: true
   ansible.builtin.dnf:
-    name: "https://mirrors.rpmfusion.org/{{ repo }}/{{ ansible_facts['distribution'] | lower }}/rpmfusion-{{ repo }}-release-{{ ansible_facts['distribution']_major_version
-      }}.noarch.rpm"
+    name: "https://mirrors.rpmfusion.org/{{ repo }}/{{ ansible_facts['distribution'] | lower }}/rpmfusion-{{ repo }}-release-{{
+      ansible_facts['distribution']_major_version }}.noarch.rpm"
     state: present
   loop:
     - "free"
