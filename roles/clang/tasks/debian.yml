@@ -1,12 +1,22 @@
 ---
+- name: "Clang | Install certificate"
+  become: true
+  ansible.builtin.get_url:
+    url: "https://apt.llvm.org/llvm-snapshot.gpg.key"
+    dest: "/etc/apt/keyrings/apt.llvm.org.asc"
+    mode: "0644"
+
 - name: "Clang | Install source repository"
   become: true
   ansible.builtin.deb822_repository:
-    name: "llvm-{{ clang_llvm_stable_version }}"
+    name: "llvm-{{ version }}"
     enabled: true
     types: deb
     uris: "http://apt.llvm.org/{{ ansible_distribution_release }}"
-    suites: "llvm-toolchain-{{ ansible_distribution_release }}-{{ clang_llvm_stable_version }}"
+    suites: "llvm-toolchain-{{ ansible_distribution_release }}-{{ version }}"
     components: main
     state: present
-    signed_by: "https://apt.llvm.org/llvm-snapshot.gpg.key"
+    signed_by: "/etc/apt/keyrings/apt.llvm.org.asc"
+  loop: "{{ clang_llvm_versions }}"
+  loop_control:
+    loop_var: version

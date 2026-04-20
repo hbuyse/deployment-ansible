@@ -1,31 +1,29 @@
 ---
-clang_llvm_stable_version: 20
-
 clang_packages:
   # LLVM
-  - "libllvm{{ clang_llvm_stable_version }}"
-  - "llvm-{{ clang_llvm_stable_version }}"
-  - "llvm-{{ clang_llvm_stable_version }}-dev"
-  - "llvm-{{ clang_llvm_stable_version }}-doc"
-  - "llvm-{{ clang_llvm_stable_version }}-examples"
-  - "llvm-{{ clang_llvm_stable_version }}-runtime"
+  - "libllvm{{ clang_latest_llvm_version }}"
+  - "llvm-{{ clang_latest_llvm_version }}"
+  - "llvm-{{ clang_latest_llvm_version }}-dev"
+  - "llvm-{{ clang_latest_llvm_version }}-doc"
+  - "llvm-{{ clang_latest_llvm_version }}-examples"
+  - "llvm-{{ clang_latest_llvm_version }}-runtime"
   # Clang and co
-  - "clang-{{ clang_llvm_stable_version }}"
-  - "clang-tools-{{ clang_llvm_stable_version }}"
-  - "clang-{{ clang_llvm_stable_version }}-doc"
-  - "libclang-common-{{ clang_llvm_stable_version }}-dev"
-  - "libclang-{{ clang_llvm_stable_version }}-dev"
-  - "libclang1-{{ clang_llvm_stable_version }}"
-  - "clang-format-{{ clang_llvm_stable_version }}"
-  - "python3-clang-{{ clang_llvm_stable_version }}"
-  - "clangd-{{ clang_llvm_stable_version }}"
-  - "clang-tidy-{{ clang_llvm_stable_version }}"
+  - "clang-{{ clang_latest_llvm_version }}"
+  - "clang-tools-{{ clang_latest_llvm_version }}"
+  - "clang-{{ clang_latest_llvm_version }}-doc"
+  - "libclang-common-{{ clang_latest_llvm_version }}-dev"
+  - "libclang-{{ clang_latest_llvm_version }}-dev"
+  - "libclang1-{{ clang_latest_llvm_version }}"
+  - "clang-format-{{ clang_latest_llvm_version }}"
+  - "python3-clang-{{ clang_latest_llvm_version }}"
+  - "clangd-{{ clang_latest_llvm_version }}"
+  - "clang-tidy-{{ clang_latest_llvm_version }}"
   # compiler-rt
-  - "libclang-rt-{{ clang_llvm_stable_version }}-dev"
+  - "libclang-rt-{{ clang_latest_llvm_version }}-dev"
   # lldb
-  - "lldb-{{ clang_llvm_stable_version }}"
+  - "lldb-{{ clang_latest_llvm_version }}"
   # lld (linker)
-  - "lld-{{ clang_llvm_stable_version }}"
+  - "lld-{{ clang_latest_llvm_version }}"
   # libc++
-  - "libc++-{{ clang_llvm_stable_version }}-dev"
-  - "libc++abi-{{ clang_llvm_stable_version }}-dev"
+  - "libc++-{{ clang_latest_llvm_version }}-dev"
+  - "libc++abi-{{ clang_latest_llvm_version }}-dev"
