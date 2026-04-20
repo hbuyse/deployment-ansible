@@ -50,7 +50,7 @@ layer=overlay
 # keyboard-focus=exclusive
 # exit-on-keyboard-focus-loss=yes
 
-cache={{ ansible_user_dir }}/.cache/fuzzel
+cache={{ ansible_facts['user_dir'] }}/.cache/fuzzel
 
 # render-workers=<number of logical CPUs>
 # match-workers=<number of logical CPUs>
