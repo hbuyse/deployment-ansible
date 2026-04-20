@@ -15,8 +15,8 @@
 - name: "Direnv | Install binary [v{{ direnv_latest_version }}]"
   become: true
   ansible.builtin.get_url:
-    url: "https://github.com/direnv/direnv/releases/download/v{{ direnv_latest_version }}/direnv.{{ ansible_system | lower
-      }}-{{ alt_arch }}"
+    url: "https://github.com/direnv/direnv/releases/download/v{{ direnv_latest_version }}/direnv.{{ ansible_facts['system']
+      | lower }}-{{ alt_arch }}"
     dest: "{{ direnv_bin_install_dir }}/direnv"
     mode: "0755"
 

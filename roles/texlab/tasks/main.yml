@@ -42,7 +42,7 @@
       become: true
       ansible.builtin.unarchive:
         src: "https://github.com/{{ texlab_github_user }}/{{ texlab_github_repo }}/releases/download/v{{ texlab_latest_version
-          }}/texlab-{{ ansible_architecture }}-{{ ansible_system | lower }}.tar.gz"
+          }}/texlab-{{ ansible_architecture }}-{{ ansible_facts['system'] | lower }}.tar.gz"
         dest: "{{ ansible_user_dir }}/.local/bin"
         owner: "{{ ansible_user_uid }}"
         group: "{{ ansible_user_gid }}"

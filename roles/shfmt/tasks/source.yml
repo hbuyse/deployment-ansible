@@ -16,6 +16,6 @@
   become: true
   ansible.builtin.get_url:
     url: "https://github.com/{{ shfmt_github_user }}/{{ shfmt_github_repo }}/releases/download/{{ shfmt_latest_version }}/shfmt_{{
-      shfmt_latest_version }}_{{ ansible_system | lower }}_{{ alt_arch }}"
+      shfmt_latest_version }}_{{ ansible_facts['system'] | lower }}_{{ alt_arch }}"
     dest: "{{ ansible_user_dir }}/.local/bin/shfmt"
     mode: "0755"

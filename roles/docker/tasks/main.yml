@@ -3,7 +3,7 @@
 - name: "Docker | Check that it is supported by the OS"
   ansible.builtin.assert:
     that:
-      - ansible_system == "Linux"
+      - ansible_facts['system'] == "Linux"
 
 - name: "Docker | Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"

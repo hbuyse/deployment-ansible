@@ -15,7 +15,7 @@
 - name: "Fastfetch | Install fastfetch from GitHub [v{{ fastfetch_latest_version }}]"
   become: true
   ansible.builtin.unarchive:
-    src: "https://github.com/fastfetch-cli/fastfetch/releases/download/{{ fastfetch_latest_version }}/fastfetch-{{ ansible_system
+    src: "https://github.com/fastfetch-cli/fastfetch/releases/download/{{ fastfetch_latest_version }}/fastfetch-{{ ansible_facts['system']
       | lower }}-{{ alt_arch }}.tar.gz"
     dest: "{{ fastfetch_install_dir }}"
     remote_src: true

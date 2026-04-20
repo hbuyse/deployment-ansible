@@ -20,7 +20,7 @@
 
 - name: "Oh My Posh | Install binary [v{{ oh_my_posh_latest_version }}]"
   ansible.builtin.get_url:
-    url: "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v{{ oh_my_posh_latest_version }}/posh-{{ ansible_system
+    url: "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v{{ oh_my_posh_latest_version }}/posh-{{ ansible_facts['system']
       | lower }}-{{ alt_arch }}"
     dest: "{{ ansible_user_dir }}/.local/bin/oh-my-posh"
     mode: "0755"

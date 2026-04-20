@@ -41,7 +41,7 @@
       become: true
       ansible.builtin.unarchive:
         src: "https://github.com/{{ lazygit_github_user }}/{{ lazygit_github_repo }}/releases/download/v{{ lazygit_latest_version
-          }}/lazygit_{{ lazygit_latest_version }}_{{ ansible_system }}_{{ ansible_architecture }}.tar.gz"
+          }}/lazygit_{{ lazygit_latest_version }}_{{ ansible_facts['system'] }}_{{ ansible_architecture }}.tar.gz"
         dest: "{{ ansible_user_dir }}/.local/bin"
         mode: "0755"
         owner: "{{ ansible_user_uid }}"
