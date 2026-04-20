@@ -17,9 +17,9 @@
       tags: always
   roles:
     - role: "greetd"
-      when: ansible_hostname == "white-tower"
+      when: ansible_facts["hostname"] == "white-tower"
     - role: "tuigreet"
-      when: ansible_hostname == "white-tower"
+      when: ansible_facts["hostname"] == "white-tower"
     - role: "alacritty"
     - role: "nvidia"
       when: nvidia_detection.rc == 0
@@ -39,13 +39,13 @@
     - role: "waybar"
     - role: "kanshi"
     - role: "mako"
-      when: ansible_os_family in ["Debian"]
+      when: ansible_facts["os_family"] in ["Debian"]
     - role: "swaync"
-      when: ansible_os_family not in ["Debian"]
+      when: ansible_facts["os_family"] not in ["Debian"]
     - role: "wofi"
-      when: ansible_os_family in ["Debian"]
+      when: ansible_facts["os_family"] in ["Debian"]
     - role: "fuzzel"
-      when: ansible_os_family not in ["Debian"]
+      when: ansible_facts["os_family"] not in ["Debian"]
     - role: "xdg_desktop_portal"
     - role: "wireplumber"
     - role: "tuned"
