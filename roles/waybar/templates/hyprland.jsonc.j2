@@ -15,7 +15,7 @@
 {% if ansible_facts["os_family"] != "Debian" %}
       "bluetooth",
 {% endif %}
-{% if ansible_form_factor in ["Portable", "Laptop", "Notebook"] %}
+{% if ansible_facts['form_factor'] in ["Portable", "Laptop", "Notebook"] %}
       "backlight",
 {% endif %}
       "pulseaudio",
