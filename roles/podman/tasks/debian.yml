@@ -5,8 +5,8 @@
     name: "podman"
     enabled: true
     types: deb
-    uris: "https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu_{{ ansible_distribution_version
+    uris: "https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu_{{ ansible_facts['distribution']_version
       }}"
     suites: "/"
-    signed_by: "https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu_{{ ansible_distribution_version
+    signed_by: "https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu_{{ ansible_facts['distribution']_version
       }}/Release.key"
