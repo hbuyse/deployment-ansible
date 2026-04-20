@@ -16,13 +16,13 @@
 - name: "Pre-tasks | Get list of services"
   ansible.builtin.service_facts:
 
-- name: "Pre-tasks | Run some OS specific tasks [{{ ansible_os_family }}]"
+- name: "Pre-tasks | Run some OS specific tasks [{{ ansible_facts['os_family'] }}]"
   ansible.builtin.include_tasks:
     file: "{{ item }}"
     apply:
       tags: always
   with_first_found:
     - files:
-        - "{{ ansible_os_family | lower }}.yml"
+        - "{{ ansible_facts['os_family'] | lower }}.yml"
       skip: true
   tags: always
