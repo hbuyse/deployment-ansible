@@ -9,12 +9,12 @@
     "modules-right": [
       // "custom/playerctl",
       "custom/weather",
-{% if ansible_os_family == "Debian" %}
+{% if ansible_facts["os_family"] == "Debian" %}
       "custom/sunset",
       "inhibitor",
 {% endif %}
       "custom/updates",
-{% if ansible_os_family != "Debian" %}
+{% if ansible_facts["os_family"] != "Debian" %}
       "bluetooth",
 {% endif %}
 {% if ansible_form_factor in ["Portable", "Laptop", "Notebook"] and 'swaync' not in role_names %}
@@ -26,7 +26,7 @@
       "network#{{ interface.device }}",
 {% endfor %}
       "clock",
-{% if ansible_os_family == "Debian" %}
+{% if ansible_facts["os_family"] == "Debian" %}
       "custom/power",
 {% else %}
       "custom/notification",
@@ -58,7 +58,7 @@
       "cpu",
       "temperature",
       "custom/battery",
-{% if ansible_os_family != "Debian" %}
+{% if ansible_facts["os_family"] != "Debian" %}
       "tray",
 {% endif %}
     ],

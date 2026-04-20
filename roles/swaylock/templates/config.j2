@@ -2,7 +2,7 @@ ignore-empty-password
 font=Iosevka Nerd Font
 #font-size=80
 
-{% if ansible_os_family == "Archlinux" %}
+{% if ansible_facts["os_family"] == "Archlinux" %}
 # clock: Show time and date.
 # timestr: The format string for the time. Defaults to '%T'.
 # datestr: The format string for the date. Defaults to '%a, %x'.
@@ -22,7 +22,7 @@ show-keyboard-layout
 # Disable the Caps Lock text.
 disable-caps-lock-text
 
-{% if ansible_os_family == "Archlinux" %}
+{% if ansible_facts["os_family"] == "Archlinux" %}
 # Make the lock screen fade in instead of just popping in.
 #fade-in=0.2
 
