@@ -78,7 +78,7 @@
         - "work-com.j2"
         - "work.j2"
       when:
-        - ansible_hostname == 'hbuyse-latitude5400'
+        - ansible_facts['hostname'] == 'hbuyse-latitude5400'
         - kanshi_work_confs is defined
 
 - name: "Kanshi | Install service file"
