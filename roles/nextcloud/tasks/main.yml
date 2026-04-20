@@ -3,18 +3,18 @@
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
-        - "{{ ansible_os_family | lower }}.yml"
+        - "{{ ansible_facts['os_family'] | lower }}.yml"
       skip: true
   tags: nextcloud
 
-- name: "Nextcloud | Add repository [{{ ansible_os_family }}]"
+- name: "Nextcloud | Add repository [{{ ansible_facts['os_family'] }}]"
   ansible.builtin.include_tasks:
     file: "{{ item }}"
     apply:
       tags: nextcloud
   with_first_found:
     - files:
-        - "{{ ansible_os_family | lower }}.yml"
+        - "{{ ansible_facts['os_family'] | lower }}.yml"
       skip: true
   tags: nextcloud
 

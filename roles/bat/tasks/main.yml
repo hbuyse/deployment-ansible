@@ -3,7 +3,7 @@
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
-        - "{{ ansible_os_family | lower }}.yml"
+        - "{{ ansible_facts['os_family'] | lower }}.yml"
       skip: true
   tags: bat
 
@@ -17,7 +17,7 @@
   when: bat_packages is not defined
   tags: bat
 
-- name: "Bat | Install from package manager [{{ ansible_os_family }}]"
+- name: "Bat | Install from package manager [{{ ansible_facts['os_family'] }}]"
   become: true
   ansible.builtin.package:
     name: "{{ bat_packages }}"

@@ -9,7 +9,7 @@
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
-        - "{{ ansible_os_family | lower }}.yml"
+        - "{{ ansible_facts['os_family'] | lower }}.yml"
       skip: true
   tags: owncloud_client
 
@@ -20,7 +20,7 @@
       tags: owncloud_client
   with_first_found:
     - files:
-        - "{{ ansible_os_family | lower }}.yml"
+        - "{{ ansible_facts['os_family'] | lower }}.yml"
       skip: true
   tags: owncloud_client
 

@@ -3,7 +3,7 @@
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
-        - "{{ ansible_os_family | lower }}.yml"
+        - "{{ ansible_facts['os_family'] | lower }}.yml"
       skip: true
   tags: swaylock
 
@@ -15,7 +15,7 @@
   tags: swaylock
   when:
     - swaylock_packages is defined
-    - ansible_os_family != "Archlinux"
+    - ansible_facts['os_family'] != "Archlinux"
 
 - name: "Swaylock | Install packages"
   kewlfft.aur.aur:
@@ -25,7 +25,7 @@
   tags: swaylock
   when:
     - swaylock_packages is defined
-    - ansible_os_family == "Archlinux"
+    - ansible_facts['os_family'] == "Archlinux"
 
 - name: "Swaylock | Install configuration"
   tags: swaylock

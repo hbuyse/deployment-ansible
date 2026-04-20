@@ -3,11 +3,11 @@
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
-        - "{{ ansible_os_family | lower }}.yml"
+        - "{{ ansible_facts['os_family'] | lower }}.yml"
       skip: true
   tags: eza
 
-- name: "Eza | Install Rust package with locked dependencies [{{ ansible_os_family }}]"
+- name: "Eza | Install Rust package with locked dependencies [{{ ansible_facts['os_family'] }}]"
   community.general.cargo:
     name: eza
     state: latest
@@ -16,7 +16,7 @@
   when: eza_packages is not defined
   tags: eza
 
-- name: "Eza | Install from package manager [{{ ansible_os_family }}]"
+- name: "Eza | Install from package manager [{{ ansible_facts['os_family'] }}]"
   become: true
   ansible.builtin.package:
     name: "{{ eza_packages }}"

@@ -1,6 +1,6 @@
 ---
 - name: "Wireshark | Include OS specific variables"
-  ansible.builtin.include_vars: "{{ ansible_os_family | lower }}.yml"
+  ansible.builtin.include_vars: "{{ ansible_facts['os_family'] | lower }}.yml"
   tags: wireshark
 
 - name: "Wireshark | Add repository"
@@ -10,7 +10,7 @@
       tags: wireshark
   with_first_found:
     - files:
-        - "{{ ansible_os_family | lower }}.yml"
+        - "{{ ansible_facts['os_family'] | lower }}.yml"
       skip: true
   tags: wireshark
 

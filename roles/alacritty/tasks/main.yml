@@ -3,12 +3,12 @@
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
-        - "{{ ansible_os_family | lower }}.yml"
+        - "{{ ansible_facts['os_family'] | lower }}.yml"
       skip: true
   tags:
     - alacritty
 
-- name: "Alacritty | Install from source [{{ ansible_os_family }}]"
+- name: "Alacritty | Install from source [{{ ansible_facts['os_family'] }}]"
   ansible.builtin.include_tasks:
     file: source.yml
     apply:
@@ -17,7 +17,7 @@
   tags:
     - alacritty
 
-- name: "Alacritty | Install from package manager [{{ ansible_os_family }}]"
+- name: "Alacritty | Install from package manager [{{ ansible_facts['os_family'] }}]"
   ansible.builtin.include_tasks:
     file: package.yml
     apply:

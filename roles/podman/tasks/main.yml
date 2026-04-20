@@ -9,7 +9,7 @@
     file: debian.yml
     apply:
       tags: podman
-  when: ansible_os_family == "Debian"
+  when: ansible_facts['os_family'] == "Debian"
   tags: podman
 
 - name: "Podman | Install packages"

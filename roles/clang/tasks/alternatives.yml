@@ -1,8 +1,8 @@
 ---
-- name: "Clang | Update Clang and LLVM alternatives [{{ ansible_os_family }}]"
+- name: "Clang | Update Clang and LLVM alternatives [{{ ansible_facts['os_family'] }}]"
   become: true
   block:
-    - name: "Clang | Update LLVM alternatives [{{ ansible_os_family }}]"
+    - name: "Clang | Update LLVM alternatives [{{ ansible_facts['os_family'] }}]"
       community.general.alternatives:
         name: llvm-config
         link: /usr/bin/llvm-config
@@ -70,7 +70,7 @@
             link: /usr/bin/llvm-tblgen
             path: "/usr/bin/llvm-tblgen-{{ clang_latest_llvm_version }}"
 
-    - name: "Clang | Update Clang alternatives [{{ ansible_os_family }}]"
+    - name: "Clang | Update Clang alternatives [{{ ansible_facts['os_family'] }}]"
       community.general.alternatives:
         name: clang
         link: /usr/bin/clang

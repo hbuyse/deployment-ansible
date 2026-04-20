@@ -1,6 +1,6 @@
 ---
 - name: "Waybar | Include OS specific variables"
-  ansible.builtin.include_vars: "{{ ansible_os_family | lower }}.yml"
+  ansible.builtin.include_vars: "{{ ansible_facts['os_family'] | lower }}.yml"
   tags: waybar
 
 - name: "Waybar | Install packages"
