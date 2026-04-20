@@ -26,4 +26,3 @@
         }}]"
       ansible.builtin.apt:
         clean: true
-      when: ansible_facts.version.full >= "2.13.0"
