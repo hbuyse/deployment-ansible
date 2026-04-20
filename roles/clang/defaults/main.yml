@@ -4,4 +4,5 @@ clang_llvm_versions:
   - 19
   - 20
   - 21
+clang_latest_llvm_version: "{{ clang_llvm_versions | last }}"
 clang_clangd_config_dir: "{{ ansible_user_dir }}/.config/clangd"
