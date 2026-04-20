@@ -39,7 +39,7 @@
     enabled: false
     state: "stopped"
     scope: "user"
-  when: "item in services"
+  when: "item in ansible_facts.services"
   loop:
     - pulseaudio.socket
     - pulseaudio.service
