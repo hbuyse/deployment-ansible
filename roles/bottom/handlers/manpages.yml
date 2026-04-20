@@ -12,7 +12,7 @@
   ansible.builtin.unarchive:
     src: "/tmp/manpage.tar.gz"
     dest: "{{ ansible_user_dir }}/.local/share/man/man1"
-    owner: "{{ ansible_user_uid }}"
+    owner: "{{ ansible_facts['user_uid'] }}"
     group: "{{ ansible_facts['user_gid'] }}"
     mode: "0644"
     include:

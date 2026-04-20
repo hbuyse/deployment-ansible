@@ -23,7 +23,7 @@
       }}/Bitwarden-{{ bitwarden_desktop_latest_version }}-{{ ansible_facts['architecture'] }}.AppImage"
     dest: "{{ ansible_user_dir }}/.local/bin/bitwarden"
     mode: "0755"
-    owner: "{{ ansible_user_uid }}"
+    owner: "{{ ansible_facts['user_uid'] }}"
     group: "{{ ansible_facts['user_gid'] }}"
   tags: bitwarden
 
@@ -32,6 +32,6 @@
     url: "https://raw.githubusercontent.com/bitwarden/clients/refs/heads/main/apps/desktop/resources/com.bitwarden.desktop.desktop"
     dest: "{{ ansible_user_dir }}/.local/share/applications/"
     mode: "0644"
-    owner: "{{ ansible_user_uid }}"
+    owner: "{{ ansible_facts['user_uid'] }}"
     group: "{{ ansible_facts['user_gid'] }}"
   tags: bitwarden

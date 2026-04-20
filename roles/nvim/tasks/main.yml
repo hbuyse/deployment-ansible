@@ -44,7 +44,7 @@
         src: "https://github.com/neovim/neovim/releases/download/v{{ nvim_latest_version }}/nvim-linux-{{ ansible_facts['architecture']
           }}.tar.gz"
         dest: "{{ ansible_user_dir }}/.local"
-        owner: "{{ ansible_user_uid }}"
+        owner: "{{ ansible_facts['user_uid'] }}"
         group: "{{ ansible_facts['user_gid'] }}"
         remote_src: true
         extra_opts:

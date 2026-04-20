@@ -37,7 +37,7 @@
   ansible.builtin.copy:
     src: "{{ role_path }}/files/"
     dest: "{{ ansible_user_dir }}/.config/xfce4"
-    owner: "{{ ansible_user_uid }}"
+    owner: "{{ ansible_facts['user_uid'] }}"
     group: "{{ ansible_facts['user_gid'] }}"
     mode: "0644"
   tags:
@@ -48,7 +48,7 @@
   ansible.builtin.copy:
     src: "{{ item }}.j2"
     dest: "{{ ansible_user_dir }}/.config/xfce4/{{ item }}"
-    owner: "{{ ansible_user_uid }}"
+    owner: "{{ ansible_facts['user_uid'] }}"
     group: "{{ ansible_facts['user_gid'] }}"
     mode: "0644"
   loop:

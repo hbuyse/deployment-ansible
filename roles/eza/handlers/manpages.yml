@@ -12,7 +12,7 @@
     src: "/tmp/man-{{ eza_latest_version }}.tar.gz"
     dest: "{{ ansible_user_dir }}/.local/share/man/man{{ item.number }}"
     mode: "0644"
-    owner: "{{ ansible_user_uid }}"
+    owner: "{{ ansible_facts['user_uid'] }}"
     group: "{{ ansible_facts['user_gid'] }}"
     include:
       - "./target/man-{{ eza_latest_version }}/{{ item.name }}.{{ item.number }}"

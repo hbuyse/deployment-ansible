@@ -35,8 +35,8 @@
     dest: "{{ direnv_man_install_dir }}/man1"
     remote_src: true
     keep_newer: true
-    owner: "{{ ansible_user_uid }}"
-    group: "{{ ansible_user_uid }}"
+    owner: "{{ ansible_facts['user_uid'] }}"
+    group: "{{ ansible_facts['user_uid'] }}"
     mode: "0644"
     include:
       - "direnv-{{ direnv_latest_version }}/man/direnv.1"

@@ -27,6 +27,6 @@
           }}/lua-language-server-{{ luals_latest_version }}-{{ ansible_facts['system'] | lower }}-x64.tar.gz"
         dest: "{{ luals_install_dir }}"
         remote_src: true
-        owner: "{{ ansible_user_uid }}"
+        owner: "{{ ansible_facts['user_uid'] }}"
         group: "{{ ansible_facts['user_gid'] }}"
         mode: "u=rwX,g=rwX,o=rwX"

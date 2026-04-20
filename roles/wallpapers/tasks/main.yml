@@ -40,7 +40,7 @@
       ansible.builtin.file:
         src: "{{ wallpapers_install_dir }}/coding.svg"
         dest: "{{ wallpapers_install_dir }}/{{ item }}.svg"
-        owner: "{{ ansible_user_uid }}"
+        owner: "{{ ansible_facts['user_uid'] }}"
         group: "{{ ansible_facts['user_gid'] }}"
         state: "link"
       loop:
@@ -59,7 +59,7 @@
       ansible.builtin.file:
         src: "{{ wallpapers_install_dir }}/coding.png"
         dest: "{{ wallpapers_install_dir }}/{{ item }}.png"
-        owner: "{{ ansible_user_uid }}"
+        owner: "{{ ansible_facts['user_uid'] }}"
         group: "{{ ansible_facts['user_gid'] }}"
         state: "link"
       loop:

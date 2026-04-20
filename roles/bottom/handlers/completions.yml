@@ -13,7 +13,7 @@
     src: "/tmp/completion.tar.gz"
     dest: "{{ item.install_dir }}"
     mode: "0644"
-    owner: "{{ ansible_user_uid }}"
+    owner: "{{ ansible_facts['user_uid'] }}"
     group: "{{ ansible_facts['user_gid'] }}"
     include:
       - "./{{ item.src_file }}"
@@ -28,7 +28,7 @@
       ansible.builtin.copy:
         src: "{{ item.install_dir }}/{{ item.src_file }}"
         dest: "{{ item.install_dir }}/{{ item.dst_file }}"
-        owner: "{{ ansible_user_uid }}"
+        owner: "{{ ansible_facts['user_uid'] }}"
         group: "{{ ansible_facts['user_gid'] }}"
         mode: "0644"
 

@@ -12,7 +12,7 @@
     src: "/tmp/{{ bat_archive_fullname }}"
     dest: "{{ item.install_dir }}"
     mode: "0644"
-    owner: "{{ ansible_user_uid }}"
+    owner: "{{ ansible_facts['user_uid'] }}"
     group: "{{ ansible_facts['user_gid'] }}"
     include:
       - "{{ bat_archive_name }}/autocomplete/{{ item.src_file }}"
@@ -27,7 +27,7 @@
       ansible.builtin.copy:
         src: "{{ item.install_dir }}/{{ item.src_file }}"
         dest: "{{ item.install_dir }}/{{ item.dst_file }}"
-        owner: "{{ ansible_user_uid }}"
+        owner: "{{ ansible_facts['user_uid'] }}"
         group: "{{ ansible_facts['user_gid'] }}"
         mode: "0644"
 

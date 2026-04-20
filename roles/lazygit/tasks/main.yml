@@ -44,7 +44,7 @@
           }}/lazygit_{{ lazygit_latest_version }}_{{ ansible_facts['system'] }}_{{ ansible_facts['architecture'] }}.tar.gz"
         dest: "{{ ansible_user_dir }}/.local/bin"
         mode: "0755"
-        owner: "{{ ansible_user_uid }}"
+        owner: "{{ ansible_facts['user_uid'] }}"
         group: "{{ ansible_facts['user_gid'] }}"
         include:
           - "lazygit"
