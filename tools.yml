@@ -1,5 +1,5 @@
 ---
-- name: "Dotfiles | Installation"
+- name: "GUI tools | Installation"
   hosts: localhost
   pre_tasks:
     - name: "Dotfiles | Prepare installation"
@@ -16,39 +16,27 @@
           tags: always
       tags: always
   roles:
+    # Configuration
     - role: "netrc"
     - role: "ssh"
-    - role: "pipx"
-    - role: "rustup"
-    - role: "mimeapps"
-    - role: "cargo_cache"
-    - role: "alacritty"
-    - role: "zsh"
-    - role: "oh_my_posh"
-    - role: "fastfetch"
-    - role: "tmux"
-    - role: "fzf"
-    - role: "nerdfonts"
-    - role: "web_browsers"
-    - role: "thunderbird"
-    - role: "wallpapers"
-    - role: "icons"
     - role: "user"
     - role: "network"
+    - role: "mimeapps"
+    # Tools
+    - role: "web_browsers"
+    - role: "thunderbird"
     - role: "minicom"
     - role: "wireshark"
-    - role: "eza"
-    - role: "bat"
-    - role: "yazi"
-    - role: "bottom"
+    - role: "qemu_kvm"
     - role: "keymapp"
+    - role: "bitwarden"
+    - role: "zoom"
+      when: ansible_facts["hostname"] == "hbuyse-latitude5400"
+    # Desktop client for cloud
     - role: "nextcloud"
     - role: "owncloud_client"
       when: ansible_facts["hostname"] == "hbuyse-latitude5400"
-    - role: "spotify_player"
+    # Web applications
     - role: "webapplications"
-    - role: "discord"
-    - role: "zoom"
-      when: ansible_facts["hostname"] == "hbuyse-latitude5400"
-    - role: "bitwarden"
-    - role: "qemu_kvm"
+    # CPU management
+    - role: "tuned"

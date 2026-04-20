@@ -1,5 +1,5 @@
 ---
-- name: "Dotfiles | Installation"
+- name: "Development | Installation"
   hosts: localhost
   pre_tasks:
     - name: "Dotfiles | Prepare installation"
@@ -16,13 +16,20 @@
           tags: always
       tags: always
   roles:
+    - role: "netrc"
+    - role: "ssh"
     - role: "python"
+    - role: "pipx"
     - role: "npmrc"
     - role: "nodejs"
-    - role: "git"
+    - role: "rustup"
+    - role: "cargo_cache"
+    - role: "ripgrep"
+    - role: "fd"
     - role: "treesitter"
     - role: "nvim"
     - role: "vscode"
+    - role: "git"
     - role: "git_delta"
     - role: "lazygit"
     - role: "direnv"
@@ -30,8 +37,6 @@
     - role: "docker"
     - role: "podman"
     - role: "pre_commit"
-    - role: "ripgrep"
-    - role: "fd"
     # LSP Servers
     - role: "ansiblels"
     - role: "bashls"

@@ -1,0 +1,36 @@
+---
+- name: "Terminal tools | Installation"
+  hosts: localhost
+  pre_tasks:
+    - name: "Sway | Prepare installation"
+      ansible.builtin.include_tasks:
+        file: pre_tasks/main.yml
+        apply:
+          tags: always
+      tags: always
+  post_tasks:
+    - name: "Sway | Finalize installation"
+      ansible.builtin.include_tasks:
+        file: post_tasks/main.yml
+        apply:
+          tags: always
+      tags: always
+  roles:
+    - role: "nerdfonts"
+    - role: "foot"
+    - role: "alacritty"
+    - role: "zsh"
+    - role: "oh_my_posh"
+    - role: "fastfetch"
+    - role: "tmux"
+    - role: "fzf"
+    - role: "eza"
+    - role: "bat"
+    - role: "fd"
+    - role: "yazi"
+    - role: "bottom"
+    - role: "git"
+    - role: "git_delta"
+    - role: "lazygit"
+    - role: "direnv"
+    - role: "minicom"
