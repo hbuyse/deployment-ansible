@@ -27,7 +27,7 @@
   tags: clang
 
 - name: "Clang | Update Clang and LLVM alternatives [Debian]"
-  when: ansible_os_family == 'Debian'
+  when: ansible_os_family in ['Debian']
   ansible.builtin.include_tasks:
     file: alternatives.yml
     apply:
