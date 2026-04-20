@@ -60,7 +60,7 @@
     src: foot.ini.j2
     dest: "{{ foot_config_dir }}/foot.ini"
     mode: "0644"
-    owner: "{{ ansible_user_id }}"
+    owner: "{{ ansible_facts['user_id'] }}"
     group: "{{ ansible_user_gid }}"
   tags: foot
 
@@ -69,7 +69,7 @@
     url: "https://raw.githubusercontent.com/catppuccin/foot/refs/heads/main/themes/catppuccin-{{ item }}.ini"
     dest: "{{ foot_themes_dir }}"
     mode: "0644"
-    owner: "{{ ansible_user_id }}"
+    owner: "{{ ansible_facts['user_id'] }}"
     group: "{{ ansible_user_gid }}"
   loop:
     - mocha
