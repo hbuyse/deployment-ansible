@@ -1,6 +1,5 @@
 ---
 - name: "Bottom | Ensure that shell completion directory exists [{{ item.shell }}]"
-  become: true
   ansible.builtin.file:
     path: "{{ item.install_dir }}"
     state: "directory"
@@ -8,7 +7,6 @@
     recurse: true
 
 - name: "Bottom | Copy shell completion file [{{ item.shell }}]"
-  become: true
   ansible.builtin.unarchive:
     src: "/tmp/completion.tar.gz"
     dest: "{{ item.install_dir }}"
@@ -21,7 +19,6 @@
       - "--strip-components=1"
 
 - name: "Bottom | Rename shell completion file [{{ item.shell }}]"
-  become: true
   when: item.src_file != item.dst_file
   block:
     - name: "Bottom | Copy file"
