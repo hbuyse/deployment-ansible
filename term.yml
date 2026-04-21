@@ -2,14 +2,14 @@
 - name: "Terminal tools | Installation"
   hosts: localhost
   pre_tasks:
-    - name: "Sway | Prepare installation"
+    - name: "Terminal tools | Prepare installation"
       ansible.builtin.include_tasks:
         file: pre_tasks/main.yml
         apply:
           tags: always
       tags: always
   post_tasks:
-    - name: "Sway | Finalize installation"
+    - name: "Terminal tools | Finalize installation"
       ansible.builtin.include_tasks:
         file: post_tasks/main.yml
         apply:

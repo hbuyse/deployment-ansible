@@ -2,14 +2,14 @@
 - name: "Development | Installation"
   hosts: localhost
   pre_tasks:
-    - name: "Dotfiles | Prepare installation"
+    - name: "Development | Prepare installation"
       ansible.builtin.include_tasks:
         file: pre_tasks/main.yml
         apply:
           tags: always
       tags: always
   post_tasks:
-    - name: "Dotfiles | Finalize installation"
+    - name: "Development | Finalize installation"
       ansible.builtin.include_tasks:
         file: post_tasks/main.yml
         apply:
