@@ -1,6 +1,5 @@
 ---
 - name: "Zellij | Ensure completion directory exists [{{ item.shell }}]"
-  become: true
   ansible.builtin.file:
     path: "{{ install_dir }}"
     state: directory
@@ -9,7 +8,6 @@
     install_dir: "{{ item.filepath | ansible.builtin.dirname }}"
 
 - name: "Zellij | Install completion file [{{ item.shell }}]"
-  become: true
   ansible.builtin.shell:
     cmd: "zellij setup --generate-completion {{ item.shell }} > {{ item.filepath }}"
   register: zellij_output
