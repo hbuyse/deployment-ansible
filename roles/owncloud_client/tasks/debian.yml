@@ -5,13 +5,12 @@
     name: owncloud-client
     enabled: true
     types: deb
-    uris: "https://download.owncloud.com/desktop/ownCloud/stable/latest/linux/{{ ansible_facts['distribution'] }}_{{ ansible_facts['distribution']_version
+    uris: "https://download.owncloud.com/desktop/ownCloud/stable/latest/linux/{{ ansible_facts.distribution }}_{{ ansible_facts.distribution_version
       }}/"
     suites: "/"
     architectures:
       - "{{ deb_arch }}"
-    signed_by: "https://download.owncloud.com/desktop/ownCloud/stable/latest/linux/{{ ansible_facts['distribution'] }}_{{ ansible_facts['distribution']_version
-      }}/Release.key"
+    signed_by: "https://download.owncloud.com/desktop/ownCloud/stable/latest/linux/{{ ansible_facts.distribution }}_{{ ansible_facts.distribution_version }}/Release.key"
 
 - name: "Owncloud Client | Update APT cache"
   become: true
