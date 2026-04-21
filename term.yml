@@ -17,9 +17,10 @@
       tags: always
   roles:
     - role: "nerdfonts"
+    - role: "rustup"
+    - role: "zsh"
     - role: "foot"
     - role: "alacritty"
-    - role: "zsh"
     - role: "oh_my_posh"
     - role: "fastfetch"
     - role: "tmux"
