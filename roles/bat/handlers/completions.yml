@@ -1,13 +1,11 @@
 ---
 - name: "Bat | Ensure that shell completion directory exists [{{ item.shell }}]"
-  become: true
   ansible.builtin.file:
     path: "{{ item.install_dir }}"
     state: "directory"
     mode: "0755"
 
 - name: "Bat | Copy shell completion file [{{ item.shell }}]"
-  become: true
   ansible.builtin.unarchive:
     src: "/tmp/{{ bat_archive_fullname }}"
     dest: "{{ item.install_dir }}"
@@ -20,7 +18,6 @@
       - "--strip-components=2"
 
 - name: "Bat | Rename shell completion file [{{ item.shell }}]"
-  become: true
   when: item.src_file != item.dst_file
   block:
     - name: "Bat | Copy file"
