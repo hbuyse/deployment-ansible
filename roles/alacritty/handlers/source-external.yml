@@ -1,20 +1,17 @@
 ---
 - name: "Alacritty | Ensure directory exists: {{ item.destdir }}"
-  become: true
   ansible.builtin.file:
     path: "{{ item.destdir }}"
     state: directory
     mode: "0755"
 
 - name: "Alacritty | Install {{ item.url | basename }}"
-  become: true
   ansible.builtin.get_url:
     url: "{{ item.url }}"
     dest: "{{ item.destdir }}/{{ item.url | basename }}"
     mode: "0644"
 
 - name: "Alacritty | Rename file"
-  become: true
   when: item.name is defined
   vars:
     oldfilepath: "{{ item.destdir }}/{{ item.url | basename }}"
