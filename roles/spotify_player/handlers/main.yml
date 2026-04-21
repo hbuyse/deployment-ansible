@@ -1,6 +1,5 @@
 ---
 - name: "Spotify Player | Install zsh completion file"
-  become: true
   tags: spotify_player
   block:
     - name: "Spotify Player | Ensure zsh-completion directory exists"
@@ -15,7 +14,6 @@
         creates: "{{ ansible_facts['user_dir'] }}/.local/share/zsh/site-functions/_spotify_player"
 
 - name: "Spotify Player | Install bash completion file"
-  become: true
   tags: spotify_player
   block:
     - name: "Spotify Player | Ensure bash-completion directory exists"
