@@ -7,5 +7,6 @@
     types: deb
     uris: "https://ppa.launchpadcontent.net/wireshark-dev/stable/ubuntu"
     suites: "{{ ansible_facts['distribution_release'] | lower }}"
+    signed_by: "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xa2e402b85a4b70cd78d8a3d9d875551314eca0f0"
     components:
       - main
