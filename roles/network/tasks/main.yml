@@ -43,6 +43,7 @@
     - nmcli
 
 - name: "Network Manager | Install wifi configurations"
+  become: true
   community.general.nmcli:
     type: wifi
     conn_name: "{{ item.name }}"
