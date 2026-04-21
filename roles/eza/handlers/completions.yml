@@ -1,13 +1,11 @@
 ---
 - name: "Eza | Ensure that shell completion directory exists [{{ item.shell }}]"
-  become: true
   ansible.builtin.file:
     path: "{{ item.install_dir }}"
     state: "directory"
     mode: "0755"
 
 - name: "Eza | Install shell completion file [{{ item.shell }}]"
-  become: true
   ansible.builtin.unarchive:
     src: "/tmp/completions-{{ eza_latest_version }}.tar.gz"
     dest: "{{ item.install_dir }}"
