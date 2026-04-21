@@ -2,8 +2,7 @@
 Description=Highly customizable Wayland bar for Sway and Wlroots based compositors.
 Documentation=man:waybar(5)
 Documentation=https://github.com/Alexays/Waybar/wiki/
-PartOf=wayland-session.target
-After=wayland-session.target
+After=graphical-session.target
 
 [Service]
 ExecStart=/usr/bin/waybar -c %h/.config/waybar/${XDG_CURRENT_DESKTOP}.jsonc -s %h/.config/waybar/style.css
@@ -12,5 +11,5 @@ Restart=on-failure
 RestartSec=5
 
 [Install]
-WantedBy=wayland-session.target
+WantedBy=graphical-session.target
 ;  vim: set ts=4 sw=4 tw=0 noet ft=systemd :
