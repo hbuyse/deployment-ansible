@@ -15,7 +15,6 @@
 - name: "Podman | Install packages"
   become: true
   ansible.builtin.package:
-    update_cache: true
     state: present
     name: "podman"
   tags: podman

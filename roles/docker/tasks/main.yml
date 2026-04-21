@@ -27,7 +27,6 @@
 - name: "Docker | Install packages"
   become: true
   ansible.builtin.package:
-    update_cache: true
     state: present
     name: "{{ docker_packages }}"
   notify: "Docker | Restart docker service"

@@ -12,3 +12,8 @@
     architectures:
       - "{{ deb_arch }}"
     signed_by: "https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg"
+
+- name: "VSCodium | Update APT cache"
+  become: true
+  ansible.builtin.apt:
+    update_cache: true

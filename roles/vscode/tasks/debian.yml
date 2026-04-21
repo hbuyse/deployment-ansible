@@ -12,3 +12,8 @@
     architectures:
       - "{{ deb_arch }}"
     signed_by: "https://packages.microsoft.com/keys/microsoft.asc"
+
+- name: "VSCode | Update APT cache"
+  become: true
+  ansible.builtin.apt:
+    update_cache: true

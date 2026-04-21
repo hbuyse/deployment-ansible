@@ -21,7 +21,6 @@
 - name: "Clang | Install LLVM packages"
   become: true
   ansible.builtin.package:
-    update_cache: true
     state: present
     name: "{{ clang_packages }}"
   tags: clang

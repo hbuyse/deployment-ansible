@@ -22,7 +22,6 @@
   become: true
   ansible.builtin.package:
     name: "{{ mattermost_desktop_packages }}"
-    update_cache: true
     state: present
   tags:
     - mattermost

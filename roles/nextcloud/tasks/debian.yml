@@ -10,3 +10,8 @@
     signed_by: "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x1fcd77dd0dbef5699ad2610160ee47fbad3dd469"
     components:
       - main
+
+- name: "Nextcloud | Update APT cache"
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
