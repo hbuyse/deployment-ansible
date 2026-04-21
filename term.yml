@@ -28,6 +28,7 @@
     - role: "eza"
     - role: "bat"
     - role: "fd"
+    - role: "ripgrep"
     - role: "yazi"
     - role: "bottom"
     - role: "git"
