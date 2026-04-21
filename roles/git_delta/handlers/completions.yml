@@ -13,7 +13,6 @@
     git_delta_latest_version: "{{ git_delta_latest_json.json.tag_name }}"
 
 - name: "Git Delta | Install bash completion file"
-  become: true
   block:
     - name: "Git Delta | Ensure config directory exists"
       ansible.builtin.file:
@@ -28,7 +27,6 @@
         mode: "0644"
 
 - name: "Git Delta | Install zsh completion file"
-  become: true
   block:
     - name: "Git Delta | Ensure config directory exists"
       ansible.builtin.file:
