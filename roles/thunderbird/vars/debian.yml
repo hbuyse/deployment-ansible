@@ -1,4 +1,2 @@
 ---
-thunderbird_packages:
-  - thunderbird
 thunderbird_snap_channel: "monthly/stable"
