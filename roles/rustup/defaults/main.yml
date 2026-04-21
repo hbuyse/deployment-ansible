@@ -1,2 +1,3 @@
 ---
 rustup_default_version: stable
+rustup_tmp_dir: "/tmp"

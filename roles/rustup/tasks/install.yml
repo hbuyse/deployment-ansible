@@ -20,13 +20,13 @@
     - name: "Rustup | Download Installer"
       ansible.builtin.get_url:
         url: https://sh.rustup.rs
-        dest: /tmp/sh.rustup.rs
+        dest: "{{ rustup_tmp_dir }}/sh.rustup.rs"
         mode: "0755"
         force: "yes"
 
     - name: "Rustup | Install Rust and Cargo from script"
       when: rustup_cargo_exists is failed
-      ansible.builtin.shell: /tmp/sh.rustup.rs -y
+      ansible.builtin.shell: "{{ rustup_tmp_dir }}/sh.rustup.rs -y"
       args:
         creates: "{{ ansible_facts['user_dir'] }}/.cargo/bin/rustup"
         executable: /bin/bash
