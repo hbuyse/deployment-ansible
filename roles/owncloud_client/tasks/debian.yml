@@ -10,7 +10,8 @@
     suites: "/"
     architectures:
       - "{{ deb_arch }}"
-    signed_by: "https://download.owncloud.com/desktop/ownCloud/stable/latest/linux/{{ ansible_facts.distribution }}_{{ ansible_facts.distribution_version }}/Release.key"
+    signed_by: "https://download.owncloud.com/desktop/ownCloud/stable/latest/linux/{{ ansible_facts.distribution }}_{{ ansible_facts.distribution_version
+      }}/Release.key"
 
 - name: "Owncloud Client | Update APT cache"
   become: true
