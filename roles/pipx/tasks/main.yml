@@ -15,10 +15,31 @@
   when: pipx_packages is defined
   tags: pipx
 
-- name: "Pipx | Install from PIP"  # noqa: package-latest
-  ansible.builtin.pip:
+- name: "Pipx | Install self-managed Pipx"
+  tags: pipx
+  when: pipx_packages is not defined
+  block:
+    - name: "Pipx | Create temporary directory"
+      ansible.builtin.tempfile:
+        state: "directory"
+        suffix: "pipx"
+      register: pipx_tmpdir
+
+    - name: "Pipx | Install in temporary venv"  # noqa: package-latest
+      ansible.builtin.pip:
+        name: "pipx"
+        state: "latest"
+        virtualenv: "{{ pipx_tmpdir.path }}"
+      notify: "Pipx | Remove temporary venv"
+
+    - name: "Pipx | Install in user space"
+      community.general.pipx:
+        name: "pipx"
+        state: "latest"
+        executable: "{{ pipx_tmpdir.path }}/bin/pipx"
+
+- name: "Pipx | Upgrade"
+  community.general.pipx:
     name: "pipx"
     state: "latest"
-    extra_args: "--user"
-  when: pipx_packages is not defined
-  tags: pipx
+    executable: "{{ ansible_facts.user_dir }}/.local/bin/pipx"
