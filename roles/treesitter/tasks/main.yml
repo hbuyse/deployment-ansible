@@ -1,20 +1,4 @@
 ---
-- name: "Tree-Sitter | Include OS specific variables"
-  ansible.builtin.include_vars: "{{ item }}"
-  with_first_found:
-    - files:
-        - "{{ ansible_facts['os_family'] | lower }}.yml"
-      skip: true
-  tags: docker
-
-- name: "Tree-Sitter | Install packages"
-  become: true
-  ansible.builtin.package:
-    state: present
-    name: "{{ treesitter_packages }}"
-  when: treesitter_packages is defined
-  tags: treesitter
-
 - name: "Tree-Sitter | Install Rust package with locked dependencies"
   community.general.cargo:
     name: "{{ treesitter_cargo_package }}"
