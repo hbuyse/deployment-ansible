@@ -38,8 +38,8 @@
         state: "latest"
         executable: "{{ pipx_tmpdir.path }}/bin/pipx"
 
-- name: "Pipx | Upgrade"
-  community.general.pipx:
-    name: "pipx"
-    state: "latest"
-    executable: "{{ ansible_facts.user_dir }}/.local/bin/pipx"
+    - name: "Pipx | Upgrade"
+      community.general.pipx:
+        name: "pipx"
+        state: "latest"
+        executable: "{{ ansible_facts.user_dir }}/.local/bin/pipx"
