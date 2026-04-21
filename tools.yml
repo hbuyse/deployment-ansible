@@ -31,11 +31,11 @@
     - role: "keymapp"
     - role: "bitwarden"
     - role: "zoom"
-      when: ansible_facts["hostname"] == "hbuyse-latitude5400"
+      when: ansible_facts["hostname"] == "hbuyse-promax14"
     # Desktop client for cloud
     - role: "nextcloud"
     - role: "owncloud_client"
-      when: ansible_facts["hostname"] == "hbuyse-latitude5400"
+      when: ansible_facts["hostname"] == "hbuyse-promax14"
     # Web applications
     - role: "webapplications"
     # CPU management

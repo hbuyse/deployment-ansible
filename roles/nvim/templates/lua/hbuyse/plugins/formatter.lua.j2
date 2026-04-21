@@ -71,7 +71,7 @@ return {
         ['_'] = { 'trim_whitespace' },
       },
       format_on_save = function(bufnr)
-{% if ansible_facts['hostname'] == 'hbuyse-latitude5400' %}
+{% if ansible_facts['hostname'] == 'hbuyse-promax14' %}
         -- Do not autoformat if in ~/work
         local filepath = vim.api.nvim_buf_get_name(bufnr)
         if filepath:find(vim.env.HOME .. '/work') then

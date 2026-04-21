@@ -26,7 +26,7 @@ profile white-tower {
 }
 
 {% set ns = namespace(manufacturer="ASUSTek COMPUTER INC") %}
-{% if ansible_facts['hostname'] == 'hbuyse-latitude5400' %}
+{% if ansible_facts['hostname'] == 'hbuyse-promax14' %}
     {%- set ns.manufacturer = "Unknown" %}
 {% endif %}
 # Profile used at home when connected to the WD19 dock
