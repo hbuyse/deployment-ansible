@@ -5,3 +5,10 @@ waybar_packages:
   - playerctl
   - libplayerctl-dev
   - gir1.2-playerctl-2.0
+  - sassc
+  - python3-virtualenv
+  # PyGObject depends on pycairo and girepository-2.0
+  - libcairo2-dev
+  - pkg-config
+  - python3-dev
+  - libgirepository-2.0-dev
