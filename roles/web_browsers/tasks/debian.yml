@@ -31,3 +31,7 @@
         src: "firefox.pref"
         dest: "/etc/apt/preferences.d/firefox.pref"
         mode: "0644"
+
+    - name: "Web Browsers | Update APT cache"
+      ansible.builtin.apt:
+        update_cache: true

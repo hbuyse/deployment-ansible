@@ -10,3 +10,8 @@
     signed_by: "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xf911ab184317630c59970973e363c90f8f1b6217"
     components:
       - main
+
+- name: "Git | Update APT cache"
+  become: true
+  ansible.builtin.apt:
+    update_cache: true

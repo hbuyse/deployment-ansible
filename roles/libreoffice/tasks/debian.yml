@@ -10,3 +10,8 @@
     signed_by: "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xcdde43ba4de3f09d7ce7016673aee920ad55f5a0"
     components:
       - main
+
+- name: "Wireshark | Update APT cache"
+  become: true
+  ansible.builtin.apt:
+    update_cache: true

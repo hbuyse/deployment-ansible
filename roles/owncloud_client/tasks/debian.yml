@@ -12,3 +12,8 @@
       - "{{ deb_arch }}"
     signed_by: "https://download.owncloud.com/desktop/ownCloud/stable/latest/linux/{{ ansible_facts['distribution'] }}_{{ ansible_facts['distribution']_version
       }}/Release.key"
+
+- name: "Owncloud Client | Update APT cache"
+  become: true
+  ansible.builtin.apt:
+    update_cache: true

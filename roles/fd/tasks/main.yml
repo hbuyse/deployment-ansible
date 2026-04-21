@@ -11,7 +11,6 @@
   become: true
   ansible.builtin.package:
     name: "{{ fd_packages }}"
-    update_cache: true
     state: present
   tags: fd
   when: fd_packages is defined

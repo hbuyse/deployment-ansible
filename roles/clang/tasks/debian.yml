@@ -20,3 +20,8 @@
   loop: "{{ clang_llvm_versions }}"
   loop_control:
     loop_var: version
+
+- name: "Clang | Update APT cache"
+  become: true
+  ansible.builtin.apt:
+    update_cache: true

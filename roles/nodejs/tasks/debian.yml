@@ -24,3 +24,8 @@
     src: "nodejs.pref"
     dest: "/etc/apt/preferences.d/nodejs.pref"
     mode: "0644"
+
+- name: "Nodejs | Update APT cache"
+  become: true
+  ansible.builtin.apt:
+    update_cache: true

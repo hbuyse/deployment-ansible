@@ -21,7 +21,6 @@
 - name: "VSCodium | Install packages"
   become: true
   ansible.builtin.package:
-    update_cache: true
     state: present
     name: "{{ vscodium_packages }}"
   tags:
