@@ -17,11 +17,11 @@
 # 4. No order is guaranteed/desired for the remaining terminal emulators.
 TERMINALS=()
 TERMINALS+=("${TERMINAL}")
+TERMINALS+=("${HOME}/.cargo/bin/alacritty")
+TERMINALS+=("alacritty")
 if [[ "${XDG_SESSION_TYPE}" == "wayland" ]]; then
     TERMINALS+=("foot")
 fi
-TERMINALS+=("${HOME}/.cargo/bin/alacritty")
-TERMINALS+=("alacritty")
 TERMINALS+=("x-terminal-emulator")
 TERMINALS+=("terminator")
 TERMINALS+=("xfce4-terminal")
