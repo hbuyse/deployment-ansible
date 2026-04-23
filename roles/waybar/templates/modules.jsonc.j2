@@ -212,6 +212,7 @@
     },
     "tooltip": false
   },
+{% if waybar_current_version.split('.') | map('int') | list >= [0, 10, 0] %}
   "systemd-failed-units": {
     "hide-on-ok": true,
     "format": "✗ {nr_failed}",
@@ -219,6 +220,7 @@
     "system": true,
     "user": true
   },
+{% endif %}
   "privacy": {
     "icon-spacing": 4,
     "icon-size": 18,
