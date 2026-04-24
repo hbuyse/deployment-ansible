@@ -14,13 +14,22 @@
       skip: true
   tags: wireshark
 
+- name: "Wireshark | Enable non-privileged users to run wireshark"
+  become: true
+  ansible.builtin.debconf:
+    name: wireshark-common
+    question: wireshark-common/install-setuid
+    value: "true"
+    vtype: boolean
+  when: ansible_facts['os_family'] == 'Debian'
+  tags: wireshark
+
 - name: "Wireshark | Install packages"
   become: true
   ansible.builtin.package:
     name: "{{ wireshark_packages }}"
     state: "present"
   when: wireshark_packages is defined
-  notify: "Wireshark | Enable non-privileged users to run wireshark"
   tags: wireshark
 
 - name: "Wireshark | Install configuration files"
