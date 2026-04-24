@@ -34,8 +34,6 @@
     # Wayland tools
     - role: "waybar"
     - role: "kanshi"
-    - role: "mako"
-      when: ansible_facts["os_family"] in ["Debian"]
     - role: "swaync"
     - role: "wofi"
       when: ansible_facts["os_family"] in ["Debian"]

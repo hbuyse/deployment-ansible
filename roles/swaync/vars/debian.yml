@@ -1,0 +1,4 @@
+---
+swaync_packages:
+  - sway-notification-center
+  - sassc
