@@ -47,3 +47,4 @@
     # Portal to select which screen to cast
     - role: "xdg_desktop_portal"
     - role: "wireplumber"
+    - role: "tuned"
