@@ -47,7 +47,7 @@
     - name: "Sway Notification Center | Copy service file"
       ansible.builtin.template:
         src: "swaync.service.j2"
-        dest: "{{ ansible_facts['user_dir'] }}/.config/systemd/user"
+        dest: "{{ ansible_facts['user_dir'] }}/.config/systemd/user/swaync.service"
         mode: "0644"
       notify: "Sway Notification Center | Enable service"
 
