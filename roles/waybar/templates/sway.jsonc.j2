@@ -58,9 +58,7 @@
       "cpu",
       "temperature",
       "custom/battery",
-{% if ansible_facts["os_family"] != "Debian" %}
       "tray",
-{% endif %}
     ],
     "include": ["~/.config/waybar/modules.jsonc"]
   }
