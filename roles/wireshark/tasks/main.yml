@@ -30,7 +30,6 @@
     name: "{{ wireshark_packages }}"
     state: "present"
   when: wireshark_packages is defined
-  notify: "Wireshark | Enable non-privileged users to run wireshark"
   tags: wireshark
 
 - name: "Wireshark | Install configuration files"
