@@ -26,11 +26,7 @@
       "network#{{ interface.device }}",
 {% endfor %}
       "clock",
-{% if ansible_facts["os_family"] == "Debian" %}
-      "custom/power",
-{% else %}
       "custom/notification",
-{% endif %}
     ],
     "include": ["~/.config/waybar/modules.jsonc"]
   },

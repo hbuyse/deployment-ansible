@@ -37,7 +37,6 @@
     - role: "mako"
       when: ansible_facts["os_family"] in ["Debian"]
     - role: "swaync"
-      when: ansible_facts["os_family"] not in ["Debian"]
     - role: "wofi"
       when: ansible_facts["os_family"] in ["Debian"]
     - role: "fuzzel"
