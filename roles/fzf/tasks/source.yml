@@ -13,7 +13,6 @@
     fzf_latest_version: "{{ fzf_latest_json.json.tag_name[1:] }}"
 
 - name: "FZF | Install binary file [v{{ fzf_latest_version }}]"
-  become: true
   ansible.builtin.unarchive:
     src: "https://github.com/junegunn/fzf/releases/download/v{{ fzf_latest_version }}/fzf-{{ fzf_latest_version }}-{{ ansible_facts['system']
       | lower }}_{{ alt_arch }}.tar.gz"
@@ -23,7 +22,6 @@
     remote_src: true
 
 - name: "FZF | Install man pages"
-  become: true
   ansible.builtin.unarchive:
     src: "https://github.com/junegunn/fzf/archive/refs/tags/v{{ fzf_latest_version }}.tar.gz"
     dest: "{{ fzf_man_install_dir }}/man1"
