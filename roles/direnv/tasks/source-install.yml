@@ -13,11 +13,12 @@
     direnv_latest_version: "{{ direnv_latest_json.json.tag_name[1:] }}"
 
 - name: "Direnv | Install binary [v{{ direnv_latest_version }}]"
-  become: true
   ansible.builtin.get_url:
     url: "https://github.com/direnv/direnv/releases/download/v{{ direnv_latest_version }}/direnv.{{ ansible_facts['system']
       | lower }}-{{ alt_arch }}"
     dest: "{{ direnv_bin_install_dir }}/direnv"
+    owner: "{{ ansible_facts['user_uid'] }}"
+    group: "{{ ansible_facts['user_uid'] }}"
     mode: "0755"
 
 - name: "Direnv | Ensure Man pages directory exists"
@@ -26,10 +27,8 @@
     state: directory
     recurse: true
     mode: "0755"
-  become: true
 
 - name: "Direnv | Install man pages"
-  become: true
   ansible.builtin.unarchive:
     src: "https://github.com/direnv/direnv/archive/refs/tags/v{{ direnv_latest_version }}.tar.gz"
     dest: "{{ direnv_man_install_dir }}/man1"
