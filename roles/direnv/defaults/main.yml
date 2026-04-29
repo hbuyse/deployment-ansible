@@ -1,5 +1,5 @@
 ---
 direnv_install_dir: "{{ ansible_facts['user_dir'] }}/.local"
 direnv_bin_install_dir: "{{ direnv_install_dir }}/bin"
-direnv_man_install_dir: "{{ direnv_install_dir }}/man"
+direnv_man_install_dir: "{{ direnv_install_dir }}/share/man"
 direnv_config_dir: "{{ ansible_facts['user_dir'] }}/.config/direnv"
