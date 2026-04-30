@@ -2,7 +2,7 @@
 - name: "Podman | Check that it is supported by the OS"
   ansible.builtin.assert:
     that:
-      - ansible_facts['system'] == "Linux"
+      - ansible_facts.system == "Linux"
 
 - name: "Podman | Install packages"
   become: true

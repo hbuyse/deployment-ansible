@@ -38,9 +38,9 @@
     - role: "kanshi"
     - role: "swaync"
     - role: "wofi"
-      when: ansible_facts["os_family"] in ["Debian"]
+      when: ansible_facts.os_family in ["Debian"]
     - role: "fuzzel"
-      when: ansible_facts["os_family"] not in ["Debian"]
+      when: ansible_facts.os_family not in ["Debian"]
     - role: "wlprop"
     - role: "wlsunset"
     # Portal to select which screen to cast

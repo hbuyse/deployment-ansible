@@ -11,8 +11,8 @@
 - name: "Mattermost Desktop | Set facts"
   ansible.builtin.set_fact:
     mattermost_desktop_latest_version: "{{ mattermost_desktop_latest_json.json.tag_name[1:] }}"
-    mattermost_desktop_root_folder: "mattermost-desktop-{{ mattermost_desktop_latest_json.json.tag_name[1:] }}-{{ ansible_facts['system']
-      | lower }}-{{ (ansible_facts['architecture'] == 'x86_64') | ternary('x64', 'arm64') }}"
+    mattermost_desktop_root_folder: "mattermost-desktop-{{ mattermost_desktop_latest_json.json.tag_name[1:] }}-{{ ansible_facts.system
+      | lower }}-{{ (ansible_facts.architecture == 'x86_64') | ternary('x64', 'arm64') }}"
 
 - name: "Mattermost Desktop | Try to load version file"
   block:
@@ -59,18 +59,18 @@
       block:
         - name: "Mattermost Desktop | Ensure applications directory exist"
           ansible.builtin.file:
-            path: "{{ ansible_facts['user_dir'] }}/.local/share/applications"
+            path: "{{ ansible_facts.user_dir }}/.local/share/applications"
             state: directory
-            owner: "{{ ansible_facts['user_uid'] }}"
-            group: "{{ ansible_facts['user_gid'] }}"
+            owner: "{{ ansible_facts.user_uid }}"
+            group: "{{ ansible_facts.user_gid }}"
             mode: "0755"
 
         - name: "Mattermost Desktop | Copy desktop file"
           ansible.builtin.template:
             src: "mattermost-desktop.desktop.j2"
-            dest: "{{ ansible_facts['user_dir'] }}/.local/share/applications/mattermost-desktop.desktop"
-            owner: "{{ ansible_facts['user_uid'] }}"
-            group: "{{ ansible_facts['user_gid'] }}"
+            dest: "{{ ansible_facts.user_dir }}/.local/share/applications/mattermost-desktop.desktop"
+            owner: "{{ ansible_facts.user_uid }}"
+            group: "{{ ansible_facts.user_gid }}"
             mode: "0644"
 
     - name: "Mattermost Desktop | Write version in custom file"

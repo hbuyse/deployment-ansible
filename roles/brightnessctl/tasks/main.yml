@@ -3,7 +3,7 @@
 #   ansible.builtin.include_vars: "{{ item }}"
 #   with_first_found:
 #     - files:
-#         - "{{ ansible_facts['os_family'] | lower }}.yml"
+#         - "{{ ansible_facts.os_family | lower }}.yml"
 #       skip: true
 #   tags: brightnessctl
 
@@ -20,6 +20,6 @@
   become: true
   tags: brightnessctl
   ansible.builtin.user:
-    name: "{{ ansible_facts['user_id'] }}"
+    name: "{{ ansible_facts.user_id }}"
     groups: "{{ brightnessctl_group }}"
     append: true

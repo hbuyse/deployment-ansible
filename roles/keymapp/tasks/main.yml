@@ -3,7 +3,7 @@
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
-        - "{{ ansible_facts['os_family'] | lower }}.yml"
+        - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
   tags: keymapp
 
@@ -40,8 +40,8 @@
     src: "/tmp/keymapp-latest.tar.gz"
     dest: "{{ item.dest }}"
     mode: "{{ item.mode }}"
-    owner: "{{ ansible_facts['user_uid'] }}"
-    group: "{{ ansible_facts['user_gid'] }}"
+    owner: "{{ ansible_facts.user_uid }}"
+    group: "{{ ansible_facts.user_gid }}"
     include:
       - "{{ item.file }}"
   loop:
@@ -86,9 +86,9 @@
 
 - name: "Keymapp | Add current user to 'plugdev' group"
   become: true
-  when: ansible_facts['os_family'] == "Debian"
+  when: ansible_facts.os_family == "Debian"
   ansible.builtin.user:
-    name: "{{ ansible_facts['user_id'] }}"
+    name: "{{ ansible_facts.user_id }}"
     groups: "plugdev"
     append: true
   tags: keymapp

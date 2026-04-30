@@ -3,7 +3,7 @@
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
-        - "{{ ansible_facts['os_family'] | lower }}.yml"
+        - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
   tags:
     - lazygit
@@ -41,11 +41,11 @@
       become: true
       ansible.builtin.unarchive:
         src: "https://github.com/{{ lazygit_github_user }}/{{ lazygit_github_repo }}/releases/download/v{{ lazygit_latest_version
-          }}/lazygit_{{ lazygit_latest_version }}_{{ ansible_facts['system'] }}_{{ ansible_facts['architecture'] }}.tar.gz"
-        dest: "{{ ansible_facts['user_dir'] }}/.local/bin"
+          }}/lazygit_{{ lazygit_latest_version }}_{{ ansible_facts.system }}_{{ ansible_facts.architecture }}.tar.gz"
+        dest: "{{ ansible_facts.user_dir }}/.local/bin"
         mode: "0755"
-        owner: "{{ ansible_facts['user_uid'] }}"
-        group: "{{ ansible_facts['user_gid'] }}"
+        owner: "{{ ansible_facts.user_uid }}"
+        group: "{{ ansible_facts.user_gid }}"
         include:
           - "lazygit"
         remote_src: true

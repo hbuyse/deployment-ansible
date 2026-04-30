@@ -1,6 +1,6 @@
 ---
 - name: "Wireshark | Include OS specific variables"
-  ansible.builtin.include_vars: "{{ ansible_facts['os_family'] | lower }}.yml"
+  ansible.builtin.include_vars: "{{ ansible_facts.os_family | lower }}.yml"
   tags: wireshark
 
 - name: "Wireshark | Add repository"
@@ -10,7 +10,7 @@
       tags: wireshark
   with_first_found:
     - files:
-        - "{{ ansible_facts['os_family'] | lower }}.yml"
+        - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
   tags: wireshark
 
@@ -21,7 +21,7 @@
     question: wireshark-common/install-setuid
     value: "true"
     vtype: boolean
-  when: ansible_facts['os_family'] == 'Debian'
+  when: ansible_facts.os_family == 'Debian'
   tags: wireshark
 
 - name: "Wireshark | Install packages"
@@ -51,7 +51,7 @@
 - name: "Wireshark | Add user to group wireshark"
   become: true
   ansible.builtin.user:
-    name: "{{ ansible_facts['user_id'] }}"
+    name: "{{ ansible_facts.user_id }}"
     groups: "{{ wireshark_group }}"
     append: true
   tags: wireshark

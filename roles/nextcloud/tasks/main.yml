@@ -3,18 +3,18 @@
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
-        - "{{ ansible_facts['os_family'] | lower }}.yml"
+        - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
   tags: nextcloud
 
-- name: "Nextcloud | Add repository [{{ ansible_facts['os_family'] }}]"
+- name: "Nextcloud | Add repository [{{ ansible_facts.os_family }}]"
   ansible.builtin.include_tasks:
     file: "{{ item }}"
     apply:
       tags: nextcloud
   with_first_found:
     - files:
-        - "{{ ansible_facts['os_family'] | lower }}.yml"
+        - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
   tags: nextcloud
 
@@ -32,14 +32,14 @@
   block:
     - name: "Nextcloud | Ensure directory exists"
       ansible.builtin.file:
-        path: "{{ ansible_facts['user_dir'] }}/.config/systemd/user"
+        path: "{{ ansible_facts.user_dir }}/.config/systemd/user"
         state: directory
         mode: "0755"
 
     - name: "Nextcloud | Copy service file"
       ansible.builtin.copy:
         src: "nextcloud.service"
-        dest: "{{ ansible_facts['user_dir'] }}/.config/systemd/user"
+        dest: "{{ ansible_facts.user_dir }}/.config/systemd/user"
         mode: "0644"
 
     - name: "Nextcloud | Enable service"

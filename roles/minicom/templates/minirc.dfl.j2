@@ -12,7 +12,7 @@ pu parity           N
 pu stopbits         1
 
 # Download directory
-pu downdir          {{ ansible_facts['user_dir'] }}/Downloads
+pu downdir          {{ ansible_facts.user_dir }}/Downloads
 
 # Hardware Flow Control
 pu rtscts           No

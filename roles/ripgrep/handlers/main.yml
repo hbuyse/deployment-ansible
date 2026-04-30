@@ -4,6 +4,6 @@
     file: completions.yml
   loop:
     - shell: zsh
-      filepath: "{{ ansible_facts['user_dir'] }}/.local/share/zsh/site-functions/_ripgrep"
+      filepath: "{{ ansible_facts.user_dir }}/.local/share/zsh/site-functions/_ripgrep"
     - shell: bash
-      filepath: "{{ ansible_facts['user_dir'] }}/.local/share/bash-completion/completions/ripgrep"
+      filepath: "{{ ansible_facts.user_dir }}/.local/share/bash-completion/completions/ripgrep"

@@ -16,11 +16,11 @@
   become: true
   ansible.builtin.unarchive:
     src: "https://github.com/{{ yamlfmt_github_user }}/{{ yamlfmt_github_repo }}/releases/download/v{{ yamlfmt_latest_version
-      }}/yamlfmt_{{ yamlfmt_latest_version }}_{{ ansible_facts['system'] }}_{{ ansible_facts['architecture'] }}.tar.gz"
-    dest: "{{ ansible_facts['user_dir'] }}/.local/bin"
+      }}/yamlfmt_{{ yamlfmt_latest_version }}_{{ ansible_facts.system }}_{{ ansible_facts.architecture }}.tar.gz"
+    dest: "{{ ansible_facts.user_dir }}/.local/bin"
     mode: "0755"
-    owner: "{{ ansible_facts['user_uid'] }}"
-    group: "{{ ansible_facts['user_gid'] }}"
+    owner: "{{ ansible_facts.user_uid }}"
+    group: "{{ ansible_facts.user_gid }}"
     include:
       - "yamlfmt"
     remote_src: true

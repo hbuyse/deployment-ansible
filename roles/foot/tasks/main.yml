@@ -3,7 +3,7 @@
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
-        - "{{ ansible_facts['os_family'] | lower }}.yml"
+        - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
   tags: foot
 
@@ -12,7 +12,7 @@
     that:
       - foot_packages is defined
       - foot_packages | length > 0
-    fail_msg: "foot_packages must not be empty (check your roles/foot/vars/{{ ansible_facts['os_family'] | lower }}.yml)"
+    fail_msg: "foot_packages must not be empty (check your roles/foot/vars/{{ ansible_facts.os_family | lower }}.yml)"
     quiet: true
   tags: foot
 
@@ -30,7 +30,7 @@
     link: /usr/bin/x-terminal-emulator
     priority: 100
     state: present
-  when: ansible_facts['os_family'] in ["Debian", "Redhat"]
+  when: ansible_facts.os_family in ["Debian", "Redhat"]
   tags: foot
 
 - name: "Foot | Get version"
@@ -60,8 +60,8 @@
     src: foot.ini.j2
     dest: "{{ foot_config_dir }}/foot.ini"
     mode: "0644"
-    owner: "{{ ansible_facts['user_id'] }}"
-    group: "{{ ansible_facts['user_gid'] }}"
+    owner: "{{ ansible_facts.user_id }}"
+    group: "{{ ansible_facts.user_gid }}"
   tags: foot
 
 - name: "Foot | Download catppuccin themes"
@@ -69,12 +69,11 @@
     url: "https://raw.githubusercontent.com/catppuccin/foot/refs/heads/main/themes/catppuccin-{{ item }}.ini"
     dest: "{{ foot_themes_dir }}"
     mode: "0644"
-    owner: "{{ ansible_facts['user_id'] }}"
-    group: "{{ ansible_facts['user_gid'] }}"
+    owner: "{{ ansible_facts.user_id }}"
+    group: "{{ ansible_facts.user_gid }}"
   loop:
     - mocha
     - macchiato
-    - latte
     - frappe
   tags: foot
 
@@ -88,7 +87,6 @@
   loop:
     - mocha
     - macchiato
-    - latte
     - frappe
   tags: foot
 
@@ -102,6 +100,5 @@
   loop:
     - mocha
     - macchiato
-    - latte
     - frappe
   tags: foot

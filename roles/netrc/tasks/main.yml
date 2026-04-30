@@ -2,6 +2,6 @@
 - name: "Netrc | Copy netrc file"
   ansible.builtin.copy:
     src: "netrc"
-    dest: "{{ ansible_facts['user_dir'] }}/.netrc"
+    dest: "{{ ansible_facts.user_dir }}/.netrc"
     mode: "0600"
   tags: netrc

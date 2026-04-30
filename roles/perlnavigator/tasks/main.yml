@@ -3,7 +3,7 @@
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
-        - "{{ ansible_facts['os_family'] | lower }}.yml"
+        - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
   tags:
     - perlnavigator
@@ -44,16 +44,16 @@
     - name: "PerlNavigator | Install program from static binary [{{ perlnavigator_latest_json.json.tag_name }}]"
       ansible.builtin.unarchive:
         src: "https://github.com/{{ perlnavigator_github_user }}/{{ perlnavigator_github_repo }}/releases/download/{{ perlnavigator_latest_json.json.tag_name
-          }}/perlnavigator-linux-{{ ansible_facts['architecture'] }}.zip"
+          }}/perlnavigator-linux-{{ ansible_facts.architecture }}.zip"
         dest: "{{ perlnavigator_tmpdir.path }}"
-        owner: "{{ ansible_facts['user_uid'] }}"
-        group: "{{ ansible_facts['user_gid'] }}"
+        owner: "{{ ansible_facts.user_uid }}"
+        group: "{{ ansible_facts.user_gid }}"
         remote_src: true
 
     - name: "PerlNavigator | Move binary file"
       ansible.builtin.copy:
-        src: "{{ perlnavigator_tmpdir.path }}/perlnavigator-linux-{{ ansible_facts['architecture'] }}/perlnavigator"
+        src: "{{ perlnavigator_tmpdir.path }}/perlnavigator-linux-{{ ansible_facts.architecture }}/perlnavigator"
         dest: "{{ perlnavigator_bin_dir }}/perlnavigator"
-        owner: "{{ ansible_facts['user_uid'] }}"
-        group: "{{ ansible_facts['user_gid'] }}"
+        owner: "{{ ansible_facts.user_uid }}"
+        group: "{{ ansible_facts.user_gid }}"
         mode: "0755"

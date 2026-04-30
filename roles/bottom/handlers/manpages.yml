@@ -1,7 +1,7 @@
 ---
 - name: "Bottom | Ensure that manpages directory exists [man1]"
   ansible.builtin.file:
-    path: "{{ ansible_facts['user_dir'] }}/.local/share/man/man1"
+    path: "{{ ansible_facts.user_dir }}/.local/share/man/man1"
     state: "directory"
     mode: "0755"
     recurse: true
@@ -9,9 +9,9 @@
 - name: "Bottom | Install manpages [man1]"
   ansible.builtin.unarchive:
     src: "/tmp/manpage.tar.gz"
-    dest: "{{ ansible_facts['user_dir'] }}/.local/share/man/man1"
-    owner: "{{ ansible_facts['user_uid'] }}"
-    group: "{{ ansible_facts['user_gid'] }}"
+    dest: "{{ ansible_facts.user_dir }}/.local/share/man/man1"
+    owner: "{{ ansible_facts.user_uid }}"
+    group: "{{ ansible_facts.user_gid }}"
     mode: "0644"
     include:
       - "./btm.1.gz"

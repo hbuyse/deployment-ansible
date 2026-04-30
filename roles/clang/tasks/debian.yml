@@ -12,8 +12,8 @@
     name: "llvm-{{ version }}"
     enabled: true
     types: deb
-    uris: "http://apt.llvm.org/{{ ansible_facts['distribution_release'] }}"
-    suites: "llvm-toolchain-{{ ansible_facts['distribution_release'] }}-{{ version }}"
+    uris: "http://apt.llvm.org/{{ ansible_facts.distribution_release }}"
+    suites: "llvm-toolchain-{{ ansible_facts.distribution_release }}-{{ version }}"
     components: main
     state: present
     signed_by: "/etc/apt/keyrings/apt.llvm.org.asc"

@@ -12,7 +12,7 @@
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
-        - "{{ ansible_facts['os_family'] | lower }}.yml"
+        - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
   tags: wlsunset
 
@@ -28,13 +28,13 @@
 
     - name: "Wlsunset | Ensure systemd directory exist"
       ansible.builtin.file:
-        path: "{{ ansible_facts['user_dir'] }}/.config/systemd/user/"
+        path: "{{ ansible_facts.user_dir }}/.config/systemd/user/"
         state: directory
         mode: "0755"
 
     - name: "Wlsunset | Copy service file"
       ansible.builtin.template:
         src: "wlsunset.service.j2"
-        dest: "{{ ansible_facts['user_dir'] }}/.config/systemd/user/wlsunset.service"
+        dest: "{{ ansible_facts.user_dir }}/.config/systemd/user/wlsunset.service"
         mode: "0644"
       notify: "Wlsunset | Restart service"

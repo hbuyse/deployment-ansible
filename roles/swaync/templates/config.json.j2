@@ -47,7 +47,7 @@
   "widgets": [
     "menubar",
     "buttons-grid",
-{% if ansible_facts['form_factor'] in ["Portable", "Laptop", "Notebook"] %}
+{% if ansible_facts.form_factor in ["Portable", "Laptop", "Notebook"] %}
     "backlight",
 {% endif %}
     "volume",
@@ -117,7 +117,7 @@
           },
           {
             "label": "Balanced",
-{% if ansible_facts['form_factor'] in ["Portable", "Laptop", "Notebook"] %}
+{% if ansible_facts.form_factor in ["Portable", "Laptop", "Notebook"] %}
             "command": "$HOME/.config/sway/scripts/tuned-switcher.sh set balanced-battery"
 {% else %}
             "command": "$HOME/.config/sway/scripts/tuned-switcher.sh set balanced"

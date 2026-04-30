@@ -3,7 +3,7 @@
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
-        - "{{ ansible_facts['os_family'] | lower }}.yml"
+        - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
   tags: git
 
@@ -12,7 +12,7 @@
     file: debian.yml
     apply:
       tags: git
-  when: ansible_facts['os_family'] == 'Debian'
+  when: ansible_facts.os_family == 'Debian'
   tags: git
 
 - name: "Git | Install from package manager"
@@ -27,14 +27,14 @@
   block:
     - name: "Git | Ensure configuration directory exists"
       ansible.builtin.file:
-        path: "{{ ansible_facts['user_dir'] }}/.config/git"
+        path: "{{ ansible_facts.user_dir }}/.config/git"
         state: directory
         mode: "0755"
 
     - name: "Git | Copy git configuration"
       ansible.builtin.copy:
         src: "{{ item }}"
-        dest: "{{ ansible_facts['user_dir'] }}/.config/git"
+        dest: "{{ ansible_facts.user_dir }}/.config/git"
         mode: "0644"
       loop:
         - config

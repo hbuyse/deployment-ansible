@@ -4,12 +4,12 @@
   become: true
   ansible.builtin.copy:
     src: "face.png"
-    dest: "/var/lib/AccountsService/icons/{{ ansible_facts['user_id'] }}"
+    dest: "/var/lib/AccountsService/icons/{{ ansible_facts.user_id }}"
     mode: "0644"
 
 - name: "User | Copy the face image in home directory"
   tags: user
   ansible.builtin.copy:
     src: "face.png"
-    dest: "{{ ansible_facts['user_dir'] }}/.face"
+    dest: "{{ ansible_facts.user_dir }}/.face"
     mode: "0644"

@@ -3,7 +3,7 @@
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
-        - "{{ ansible_facts['os_family'] | lower }}.yml"
+        - "{{ ansible_facts.os_family | lower }}.yml"
   tags: kanshi
 
 - name: "Kanshi | Install required packages"
@@ -14,7 +14,7 @@
 
 - name: "Kanshi | Gather the package facts"
   ansible.builtin.package_facts:
-    manager: "{{ (ansible_facts['os_family'] == 'RedHat') | ansible.builtin.ternary('dnf5', 'auto') }}"
+    manager: "{{ (ansible_facts.os_family == 'RedHat') | ansible.builtin.ternary('dnf5', 'auto') }}"
     strategy: first
   tags: kanshi
 
@@ -78,7 +78,7 @@
         - "work-com.j2"
         - "work.j2"
       when:
-        - ansible_facts['hostname'] == 'hbuyse-promax14'
+        - ansible_facts.hostname == 'hbuyse-promax14'
         - kanshi_work_confs is defined
 
 - name: "Kanshi | Install service file"

@@ -43,7 +43,7 @@
 
     - name: "Discord | Extract archive"
       ansible.builtin.unarchive:
-        src: "{{ discord_apps_url }}/{{ ansible_facts['system'] | lower }}/{{ discord_latest_version }}/discord-{{ discord_latest_version
+        src: "{{ discord_apps_url }}/{{ ansible_facts.system | lower }}/{{ discord_latest_version }}/discord-{{ discord_latest_version
           }}.tar.gz"
         dest: "{{ discord_install_dir }}"
         owner: "root"
@@ -59,7 +59,7 @@
       block:
         - name: "Discord | Ensure applications directory exist"
           ansible.builtin.file:
-            path: "{{ ansible_facts['user_dir'] }}/.local/share/applications"
+            path: "{{ ansible_facts.user_dir }}/.local/share/applications"
             state: directory
             owner: "root"
             group: "root"
@@ -68,7 +68,7 @@
         - name: "Discord | Copy desktop file"
           ansible.builtin.template:
             src: "discord.desktop.j2"
-            dest: "{{ ansible_facts['user_dir'] }}/.local/share/applications/discord.desktop"
+            dest: "{{ ansible_facts.user_dir }}/.local/share/applications/discord.desktop"
             owner: "root"
             group: "root"
             mode: "0644"

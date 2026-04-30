@@ -3,7 +3,7 @@
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
-        - "{{ ansible_facts['os_family'] | lower }}.yml"
+        - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
   tags: wallpapers
 
@@ -40,8 +40,8 @@
       ansible.builtin.file:
         src: "{{ wallpapers_install_dir }}/coding.svg"
         dest: "{{ wallpapers_install_dir }}/{{ item }}.svg"
-        owner: "{{ ansible_facts['user_uid'] }}"
-        group: "{{ ansible_facts['user_gid'] }}"
+        owner: "{{ ansible_facts.user_uid }}"
+        group: "{{ ansible_facts.user_gid }}"
         state: "link"
       loop:
         - "wallpaper"
@@ -59,8 +59,8 @@
       ansible.builtin.file:
         src: "{{ wallpapers_install_dir }}/coding.png"
         dest: "{{ wallpapers_install_dir }}/{{ item }}.png"
-        owner: "{{ ansible_facts['user_uid'] }}"
-        group: "{{ ansible_facts['user_gid'] }}"
+        owner: "{{ ansible_facts.user_uid }}"
+        group: "{{ ansible_facts.user_gid }}"
         state: "link"
       loop:
         - "wallpaper"

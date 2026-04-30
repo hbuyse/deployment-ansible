@@ -3,13 +3,13 @@
 - name: "Owncloud Client | Check that it is supported by the OS"
   ansible.builtin.assert:
     that:
-      - ansible_facts['system'] == "Linux"
+      - ansible_facts.system == "Linux"
 
 - name: "Owncloud Client | Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
-        - "{{ ansible_facts['os_family'] | lower }}.yml"
+        - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
   tags: owncloud_client
 
@@ -20,7 +20,7 @@
       tags: owncloud_client
   with_first_found:
     - files:
-        - "{{ ansible_facts['os_family'] | lower }}.yml"
+        - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
   tags: owncloud_client
 
@@ -44,7 +44,7 @@
       ansible.builtin.copy:
         src: "owncloud-client.service"
         dest: "{{ owncloud_client_service_dir }}"
-        owner: "{{ ansible_facts['user_id'] }}"
-        group: "{{ ansible_facts['user_gid'] }}"
+        owner: "{{ ansible_facts.user_id }}"
+        group: "{{ ansible_facts.user_gid }}"
         mode: "0644"
       notify: "Owncloud Client | Restart service"

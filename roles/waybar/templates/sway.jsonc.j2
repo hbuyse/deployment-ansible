@@ -9,15 +9,15 @@
     "modules-right": [
       // "custom/playerctl",
       "custom/weather",
-{% if ansible_facts["os_family"] == "Debian" %}
+{% if ansible_facts.os_family == "Debian" %}
       "custom/sunset",
       "inhibitor",
 {% endif %}
       "custom/updates",
-{% if ansible_facts["os_family"] != "Debian" %}
+{% if ansible_facts.os_family != "Debian" %}
       "bluetooth",
 {% endif %}
-{% if ansible_facts['form_factor'] in ["Portable", "Laptop", "Notebook"] and 'swaync' not in role_names %}
+{% if ansible_facts.form_factor in ["Portable", "Laptop", "Notebook"] and 'swaync' not in role_names %}
       "backlight",
 {% endif %}
       "pulseaudio",

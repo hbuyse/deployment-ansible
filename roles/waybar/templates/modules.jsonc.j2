@@ -391,7 +391,7 @@
     "return-type": "json",
     "escape": false,
     // Filter player based on name
-    "exec": "~/.config/waybar/scripts/.venv/bin/python ~/.config/waybar/scripts/disk_aio.py {% for mount in ansible_facts['mounts']|selectattr('fstype','in','ext4,vfat,btrfs')|sort(attribute='mount') %}{{ mount.mount }} {% endfor %}",
+    "exec": "~/.config/waybar/scripts/.venv/bin/python ~/.config/waybar/scripts/disk_aio.py {% for mount in ansible_facts.mounts|selectattr('fstype','in','ext4,vfat,btrfs')|sort(attribute='mount') %}{{ mount.mount }} {% endfor %}",
   },
   "temperature": {
     "interval": 5,

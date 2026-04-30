@@ -2,7 +2,7 @@ ignore-empty-password
 font=Iosevka Nerd Font
 #font-size=80
 
-{% if ansible_facts["os_family"] == "Archlinux" %}
+{% if ansible_facts.os_family == "Archlinux" %}
 # clock: Show time and date.
 # timestr: The format string for the time. Defaults to '%T'.
 # datestr: The format string for the date. Defaults to '%a, %x'.
@@ -13,7 +13,7 @@ datestr=%d/%m/%Y
 
 # Display the given image, optionally only on the given output.
 # image: [[<output>]:]<path>
-image={{ ansible_facts['user_dir'] }}/.local/share/backgrounds/locker.png
+image={{ ansible_facts.user_dir }}/.local/share/backgrounds/locker.png
 
 # Display the current xkb layout while typing.
 show-keyboard-layout
@@ -22,7 +22,7 @@ show-keyboard-layout
 # Disable the Caps Lock text.
 disable-caps-lock-text
 
-{% if ansible_facts["os_family"] == "Archlinux" %}
+{% if ansible_facts.os_family == "Archlinux" %}
 # Make the lock screen fade in instead of just popping in.
 #fade-in=0.2
 

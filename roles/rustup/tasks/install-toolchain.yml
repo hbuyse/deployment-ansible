@@ -5,9 +5,9 @@
       rustup default | awk '{ print $1 }'
   register: rustup_get_default_output
   environment:
-    RUSTUP_HOME: "{{ ansible_facts['user_dir'] }}/.rustup"
-    CARGO_HOME: "{{ ansible_facts['user_dir'] }}/.cargo"
-    PATH: "{{ ansible_env.PATH }}:{{ ansible_facts['user_dir'] }}/.cargo/bin"
+    RUSTUP_HOME: "{{ ansible_facts.user_dir }}/.rustup"
+    CARGO_HOME: "{{ ansible_facts.user_dir }}/.cargo"
+    PATH: "{{ ansible_env.PATH }}:{{ ansible_facts.user_dir }}/.cargo/bin"
   changed_when: false
   ignore_errors: true
 
@@ -15,9 +15,9 @@
   ansible.builtin.command:
     cmd: rustup default "{{ rustup_default_version }}"
   environment:
-    RUSTUP_HOME: "{{ ansible_facts['user_dir'] }}/.rustup"
-    CARGO_HOME: "{{ ansible_facts['user_dir'] }}/.cargo"
-    PATH: "{{ ansible_env.PATH }}:{{ ansible_facts['user_dir'] }}/.cargo/bin"
+    RUSTUP_HOME: "{{ ansible_facts.user_dir }}/.rustup"
+    CARGO_HOME: "{{ ansible_facts.user_dir }}/.cargo"
+    PATH: "{{ ansible_env.PATH }}:{{ ansible_facts.user_dir }}/.cargo/bin"
   register: rustup_set_default_output
   failed_when: rustup_set_default_output.rc != 0
   changed_when:
@@ -28,9 +28,9 @@
   ansible.builtin.command:
     cmd: "rustup update"
   environment:
-    RUSTUP_HOME: "{{ ansible_facts['user_dir'] }}/.rustup"
-    CARGO_HOME: "{{ ansible_facts['user_dir'] }}/.cargo"
-    PATH: "{{ ansible_env.PATH }}:{{ ansible_facts['user_dir'] }}/.cargo/bin"
+    RUSTUP_HOME: "{{ ansible_facts.user_dir }}/.rustup"
+    CARGO_HOME: "{{ ansible_facts.user_dir }}/.cargo"
+    PATH: "{{ ansible_env.PATH }}:{{ ansible_facts.user_dir }}/.cargo/bin"
   register: rustup_update
   failed_when: rustup_update.rc != 0
   changed_when:

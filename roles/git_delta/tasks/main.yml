@@ -3,7 +3,7 @@
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
-        - "{{ ansible_facts['os_family'] | lower }}.yml"
+        - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
   tags:
     - git
@@ -37,14 +37,14 @@
   block:
     - name: "Git Delta | Ensure git directory exists"
       ansible.builtin.file:
-        path: "{{ ansible_facts['user_dir'] }}/.config/git"
+        path: "{{ ansible_facts.user_dir }}/.config/git"
         state: directory
         mode: "0755"
 
     - name: "Git Delta | Copy git-delta configuration"
       ansible.builtin.copy:
         src: "delta"
-        dest: "{{ ansible_facts['user_dir'] }}/.config/git"
+        dest: "{{ ansible_facts.user_dir }}/.config/git"
         mode: "0644"
 
 - name: "Git Delta | Install themes"
@@ -54,18 +54,18 @@
   block:
     - name: "Git Delta | Ensure themes directory exists"
       ansible.builtin.file:
-        path: "{{ ansible_facts['user_dir'] }}/.config/git/themes"
+        path: "{{ ansible_facts.user_dir }}/.config/git/themes"
         state: directory
         mode: "0755"
 
     - name: "Git Delta | Download git delta themes"
       ansible.builtin.get_url:
         url: "https://raw.githubusercontent.com/dandavison/delta/refs/heads/main/themes.gitconfig"
-        dest: "{{ ansible_facts['user_dir'] }}/.config/git/themes/themes.conf"
+        dest: "{{ ansible_facts.user_dir }}/.config/git/themes/themes.conf"
         mode: "0644"
 
     - name: "Git Delta | Download catppuccin theme"
       ansible.builtin.get_url:
         url: "https://raw.githubusercontent.com/catppuccin/delta/refs/heads/main/catppuccin.gitconfig"
-        dest: "{{ ansible_facts['user_dir'] }}/.config/git/themes/catppuccin.conf"
+        dest: "{{ ansible_facts.user_dir }}/.config/git/themes/catppuccin.conf"
         mode: "0644"

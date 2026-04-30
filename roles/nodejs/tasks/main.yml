@@ -3,22 +3,22 @@
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
-        - "{{ ansible_facts['os_family'] | lower }}.yml"
+        - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
   tags: nodejs
 
-- name: "NodeJS | Add repository [{{ ansible_facts['os_family'] }}]"
+- name: "NodeJS | Add repository [{{ ansible_facts.os_family }}]"
   ansible.builtin.include_tasks:
     file: "{{ item }}"
     apply:
       tags: nodejs
   with_first_found:
     - files:
-        - "{{ ansible_facts['os_family'] | lower }}.yml"
+        - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
   tags: nodejs
 
-- name: "Nodejs | Install package and npm [{{ ansible_facts['os_family'] }}]"
+- name: "Nodejs | Install package and npm [{{ ansible_facts.os_family }}]"
   become: true
   ansible.builtin.package:
     name: "{{ nodejs_packages }}"

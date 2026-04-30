@@ -1,16 +1,16 @@
 ---
 - name: "Bat | Ensure that manpages directory exists [man1]"
   ansible.builtin.file:
-    path: "{{ ansible_facts['user_dir'] }}/.local/share/man/man1"
+    path: "{{ ansible_facts.user_dir }}/.local/share/man/man1"
     state: "directory"
     mode: "0755"
 
 - name: "Bat | Install manpages [man1]"
   ansible.builtin.unarchive:
     src: "/tmp/{{ bat_archive_fullname }}"
-    dest: "{{ ansible_facts['user_dir'] }}/.local/share/man/man1"
-    owner: "{{ ansible_facts['user_uid'] }}"
-    group: "{{ ansible_facts['user_gid'] }}"
+    dest: "{{ ansible_facts.user_dir }}/.local/share/man/man1"
+    owner: "{{ ansible_facts.user_uid }}"
+    group: "{{ ansible_facts.user_gid }}"
     mode: "0755"
     include:
       - "{{ bat_archive_name }}/bat.1"

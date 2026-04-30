@@ -14,11 +14,11 @@
 
 - name: "FZF | Install binary file [v{{ fzf_latest_version }}]"
   ansible.builtin.unarchive:
-    src: "https://github.com/junegunn/fzf/releases/download/v{{ fzf_latest_version }}/fzf-{{ fzf_latest_version }}-{{ ansible_facts['system']
+    src: "https://github.com/junegunn/fzf/releases/download/v{{ fzf_latest_version }}/fzf-{{ fzf_latest_version }}-{{ ansible_facts.system
       | lower }}_{{ alt_arch }}.tar.gz"
     dest: "{{ fzf_bin_install_dir }}"
-    owner: "{{ ansible_facts['user_uid'] }}"
-    group: "{{ ansible_facts['user_gid'] }}"
+    owner: "{{ ansible_facts.user_uid }}"
+    group: "{{ ansible_facts.user_gid }}"
     remote_src: true
 
 - name: "FZF | Install man pages"
@@ -27,8 +27,8 @@
     dest: "{{ fzf_man_install_dir }}/man1"
     remote_src: true
     keep_newer: true
-    owner: "{{ ansible_facts['user_uid'] }}"
-    group: "{{ ansible_facts['user_gid'] }}"
+    owner: "{{ ansible_facts.user_uid }}"
+    group: "{{ ansible_facts.user_gid }}"
     include:
       - "fzf-{{ fzf_latest_version }}/man/man1/fzf.1"
       - "fzf-{{ fzf_latest_version }}/man/man1/fzf-tmux.1"

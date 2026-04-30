@@ -1,2 +1,2 @@
 ---
-xdg_desktop_portal_wlr_user_dir: "{{ ansible_facts['user_dir'] }}/.config/xdg-desktop-portal-wlr"
+xdg_desktop_portal_wlr_user_dir: "{{ ansible_facts.user_dir }}/.config/xdg-desktop-portal-wlr"

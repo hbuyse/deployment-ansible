@@ -12,10 +12,10 @@
       "custom/sunset",
       "inhibitor",
       "custom/updates",
-{% if ansible_facts["os_family"] != "Debian" %}
+{% if ansible_facts.os_family != "Debian" %}
       "bluetooth",
 {% endif %}
-{% if ansible_facts['form_factor'] in ["Portable", "Laptop", "Notebook"] %}
+{% if ansible_facts.form_factor in ["Portable", "Laptop", "Notebook"] %}
       "backlight",
 {% endif %}
       "pulseaudio",
@@ -52,7 +52,7 @@
       "cpu",
       "temperature",
       "custom/battery",
-{% if ansible_facts["os_family"] != "Debian" %}
+{% if ansible_facts.os_family != "Debian" %}
       "tray",
 {% endif %}
     ],

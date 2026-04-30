@@ -6,7 +6,7 @@
     enabled: false
     scope: "system"
   tags: always
-  when: ansible_facts["service_mgr"] == "systemd"
+  when: ansible_facts.service_mgr == "systemd"
 
 - name: "Post-tasks | Always run tasks that are OS specific"
   ansible.builtin.include_tasks:
@@ -15,6 +15,6 @@
       tags: always
   with_first_found:
     - files:
-        - "{{ ansible_facts['os_family'] | lower }}.yml"
+        - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
   tags: always

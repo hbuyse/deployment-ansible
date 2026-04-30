@@ -3,7 +3,7 @@
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
-        - "{{ ansible_facts['os_family'] | lower }}.yml"
+        - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
   tags:
     - neovim
@@ -41,11 +41,11 @@
     - name: "Neovim | Install program from static binary [v{{ nvim_latest_version }}]"
       become: true
       ansible.builtin.unarchive:
-        src: "https://github.com/neovim/neovim/releases/download/v{{ nvim_latest_version }}/nvim-linux-{{ ansible_facts['architecture']
+        src: "https://github.com/neovim/neovim/releases/download/v{{ nvim_latest_version }}/nvim-linux-{{ ansible_facts.architecture
           }}.tar.gz"
-        dest: "{{ ansible_facts['user_dir'] }}/.local"
-        owner: "{{ ansible_facts['user_uid'] }}"
-        group: "{{ ansible_facts['user_gid'] }}"
+        dest: "{{ ansible_facts.user_dir }}/.local"
+        owner: "{{ ansible_facts.user_uid }}"
+        group: "{{ ansible_facts.user_gid }}"
         remote_src: true
         extra_opts:
           - --strip-components=1

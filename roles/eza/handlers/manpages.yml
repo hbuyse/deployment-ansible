@@ -1,17 +1,17 @@
 ---
 - name: "Eza | Ensure that manpages directory exists [man{{ item.number }}]"
   ansible.builtin.file:
-    path: "{{ ansible_facts['user_dir'] }}/.local/share/man/man{{ item.number }}"
+    path: "{{ ansible_facts.user_dir }}/.local/share/man/man{{ item.number }}"
     state: "directory"
     mode: "0755"
 
 - name: "Eza | Install manpages [man{{ item.number }}]"
   ansible.builtin.unarchive:
     src: "/tmp/man-{{ eza_latest_version }}.tar.gz"
-    dest: "{{ ansible_facts['user_dir'] }}/.local/share/man/man{{ item.number }}"
+    dest: "{{ ansible_facts.user_dir }}/.local/share/man/man{{ item.number }}"
     mode: "0644"
-    owner: "{{ ansible_facts['user_uid'] }}"
-    group: "{{ ansible_facts['user_gid'] }}"
+    owner: "{{ ansible_facts.user_uid }}"
+    group: "{{ ansible_facts.user_gid }}"
     include:
       - "./target/man-{{ eza_latest_version }}/{{ item.name }}.{{ item.number }}"
     extra_opts:

@@ -1,5 +1,5 @@
 ---
-waybar_config_dir: "{{ ansible_facts['user_dir'] }}/.config/waybar"
+waybar_config_dir: "{{ ansible_facts.user_dir }}/.config/waybar"
 
 waybar_pip_packages:
   - requests
