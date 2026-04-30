@@ -16,7 +16,6 @@
           tags: always
       tags: always
   roles:
-    - role: "townk.beautiful_output"
     - role: "netrc"
     - role: "ssh"
     - role: "python"
