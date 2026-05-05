@@ -3,7 +3,7 @@
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
-        - "{{ ansible_os_family | lower }}.yml"
+        - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
   tags:
     - wireplumber
@@ -21,7 +21,7 @@
   ansible.builtin.package:
     name: "pipewire-media-session-docs"
     state: "absent"
-  ignore_errors: "{{ ansible_check_mode }}"
+  ignore_errors: "{{ ansible_facts.check_mode }}"
   tags:
     - wireplumber
 
@@ -40,7 +40,7 @@
     enabled: false
     state: "stopped"
     scope: "user"
-  when: "item in services"
+  when: "item in ansible_facts.services"
   loop:
     - pulseaudio.socket
     - pulseaudio.service
