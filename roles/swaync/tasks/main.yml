@@ -3,17 +3,6 @@
   ansible.builtin.include_vars: "{{ ansible_facts.os_family | lower }}.yml"
   tags: swaync
 
-- name: "Sway Notification Center | Include OS specific tasks"
-  ansible.builtin.include_tasks:
-    file: "{{ item }}"
-    apply:
-      tags: zellij
-  with_first_found:
-    - files:
-        - "{{ ansible_facts.os_family | lower }}.yml"
-      skip: true
-  tags: swaync
-
 - name: "Sway Notification Center | Install packages"
   become: true
   ansible.builtin.package:
