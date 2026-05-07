@@ -3,17 +3,6 @@
   ansible.builtin.include_vars: "{{ ansible_facts.os_family | lower }}.yml"
   tags: yazi
 
-- name: "Yazi | Include OS specific tasks"
-  ansible.builtin.include_tasks:
-    file: "{{ item }}"
-    apply:
-      tags: zellij
-  with_first_found:
-    - files:
-        - "{{ ansible_facts.os_family | lower }}.yml"
-      skip: true
-  tags: yazi
-
 - name: "Yazi | Install packages"
   become: true
   ansible.builtin.package:

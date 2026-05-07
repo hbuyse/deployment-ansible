@@ -1,6 +1,0 @@
----
-- name: "Yazi | Add COPR repo"
-  become: true
-  community.general.copr:
-    name: "lihaohong/yazi"
-    state: "enabled"
