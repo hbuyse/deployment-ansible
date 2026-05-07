@@ -10,6 +10,7 @@
     - git
 
 - name: "LazyGit | Install from package manager"
+  become: true
   when: lazygit_packages is defined
   tags:
     - lazygit

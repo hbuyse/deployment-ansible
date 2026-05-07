@@ -11,14 +11,6 @@
   when: yazi_packages is defined
   tags: yazi
 
-- name: "Yazi | Install Rust package with locked dependencies"
-  community.general.cargo:
-    name: yazi-build
-    state: latest
-    locked: true
-  tags: yazi
-  when: yazi_packages is not defined
-
 - name: "Yazi | Ensure configuration directory exists"
   ansible.builtin.file:
     path: "{{ yazi_config_dir }}"

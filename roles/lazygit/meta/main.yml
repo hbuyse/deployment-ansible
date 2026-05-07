@@ -1,6 +1,4 @@
 ---
 dependencies:
-  - role: rustup
-    when: ansible_facts.os_family in ["RedHat"]
   - role: "debian_griffo"
     when: ansible_facts.os_family in ["Debian"]

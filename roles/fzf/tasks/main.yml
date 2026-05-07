@@ -13,11 +13,3 @@
     name: "{{ fzf_packages }}"
   when: fzf_packages is defined
   tags: fzf
-
-- name: "FZF | Install from sources"
-  ansible.builtin.include_tasks:
-    file: source.yml
-    apply:
-      tags: fzf
-  when: fzf_packages is not defined
-  tags: fzf
