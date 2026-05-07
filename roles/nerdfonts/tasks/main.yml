@@ -5,7 +5,7 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags: docker
+  tags: nerdfonts
 
 - name: "Nerdfonts | Install packages"
   become: true
