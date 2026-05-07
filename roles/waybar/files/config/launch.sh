@@ -19,4 +19,6 @@ if [ -f "$USER_STYLE_PATH" ]; then
 fi
 
 env > "$LOG_FILE"
-waybar -c "${USER_CONFIG:-"/usr/share/sway/templates/waybar/config.jsonc"}" -s "${USER_STYLE:-"/usr/share/sway/templates/waybar/style.css"}" >> "$LOG_FILE"
+if [ ${DESKTOP_SESSION} != "sway-systemd" ]; then
+    waybar -c "${USER_CONFIG:-"/usr/share/sway/templates/waybar/config.jsonc"}" -s "${USER_STYLE:-"/usr/share/sway/templates/waybar/style.css"}" >> "$LOG_FILE"
+fi
