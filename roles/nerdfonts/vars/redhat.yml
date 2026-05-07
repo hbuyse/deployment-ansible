@@ -1,0 +1,2 @@
+---
+nerdfonts_packages: "{{ nerdfonts_list | map('lower') | map('regex_replace', '$', '-nerd-fonts') | list }}"
