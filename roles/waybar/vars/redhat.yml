@@ -7,3 +7,4 @@ waybar_packages:
   - gobject-introspection-devel
   - cairo-gobject-devel
   - python3-devel
+  - sassc
