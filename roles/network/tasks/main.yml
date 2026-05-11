@@ -51,6 +51,8 @@
     wifi_sec:
       key-mgmt: wpa-psk
       psk: "{{ item.psk }}"
+    wifi:
+      assigned-mac-address: "{{ item.mac_address_type | default(random) }}"
     autoconnect: "{{ item.autoconnect }}"
     state: present
   loop: "{{ network_wifi_connections }}"
