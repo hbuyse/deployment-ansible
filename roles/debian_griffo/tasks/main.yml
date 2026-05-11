@@ -1,0 +1,19 @@
+---
+- name: "Debian Griffo | Add repository"
+  become: true
+  ansible.builtin.deb822_repository:
+    name: debian.griffo.io
+    enabled: true
+    types: deb
+    uris: "{{ debian_griffo_url }}"
+    suites: "{{ ansible_facts.distribution_release | lower }}"
+    signed_by: "{{ debian_griffo_asc }}"
+    components:
+      - main
+  register: debian_griffo_res
+
+- name: "Debian Griffo | Update APT cache"
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+  when: debian_griffo_res.changed  # noqa: no-handler
