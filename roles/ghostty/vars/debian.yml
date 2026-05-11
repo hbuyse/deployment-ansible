@@ -1,0 +1,7 @@
+---
+ghostty_packages:
+  - "ghostty"
+
+ghostty_ppa:
+  repo: "mkasberg/ghostty-ubuntu"
+  fingerprint: "0721FDF5FECB88DC6920361657C8EF455CEAE491"

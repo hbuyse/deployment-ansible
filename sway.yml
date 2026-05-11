@@ -19,6 +19,7 @@
     # Terminals
     - role: "foot"
     - role: "alacritty"
+    - role: "ghostty"
     - role: "themes"
 
     # Sway

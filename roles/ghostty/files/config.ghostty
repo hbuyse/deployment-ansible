@@ -1,0 +1,15 @@
+config-file = ~/.config/ghostty/keybindings.ghostty
+
+command = zsh --login
+clipboard-read = allow
+background-opacity = 0.99
+theme = Catppuccin Mocha
+
+# Font options
+font-size = 10
+font-family = Iosevka Nerd Font Mono
+font-feature = "+calt"
+
+# GTK options
+gtk-tabs-location = bottom
+gtk-wide-tabs = true
