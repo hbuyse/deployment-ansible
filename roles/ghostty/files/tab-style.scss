@@ -1,0 +1,55 @@
+/* -------------------------------------------------
+   Debug :   env GTK_DEBUG=interactive ghostty
+   Docs  :   https://docs.gtk.org/gtk4/css-overview.html
+             https://docs.gtk.org/gtk4/css-properties.html
+   ------------------------------------------------- */
+
+/* -----------------------------------------------------------------
+   Variables – vous pouvez les ajuster en un seul endroit
+   ----------------------------------------------------------------- */
+$bg-dark: #1a1a1a; // background du tabbox
+$bg-selected: #2d2d2d; // background du tab sélectionné
+$color-default: #9ca3af; // couleur du texte des tabs
+$color-selected: #ffffff; // couleur du texte du tab sélectionné
+$border-color: #374151; // bordure droite des tabs
+$header-height: 24px;
+$tabbox-height: 10px;
+$font-mono: monospace;
+$font-size-label: 10px;
+
+/* -----------------------------------------------------------------
+   Styles
+   ----------------------------------------------------------------- */
+headerbar {
+  min-height: $header-height;
+  padding: 0;
+  margin: 0;
+}
+
+tabbar {
+  tabbox {
+    margin: 0;
+    padding: 0;
+    min-height: $tabbox-height;
+    background-color: $bg-dark;
+    font-family: $font-mono;
+
+    tab {
+      margin: 0;
+      padding: 0;
+      color: $color-default;
+      border-right: 1px solid $border-color;
+
+      /* État sélectionné */
+      &:selected {
+        background-color: $bg-selected;
+        color: $color-selected;
+      }
+
+      /* Libellé du tab */
+      label {
+        font-size: $font-size-label;
+      }
+    }
+  }
+}

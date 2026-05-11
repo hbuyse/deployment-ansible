@@ -1,0 +1,14 @@
+---
+- name: "Ghostty | Enable service"
+  ansible.builtin.systemd:
+    service: "app-com.mitchellh.ghostty"
+    enabled: true
+    daemon_reload: true
+    scope: "user"
+
+- name: "Ghostty | Start service"
+  ansible.builtin.systemd:
+    service: "app-com.mitchellh.ghostty"
+    state: "restarted"
+    daemon_reload: true
+    scope: "user"

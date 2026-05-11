@@ -21,6 +21,7 @@
     - role: "zsh"
     - role: "foot"
     - role: "alacritty"
+    - role: "ghostty"
     - role: "oh_my_posh"
     - role: "fastfetch"
     - role: "tmux"

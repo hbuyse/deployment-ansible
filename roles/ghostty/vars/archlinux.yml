@@ -1,0 +1,4 @@
+---
+ghostty_packages:
+  - "ghostty"
+  - "sassc"
