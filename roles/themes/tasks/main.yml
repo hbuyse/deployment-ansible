@@ -9,6 +9,8 @@
     - theming
   loop:
     - "{{ themes_gtk_dir }}"
+    - "{{ themes_gtk3_config_dir }}"
+    - "{{ themes_gtk4_config_dir }}"
 
 - name: "Themes | Install dependencies"
   become: true
