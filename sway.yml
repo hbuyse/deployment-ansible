@@ -23,7 +23,6 @@
 
     # Sway
     - role: "sway"
-    - role: "wayland_sessions"
     - role: "wallpapers"
     - role: "themes"
     # Tools for sway
