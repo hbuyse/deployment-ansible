@@ -1,0 +1,24 @@
+---
+- name: "Vimix Cursors | Create temporary directory"
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: _vimix_gtk_theme
+  register: themes_vimix_tmpdir
+  notify: "Vimix Cursors | Remove temporary directory"
+
+- name: "Vimix Cursors | Decompress archive"
+  ansible.builtin.unarchive:
+    src: "https://codeload.github.com/{{ themes_vimix_cursors_github_user }}/{{ themes_vimix_cursors_github_repo }}/tar.gz/refs/heads/master"
+    dest: "{{ themes_vimix_tmpdir.path }}"
+    owner: "{{ ansible_facts.user_uid }}"
+    group: "{{ ansible_facts.user_gid }}"
+    extra_opts:
+      - "--strip-components=1"
+    remote_src: true
+
+- name: "Vimix Cursors | Install cursors"
+  ansible.builtin.command:
+    cmd: "./install.sh"
+    chdir: "{{ themes_vimix_tmpdir.path }}"
+  register: themes_vimix_cmd_out
+  changed_when: themes_vimix_cmd_out.rc != 0

@@ -45,3 +45,15 @@
   tags:
     - themes
     - theming
+
+- name: "Themes | Install Vimix Cursors"
+  ansible.builtin.include_tasks:
+    file: "vimix_cursors.yml"
+    apply:
+      tags:
+        - themes
+        - theming
+  when: themes_catppuccin_enable
+  tags:
+    - themes
+    - theming
