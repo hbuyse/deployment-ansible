@@ -20,16 +20,26 @@
     - themes
     - theming
 
-- name: "Themes | Install"
+- name: "Themes | Install Matcha themes"
   ansible.builtin.include_tasks:
-    file: "{{ item }}.yml"
+    file: "matcha.yml"
     apply:
       tags:
         - themes
         - theming
-  loop:
-    - matcha
-    - catppuccin
+  when: themes_matcha_enable
+  tags:
+    - themes
+    - theming
+
+- name: "Themes | Install Catppuccin themes"
+  ansible.builtin.include_tasks:
+    file: "catppuccin.yml"
+    apply:
+      tags:
+        - themes
+        - theming
+  when: themes_catppuccin_enable
   tags:
     - themes
     - theming

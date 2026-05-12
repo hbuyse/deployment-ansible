@@ -20,8 +20,8 @@
       ansible.builtin.unarchive:
         src: "https://github.com/{{ themes_catppuccin_github_user }}/{{ themes_catppuccin_github_repo }}/archive/refs/heads/main.tar.gz"
         dest: "{{ themes_catppuccin_tmpdir.path }}"
-        owner: "{{ ansible_user_uid }}"
-        group: "{{ ansible_user_gid }}"
+        owner: "{{ ansible_facts.user_uid }}"
+        group: "{{ ansible_facts.user_gid }}"
         extra_opts:
           - "--strip-components=1"
         remote_src: true

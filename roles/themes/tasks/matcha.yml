@@ -24,8 +24,8 @@
     src: "https://github.com/{{ themes_matcha_github_user }}/{{ themes_matcha_github_repo }}/archive/refs/tags/{{ themes_matcha_latest_version
       }}.tar.gz"
     dest: "{{ themes_matcha_tmpdir.path }}"
-    owner: "{{ ansible_user_uid }}"
-    group: "{{ ansible_user_gid }}"
+    owner: "{{ ansible_facts.user_uid }}"
+    group: "{{ ansible_facts.user_gid }}"
     extra_opts:
       - "--strip-components=1"
     remote_src: true
