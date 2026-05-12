@@ -16,7 +16,7 @@
   become: true
   ansible.builtin.package:
     state: present
-    name: "{{ themes_packages_dependencies }}"
+    name: "{{ themes_packages }}"
   when: themes_packages_dependencies is defined
   tags:
     - themes

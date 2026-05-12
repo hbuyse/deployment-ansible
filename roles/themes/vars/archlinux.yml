@@ -1,4 +1,5 @@
 ---
-themes_packages_dependencies:
+themes_packages:
   - "gtk-engine-murrine"
   - "gtk-engines"
+  - "papirus-icon-theme"

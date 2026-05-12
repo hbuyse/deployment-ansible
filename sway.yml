@@ -20,7 +20,6 @@
     - role: "foot"
     - role: "alacritty"
     - role: "ghostty"
-    - role: "themes"
 
     # Sway
     - role: "sway"
@@ -29,7 +28,7 @@
     - role: "nvidia"
       when: nvidia_detection.rc == 0
     - role: "wallpapers"
-    - role: "icons"
+    - role: "themes"
     # Tools for sway
     - role: "swaylock"
     - role: "swayidle"
