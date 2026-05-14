@@ -161,3 +161,13 @@ if [ ! -d "${INSTALL_REPO}" ]; then
 else
     display_already_installed
 fi
+
+# Install better callback directly from its repo: https://github.com/roots/ansible-output-prettify
+prompt "Install prettify callback"
+mkdir -p "${INSTALL_REPO}/callback_plugins"
+if [ -f "${INSTALL_REPO}/callback_plugins/prettify.py" ]; then
+    wget -O "${INSTALL_REPO}/callback_plugins/prettify.py" "https://raw.githubusercontent.com/roots/ansible-output-prettify/refs/heads/main/files/prettify.py"
+    display_ko_ok $?
+else
+    display_already_installed
+fi
