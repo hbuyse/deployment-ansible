@@ -1,22 +1,22 @@
 ---
 - name: "Ensure directories exists"
   ansible.builtin.file:
-    path: "{{ ansible_facts.user_dir }}/.config/sway"
+    path: "{{ sway_config_dir }}"
     state: directory
     mode: "0755"
 
 - name: "Copy configuration files"
   ansible.builtin.copy:
     src: "sway/"
-    dest: "{{ ansible_facts.user_dir }}/.config/sway/"
+    dest: "{{ sway_config_dir }}/"
     mode: "preserve"
     directory_mode: "0755"
 
 - name: "Copy dynamic configuration files"
   ansible.builtin.template:
-    src: "{{ item }}.j2"
-    dest: "{{ ansible_facts.user_dir }}/.config/{{ item }}"
+    src: "sway/{{ item }}.j2"
+    dest: "{{ sway_config_dir }}/{{ item }}"
     mode: "0644"
   loop:
-    - sway/variables
-    - sway/config.d/01-default-screen.conf
+    - variables
+    - config.d/01-default-screen.conf
