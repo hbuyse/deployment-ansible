@@ -1,5 +1,8 @@
 config-file = ~/.config/ghostty/keybindings.ghostty
 
+# Add GTK_IM_MODULE=simple (https://github.com/ghostty-org/ghostty/discussions/8899)
+env = GTK_IM_MODULE=simple
+
 command = zsh --login
 clipboard-read = allow
 background-opacity = 0.99
