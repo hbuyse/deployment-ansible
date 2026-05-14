@@ -1,6 +1,16 @@
 ---
 - name: "Restart service"
-  ansible.builtin.systemd:
-    name: "waybar-user.service"
-    state: "restarted"
-    scope: "user"
+  block:
+    - name: "Disable 'waybar' service"
+      ansible.builtin.systemd:
+        name: "waybar.service"
+        enabled: false
+        state: "stopped"
+        scope: "user"
+
+    - name: "Restart 'waybar-user' service"
+      ansible.builtin.systemd:
+        name: "waybar-user.service"
+        enabled: true
+        state: "restarted"
+        scope: "user"
