@@ -38,6 +38,6 @@
 
     - name: "Copy preferred-terminal script"
       ansible.builtin.copy:
-        src: "preferred-terminal"
-        dest: "{{ ansible_facts.user_dir }}/.local/bin/"
+        src: "preferred-terminal.py"
+        dest: "{{ ansible_facts.user_dir }}/.local/bin/preferred-terminal"
         mode: "0755"
