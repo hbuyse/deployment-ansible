@@ -1,0 +1,16 @@
+{% if ansible_facts.service_mgr != "systemd" %}
+exec_always --no-startup-id ~/.config/waybar/launch.sh
+
+exec_always kill -1 $(pidof kanshi)
+exec kanshi
+
+exec swayidle -w
+
+exec wlsunset
+
+exec swaync --skip-system-css
+{% else %}
+exec_always systemctl --user start sway-session.target
+{% endif %}
+
+#  vim: set ts=4 sw=4 tw=0 et ft=swayconfig :
