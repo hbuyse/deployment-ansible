@@ -24,9 +24,6 @@
     # Sway
     - role: "sway"
     - role: "wayland_sessions"
-    # Nvidia support if needed
-    - role: "nvidia"
-      when: nvidia_detection.rc == 0
     - role: "wallpapers"
     - role: "themes"
     # Tools for sway
