@@ -1,5 +1,5 @@
 ---
-- name: "SSH | Check that the email for the public key is populated"
+- name: "Wlsunset | Check that latitude and longitude is populated"
   ansible.builtin.assert:
     that:
       - wlsunset_config.latitude is defined
