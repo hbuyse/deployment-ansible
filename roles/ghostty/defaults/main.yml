@@ -1,2 +1,3 @@
 ---
 ghostty_config_dir: "{{ ansible_facts.user_dir }}/.config/ghostty"
+ghostty_themes_dir: "{{ ghostty_config_dir }}/themes"

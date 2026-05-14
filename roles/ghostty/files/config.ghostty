@@ -3,7 +3,7 @@ config-file = ~/.config/ghostty/keybindings.ghostty
 command = zsh --login
 clipboard-read = allow
 background-opacity = 0.99
-theme = Catppuccin Mocha
+theme = catppuccin-mocha.conf
 
 # Font options
 font-size = 10

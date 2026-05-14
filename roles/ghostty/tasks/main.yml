@@ -53,3 +53,25 @@
       register: ghostty_sassc
       changed_when: ghostty_sassc.rc == 0
       failed_when: ghostty_sassc.rc != 0
+
+- name: "Ghostty | Download themes"
+  tags: ghostty
+  block:
+    - name: "Ghostty | Ensure theme directory exists"
+      ansible.builtin.file:
+        path: "{{ ghostty_themes_dir }}"
+        state: "directory"
+        mode: "0755"
+
+    - name: "Ghostty | Copy Ghostty configuration files"
+      ansible.builtin.get_url:
+        url: "https://raw.githubusercontent.com/catppuccin/ghostty/refs/heads/main/themes/catppuccin-{{ item }}.conf"
+        dest: "{{ ghostty_themes_dir }}"
+        mode: "0644"
+        owner: "{{ ansible_facts.user_uid }}"
+        group: "{{ ansible_facts.user_gid }}"
+      loop:
+        - frappe
+        - latte
+        - macchiato
+        - mocha
