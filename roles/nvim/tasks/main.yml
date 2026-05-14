@@ -38,7 +38,7 @@
       ansible.builtin.set_fact:
         nvim_latest_version: "{{ nvim_latest_json.json.tag_name[1:] }}"
 
-    - name: "Install program from static binary [v{{ nvim_latest_version }}]"
+    - name: "Install program from static binary"
       become: true
       ansible.builtin.unarchive:
         src: "https://github.com/neovim/neovim/releases/download/v{{ nvim_latest_version }}/nvim-linux-{{ ansible_facts.architecture
