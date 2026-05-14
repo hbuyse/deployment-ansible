@@ -20,3 +20,4 @@
   loop:
     - variables
     - config.d/01-default-screen.conf
+    - config.d/99-autostart.conf
