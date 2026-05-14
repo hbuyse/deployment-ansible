@@ -1,5 +1,5 @@
 ---
-- name: "Git Delta | Get latest version number"
+- name: "Get latest version number"
   register: git_delta_latest_json
   ansible.builtin.uri:
     url: "https://api.github.com/repos/dandavison/delta/releases/latest"
@@ -8,33 +8,33 @@
     status_code: 200
     body_format: json
 
-- name: "Git Delta | Set facts"
+- name: "Set facts"
   ansible.builtin.set_fact:
     git_delta_latest_version: "{{ git_delta_latest_json.json.tag_name }}"
 
-- name: "Git Delta | Install bash completion file"
+- name: "Install bash completion file"
   block:
-    - name: "Git Delta | Ensure config directory exists"
+    - name: "Ensure config directory exists"
       ansible.builtin.file:
         path: "{{ ansible_facts.user_dir }}/.local/share/bash-completion/completions"
         state: directory
         mode: "0755"
 
-    - name: "Git Delta | Install completion file"
+    - name: "Install completion file"
       ansible.builtin.get_url:
         url: "https://raw.githubusercontent.com/dandavison/delta/refs/tags/{{ git_delta_latest_version }}/etc/completion/completion.bash"
         dest: "{{ ansible_facts.user_dir }}/.local/share/bash-completion/completions/delta"
         mode: "0644"
 
-- name: "Git Delta | Install zsh completion file"
+- name: "Install zsh completion file"
   block:
-    - name: "Git Delta | Ensure config directory exists"
+    - name: "Ensure config directory exists"
       ansible.builtin.file:
         path: "{{ ansible_facts.user_dir }}/.local/share/zsh/site-functions"
         state: directory
         mode: "0755"
 
-    - name: "Git Delta | Install completion file"
+    - name: "Install completion file"
       ansible.builtin.get_url:
         url: "https://raw.githubusercontent.com/dandavison/delta/refs/tags/{{ git_delta_latest_version }}/etc/completion/completion.zsh"
         dest: "{{ ansible_facts.user_dir }}/.local/share/zsh/site-functions/_delta"

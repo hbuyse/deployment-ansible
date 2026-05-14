@@ -1,42 +1,42 @@
 ---
 # tasks file for sway
-- name: "Sway | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
   tags: sway
 
-- name: "Sway | Install required packages"
+- name: "Install required packages"
   become: true
   ansible.builtin.package:
     name: "{{ sway_packages }}"
   tags: sway
 
-- name: "Sway | Copy Sway session files"
+- name: "Copy Sway session files"
   tags: sway
   ansible.builtin.include_tasks:
     file: "copy-service.yml"
     apply:
       tags: sway
 
-- name: "Sway | Copy configuration"
+- name: "Copy configuration"
   tags: sway
   ansible.builtin.include_tasks:
     file: "copy-sway-conf.yml"
     apply:
       tags: sway
 
-- name: "Sway | Copy preferred-terminal script"
+- name: "Copy preferred-terminal script"
   tags: sway
   block:
-    - name: "Sway | Ensure ~/.local/bin exists"
+    - name: "Ensure ~/.local/bin exists"
       ansible.builtin.file:
         path: "{{ ansible_facts.user_dir }}/.local/bin"
         state: "directory"
         mode: "0755"
 
-    - name: "Sway | Copy preferred-terminal script"
+    - name: "Copy preferred-terminal script"
       ansible.builtin.copy:
         src: "preferred-terminal"
         dest: "{{ ansible_facts.user_dir }}/.local/bin/"

@@ -1,5 +1,5 @@
 ---
-- name: "Alacritty | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -8,7 +8,7 @@
   tags:
     - alacritty
 
-- name: "Alacritty | Install from source [{{ ansible_facts.os_family }}]"
+- name: "Install from source [{{ ansible_facts.os_family }}]"
   ansible.builtin.include_tasks:
     file: source.yml
     apply:
@@ -17,7 +17,7 @@
   tags:
     - alacritty
 
-- name: "Alacritty | Install from package manager [{{ ansible_facts.os_family }}]"
+- name: "Install from package manager [{{ ansible_facts.os_family }}]"
   ansible.builtin.include_tasks:
     file: package.yml
     apply:
@@ -26,7 +26,7 @@
   tags:
     - alacritty
 
-- name: "Alacritty | Ensure config directory exists"
+- name: "Ensure config directory exists"
   ansible.builtin.file:
     path: "{{ ansible_facts.user_dir }}/.config/alacritty"
     state: directory
@@ -34,7 +34,7 @@
   tags:
     - alacritty
 
-- name: "Alacritty | Copy static files in configuration directory"
+- name: "Copy static files in configuration directory"
   ansible.builtin.copy:
     src: "{{ role_path }}/files/"
     dest: "{{ ansible_facts.user_dir }}/.config/alacritty"
@@ -42,7 +42,7 @@
   tags:
     - alacritty
 
-- name: "Alacritty | Install catppuccin themes"
+- name: "Install catppuccin themes"
   ansible.builtin.git:
     repo: "https://github.com/alacritty/alacritty-theme"
     dest: "{{ ansible_facts.user_dir }}/.config/alacritty/themes"

@@ -1,5 +1,5 @@
 ---
-- name: "Tombi | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -11,7 +11,7 @@
     - formatter
     - linter
 
-- name: "Tombi | Install from package manager"
+- name: "Install from package manager"
   become: true
   when: tombi_package is defined
   ansible.builtin.package:
@@ -23,7 +23,7 @@
     - formatter
     - linter
 
-- name: "Tombi | Install from Node Package Manager"
+- name: "Install from Node Package Manager"
   when: tombi_package is not defined
   community.general.npm:
     name: "{{ tombi_npm_package }}"

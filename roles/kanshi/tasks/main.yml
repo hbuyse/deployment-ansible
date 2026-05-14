@@ -1,79 +1,79 @@
 ---
-- name: "Kanshi | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
   tags: kanshi
 
-- name: "Kanshi | Install required packages"
+- name: "Install required packages"
   become: true
   ansible.builtin.package:
     name: "{{ kanshi_packages }}"
   tags: kanshi
 
-- name: "Kanshi | Gather the package facts"
+- name: "Gather the package facts"
   ansible.builtin.package_facts:
     manager: "{{ (ansible_facts.os_family == 'RedHat') | ansible.builtin.ternary('dnf5', 'auto') }}"
     strategy: first
   tags: kanshi
 
-- name: "Kanshi | Store version as fact"
+- name: "Store version as fact"
   ansible.builtin.set_fact:
     kanshi_version: "{{ ansible_facts.packages['kanshi'][0]['version'] | regex_search('[0-9]+.[0-9]+.[0-9]+') }}"
   tags: kanshi
 
-- name: "Kanshi | Install static configuration files"
+- name: "Install static configuration files"
   tags: kanshi
   block:
-    - name: "Kanshi | Ensure directory exist"
+    - name: "Ensure directory exist"
       ansible.builtin.file:
         path: "{{ kanshi_config_dir }}"
         state: directory
         mode: "0755"
 
-    - name: "Kanshi | Copy root configuration"
+    - name: "Copy root configuration"
       ansible.builtin.copy:
         src: "{{ item.src }}"
         dest: "{{ kanshi_config_dir }}"
         mode: "{{ item.mode }}"
-      notify: "Kanshi | Enable and restart service"
+      notify: "Enable and restart service"
       loop:
         - src: "config"
           mode: "0644"
         - src: "notify.sh"
           mode: "0755"
 
-- name: "Kanshi | Include 'work' variables"
+- name: "Include 'work' variables"
   ansible.builtin.include_vars:
     file: "work.yml"
   tags: kanshi
 
-- name: "Kanshi | Install dynamic configuration files"
+- name: "Install dynamic configuration files"
   tags: kanshi
   block:
-    - name: "Kanshi | Ensure directory exist"
+    - name: "Ensure directory exist"
       ansible.builtin.file:
         path: "{{ kanshi_config_dir }}/config.d"
         state: directory
         mode: "0755"
 
-    - name: "Kanshi | Generate basic configuration"
+    - name: "Generate basic configuration"
       ansible.builtin.template:
         src: "{{ item }}"
         dest: "{{ kanshi_config_dir }}/config.d/{{ item | replace('.j2', '') }}"
         mode: "0644"
-      notify: "Kanshi | Enable and restart service"
+      notify: "Enable and restart service"
       loop:
         - "home.j2"
         - "one-screen.j2"
 
-    - name: "Kanshi | Generate work configuration"
+    - name: "Generate work configuration"
       ansible.builtin.template:
         src: "{{ item }}"
         dest: "{{ kanshi_config_dir }}/config.d/{{ item | replace('.j2', '') }}"
         mode: "0644"
-      notify: "Kanshi | Enable and restart service"
+      notify: "Enable and restart service"
       loop:
         - "work-com.j2"
         - "work.j2"
@@ -81,20 +81,20 @@
         - ansible_facts.hostname == 'hbuyse-promax14'
         - kanshi_work_confs is defined
 
-- name: "Kanshi | Install service file"
+- name: "Install service file"
   become: true
   tags: kanshi
   block:
-    - name: "Kanshi | Ensure directory exist"
+    - name: "Ensure directory exist"
       ansible.builtin.file:
         path: "{{ kanshi_systemd_dir }}"
         state: directory
         mode: "0755"
 
-    - name: "Kanshi | Copy service file"
+    - name: "Copy service file"
       ansible.builtin.get_url:
         url: "https://raw.githubusercontent.com/xdbob/sway-services/refs/heads/master/systemd/kanshi.service"
         dest: "{{ kanshi_systemd_dir }}"
         mode: "0644"
       tags: kanshi
-      notify: "Kanshi | Enable and restart service"
+      notify: "Enable and restart service"

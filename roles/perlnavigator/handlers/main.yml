@@ -1,5 +1,5 @@
 ---
-- name: "PerlNavigator | Remove temporary directory"
+- name: "Remove temporary directory"
   ansible.builtin.file:
     path: "{{ perlnavigator_tmpdir.path }}"
     state: "absent"

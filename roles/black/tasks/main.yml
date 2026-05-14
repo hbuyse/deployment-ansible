@@ -1,5 +1,5 @@
 ---
-- name: "Black | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -9,7 +9,7 @@
     - black
     - formatter
 
-- name: "Black | Install from package manager"
+- name: "Install from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ black_packages }}"
@@ -19,7 +19,7 @@
     - formatter
   when: black_packages is defined
 
-- name: "Black | Install from source"
+- name: "Install from source"
   community.general.pipx:
     name: "black"
     state: "latest"

@@ -1,5 +1,5 @@
 ---
-- name: "Libreoffice | Add PPA"
+- name: "Add PPA"
   become: true
   ansible.builtin.deb822_repository:
     name: libreoffice
@@ -11,7 +11,7 @@
     components:
       - main
 
-- name: "Wireshark | Update APT cache"
+- name: "Update APT cache"
   become: true
   ansible.builtin.apt:
     update_cache: true

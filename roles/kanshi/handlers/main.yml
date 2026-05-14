@@ -1,5 +1,5 @@
 ---
-- name: "Kanshi | Enable and restart service"
+- name: "Enable and restart service"
   become: false
   ansible.builtin.systemd:
     name: "kanshi"

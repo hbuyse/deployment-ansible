@@ -1,5 +1,5 @@
 ---
-- name: "ShFmt | Get latest version number"
+- name: "Get latest version number"
   register: shfmt_latest_json
   ansible.builtin.uri:
     url: "https://api.github.com/repos/{{ shfmt_github_user }}/{{ shfmt_github_repo }}/releases/latest"
@@ -8,11 +8,11 @@
     status_code: 200
     body_format: json
 
-- name: "ShFmt | Set facts"
+- name: "Set facts"
   ansible.builtin.set_fact:
     shfmt_latest_version: "{{ shfmt_latest_json.json.tag_name }}"
 
-- name: "ShFmt | Install executable"
+- name: "Install executable"
   become: true
   ansible.builtin.get_url:
     url: "https://github.com/{{ shfmt_github_user }}/{{ shfmt_github_repo }}/releases/download/{{ shfmt_latest_version }}/shfmt_{{

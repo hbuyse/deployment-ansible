@@ -1,5 +1,5 @@
 ---
-- name: "Owncloud Client | Install repository [Debian]"
+- name: "Install repository [Debian]"
   become: true
   ansible.builtin.deb822_repository:
     name: owncloud-client
@@ -13,7 +13,7 @@
     signed_by: "https://download.owncloud.com/desktop/ownCloud/stable/latest/linux/{{ ansible_facts.distribution }}_{{ ansible_facts.distribution_version
       }}/Release.key"
 
-- name: "Owncloud Client | Update APT cache"
+- name: "Update APT cache"
   become: true
   ansible.builtin.apt:
     update_cache: true

@@ -1,5 +1,5 @@
 ---
-- name: "Wireplumber | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -8,7 +8,7 @@
   tags:
     - wireplumber
 
-- name: "Wireplumber | Uninstall pipewire-media-session"
+- name: "Uninstall pipewire-media-session"
   become: true
   ansible.builtin.package:
     name: "pipewire-media-session"
@@ -16,7 +16,7 @@
   tags:
     - wireplumber
 
-- name: "Wireplumber | Uninstall pipewire-media-session-docs"
+- name: "Uninstall pipewire-media-session-docs"
   become: true
   ansible.builtin.package:
     name: "pipewire-media-session-docs"
@@ -25,7 +25,7 @@
   tags:
     - wireplumber
 
-- name: "Wireplumber | Install packages"
+- name: "Install packages"
   become: true
   ansible.builtin.package:
     name: "{{ wireplumber_packages }}"
@@ -34,7 +34,7 @@
   tags:
     - wireplumber
 
-- name: "Wireplumber | Stop PulseAudio"
+- name: "Stop PulseAudio"
   ansible.builtin.systemd:
     name: "{{ item }}"
     enabled: false
@@ -47,7 +47,7 @@
   tags:
     - wireplumber
 
-# - name: "Wireplumber | Uninstall PulseAudio"
+# - name: "Uninstall PulseAudio"
 #   become: true
 #   ansible.builtin.packages:
 #     name: "pulseaudio"
@@ -55,7 +55,7 @@
 #   tags:
 #     - wireplumber
 
-- name: "Wireplumber | Enable Pipewire and Wireplumber services"
+- name: "Enable Pipewire and Wireplumber services"
   ansible.builtin.systemd:
     name: "{{ item }}"
     enabled: true
@@ -68,19 +68,19 @@
   tags:
     - wireplumber
 
-- name: "Wireplumber | Copy configuration"
+- name: "Copy configuration"
   tags:
     - wireplumber
   block:
-    - name: "Wireplumber | Ensure configuration directory exists"
+    - name: "Ensure configuration directory exists"
       ansible.builtin.file:
         path: "{{ wireplumber_user_dir }}"
         state: "directory"
         mode: "0755"
 
-    - name: "Wireplumber | Copy configuration files"
+    - name: "Copy configuration files"
       ansible.builtin.copy:
         src: "{{ role_path }}/files/"
         dest: "{{ wireplumber_user_dir }}"
         mode: "0644"
-      notify: "Wireplumber | Restart Wireplumber service"
+      notify: "Restart Wireplumber service"

@@ -1,5 +1,5 @@
 ---
-- name: "Wlsunset | Check that latitude and longitude is populated"
+- name: "Check that latitude and longitude is populated"
   ansible.builtin.assert:
     that:
       - wlsunset_config.latitude is defined
@@ -8,7 +8,7 @@
     quiet: true
   tags: wlsunset
 
-- name: "Wlsunset | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -16,25 +16,25 @@
       skip: true
   tags: wlsunset
 
-- name: "Wlsunset | Install"
+- name: "Install"
   become: true
   tags: wlsunset
   when: wlsunset_packages is defined
   block:
-    - name: "Wlsunset | Install packages"
+    - name: "Install packages"
       ansible.builtin.package:
         name: "{{ wlsunset_packages }}"
         state: present
 
-    - name: "Wlsunset | Ensure systemd directory exist"
+    - name: "Ensure systemd directory exist"
       ansible.builtin.file:
         path: "{{ ansible_facts.user_dir }}/.config/systemd/user/"
         state: directory
         mode: "0755"
 
-    - name: "Wlsunset | Copy service file"
+    - name: "Copy service file"
       ansible.builtin.template:
         src: "wlsunset.service.j2"
         dest: "{{ ansible_facts.user_dir }}/.config/systemd/user/wlsunset.service"
         mode: "0644"
-      notify: "Wlsunset | Restart service"
+      notify: "Restart service"

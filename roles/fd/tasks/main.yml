@@ -1,5 +1,5 @@
 ---
-- name: "FD | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -7,7 +7,7 @@
       skip: true
   tags: fd
 
-- name: "FD | Install from package manager"
+- name: "Install from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ fd_packages }}"
@@ -15,7 +15,7 @@
   tags: fd
   when: fd_packages is defined
 
-- name: "FD | Install Rust package with locked dependencies"
+- name: "Install Rust package with locked dependencies"
   community.general.cargo:
     name: fd-find
     state: latest

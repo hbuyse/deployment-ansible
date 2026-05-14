@@ -1,5 +1,5 @@
 ---
-- name: "Nextcloud | Add PPA"
+- name: "Add PPA"
   become: true
   ansible.builtin.deb822_repository:
     name: nextcloud-devs
@@ -11,7 +11,7 @@
     components:
       - main
 
-- name: "Nextcloud | Update APT cache"
+- name: "Update APT cache"
   become: true
   ansible.builtin.apt:
     update_cache: true

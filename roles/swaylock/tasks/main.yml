@@ -1,5 +1,5 @@
 ---
-- name: "Swaylock | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -7,7 +7,7 @@
       skip: true
   tags: swaylock
 
-- name: "Swaylock | Install packages"
+- name: "Install packages"
   become: true
   ansible.builtin.package:
     name: "{{ swaylock_packages }}"
@@ -17,7 +17,7 @@
     - swaylock_packages is defined
     - ansible_facts.os_family != "Archlinux"
 
-- name: "Swaylock | Install packages"
+- name: "Install packages"
   kewlfft.aur.aur:
     name: "{{ swaylock_packages }}"
     use: yay
@@ -27,32 +27,32 @@
     - swaylock_packages is defined
     - ansible_facts.os_family == "Archlinux"
 
-- name: "Swaylock | Install configuration"
+- name: "Install configuration"
   tags: swaylock
   block:
-    - name: "Swaylock | Ensure directory exist"
+    - name: "Ensure directory exist"
       ansible.builtin.file:
         path: "{{ ansible_facts.user_dir }}/.config/swaylock"
         state: directory
         mode: "0755"
 
-    - name: "Swaylock | Copy configuration"
+    - name: "Copy configuration"
       ansible.builtin.template:
         src: "config.j2"
         dest: "{{ ansible_facts.user_dir }}/.config/swaylock/config"
         mode: "0644"
 
-- name: "Swaylock | Install service file"
+- name: "Install service file"
   become: true
   tags: swaylock
   block:
-    - name: "Swaylock | Ensure directory exist"
+    - name: "Ensure directory exist"
       ansible.builtin.file:
         path: "{{ ansible_facts.user_dir }}/.config/systemd/user/"
         state: directory
         mode: "0755"
 
-    - name: "Swaylock | Copy service file"
+    - name: "Copy service file"
       ansible.builtin.copy:
         src: "swaylock.service"
         dest: "{{ ansible_facts.user_dir }}/.config/systemd/user/swaylock.service"

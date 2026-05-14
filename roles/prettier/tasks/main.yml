@@ -1,5 +1,5 @@
 ---
-- name: "Prettier | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -9,7 +9,7 @@
     - prettier
     - formatter
 
-- name: "Prettier | Install from package manager"
+- name: "Install from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ prettier_packages }}"
@@ -19,7 +19,7 @@
     - formatter
   when: prettier_packages is defined
 
-- name: "Prettier | Install from Node Package Manager"
+- name: "Install from Node Package Manager"
   community.general.npm:
     name: "{{ item }}"
     global: true

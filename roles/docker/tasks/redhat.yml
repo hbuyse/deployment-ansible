@@ -1,5 +1,5 @@
 ---
-- name: "Docker | Ensure old versions of Docker are not installed."  # noqa ignore-errors
+- name: "Ensure old versions of Docker are not installed."  # noqa ignore-errors
   become: true
   ansible.builtin.package:
     name:
@@ -16,7 +16,7 @@
     state: absent
   ignore_errors: true
 
-- name: "Docker | Add yum repository"
+- name: "Add yum repository"
   become: true
   ansible.builtin.yum_repository:
     name: docker-ce-stable

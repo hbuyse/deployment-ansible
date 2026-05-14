@@ -1,5 +1,5 @@
 ---
-- name: "CodeSpell | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -9,7 +9,7 @@
     - codespell
     - formatter
 
-- name: "CodeSpell | Install from package manager"
+- name: "Install from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ codespell_packages }}"
@@ -19,7 +19,7 @@
     - formatter
   when: codespell_packages is defined
 
-- name: "CodeSpell | Install from source"
+- name: "Install from source"
   community.general.pipx:
     name: "codespell"
     state: "latest"

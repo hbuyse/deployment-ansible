@@ -1,5 +1,5 @@
 ---
-- name: "Lua Language Server | Get latest version number"
+- name: "Get latest version number"
   register: luals_latest_json
   ansible.builtin.uri:
     url: "https://api.github.com/repos/{{ luals_github_user }}/{{ luals_github_repo }}/releases/latest"
@@ -8,20 +8,20 @@
     status_code: 200
     body_format: json
 
-- name: "Lua Language Server | Set facts"
+- name: "Set facts"
   ansible.builtin.set_fact:
     luals_latest_version: "{{ luals_latest_json.json.tag_name }}"
 
-- name: "Lua Language Server | Install latest version"
+- name: "Install latest version"
   become: true
   block:
-    - name: "Lua Language Server | Ensure install directory exists"
+    - name: "Ensure install directory exists"
       ansible.builtin.file:
         path: "{{ luals_install_dir }}"
         state: directory
         mode: "0777"
 
-    - name: "Lua Language Server | Install executable"
+    - name: "Install executable"
       ansible.builtin.unarchive:
         src: "https://github.com/{{ luals_github_user }}/{{ luals_github_repo }}/releases/download/{{ luals_latest_version
           }}/lua-language-server-{{ luals_latest_version }}-{{ ansible_facts.system | lower }}-x64.tar.gz"

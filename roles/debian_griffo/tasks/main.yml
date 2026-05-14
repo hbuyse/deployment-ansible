@@ -1,5 +1,5 @@
 ---
-- name: "Debian Griffo | Add repository"
+- name: "Add repository"
   become: true
   ansible.builtin.deb822_repository:
     name: debian.griffo.io
@@ -12,7 +12,7 @@
       - main
   register: debian_griffo_res
 
-- name: "Debian Griffo | Update APT cache"
+- name: "Update APT cache"
   become: true
   ansible.builtin.apt:
     update_cache: true

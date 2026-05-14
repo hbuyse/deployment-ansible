@@ -1,5 +1,5 @@
 ---
-- name: "Wofi | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -7,29 +7,29 @@
       skip: true
   tags: wofi
 
-- name: "Wofi | Install packages"
+- name: "Install packages"
   become: true
   ansible.builtin.package:
     name: "{{ wofi_packages }}"
     state: present
   tags: wofi
 
-- name: "Wofi | Install configuration"
+- name: "Install configuration"
   tags: wofi
   block:
-    - name: "Wofi | Ensure directory exist"
+    - name: "Ensure directory exist"
       ansible.builtin.file:
         path: "{{ wofi_config_dir }}"
         state: directory
         mode: "0755"
 
-    - name: "Wofi | Copy configuration files"
+    - name: "Copy configuration files"
       ansible.builtin.copy:
         src: "config"
         dest: "{{ wofi_config_dir }}/config"
         mode: "0644"
 
-    - name: "Wofi | Generated CSS"
+    - name: "Generated CSS"
       ansible.builtin.command:
         cmd: "sassc -t expanded {{ role_path }}/files/style.scss {{ wofi_config_dir }}/style.css"
       register: wofi_sassc

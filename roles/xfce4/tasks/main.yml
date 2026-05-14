@@ -1,5 +1,5 @@
 ---
-- name: "Xfce4 | Ensure colorschemes directory exists"
+- name: "Ensure colorschemes directory exists"
   become: true
   ansible.builtin.file:
     path: "{{ xfce4_terminal_coloschemes_dir }}"
@@ -9,7 +9,7 @@
     - xfce
     - xfce4
 
-- name: "Xfce4 | Install catppuccin themes for terminal"
+- name: "Install catppuccin themes for terminal"
   become: true
   ansible.builtin.get_url:
     url: "https://raw.githubusercontent.com/catppuccin/xfce4-terminal/refs/heads/main/themes/catppuccin-{{ item }}.theme"
@@ -24,7 +24,7 @@
     - xfce
     - xfce4
 
-- name: "Xfce4 | Ensure colorschemes directory exists"
+- name: "Ensure colorschemes directory exists"
   ansible.builtin.file:
     path: "{{ ansible_facts.user_dir }}/.config/xfce4"
     state: directory
@@ -33,7 +33,7 @@
     - xfce
     - xfce4
 
-- name: "Xfce4 | Copy configuration files"
+- name: "Copy configuration files"
   ansible.builtin.copy:
     src: "{{ role_path }}/files/"
     dest: "{{ ansible_facts.user_dir }}/.config/xfce4"
@@ -44,7 +44,7 @@
     - xfce
     - xfce4
 
-- name: "Xfce4 | Copy dynamic configuration files"
+- name: "Copy dynamic configuration files"
   ansible.builtin.copy:
     src: "{{ item }}.j2"
     dest: "{{ ansible_facts.user_dir }}/.config/xfce4/{{ item }}"

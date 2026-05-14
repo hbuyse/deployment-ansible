@@ -1,5 +1,5 @@
 ---
-- name: "Minicom | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -9,7 +9,7 @@
     - minicom
     - serial
 
-- name: "Minicom | Install from package manager"
+- name: "Install from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ minicom_packages }}"
@@ -19,7 +19,7 @@
     - serial
   when: minicom_packages is defined
 
-- name: "Minicom | Add '{{ minicom_group }}' group to user"  # noqa: name[template]
+- name: "Add '{{ minicom_group }}' group to user"  # noqa: name[template]
   become: true
   ansible.builtin.user:
     name: "{{ ansible_facts.user_id }}"
@@ -29,7 +29,7 @@
     - minicom
     - serial
 
-- name: "Minicom | Copy default file"
+- name: "Copy default file"
   ansible.builtin.template:
     src: "minirc.dfl.j2"
     dest: "{{ minicom_dfl_file_location }}"

@@ -1,5 +1,5 @@
 ---
-- name: "Pre-commit | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -7,7 +7,7 @@
       skip: true
   tags: pre-commit
 
-- name: "Pre-commit | Install packages"
+- name: "Install packages"
   become: true
   ansible.builtin.package:
     name: "{{ pre_commit_packages }}"
@@ -15,7 +15,7 @@
   when: pre_commit_packages is defined
   tags: pre-commit
 
-- name: "Pre-commit | Install using Pipx"
+- name: "Install using Pipx"
   community.general.pipx:
     name: "pre-commit"
     state: "latest"

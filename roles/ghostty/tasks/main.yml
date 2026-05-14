@@ -1,5 +1,5 @@
 ---
-- name: "Ghostty | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -7,7 +7,7 @@
       skip: true
   tags: ghostty
 
-- name: "Ghostty | Add repository [{{ ansible_facts.os_family }}]"
+- name: "Add repository [{{ ansible_facts.os_family }}]"
   ansible.builtin.include_tasks:
     file: "{{ item }}"
     apply:
@@ -18,7 +18,7 @@
       skip: true
   tags: ghostty
 
-- name: "Ghostty | Install packages"
+- name: "Install packages"
   become: true
   when: ghostty_packages is defined
   ansible.builtin.package:
@@ -30,16 +30,16 @@
     - "Ghostty | Enable service"
     - "Ghostty | Start service"
 
-- name: "Ghostty | Copy configuration"
+- name: "Copy configuration"
   tags: ghostty
   block:
-    - name: "Ghostty | Ensure configuration directory exists"
+    - name: "Ensure configuration directory exists"
       ansible.builtin.file:
         path: "{{ ghostty_config_dir }}"
         state: "directory"
         mode: "0755"
 
-    - name: "Ghostty | Copy Ghostty configuration files"
+    - name: "Copy Ghostty configuration files"
       ansible.builtin.copy:
         src: "{{ item }}"
         dest: "{{ ghostty_config_dir }}"
@@ -47,23 +47,23 @@
       with_fileglob:
         - "{{ role_path }}/files/*.ghostty"
 
-    - name: "Ghostty | Generate tab-style CSS file"
+    - name: "Generate tab-style CSS file"
       ansible.builtin.command:
         cmd: "sassc -t expanded {{ role_path }}/files/tab-style.scss {{ ghostty_config_dir }}/tab-style.css"
       register: ghostty_sassc
       changed_when: ghostty_sassc.rc == 0
       failed_when: ghostty_sassc.rc != 0
 
-- name: "Ghostty | Download themes"
+- name: "Download themes"
   tags: ghostty
   block:
-    - name: "Ghostty | Ensure theme directory exists"
+    - name: "Ensure theme directory exists"
       ansible.builtin.file:
         path: "{{ ghostty_themes_dir }}"
         state: "directory"
         mode: "0755"
 
-    - name: "Ghostty | Copy Ghostty configuration files"
+    - name: "Copy Ghostty configuration files"
       ansible.builtin.get_url:
         url: "https://raw.githubusercontent.com/catppuccin/ghostty/refs/heads/main/themes/catppuccin-{{ item }}.conf"
         dest: "{{ ghostty_themes_dir }}"

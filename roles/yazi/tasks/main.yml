@@ -1,9 +1,9 @@
 ---
-- name: "Yazi | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ ansible_facts.os_family | lower }}.yml"
   tags: yazi
 
-- name: "Yazi | Install packages"
+- name: "Install packages"
   become: true
   ansible.builtin.package:
     name: "{{ yazi_packages }}"
@@ -11,7 +11,7 @@
   when: yazi_packages is defined
   tags: yazi
 
-- name: "Yazi | Ensure configuration directory exists"
+- name: "Ensure configuration directory exists"
   ansible.builtin.file:
     path: "{{ yazi_config_dir }}"
     state: "directory"
@@ -20,7 +20,7 @@
     - "Yazi | Download Catppuccin Mocha theme (peach variant)"
   tags: yazi
 
-- name: "Yazi | Copy configuration files"
+- name: "Copy configuration files"
   ansible.builtin.copy:
     src: "{{ role_path }}/files/"
     dest: "{{ yazi_config_dir }}"

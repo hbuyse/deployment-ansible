@@ -1,5 +1,5 @@
 ---
-- name: "YamlFmt | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -9,7 +9,7 @@
     - yamlfmt
     - formatter
 
-- name: "YamlFmt | Install from package manager"
+- name: "Install from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ yamlfmt_packages }}"
@@ -19,7 +19,7 @@
     - formatter
   when: yamlfmt_packages is defined
 
-- name: "YamlFmt | Install from source"
+- name: "Install from source"
   ansible.builtin.include_tasks:
     file: "source.yml"
     apply:

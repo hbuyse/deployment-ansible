@@ -1,5 +1,5 @@
 ---
-- name: "VSCodium | Add yum repository"
+- name: "Add yum repository"
   become: true
   ansible.builtin.yum_repository:
     file: vscodium

@@ -1,5 +1,5 @@
 ---
-- name: "PerlNavigator | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -9,7 +9,7 @@
     - perlnavigator
     - lsp
 
-- name: "PerlNavigator | Install program from package manager"
+- name: "Install program from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ perlnavigator_package }}"
@@ -19,13 +19,13 @@
     - lsp
     - perlnavigator
 
-- name: "PerlNavigator | Install program from static binary"
+- name: "Install program from static binary"
   when: perlnavigator_package is not defined
   tags:
     - lsp
     - perlnavigator
   block:
-    - name: "PerlNavigator | Get latest version number"
+    - name: "Get latest version number"
       register: perlnavigator_latest_json
       ansible.builtin.uri:
         url: "https://api.github.com/repos/{{ perlnavigator_github_user }}/{{ perlnavigator_github_repo }}/releases/latest"
@@ -34,14 +34,14 @@
         status_code: 200
         body_format: json
 
-    - name: "PerlNavigator | Create temporary directory to extract zip"
+    - name: "Create temporary directory to extract zip"
       ansible.builtin.tempfile:
         state: directory
         suffix: perlnavigator
       register: perlnavigator_tmpdir
-      notify: "PerlNavigator | Remove temporary directory"
+      notify: "Remove temporary directory"
 
-    - name: "PerlNavigator | Install program from static binary [{{ perlnavigator_latest_json.json.tag_name }}]"
+    - name: "Install program from static binary [{{ perlnavigator_latest_json.json.tag_name }}]"
       ansible.builtin.unarchive:
         src: "https://github.com/{{ perlnavigator_github_user }}/{{ perlnavigator_github_repo }}/releases/download/{{ perlnavigator_latest_json.json.tag_name
           }}/perlnavigator-linux-{{ ansible_facts.architecture }}.zip"
@@ -50,7 +50,7 @@
         group: "{{ ansible_facts.user_gid }}"
         remote_src: true
 
-    - name: "PerlNavigator | Move binary file"
+    - name: "Move binary file"
       ansible.builtin.copy:
         src: "{{ perlnavigator_tmpdir.path }}/perlnavigator-linux-{{ ansible_facts.architecture }}/perlnavigator"
         dest: "{{ perlnavigator_bin_dir }}/perlnavigator"

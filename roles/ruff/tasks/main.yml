@@ -1,5 +1,5 @@
 ---
-- name: "Ruff | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -11,7 +11,7 @@
     - formatter
     - linter
 
-- name: "Ruff | Install from package manager"
+- name: "Install from package manager"
   become: true
   when: ruff_package is defined
   ansible.builtin.package:
@@ -23,7 +23,7 @@
     - formatter
     - linter
 
-- name: "Ruff | Install from PIP"
+- name: "Install from PIP"
   when: ruff_package is not defined
   community.general.pipx:
     name: "ruff"

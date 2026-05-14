@@ -1,5 +1,5 @@
 ---
-- name: "Bitwarden Desktop | Get latest version number"
+- name: "Get latest version number"
   register: bitwarden_releases_json
   ansible.builtin.uri:
     url: "https://api.github.com/repos/{{ bitwarden_owner }}/{{ bitwarden_repo }}/releases"
@@ -9,7 +9,7 @@
     body_format: json
   tags: bitwarden
 
-- name: "Bitwarden Desktop | Set facts"
+- name: "Set facts"
   ansible.builtin.set_fact:
     bitwarden_desktop_latest_tag: "{{ (bitwarden_releases_json.json | selectattr('tag_name', 'search', '^desktop') | first).tag_name
       }}"
@@ -17,7 +17,7 @@
       }}"
   tags: bitwarden
 
-- name: "Bitwarden Desktop | Install man pages"
+- name: "Install man pages"
   ansible.builtin.get_url:
     url: "https://github.com/{{ bitwarden_owner }}/{{ bitwarden_repo }}/releases/download/{{ bitwarden_desktop_latest_tag
       }}/Bitwarden-{{ bitwarden_desktop_latest_version }}-{{ ansible_facts.architecture }}.AppImage"
@@ -27,7 +27,7 @@
     group: "{{ ansible_facts.user_gid }}"
   tags: bitwarden
 
-- name: "Bitwarden Desktop | Install desktop file"
+- name: "Install desktop file"
   ansible.builtin.get_url:
     url: "https://raw.githubusercontent.com/bitwarden/clients/refs/heads/main/apps/desktop/resources/com.bitwarden.desktop.desktop"
     dest: "{{ ansible_facts.user_dir }}/.local/share/applications/"

@@ -1,5 +1,5 @@
 ---
-- name: "StyLua | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -9,7 +9,7 @@
     - stylua
     - formatter
 
-- name: "StyLua | Install from package manager"
+- name: "Install from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ stylua_packages }}"
@@ -19,7 +19,7 @@
     - formatter
   when: stylua_packages is defined
 
-- name: "StyLua | Install Rust package with locked dependencies"
+- name: "Install Rust package with locked dependencies"
   community.general.cargo:
     name: stylua
     state: latest

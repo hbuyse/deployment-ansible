@@ -1,5 +1,5 @@
 ---
-- name: "VSCode | Add repository"
+- name: "Add repository"
   become: true
   ansible.builtin.deb822_repository:
     name: vscode
@@ -13,7 +13,7 @@
       - "{{ deb_arch }}"
     signed_by: "https://packages.microsoft.com/keys/microsoft.asc"
 
-- name: "VSCode | Update APT cache"
+- name: "Update APT cache"
   become: true
   ansible.builtin.apt:
     update_cache: true

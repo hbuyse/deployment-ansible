@@ -1,5 +1,5 @@
 ---
-- name: "TexLab Language Server | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -9,7 +9,7 @@
     - lsp
     - texlab
 
-- name: "TexLab Language Server | Install from package manager"
+- name: "Install from package manager"
   become: true
   when: texlab_package is defined
   ansible.builtin.package:
@@ -19,13 +19,13 @@
     - lsp
     - texlab
 
-- name: "TexLab Language Server | Install from GitHub"
+- name: "Install from GitHub"
   when: texlab_package is not defined
   tags:
     - lsp
     - texlab
   block:
-    - name: "TexLab Language Server | Get latest version number"
+    - name: "Get latest version number"
       register: texlab_latest_json
       ansible.builtin.uri:
         url: "https://api.github.com/repos/{{ texlab_github_user }}/{{ texlab_github_repo }}/releases/latest"
@@ -34,11 +34,11 @@
         status_code: 200
         body_format: json
 
-    - name: "TexLab Language Server | Set facts"
+    - name: "Set facts"
       ansible.builtin.set_fact:
         texlab_latest_version: "{{ texlab_latest_json.json.tag_name[1:] }}"
 
-    - name: "TexLab Language Server | Install executable"
+    - name: "Install executable"
       become: true
       ansible.builtin.unarchive:
         src: "https://github.com/{{ texlab_github_user }}/{{ texlab_github_repo }}/releases/download/v{{ texlab_latest_version

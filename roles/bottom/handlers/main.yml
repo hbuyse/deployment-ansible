@@ -1,5 +1,5 @@
 ---
-- name: "Bottom | Remove downloaded archives"
+- name: "Remove downloaded archives"
   ansible.builtin.file:
     path: "/tmp/{{ item }}.tar.gz"
     state: absent
@@ -7,5 +7,5 @@
     - completion
     - manpage
 
-- name: "Bottom | Install assets"
+- name: "Install assets"
   ansible.builtin.include_tasks: assets.yml

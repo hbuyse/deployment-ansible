@@ -1,5 +1,5 @@
 ---
-- name: "Fuzzel | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -7,7 +7,7 @@
       skip: true
   tags: fuzzel
 
-- name: "Fuzzel | Check that the package list is not empty"
+- name: "Check that the package list is not empty"
   ansible.builtin.assert:
     that:
       - fuzzel_packages is defined
@@ -16,36 +16,36 @@
     quiet: true
   tags: fuzzel
 
-- name: "Fuzzel | Install from package manager"
+- name: "Install from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ fuzzel_packages }}"
   when: fuzzel_packages is defined
   tags: fuzzel
 
-- name: "Fuzzel | Install configuration files"
+- name: "Install configuration files"
   tags: fuzzel
   when: fuzzel_packages is defined
   block:
-    - name: "Fuzzel | Ensure directory exist"
+    - name: "Ensure directory exist"
       ansible.builtin.file:
         path: "{{ fuzzel_config_dir }}"
         state: directory
         mode: "0755"
 
-    - name: "Fuzzel | Copy static configuration files"
+    - name: "Copy static configuration files"
       ansible.builtin.copy:
         src: "keybindings.ini"
         dest: "{{ fuzzel_config_dir }}/keybindings.ini"
         mode: "0644"
 
-    - name: "Fuzzel | Copy dynamic configuration files"
+    - name: "Copy dynamic configuration files"
       ansible.builtin.template:
         src: "fuzzel.ini.j2"
         dest: "{{ fuzzel_config_dir }}/fuzzel.ini"
         mode: "0644"
 
-    - name: "Fuzzel | Download theme"
+    - name: "Download theme"
       ansible.builtin.get_url:
         url: "https://raw.githubusercontent.com/catppuccin/fuzzel/refs/heads/main/themes/catppuccin-mocha/peach.ini"
         dest: "{{ fuzzel_config_dir }}/catppuccin-mocha.ini"

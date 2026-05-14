@@ -1,5 +1,5 @@
 ---
-- name: "Spotify | Include OS specific tasks"
+- name: "Include OS specific tasks"
   ansible.builtin.include_tasks:
     file: "{{ item }}"
     apply:

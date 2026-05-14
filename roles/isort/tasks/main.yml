@@ -1,5 +1,5 @@
 ---
-- name: "Isort | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -9,7 +9,7 @@
     - isort
     - formatter
 
-- name: "Isort | Install from package manager"
+- name: "Install from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ isort_packages }}"
@@ -19,7 +19,7 @@
     - formatter
   when: isort_packages is defined
 
-- name: "Isort | Install from source"
+- name: "Install from source"
   community.general.pipx:
     name: "isort"
     state: "latest"

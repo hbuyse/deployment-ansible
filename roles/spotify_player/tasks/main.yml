@@ -1,5 +1,5 @@
 ---
-- name: "Spotify Player | Check that client id and secret are populated"
+- name: "Check that client id and secret are populated"
   ansible.builtin.assert:
     that:
       - spotify_player_client_id is defined
@@ -10,7 +10,7 @@
     quiet: true
   tags: spotify_player
 
-- name: "Spotify Player | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -19,16 +19,16 @@
   tags:
     - spotify_player
 
-- name: "Spotify Player | Install Rust package with locked dependencies"
+- name: "Install Rust package with locked dependencies"
   tags: spotify_player
   when: spotify_player_packages is not defined
   block:
-    - name: "Spotify Player | Install dependencies"
+    - name: "Install dependencies"
       become: true
       ansible.builtin.package:
         name: "{{ spotify_player_dependencies }}"
 
-    - name: "Spotify Player | Install Rust package with locked dependencies"
+    - name: "Install Rust package with locked dependencies"
       community.general.cargo:
         name: "spotify_player"
         state: "latest"
@@ -38,7 +38,7 @@
         - "Spotify Player | Install zsh completion file"
         - "Spotify Player | Install bash completion file"
 
-- name: "Spotify Player | Install from package manager"  # noqa: package-latest
+- name: "Install from package manager"  # noqa: package-latest
   become: true
   ansible.builtin.package:
     name: "{{ spotify_player_packages }}"
@@ -49,22 +49,22 @@
     - "Spotify Player | Install zsh completion file"
     - "Spotify Player | Install bash completion file"
 
-- name: "Spotify Player | Copy configuration files"
+- name: "Copy configuration files"
   tags: spotify_player
   block:
-    - name: "Spotify Player | Ensure configuration directory exists"
+    - name: "Ensure configuration directory exists"
       ansible.builtin.file:
         path: "{{ spotify_player_config_dir }}"
         state: "directory"
         mode: "0755"
 
-    - name: "Spotify Player | Copy configuration file"
+    - name: "Copy configuration file"
       ansible.builtin.template:
         src: "app.toml.j2"
         dest: "{{ spotify_player_config_dir }}/app.toml"
         mode: "0644"
 
-    - name: "Spotify Player | Download theme file"
+    - name: "Download theme file"
       ansible.builtin.get_url:
         url: "https://raw.githubusercontent.com/aome510/spotify-player/refs/heads/master/examples/theme.toml"
         dest: "{{ spotify_player_config_dir }}/theme.toml"

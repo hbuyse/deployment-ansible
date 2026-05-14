@@ -1,5 +1,5 @@
 ---
-- name: "Ansible Lint | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -9,7 +9,7 @@
     - ansiblelint
     - linter
 
-- name: "Ansible Lint | Install from package manager"
+- name: "Install from package manager"
   become: true
   when: ansiblelint_packages is defined
   ansible.builtin.package:
@@ -19,7 +19,7 @@
     - ansiblelint
     - linter
 
-- name: "Ansible Lint | Install from PIP"
+- name: "Install from PIP"
   when: ansiblelint_packages is not defined
   community.general.pipx:
     name: "ansible-lint"

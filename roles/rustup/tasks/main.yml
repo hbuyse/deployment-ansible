@@ -1,5 +1,5 @@
 ---
-- name: "Rustup | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -7,7 +7,7 @@
       skip: true
   tags: rustup
 
-- name: "Rustup | Install dependencies"
+- name: "Install dependencies"
   become: true
   ansible.builtin.package:
     name: "{{ rustup_dependencies }}"
@@ -15,14 +15,14 @@
   when: rustup_dependencies is defined
   tags: rustup
 
-- name: "Rustup | Install from script"
+- name: "Install from script"
   ansible.builtin.include_tasks:
     file: install.yml
     apply:
       tags: rustup
   tags: rustup
 
-- name: "Rustup | Install toolchain"
+- name: "Install toolchain"
   ansible.builtin.include_tasks:
     file: install-toolchain.yml
     apply:

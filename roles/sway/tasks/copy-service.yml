@@ -1,5 +1,5 @@
 ---
-- name: "Sway | Ensure directories exists"
+- name: "Ensure directories exists"
   become: true
   ansible.builtin.file:
     path: "{{ item }}"
@@ -10,10 +10,10 @@
     - "/usr/share/wayland-sessions"
     - "/usr/local/bin"
 
-- name: "Sway | Create sway service files"
+- name: "Create sway service files"
   become: true
   block:
-    - name: "Sway | Copy sway-unsupported-gpu and lxpolkit service files"
+    - name: "Copy sway-unsupported-gpu and lxpolkit service files"
       ansible.builtin.copy:
         src: "service/{{ item }}"
         dest: "/usr/local/lib/systemd/user/"
@@ -22,7 +22,7 @@
         - sway-unsupported-gpu.service
         - lxpolkit.service
 
-    - name: "Sway | Download some sway service files"
+    - name: "Download some sway service files"
       ansible.builtin.get_url:
         url: "{{ item }}"
         dest: "/usr/local/lib/systemd/user/"
@@ -33,21 +33,21 @@
         - "https://raw.githubusercontent.com/xdbob/sway-services/refs/heads/master/systemd/sway.service"
 
 # Copy the wayland session file at the "normal" place otherwise in /usr/local it is not seen
-- name: "Sway | Copy wayland-session file for sway"
+- name: "Copy wayland-session file for sway"
   become: true
   ansible.builtin.copy:
     src: "service/sway.desktop"
     dest: "/usr/share/wayland-sessions/sway-systemd.desktop"
     mode: "0644"
 
-- name: "Sway | Copy sway-wrapper shell script"
+- name: "Copy sway-wrapper shell script"
   become: true
   ansible.builtin.copy:
     src: "service/sway-wrapper.sh"
     dest: "/usr/local/bin/"
     mode: "0755"
 
-- name: "Sway | Enable lxpolkit service"
+- name: "Enable lxpolkit service"
   become: false
   ansible.builtin.systemd:
     name: "lxpolkit"

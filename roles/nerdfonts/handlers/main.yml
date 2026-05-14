@@ -1,5 +1,5 @@
 ---
-- name: "Nerdfonts | Build font information caches"
+- name: "Build font information caches"
   become: true
   ansible.builtin.command: fc-cache --force --verbose
   register: nerdfonts_res

@@ -1,5 +1,5 @@
 ---
-- name: "Bottom | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -7,7 +7,7 @@
       skip: true
   tags: bottom
 
-- name: "Bottom | Install Rust package with locked dependencies"
+- name: "Install Rust package with locked dependencies"
   community.general.cargo:
     name: bottom
     state: latest
@@ -17,7 +17,7 @@
   notify:
     - "Bottom | Install assets"
 
-- name: "Bottom | Install from package manager"
+- name: "Install from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ bottom_packages }}"
@@ -25,17 +25,17 @@
   when: bottom_packages is defined
   tags: bottom
 
-- name: "Bottom | Copy configuration file"
+- name: "Copy configuration file"
   tags: bottom
   block:
-    - name: "Bottom | Ensure configuration folder exists"
+    - name: "Ensure configuration folder exists"
       ansible.builtin.file:
         path: "{{ ansible_facts.user_dir }}/.config/bottom"
         state: "directory"
         mode: "0755"
         recurse: true
 
-    - name: "Bottom | Copy configuration file"
+    - name: "Copy configuration file"
       ansible.builtin.copy:
         src: "bottom.toml"
         dest: "{{ ansible_facts.user_dir }}/.config/bottom/bottom.toml"

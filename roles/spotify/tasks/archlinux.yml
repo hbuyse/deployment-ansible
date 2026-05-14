@@ -1,5 +1,5 @@
 ---
-- name: "Spotify | Install from AUR"
+- name: "Install from AUR"
   kewlfft.aur.aur:
     name: "spotify"
     use: yay

@@ -1,5 +1,5 @@
 ---
-- name: "Themes | Ensure directory exist"
+- name: "Ensure directory exist"
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
@@ -12,7 +12,7 @@
     - "{{ themes_gtk3_config_dir }}"
     - "{{ themes_gtk4_config_dir }}"
 
-- name: "Themes | Install dependencies"
+- name: "Install dependencies"
   become: true
   ansible.builtin.package:
     state: present
@@ -22,7 +22,7 @@
     - themes
     - theming
 
-- name: "Themes | Install Matcha themes"
+- name: "Install Matcha themes"
   ansible.builtin.include_tasks:
     file: "matcha.yml"
     apply:
@@ -34,7 +34,7 @@
     - themes
     - theming
 
-- name: "Themes | Install Catppuccin themes"
+- name: "Install Catppuccin themes"
   ansible.builtin.include_tasks:
     file: "catppuccin.yml"
     apply:
@@ -46,7 +46,7 @@
     - themes
     - theming
 
-- name: "Themes | Install Vimix Cursors"
+- name: "Install Vimix Cursors"
   ansible.builtin.include_tasks:
     file: "vimix_cursors.yml"
     apply:

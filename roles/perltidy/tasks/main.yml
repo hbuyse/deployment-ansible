@@ -1,5 +1,5 @@
 ---
-- name: "Perl-Tidy | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -9,7 +9,7 @@
     - perltidy
     - formatter
 
-- name: "Perl-Tidy | Install from package manager"
+- name: "Install from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ codespell_packages }}"
@@ -19,7 +19,7 @@
     - formatter
   when: perltidy_packages is defined
 
-- name: "Perl-Tidy | Install from source"
+- name: "Install from source"
   become: true
   community.general.cpanm:
     name: "Perl::Tidy"

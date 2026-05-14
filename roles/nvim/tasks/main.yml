@@ -1,5 +1,5 @@
 ---
-- name: "Neovim | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -9,7 +9,7 @@
     - neovim
     - nvim
 
-- name: "Neovim | Install program from package manager"
+- name: "Install program from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ nvim_package }}"
@@ -19,13 +19,13 @@
     - neovim
     - nvim
 
-- name: "Neovim | Install program from static binary"
+- name: "Install program from static binary"
   when: nvim_package is not defined
   tags:
     - neovim
     - nvim
   block:
-    - name: "Neovim | Get latest version number"
+    - name: "Get latest version number"
       register: nvim_latest_json
       ansible.builtin.uri:
         url: "https://api.github.com/repos/neovim/neovim/releases/latest"
@@ -34,11 +34,11 @@
         status_code: 200
         body_format: json
 
-    - name: "Neovim | Set facts"
+    - name: "Set facts"
       ansible.builtin.set_fact:
         nvim_latest_version: "{{ nvim_latest_json.json.tag_name[1:] }}"
 
-    - name: "Neovim | Install program from static binary [v{{ nvim_latest_version }}]"
+    - name: "Install program from static binary [v{{ nvim_latest_version }}]"
       become: true
       ansible.builtin.unarchive:
         src: "https://github.com/neovim/neovim/releases/download/v{{ nvim_latest_version }}/nvim-linux-{{ ansible_facts.architecture
@@ -50,7 +50,7 @@
         extra_opts:
           - --strip-components=1
 
-- name: "Neovim | Ensure configuration folder exists"
+- name: "Ensure configuration folder exists"
   ansible.builtin.file:
     mode: "0755"
     path: "{{ nvim_config_dir }}"
@@ -59,7 +59,7 @@
     - neovim
     - nvim
 
-- name: "Neovim | Copy static files in configuration directory"
+- name: "Copy static files in configuration directory"
   ansible.posix.synchronize:
     src: "{{ role_path }}/files/"
     dest: "{{ nvim_config_dir }}"
@@ -69,7 +69,7 @@
     - neovim
     - nvim
 
-- name: "Neovim | Copy templates files in configuration directory"
+- name: "Copy templates files in configuration directory"
   ansible.builtin.template:
     src: "{{ item }}.j2"
     dest: "{{ nvim_config_dir }}/{{ item }}"
@@ -82,7 +82,7 @@
     - neovim
     - nvim
 
-- name: "Neovim | Sync plugins"
+- name: "Sync plugins"
   when: nvim_update_plugins|bool
   ansible.builtin.command: nvim --headless "+Lazy! sync" +qa
   changed_when: false

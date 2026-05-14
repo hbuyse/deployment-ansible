@@ -1,5 +1,5 @@
 ---
-- name: "Tailwind CSS Language Server | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -9,7 +9,7 @@
     - tailwindcss
     - lsp
 
-- name: "Tailwind CSS Language Server | Install from package manager"
+- name: "Install from package manager"
   become: true
   when: tailwindcss_lsp_package is defined
   ansible.builtin.package:
@@ -19,7 +19,7 @@
     - tailwindcss
     - lsp
 
-- name: "Tailwind CSS Language Server | Install from Node Package Manager"
+- name: "Install from Node Package Manager"
   when: tailwindcss_lsp_package is not defined
   community.general.npm:
     name: "{{ tailwindcss_lsp_npm_package }}"

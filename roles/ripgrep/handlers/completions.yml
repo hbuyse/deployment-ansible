@@ -1,5 +1,5 @@
 ---
-- name: "Ripgrep | Ensure completion directory exists [{{ item.shell }}]"
+- name: "Ensure completion directory exists [{{ item.shell }}]"
   ansible.builtin.file:
     path: "{{ install_dir }}"
     state: directory
@@ -7,7 +7,7 @@
   vars:
     install_dir: "{{ item.filepath | ansible.builtin.dirname }}"
 
-- name: "Ripgrep | Install completion file [{{ item.shell }}]"
+- name: "Install completion file [{{ item.shell }}]"
   ansible.builtin.shell:
     cmd: "rg --generate complete-{{ item.shell }} > {{ item.filepath }}"
   register: ripgrep_output

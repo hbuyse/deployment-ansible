@@ -1,5 +1,5 @@
 ---
-- name: "Clang | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -7,7 +7,7 @@
       skip: true
   tags: clang
 
-- name: "Clang | Add LLVM repository"
+- name: "Add LLVM repository"
   ansible.builtin.include_tasks:
     file: "{{ item }}"
     apply:
@@ -18,14 +18,14 @@
       skip: true
   tags: clang
 
-- name: "Clang | Install LLVM packages"
+- name: "Install LLVM packages"
   become: true
   ansible.builtin.package:
     state: present
     name: "{{ clang_packages }}"
   tags: clang
 
-- name: "Clang | Update Clang and LLVM alternatives [Debian]"
+- name: "Update Clang and LLVM alternatives [Debian]"
   when: ansible_facts.os_family in ['Debian']
   ansible.builtin.include_tasks:
     file: alternatives.yml
@@ -33,18 +33,18 @@
       tags: clang
   tags: clang
 
-- name: "Clangd | Copy configuration file"
+- name: "Copy configuration file"
   tags:
     - clang
     - clangd
   block:
-    - name: "Clangd | Ensure configuration directory exists"
+    - name: "Ensure configuration directory exists"
       ansible.builtin.file:
         path: "{{ ansible_facts.user_dir }}/.config/clangd"
         mode: "0755"
         state: "directory"
 
-    - name: "Clangd | Copy launcher script"
+    - name: "Copy launcher script"
       ansible.builtin.copy:
         src: "config.yaml"
         dest: "{{ clang_clangd_config_dir }}"

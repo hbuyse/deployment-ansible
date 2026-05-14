@@ -1,5 +1,5 @@
 ---
-- name: "Cargo-Cache | Install Rust package with locked dependencies"
+- name: "Install Rust package with locked dependencies"
   community.general.cargo:
     name: cargo-cache
     state: latest

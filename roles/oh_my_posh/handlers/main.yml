@@ -1,5 +1,5 @@
 ---
-- name: "Oh My Posh | Clear cache"
+- name: "Clear cache"
   ansible.builtin.command:
     argv:
       - oh-my-posh

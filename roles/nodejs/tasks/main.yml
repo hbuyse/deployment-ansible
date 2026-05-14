@@ -1,5 +1,5 @@
 ---
-- name: "NodeJS | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -7,7 +7,7 @@
       skip: true
   tags: nodejs
 
-- name: "NodeJS | Add repository [{{ ansible_facts.os_family }}]"
+- name: "Add repository [{{ ansible_facts.os_family }}]"
   ansible.builtin.include_tasks:
     file: "{{ item }}"
     apply:
@@ -18,7 +18,7 @@
       skip: true
   tags: nodejs
 
-- name: "Nodejs | Install package and npm [{{ ansible_facts.os_family }}]"
+- name: "Install package and npm [{{ ansible_facts.os_family }}]"
   become: true
   ansible.builtin.package:
     name: "{{ nodejs_packages }}"

@@ -1,5 +1,5 @@
 ---
-- name: "VSCode | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -7,7 +7,7 @@
       skip: true
   tags: vscode
 
-- name: "VSCode | Add dependencies and repo"
+- name: "Add dependencies and repo"
   ansible.builtin.include_tasks:
     file: "{{ item }}"
     apply:
@@ -18,7 +18,7 @@
       skip: true
   tags: vscode
 
-- name: "VSCode | Install VS Code"
+- name: "Install VS Code"
   become: true
   ansible.builtin.package:
     state: present

@@ -1,5 +1,5 @@
 ---
-- name: "TuiGreet | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -9,7 +9,7 @@
     - tuigreet
     - greetd
 
-- name: "TuiGreet | Install from package manager"
+- name: "Install from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ tuigreet_packages }}"
@@ -19,7 +19,7 @@
     - greetd
   when: tuigreet_packages is defined
 
-- name: "TuiGreet | Copy configuration to /etc/greetd"
+- name: "Copy configuration to /etc/greetd"
   become: true
   ansible.builtin.copy:
     src: "config.toml"

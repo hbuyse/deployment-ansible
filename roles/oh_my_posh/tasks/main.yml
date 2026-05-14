@@ -1,5 +1,5 @@
 ---
-- name: "Oh My Posh | Get latest version number"
+- name: "Get latest version number"
   register: oh_my_posh_latest_json
   ansible.builtin.uri:
     url: "https://api.github.com/repos/JanDeDobbeleer/oh-my-posh/releases/latest"
@@ -11,14 +11,14 @@
     - oh_my_posh
     - shell
 
-- name: "Oh My Posh | Set facts"
+- name: "Set facts"
   ansible.builtin.set_fact:
     oh_my_posh_latest_version: "{{ oh_my_posh_latest_json.json.tag_name[1:] }}"
   tags:
     - oh_my_posh
     - shell
 
-- name: "Oh My Posh | Install binary [v{{ oh_my_posh_latest_version }}]"
+- name: "Install binary [v{{ oh_my_posh_latest_version }}]"
   ansible.builtin.get_url:
     url: "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v{{ oh_my_posh_latest_version }}/posh-{{ ansible_facts.system
       | lower }}-{{ alt_arch }}"
@@ -26,12 +26,12 @@
     mode: "0755"
     owner: "{{ ansible_facts.user_uid }}"
     group: "{{ ansible_facts.user_gid }}"
-  notify: "Oh My Posh | Clear cache"
+  notify: "Clear cache"
   tags:
     - oh_my_posh
     - shell
 
-- name: "Oh My Posh | Ensure config directory exists"
+- name: "Ensure config directory exists"
   ansible.builtin.file:
     path: "{{ ansible_facts.user_dir }}/.config/oh-my-posh"
     state: directory
@@ -40,12 +40,12 @@
     - oh_my_posh
     - shell
 
-- name: "Oh My Posh | Copy configuration file"
+- name: "Copy configuration file"
   ansible.builtin.copy:
     src: "config.omp.yaml"
     dest: "{{ ansible_facts.user_dir }}/.config/oh-my-posh"
     mode: "0644"
-  notify: "Oh My Posh | Clear cache"
+  notify: "Clear cache"
   tags:
     - oh_my_posh
     - shell

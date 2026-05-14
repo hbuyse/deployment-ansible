@@ -1,30 +1,30 @@
 ---
-- name: "Rustup | Check if cargo is installed"
+- name: "Check if cargo is installed"
   ansible.builtin.command:
     cmd: command -v cargo
   register: rustup_cargo_exists
   changed_when: false
   ignore_errors: true
 
-- name: "Rustup | Install Rustup and Cargo"
+- name: "Install Rustup and Cargo"
   when: rustup_cargo_exists is failed
   tags:
     - rust
   block:
-    - name: "Rustup | Install dependencies"
+    - name: "Install dependencies"
       become: true
       ansible.builtin.package:
         name: curl
         state: present
 
-    - name: "Rustup | Download Installer"
+    - name: "Download Installer"
       ansible.builtin.get_url:
         url: https://sh.rustup.rs
         dest: "{{ rustup_tmp_dir }}/sh.rustup.rs"
         mode: "0755"
         force: "yes"
 
-    - name: "Rustup | Install Rust and Cargo from script"
+    - name: "Install Rust and Cargo from script"
       when: rustup_cargo_exists is failed
       ansible.builtin.shell: "{{ rustup_tmp_dir }}/sh.rustup.rs -y"
       args:

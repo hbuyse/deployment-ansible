@@ -1,5 +1,5 @@
 ---
-- name: "CSS Language Server | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -9,7 +9,7 @@
     - cssls
     - lsp
 
-- name: "CSS Language Server | Install from package manager"
+- name: "Install from package manager"
   become: true
   when: cssls_package is defined
   ansible.builtin.package:
@@ -19,7 +19,7 @@
     - cssls
     - lsp
 
-- name: "CSS Language Server | Install from Node Package Manager"
+- name: "Install from Node Package Manager"
   when: cssls_package is not defined
   community.general.npm:
     name: "{{ cssls_npm_package }}"

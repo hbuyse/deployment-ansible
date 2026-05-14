@@ -1,5 +1,5 @@
 ---
-- name: "Nerdfonts | Ensure font directory exists [{{ item }}]"
+- name: "Ensure font directory exists [{{ item }}]"
   become: true
   ansible.builtin.file:
     path: "{{ nerdfonts_font_dir_prefix }}/{{ item }}"
@@ -7,7 +7,7 @@
     mode: "0755"
     state: directory
 
-- name: "Nerdfonts | Download fonts [{{ item }}]"
+- name: "Download fonts [{{ item }}]"
   become: true
   ansible.builtin.unarchive:
     src: "https://github.com/ryanoasis/nerd-fonts/releases/download/v{{ nerdfonts_latest_version }}/{{ item }}.tar.xz"
@@ -16,4 +16,4 @@
     remote_src: true
     owner: "{{ ansible_facts.user_uid }}"
     group: "{{ ansible_facts.user_gid }}"
-  notify: "Nerdfonts | Build font information caches"
+  notify: "Build font information caches"

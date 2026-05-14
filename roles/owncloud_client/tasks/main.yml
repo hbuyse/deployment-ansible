@@ -1,11 +1,11 @@
 ---
 
-- name: "Owncloud Client | Check that it is supported by the OS"
+- name: "Check that it is supported by the OS"
   ansible.builtin.assert:
     that:
       - ansible_facts.system == "Linux"
 
-- name: "Owncloud Client | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -13,7 +13,7 @@
       skip: true
   tags: owncloud_client
 
-- name: "Owncloud Client | Add dependencies and repo"
+- name: "Add dependencies and repo"
   ansible.builtin.include_tasks:
     file: "{{ item }}"
     apply:
@@ -24,27 +24,27 @@
       skip: true
   tags: owncloud_client
 
-- name: "Owncloud Client | Install packages"
+- name: "Install packages"
   become: true
   ansible.builtin.package:
     state: present
     name: "{{ owncloud_client_packages }}"
   tags: owncloud_client
 
-- name: "Owncloud Client | Install service"
+- name: "Install service"
   tags: owncloud_client
   block:
-    - name: "Owncloud Client | Ensure directory exist"
+    - name: "Ensure directory exist"
       ansible.builtin.file:
         path: "{{ owncloud_client_service_dir }}"
         state: directory
         mode: "0755"
 
-    - name: "Owncloud Client | Copy service file"
+    - name: "Copy service file"
       ansible.builtin.copy:
         src: "owncloud-client.service"
         dest: "{{ owncloud_client_service_dir }}"
         owner: "{{ ansible_facts.user_id }}"
         group: "{{ ansible_facts.user_gid }}"
         mode: "0644"
-      notify: "Owncloud Client | Restart service"
+      notify: "Restart service"

@@ -1,5 +1,5 @@
 ---
-- name: "VSCodium | Add repository"
+- name: "Add repository"
   become: true
   ansible.builtin.deb822_repository:
     name: vscodium
@@ -13,7 +13,7 @@
       - "{{ deb_arch }}"
     signed_by: "https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg"
 
-- name: "VSCodium | Update APT cache"
+- name: "Update APT cache"
   become: true
   ansible.builtin.apt:
     update_cache: true

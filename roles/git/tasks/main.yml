@@ -1,5 +1,5 @@
 ---
-- name: "Git | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -7,7 +7,7 @@
       skip: true
   tags: git
 
-- name: "Git | Install repository [Debian]"
+- name: "Install repository [Debian]"
   ansible.builtin.include_tasks:
     file: debian.yml
     apply:
@@ -15,23 +15,23 @@
   when: ansible_facts.os_family == 'Debian'
   tags: git
 
-- name: "Git | Install from package manager"
+- name: "Install from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ git_packages }}"
     state: present
   tags: git
 
-- name: "Git | Copy git configuration"
+- name: "Copy git configuration"
   tags: git
   block:
-    - name: "Git | Ensure configuration directory exists"
+    - name: "Ensure configuration directory exists"
       ansible.builtin.file:
         path: "{{ ansible_facts.user_dir }}/.config/git"
         state: directory
         mode: "0755"
 
-    - name: "Git | Copy git configuration"
+    - name: "Copy git configuration"
       ansible.builtin.copy:
         src: "{{ item }}"
         dest: "{{ ansible_facts.user_dir }}/.config/git"

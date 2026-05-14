@@ -1,5 +1,5 @@
 ---
-- name: "Rustup | Get active toolchain version"
+- name: "Get active toolchain version"
   ansible.builtin.shell:
     cmd: |
       rustup default | awk '{ print $1 }'
@@ -11,7 +11,7 @@
   changed_when: false
   ignore_errors: true
 
-- name: "Rustup | Set default toolchain version"
+- name: "Set default toolchain version"
   ansible.builtin.command:
     cmd: rustup default "{{ rustup_default_version }}"
   environment:
@@ -24,7 +24,7 @@
     - rustup_set_default_output.rc == 0
     - "'unchanged' not in rustup_set_default_output.stdout"
 
-- name: "Rustup | Update Rust toolchain"
+- name: "Update Rust toolchain"
   ansible.builtin.command:
     cmd: "rustup update"
   environment:

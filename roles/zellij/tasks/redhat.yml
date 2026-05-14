@@ -1,5 +1,5 @@
 ---
-- name: "Zellij | Add COPR repo"
+- name: "Add COPR repo"
   become: true
   community.general.copr:
     name: "varlad/zellij"

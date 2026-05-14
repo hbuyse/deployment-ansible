@@ -1,5 +1,5 @@
 ---
-- name: "Tree-Sitter | Install Rust package with locked dependencies"
+- name: "Install Rust package with locked dependencies"
   community.general.cargo:
     name: "{{ treesitter_cargo_package }}"
     state: latest

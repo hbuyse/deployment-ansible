@@ -1,5 +1,5 @@
 ---
-- name: "YamlFmt | Get latest version number"
+- name: "Get latest version number"
   register: yamlfmt_latest_json
   ansible.builtin.uri:
     url: "https://api.github.com/repos/{{ yamlfmt_github_user }}/{{ yamlfmt_github_repo }}/releases/latest"
@@ -8,11 +8,11 @@
     status_code: 200
     body_format: json
 
-- name: "YamlFmt | Set facts"
+- name: "Set facts"
   ansible.builtin.set_fact:
     yamlfmt_latest_version: "{{ yamlfmt_latest_json.json.tag_name[1:] }}"
 
-- name: "YamlFmt | Install executable"
+- name: "Install executable"
   become: true
   ansible.builtin.unarchive:
     src: "https://github.com/{{ yamlfmt_github_user }}/{{ yamlfmt_github_repo }}/releases/download/v{{ yamlfmt_latest_version

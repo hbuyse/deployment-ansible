@@ -1,5 +1,5 @@
 ---
-- name: "Ripgrep | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -8,16 +8,16 @@
   tags:
     - ripgrep
 
-- name: "Ripgrep | Install Rust package with locked dependencies"
+- name: "Install Rust package with locked dependencies"
   community.general.cargo:
     name: ripgrep
     state: latest
     locked: true
-  notify: "Ripgrep | Install completions"
+  notify: "Install completions"
   tags: ripgrep
   when: ripgrep_packages is not defined
 
-- name: "Ripgrep | Install from package manager [{{ ansible_facts.os_family }}]"
+- name: "Install from package manager [{{ ansible_facts.os_family }}]"
   become: true
   ansible.builtin.package:
     name: "{{ ripgrep_packages }}"

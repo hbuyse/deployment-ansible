@@ -1,5 +1,5 @@
 ---
-- name: "Eza | Get latest version number"
+- name: "Get latest version number"
   register: eza_latest_json
   ansible.builtin.uri:
     url: "https://api.github.com/repos/eza-community/eza/releases/latest"
@@ -8,11 +8,11 @@
     status_code: 200
     body_format: json
 
-- name: "Eza | Set facts"
+- name: "Set facts"
   ansible.builtin.set_fact:
     eza_latest_version: "{{ eza_latest_json.json.tag_name[1:] }}"
 
-- name: "Eza | Download eza extra archives"
+- name: "Download eza extra archives"
   ansible.builtin.get_url:
     url: "https://github.com/eza-community/eza/releases/download/v{{ eza_latest_version }}/{{ item }}-{{ eza_latest_version
       }}.tar.gz"
@@ -21,9 +21,9 @@
   loop:
     - completions
     - man
-  notify: "Eza | Remove downloaded archives"
+  notify: "Remove downloaded archives"
 
-- name: "Eza | Install completion shell files"
+- name: "Install completion shell files"
   ansible.builtin.include_tasks:
     file: completions.yml
   loop:
@@ -34,7 +34,7 @@
       shell: bash
       install_dir: "{{ ansible_facts.user_dir }}/.local/share/bash-completion/completions"
 
-- name: "Eza | Install manpage files"
+- name: "Install manpage files"
   ansible.builtin.include_tasks:
     file: manpages.yml
   loop:

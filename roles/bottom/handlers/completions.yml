@@ -1,12 +1,12 @@
 ---
-- name: "Bottom | Ensure that shell completion directory exists [{{ item.shell }}]"
+- name: "Ensure that shell completion directory exists [{{ item.shell }}]"
   ansible.builtin.file:
     path: "{{ item.install_dir }}"
     state: "directory"
     mode: "0755"
     recurse: true
 
-- name: "Bottom | Copy shell completion file [{{ item.shell }}]"
+- name: "Copy shell completion file [{{ item.shell }}]"
   ansible.builtin.unarchive:
     src: "/tmp/completion.tar.gz"
     dest: "{{ item.install_dir }}"
@@ -18,10 +18,10 @@
     extra_opts:
       - "--strip-components=1"
 
-- name: "Bottom | Rename shell completion file [{{ item.shell }}]"
+- name: "Rename shell completion file [{{ item.shell }}]"
   when: item.src_file != item.dst_file
   block:
-    - name: "Bottom | Copy file"
+    - name: "Copy file"
       ansible.builtin.copy:
         src: "{{ item.install_dir }}/{{ item.src_file }}"
         dest: "{{ item.install_dir }}/{{ item.dst_file }}"
@@ -29,7 +29,7 @@
         group: "{{ ansible_facts.user_gid }}"
         mode: "0644"
 
-    - name: "Bottom | Remove old one"
+    - name: "Remove old one"
       ansible.builtin.file:
         state: absent
         path: "{{ item.install_dir }}/{{ item.src_file }}"

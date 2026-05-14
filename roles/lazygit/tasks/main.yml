@@ -1,5 +1,5 @@
 ---
-- name: "LazyGit | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -9,7 +9,7 @@
     - lazygit
     - git
 
-- name: "LazyGit | Install from package manager"
+- name: "Install from package manager"
   become: true
   when: lazygit_packages is defined
   tags:
@@ -19,13 +19,13 @@
     name: "{{ lazygit_packages }}"
     state: "present"
 
-- name: "LazyGit | Install from source"
+- name: "Install from source"
   when: lazygit_packages is not defined
   tags:
     - lazygit
     - git
   block:
-    - name: "LazyGit | Get latest version number"
+    - name: "Get latest version number"
       register: lazygit_latest_json
       ansible.builtin.uri:
         url: "https://api.github.com/repos/{{ lazygit_github_user }}/{{ lazygit_github_repo }}/releases/latest"
@@ -34,11 +34,11 @@
         status_code: 200
         body_format: json
 
-    - name: "LazyGit | Set facts"
+    - name: "Set facts"
       ansible.builtin.set_fact:
         lazygit_latest_version: "{{ lazygit_latest_json.json.tag_name[1:] }}"
 
-    - name: "LazyGit | Install executable"
+    - name: "Install executable"
       become: true
       ansible.builtin.unarchive:
         src: "https://github.com/{{ lazygit_github_user }}/{{ lazygit_github_repo }}/releases/download/v{{ lazygit_latest_version
@@ -51,18 +51,18 @@
           - "lazygit"
         remote_src: true
 
-- name: "LazyGit | Install configuration"
+- name: "Install configuration"
   tags:
     - lazygit
     - git
   block:
-    - name: "LazyGit | Ensure configuration directory exists"
+    - name: "Ensure configuration directory exists"
       ansible.builtin.file:
         path: "{{ lazygit_config_dir }}"
         state: directory
         mode: "0755"
 
-    - name: "LazyGit | Copy configuration"
+    - name: "Copy configuration"
       ansible.builtin.copy:
         src: "config.yml"
         dest: "{{ lazygit_config_dir }}"

@@ -1,5 +1,5 @@
 ---
-- name: "Alacritty | Install dependencies"
+- name: "Install dependencies"
   become: true
   ansible.builtin.package:
     name:
@@ -12,9 +12,9 @@
       - python3
     state: present
 
-- name: "Alacritty | Install Rust package with locked dependencies"
+- name: "Install Rust package with locked dependencies"
   community.general.cargo:
     name: alacritty
     state: latest
     locked: true
-  notify: "Alacritty | Install extras"
+  notify: "Install extras"

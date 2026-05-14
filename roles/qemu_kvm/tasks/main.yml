@@ -1,11 +1,11 @@
 ---
 
-- name: "QEMU-KVM | Check that it is supported by the OS"
+- name: "Check that it is supported by the OS"
   ansible.builtin.assert:
     that:
       - ansible_facts.system == "Linux"
 
-- name: "QEMU-KVM | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -17,7 +17,7 @@
     - virtualization
     - virt
 
-- name: "QEMU-KVM | Install from package manager"
+- name: "Install from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ qemu_kvm_packages }}"
@@ -28,7 +28,7 @@
     - virtualization
     - virt
 
-- name: "QEMU-KVM | Add 'libvirt' group to user"
+- name: "Add 'libvirt' group to user"
   become: true
   ansible.builtin.user:
     name: "{{ ansible_facts.user_id }}"
@@ -40,7 +40,7 @@
     - virtualization
     - virt
 
-- name: "QEMU-KDM | Enable libvirtd service"
+- name: "Enable libvirtd service"
   become: true
   ansible.builtin.systemd:
     name: "libvirtd"

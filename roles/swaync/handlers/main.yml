@@ -1,5 +1,5 @@
 ---
-- name: "Sway Notification Center | Enable service"
+- name: "Enable service"
   become: false
   ansible.builtin.systemd:
     name: "swaync.service"

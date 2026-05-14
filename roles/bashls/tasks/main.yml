@@ -1,5 +1,5 @@
 ---
-- name: "Bash Language Server | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -9,7 +9,7 @@
     - bashls
     - lsp
 
-- name: "Bash Language Server | Install from package manager"
+- name: "Install from package manager"
   become: true
   when: bashls_package is defined
   ansible.builtin.package:
@@ -19,7 +19,7 @@
     - bashls
     - lsp
 
-- name: "Bash Language Server | Install from Node Package Manager"
+- name: "Install from Node Package Manager"
   when: bashls_package is not defined
   community.general.npm:
     name: "{{ bashls_npm_package }}"

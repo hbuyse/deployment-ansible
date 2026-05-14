@@ -1,5 +1,5 @@
 ---
-- name: "Fastfetch | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -7,14 +7,14 @@
       skip: true
   tags: fastfetch
 
-- name: "Fastfetch | Install from package manager"
+- name: "Install from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ fastfetch_packages }}"
   when: fastfetch_packages is defined
   tags: fastfetch
 
-- name: "Fastfetch | Install from sources"
+- name: "Install from sources"
   ansible.builtin.include_tasks:
     file: source.yml
     apply:
@@ -22,14 +22,14 @@
   when: fastfetch_packages is not defined
   tags: fastfetch
 
-- name: "Fastfetch | Ensure config directory exists"
+- name: "Ensure config directory exists"
   ansible.builtin.file:
     path: "{{ fastfetch_config_dir }}"
     state: directory
     mode: "0755"
   tags: fastfetch
 
-- name: "Fastfetch | Copy config file"
+- name: "Copy config file"
   ansible.builtin.template:
     src: "config.jsonc.j2"
     dest: "{{ fastfetch_config_dir }}/config.jsonc"

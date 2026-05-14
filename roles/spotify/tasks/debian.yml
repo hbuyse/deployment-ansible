@@ -1,5 +1,5 @@
 ---
-- name: "Spotify | Add repository"
+- name: "Add repository"
   become: true
   ansible.builtin.deb822_repository:
     name: spotify
@@ -11,7 +11,7 @@
       - non-free
     signed_by: "https://download.spotify.com/debian/pubkey_5384CE82BA52C83A.asc"
 
-- name: "Spotify | Install from package manager"
+- name: "Install from package manager"
   become: true
   ansible.builtin.package:
     name: "spotify-client"

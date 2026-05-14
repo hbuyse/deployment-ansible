@@ -1,5 +1,5 @@
 ---
-- name: "Swayidle | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -7,42 +7,42 @@
       skip: true
   tags: swayidle
 
-- name: "Swayidle | Install packages"
+- name: "Install packages"
   become: true
   ansible.builtin.package:
     name: "{{ swayidle_packages }}"
     state: present
   tags: swayidle
 
-- name: "Swayidle | Install configuration"
+- name: "Install configuration"
   tags: swayidle
   block:
-    - name: "Swayidle | Ensure directory exist"
+    - name: "Ensure directory exist"
       ansible.builtin.file:
         path: "{{ swayidle_config_dir }}"
         state: directory
         mode: "0755"
 
-    - name: "Swayidle | Copy configuration"
+    - name: "Copy configuration"
       ansible.builtin.copy:
         src: "config"
         dest: "{{ swayidle_config_dir }}"
         mode: "0644"
-      notify: "Swayidle | Enable and restart service"
+      notify: "Enable and restart service"
 
-- name: "Swayidle | Install service file"
+- name: "Install service file"
   become: true
   tags: swayidle
   block:
-    - name: "Swayidle | Ensure directory exist"
+    - name: "Ensure directory exist"
       ansible.builtin.file:
         path: "{{ swayidle_service_dir }}"
         state: directory
         mode: "0755"
 
-    - name: "Swayidle | Copy service file"
+    - name: "Copy service file"
       ansible.builtin.copy:
         src: "swayidle.service"
         dest: "{{ swayidle_service_dir }}"
         mode: "0644"
-      notify: "Swayidle | Enable and restart service"
+      notify: "Enable and restart service"

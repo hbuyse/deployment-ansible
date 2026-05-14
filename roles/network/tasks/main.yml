@@ -1,5 +1,5 @@
 ---
-- name: "Network Manager | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -9,7 +9,7 @@
     - networkmanager
     - nmcli
 
-- name: "Network Manager | Install dependencies"
+- name: "Install dependencies"
   become: true
   ansible.builtin.package:
     name: "{{ network_packages }}"
@@ -18,7 +18,7 @@
     - networkmanager
     - nmcli
 
-- name: "Network Manager | Enable service"
+- name: "Enable service"
   become: true
   ansible.builtin.systemd:
     name: "NetworkManager.service"
@@ -28,7 +28,7 @@
     - networkmanager
     - nmcli
 
-- name: "Network Manager | Install ethernet configurations"
+- name: "Install ethernet configurations"
   become: true
   community.general.nmcli:
     type: ethernet
@@ -42,7 +42,7 @@
     - networkmanager
     - nmcli
 
-- name: "Network Manager | Install wifi configurations"
+- name: "Install wifi configurations"
   become: true
   community.general.nmcli:
     type: wifi

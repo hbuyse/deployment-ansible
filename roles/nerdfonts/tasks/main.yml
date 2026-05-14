@@ -1,5 +1,5 @@
 ---
-- name: "Nerdfonts | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -7,7 +7,7 @@
       skip: true
   tags: nerdfonts
 
-- name: "Nerdfonts | Install packages"
+- name: "Install packages"
   become: true
   ansible.builtin.package:
     state: present
@@ -15,11 +15,11 @@
   when: nerdfonts_packages is defined
   tags: nerdfonts
 
-- name: "Nerdfonts | Install from source"
+- name: "Install from source"
   when: nerdfonts_packages is not defined
   tags: nerdfonts
   block:
-    - name: "Nerdfonts | Get latest version number"
+    - name: "Get latest version number"
       register: nerdfonts_latest_json
       ansible.builtin.uri:
         url: "https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest"
@@ -28,12 +28,12 @@
         status_code: 200
         body_format: json
 
-    - name: "Nerdfonts | Set facts"
+    - name: "Set facts"
       ansible.builtin.set_fact:
         nerdfonts_latest_version: "{{ nerdfonts_latest_json.json.tag_name[1:] }}"
       tags: nerdfonts
 
-    - name: "Nerdfonts | Download fonts"
+    - name: "Download fonts"
       ansible.builtin.include_tasks:
         file: font-download.yml
         apply:

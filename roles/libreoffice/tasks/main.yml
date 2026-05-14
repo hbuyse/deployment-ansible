@@ -1,5 +1,5 @@
 ---
-- name: "Libreoffice | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -7,7 +7,7 @@
       skip: true
   tags: libreoffice
 
-- name: "Libreoffice | Include OS specific tasks"
+- name: "Include OS specific tasks"
   ansible.builtin.include_tasks:
     file: "{{ item }}"
     apply:
@@ -18,7 +18,7 @@
       skip: true
   tags: libreoffice
 
-- name: "Libreoffice | Install from package manager"
+- name: "Install from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ libreoffice_packages }}"

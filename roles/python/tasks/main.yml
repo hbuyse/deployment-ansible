@@ -1,5 +1,5 @@
 ---
-- name: "Python | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -7,7 +7,7 @@
       skip: true
   tags: python
 
-- name: "Python | Install packages"
+- name: "Install packages"
   become: true
   ansible.builtin.package:
     name: "{{ python_packages }}"

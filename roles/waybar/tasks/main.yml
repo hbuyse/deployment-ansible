@@ -1,44 +1,44 @@
 ---
-- name: "Waybar | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ ansible_facts.os_family | lower }}.yml"
   tags: waybar
 
-- name: "Waybar | Install packages"
+- name: "Install packages"
   become: true
   ansible.builtin.package:
     name: "{{ waybar_packages }}"
     state: "present"
   tags: waybar
 
-- name: "Waybar | Get version"
+- name: "Get version"
   ansible.builtin.command:
     cmd: "waybar --version"
   register: waybar_version
   changed_when: waybar_version.rc != 0
   tags: waybar
 
-- name: "Waybar | Extract version"
+- name: "Extract version"
   ansible.builtin.set_fact:
     waybar_current_version: "{{ waybar_version.stdout | regex_search('[0-9]+.[0-9]+.[0-9]+') }}"
   tags: waybar
 
-- name: "Waybar | Install service file"
+- name: "Install service file"
   become: true
   tags: waybar
   block:
-    - name: "Waybar | Ensure directories exists"
+    - name: "Ensure directories exists"
       ansible.builtin.file:
         path: "{{ ansible_facts.user_dir }}/.config/systemd/user"
         state: "directory"
         mode: "0755"
 
-    - name: "Waybar | Copy service file"
+    - name: "Copy service file"
       ansible.builtin.copy:
         src: "waybar.service"
         dest: "{{ ansible_facts.user_dir }}/.config/systemd/user"
         mode: "0644"
 
-    - name: "Waybar | Enable service"
+    - name: "Enable service"
       become: false
       ansible.builtin.systemd:
         name: "waybar.service"
@@ -47,31 +47,31 @@
         state: "started"
         scope: "user"
 
-- name: "Waybar | Install configuration files"
+- name: "Install configuration files"
   tags: waybar
-  notify: "Waybar | Restart service"
+  notify: "Restart service"
   block:
-    - name: "Waybar | Ensure directories exists"
+    - name: "Ensure directories exists"
       ansible.builtin.file:
         path: "{{ waybar_config_dir }}"
         state: directory
         mode: "0755"
 
-    - name: "Waybar | Copy static configuration files"
+    - name: "Copy static configuration files"
       ansible.builtin.copy:
         src: "config/"
         dest: "{{ waybar_config_dir }}"
         mode: "preserve"
         directory_mode: "0755"
 
-    - name: "Waybar | Generated CSS"
+    - name: "Generated CSS"
       ansible.builtin.command:
         cmd: "sassc -t expanded {{ role_path }}/files/style.scss {{ waybar_config_dir }}/style.css"
       register: waybar_sassc
       changed_when: waybar_sassc.rc == 0
       failed_when: waybar_sassc.rc != 0
 
-    - name: "Waybar | Copy dynamic configuration files"
+    - name: "Copy dynamic configuration files"
       ansible.builtin.template:
         src: "{{ item }}.j2"
         dest: "{{ waybar_config_dir }}/{{ item }}"
@@ -81,7 +81,7 @@
         - hyprland.jsonc
         - modules.jsonc
 
-- name: "Waybar | Create virtualenv for Python scripts"
+- name: "Create virtualenv for Python scripts"
   ansible.builtin.pip:
     name: "{{ waybar_pip_packages }}"
     state: "present"

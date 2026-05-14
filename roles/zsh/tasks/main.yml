@@ -1,5 +1,5 @@
 ---
-- name: "ZSH | Install shell"
+- name: "Install shell"
   ansible.builtin.include_tasks:
     file: zsh.yml
     apply:
@@ -10,7 +10,7 @@
     - shell
     - zsh
 
-- name: "ZSH | Install oh-my-zsh, its plugins and themes"
+- name: "Install oh-my-zsh, its plugins and themes"
   ansible.builtin.include_tasks:
     file: oh-my-zsh.yml
     apply:
@@ -23,14 +23,14 @@
     - zsh
     - omz
 
-- name: "Shell | Copy configuration file"
+- name: "Copy configuration file"
   tags:
     - shell
     - zsh
     - omz
     - p10k
   block:
-    - name: "Shell | Copy static configuration file"
+    - name: "Copy static configuration file"
       ansible.builtin.copy:
         src: "{{ item }}"
         dest: "{{ ansible_facts.user_dir }}/.{{ item }}"
@@ -43,7 +43,7 @@
         - xprofile
         - Xresources
 
-    - name: "Shell | Copy dynamic configuration file"
+    - name: "Copy dynamic configuration file"
       ansible.builtin.template:
         src: "{{ item }}.j2"
         dest: "{{ ansible_facts.user_dir }}/.{{ item }}"

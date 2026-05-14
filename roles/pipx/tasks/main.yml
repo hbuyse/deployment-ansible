@@ -1,5 +1,5 @@
 ---
-- name: "Pipx | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -7,7 +7,7 @@
       skip: true
   tags: pipx
 
-- name: "Pipx | Install packages"
+- name: "Install packages"
   become: true
   ansible.builtin.package:
     name: "{{ pipx_packages }}"
@@ -15,30 +15,30 @@
   when: pipx_packages is defined
   tags: pipx
 
-- name: "Pipx | Install self-managed Pipx"
+- name: "Install self-managed Pipx"
   tags: pipx
   when: pipx_packages is not defined
   block:
-    - name: "Pipx | Create temporary directory"
+    - name: "Create temporary directory"
       ansible.builtin.tempfile:
         state: "directory"
         suffix: "pipx"
       register: pipx_tmpdir
 
-    - name: "Pipx | Install in temporary venv"  # noqa: package-latest
+    - name: "Install in temporary venv"  # noqa: package-latest
       ansible.builtin.pip:
         name: "pipx"
         state: "latest"
         virtualenv: "{{ pipx_tmpdir.path }}"
-      notify: "Pipx | Remove temporary venv"
+      notify: "Remove temporary venv"
 
-    - name: "Pipx | Install in user space"
+    - name: "Install in user space"
       community.general.pipx:
         name: "pipx"
         state: "latest"
         executable: "{{ pipx_tmpdir.path }}/bin/pipx"
 
-    - name: "Pipx | Upgrade"
+    - name: "Upgrade"
       community.general.pipx:
         name: "pipx"
         state: "latest"

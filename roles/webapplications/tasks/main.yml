@@ -1,5 +1,5 @@
 ---
-- name: "Web Applications | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -7,18 +7,18 @@
       skip: true
   tags: webapplications
 
-- name: "Web Applications | Install from package manager"
+- name: "Install from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ webapplications_packages }}"
     state: present
   tags: webapplications
 
-- name: "Web Applications | Copy desktop files"
+- name: "Copy desktop files"
   tags: webapplications
   become: true
   block:
-    - name: "Web Applications | Ensure applications directory exist"
+    - name: "Ensure applications directory exist"
       ansible.builtin.file:
         path: "{{ ansible_facts.user_dir }}/.local/share/applications"
         state: directory
@@ -26,7 +26,7 @@
         group: "{{ ansible_facts.user_gid }}"
         mode: "0755"
 
-    - name: "Web Applications | Copy desktop files"
+    - name: "Copy desktop files"
       ansible.builtin.template:
         src: "webapp.desktop.j2"
         dest: "{{ ansible_facts.user_dir }}/.local/share/applications/com.{{ item.key | lower }}.webapp.desktop"

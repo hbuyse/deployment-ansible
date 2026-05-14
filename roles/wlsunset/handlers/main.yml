@@ -1,5 +1,5 @@
 ---
-- name: "Wlsunset | Restart service"
+- name: "Restart service"
   ansible.builtin.systemd:
     name: "wlsunset"
     daemon_reload: true

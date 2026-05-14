@@ -1,5 +1,5 @@
 ---
-# - name: "Brightnessctl | Include OS specific variables"
+# - name: "Include OS specific variables"
 #   ansible.builtin.include_vars: "{{ item }}"
 #   with_first_found:
 #     - files:
@@ -7,7 +7,7 @@
 #       skip: true
 #   tags: brightnessctl
 
-- name: "Brightnessctl | Install packages"
+- name: "Install packages"
   become: true
   ansible.builtin.package:
     state: present
@@ -16,7 +16,7 @@
   tags: brightnessctl
 
 # Allow brightnessctl to work without 'sudo'
-- name: "Brightnessctl | Add current user to 'video' group"
+- name: "Add current user to 'video' group"
   become: true
   tags: brightnessctl
   ansible.builtin.user:

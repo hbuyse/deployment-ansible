@@ -1,5 +1,5 @@
 ---
-- name: "Zellij | Include OS specific variables"
+- name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
@@ -7,20 +7,20 @@
       skip: true
   tags: zellij
 
-- name: "Zellij | Install Rust package with locked dependencies"
+- name: "Install Rust package with locked dependencies"
   community.general.cargo:
     name: zellij
     state: latest
     locked: true
   when: zellij_packages is not defined
   tags: zellij
-  notify: "Zellij | Install completion files"
+  notify: "Install completion files"
 
-- name: "Zellij | Install from package manager"
+- name: "Install from package manager"
   when: zellij_packages is defined
   tags: zellij
   block:
-    - name: "Zellij | Include OS specific tasks"
+    - name: "Include OS specific tasks"
       ansible.builtin.include_tasks:
         file: "{{ item }}"
         apply:
@@ -30,38 +30,38 @@
             - "{{ ansible_facts.os_family | lower }}.yml"
           skip: true
 
-    - name: "Zellij | Install from package manager"
+    - name: "Install from package manager"
       become: true
       ansible.builtin.package:
         name: "{{ zellij_packages }}"
         state: present
-      notify: "Zellij | Install completion files"
+      notify: "Install completion files"
 
-- name: "Zellij | Copy configuration files"
+- name: "Copy configuration files"
   tags: zellij
   block:
-    - name: "Zellij | Ensure config directory exist"
+    - name: "Ensure config directory exist"
       ansible.builtin.file:
         path: "{{ zellij_config_dir }}"
         state: directory
         mode: "0755"
 
-    - name: "Zellij | Copy files"
+    - name: "Copy files"
       ansible.builtin.copy:
         src: "{{ role_path }}/files/"
         dest: "{{ zellij_config_dir }}"
         mode: "0644"
 
-- name: "Zellij | Install plugins"
+- name: "Install plugins"
   tags: zellij
   block:
-    - name: "Zellij | Ensure plugins directory exist"
+    - name: "Ensure plugins directory exist"
       ansible.builtin.file:
         path: "{{ zellij_plugins_dir }}"
         state: directory
         mode: "0755"
 
-    - name: "Zellij | Install plugins"
+    - name: "Install plugins"
       ansible.builtin.include_tasks: install-plugin.yml
       loop:
         - name: zjswitcher
