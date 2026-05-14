@@ -8,7 +8,7 @@ themes_matcha_enable: true
 themes_matcha_github_user: "vinceliuice"
 themes_matcha_github_repo: "Matcha-gtk-theme"
 
-themes_catppuccin_enable: true
+themes_catppuccin_enable: false
 themes_catppuccin_github_user: "Fausto-Korpsvart"
 themes_catppuccin_github_repo: "Catppuccin-GTK-Theme"
 
