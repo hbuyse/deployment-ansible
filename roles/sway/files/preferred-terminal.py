@@ -11,7 +11,9 @@ TERMINALS = [
     },
     {
         "name": "ghostty",
-        "env": {"GTK_IM_SIMPLE": "simple"},
+        "env": {
+            "GTK_IM_MODULE": "simple",
+        },
         "run_cmd_args": "-e",
     },
     {
