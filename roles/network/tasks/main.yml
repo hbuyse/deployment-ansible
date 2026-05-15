@@ -18,7 +18,7 @@
     - networkmanager
     - nmcli
 
-- name: "Enable service"
+- name: "Enable NetworkManager service"
   become: true
   ansible.builtin.systemd:
     name: "NetworkManager.service"

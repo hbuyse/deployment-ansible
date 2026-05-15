@@ -37,7 +37,7 @@
         src: "{{ item.src }}"
         dest: "{{ kanshi_config_dir }}"
         mode: "{{ item.mode }}"
-      notify: "Enable and restart service"
+      notify: "Enable and restart kanshi service"
       loop:
         - src: "config"
           mode: "0644"
@@ -63,7 +63,7 @@
         src: "{{ item }}"
         dest: "{{ kanshi_config_dir }}/config.d/{{ item | replace('.j2', '') }}"
         mode: "0644"
-      notify: "Enable and restart service"
+      notify: "Enable and restart kanshi service"
       loop:
         - "home.j2"
         - "one-screen.j2"
@@ -73,7 +73,7 @@
         src: "{{ item }}"
         dest: "{{ kanshi_config_dir }}/config.d/{{ item | replace('.j2', '') }}"
         mode: "0644"
-      notify: "Enable and restart service"
+      notify: "Enable and restart kanshi service"
       loop:
         - "work-com.j2"
         - "work.j2"
@@ -97,4 +97,4 @@
         dest: "{{ kanshi_systemd_dir }}"
         mode: "0644"
       tags: kanshi
-      notify: "Enable and restart service"
+      notify: "Enable and restart kanshi service"

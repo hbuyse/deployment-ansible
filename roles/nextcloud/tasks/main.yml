@@ -41,11 +41,4 @@
         src: "nextcloud.service"
         dest: "{{ ansible_facts.user_dir }}/.config/systemd/user"
         mode: "0644"
-
-    - name: "Enable service"
-      become: false
-      ansible.builtin.systemd:
-        name: "nextcloud"
-        daemon_reload: true
-        enabled: true
-        scope: "user"
+      notify: "Enable and restart nextcloud service"

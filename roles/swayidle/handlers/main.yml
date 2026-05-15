@@ -1,5 +1,5 @@
 ---
-- name: "Enable and restart service"
+- name: "Enable and restart swayidle service"
   become: false
   ansible.builtin.systemd:
     name: "swayidle"
