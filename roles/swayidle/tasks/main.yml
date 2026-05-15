@@ -28,10 +28,9 @@
         src: "config"
         dest: "{{ swayidle_config_dir }}"
         mode: "0644"
-      notify: "Enable and restart service"
+      notify: "Enable and restart swayidle service"
 
 - name: "Install service file"
-  become: true
   tags: swayidle
   block:
     - name: "Ensure directory exist"
@@ -45,4 +44,4 @@
         src: "swayidle.service"
         dest: "{{ swayidle_service_dir }}"
         mode: "0644"
-      notify: "Enable and restart service"
+      notify: "Enable and restart swayidle service"

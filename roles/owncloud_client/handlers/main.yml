@@ -1,5 +1,5 @@
 ---
-- name: "Restart service"
+- name: "Restart owncloud client service"
   ansible.builtin.systemd:
     name: "owncloud-client"
     enabled: true

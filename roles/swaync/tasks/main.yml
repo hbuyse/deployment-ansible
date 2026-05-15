@@ -9,7 +9,7 @@
     name: "{{ swaync_packages }}"
     state: "present"
   tags: swaync
-  notify: "Enable service"
+  notify: "Enable and restart swaync service"
 
 - name: "Get version"
   ansible.builtin.command:
@@ -38,11 +38,11 @@
         src: "swaync.service.j2"
         dest: "{{ ansible_facts.user_dir }}/.config/systemd/user/swaync.service"
         mode: "0644"
-      notify: "Enable service"
+      notify: "Enable and restart swaync service"
 
 - name: "Install configuration files"
   tags: swaync
-  notify: "Enable service"
+  notify: "Enable and restart swaync service"
   block:
     - name: "Ensure directories exists"
       ansible.builtin.file:

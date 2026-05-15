@@ -37,4 +37,4 @@
         src: "wlsunset.service.j2"
         dest: "{{ ansible_facts.user_dir }}/.config/systemd/user/wlsunset.service"
         mode: "0644"
-      notify: "Restart service"
+      notify: "Restart wlsunset service"
