@@ -19,3 +19,7 @@ indent_size = 2
 [*.{scss,css}]
 indent_style = space
 indent_size = 2
+
+[roles/wireplumber/files/main.lua.d/*.lua]
+indent_style = space
+indent_size = 2

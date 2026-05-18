@@ -4,11 +4,11 @@
 local rule = {
   matches = {
     {
-      { 'device.nick', 'equals', 'WD19 Dock' },
+      { "device.nick", "equals", "WD19 Dock" },
     },
   },
   apply_properties = {
-    ['device.disabled'] = true,
+    ["device.disabled"] = true,
   },
 }
 
