@@ -37,11 +37,15 @@
         src: "waybar.service"
         dest: "{{ ansible_facts.user_dir }}/.config/systemd/user/waybar-user.service"
         mode: "0644"
-      notify: "Restart waybar service"
+      notify:
+        - "Disable 'waybar' service"
+        - "Restart 'waybar-user' service"
 
 - name: "Install configuration files"
   tags: waybar
-  notify: "Restart waybar service"
+  notify:
+    - "Disable 'waybar' service"
+    - "Restart 'waybar-user' service"
   block:
     - name: "Ensure directories exists"
       ansible.builtin.file:
