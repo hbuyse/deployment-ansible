@@ -1,2 +1,2 @@
 ---
-nerdfonts_packages: " {{ nerdfonts_list | map('lower') | map('regex_replace', '^(.*)$', 'ttf-\\1-nerd') | list }}"
+nerdfonts_packages: "{{ nerdfonts_list | map('lower') | map('regex_replace', '^(.*)$', 'ttf-\\1-nerd') | list }}"
