@@ -8,6 +8,9 @@ clipboard-read = allow
 background-opacity = 0.99
 theme = catppuccin-mocha.conf
 
+# Toast notifications
+app-notifications = no-clipboard-copy,config-reload
+
 # Do not show links at the bottom of the terminal
 link-previews = false
 
