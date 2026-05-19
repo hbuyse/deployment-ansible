@@ -27,8 +27,8 @@
     update_cache: true
   tags: ghostty
   notify:
-    - "Ghostty | Enable service"
-    - "Ghostty | Start service"
+    - "Enable ghostty service"
+    - "Start ghostty service"
 
 - name: "Copy configuration"
   tags: ghostty
