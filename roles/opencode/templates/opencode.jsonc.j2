@@ -1,0 +1,6 @@
+{
+    "$schema": "https://opencode.ai/config.json",
+    "default_agent": "plan",
+    "enabled_providers": {{ opencode_providers.keys() | list | ansible.builtin.to_json }},
+    "provider": {{ opencode_providers | ansible.builtin.to_nice_json(sort_keys=False) }}
+}

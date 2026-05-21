@@ -37,3 +37,4 @@
     - role: "docker"
     - role: "podman"
     - role: "pre_commit"
+    - role: "opencode"

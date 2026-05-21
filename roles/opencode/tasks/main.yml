@@ -1,0 +1,45 @@
+---
+- name: "Install from Node Package Manager"
+  community.general.npm:
+    name: "{{ opencode_npm_package }}"
+    global: true
+    state: latest
+    production: true
+    no_optional: true
+  tags:
+    - opencode
+    - ai
+
+- name: "Copy configuration"
+  tags:
+    - opencode
+    - ai
+  block:
+    - name: "Ensure configuration directory exists"
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: "directory"
+        mode: "0755"
+      loop:
+        - "{{ opencode_config_dir }}"
+        - "{{ opencode_agents_dir }}"
+
+    - name: "Copy static configuration files"
+      ansible.builtin.copy:
+        src: "tui.jsonc"
+        dest: "{{ opencode_config_dir }}"
+        mode: "0644"
+
+    - name: "Copy Opencode configuration file"
+      ansible.builtin.template:
+        src: "opencode.jsonc.j2"
+        dest: "{{ opencode_config_dir }}/opencode.jsonc"
+        mode: "0644"
+      when: opencode_providers is defined
+
+    - name: "Copy Opencode agent files"
+      ansible.builtin.template:
+        src: "agents/review.md.j2"
+        dest: "{{ opencode_agents_dir }}/review.md"
+        mode: "0644"
+      when: opencode_code_review_model is defined
