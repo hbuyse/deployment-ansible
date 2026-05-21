@@ -8,6 +8,9 @@ clipboard-read = allow
 background-opacity = 0.99
 theme = catppuccin-mocha.conf
 
+# Configures the low-level API to use for async IO, eventing, etc
+async-backend = epoll
+
 # Toast notifications
 app-notifications = no-clipboard-copy,config-reload
 
@@ -33,3 +36,6 @@ window-inherit-working-directory = false
 tab-inherit-working-directory = false
 split-inherit-working-directory = true
 window-inherit-font-size = true
+
+# Shell features
+shell-integration-features = ssh-env
