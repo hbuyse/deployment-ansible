@@ -31,6 +31,12 @@ if [ -d "/opt/luals/bin" ]; then
     PATH=$PATH:"/opt/luals/bin"
 fi
 
+{% if ansible_facts.hostname == "hbuyse-promax14" %}
+if [ -d "${HOME}/work/arcanist" ]; then
+    PATH="${PATH}:${HOME}/work/arcanist/bin"
+fi
+{% endif %}
+
 export PATH {% if ansible_facts.system | lower == "linux" %}DOCKER_HOST{% endif %}
 
 #  vim: set ts=4 sw=4 tw=0 noet ft=sh :
