@@ -46,6 +46,7 @@
     - role: "jsonls"
     - role: "luals"
     - role: "markdownls"
+    - role: "neocmakelsp"
     - role: "perlnavigator"
     - role: "pyright"
     - role: "ruff"
