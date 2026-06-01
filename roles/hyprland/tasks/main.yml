@@ -27,7 +27,7 @@
   block:
     - name: "Ensure configuration directory exists"
       ansible.builtin.file:
-        path: "{{ hyprland_config_dir}}"
+        path: "{{ hyprland_config_dir }}"
         state: directory
         mode: "0755"
 
