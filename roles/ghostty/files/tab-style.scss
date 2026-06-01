@@ -1,14 +1,14 @@
-/* -------------------------------------------------
-   Debug :   env GTK_DEBUG=interactive ghostty
-   Docs  :   https://docs.gtk.org/gtk4/css-overview.html
-             https://docs.gtk.org/gtk4/css-properties.html
-   ------------------------------------------------- */
+/*
+ * Debug :   env GTK_DEBUG=interactive ghostty
+ * Docs  :   https://docs.gtk.org/gtk4/css-overview.html
+ *           https://docs.gtk.org/gtk4/css-properties.html
+ */
 
-$bg-dark: #1a1a1a; // tabbox background
-$bg-selected: #2d2d2d; // selected tab background
-$color-default: #9ca3af; // tabs text color
-$color-selected: #ffffff; // selected tab text color
-$border-color: #374151; // tabs right border
+$bg-dark: #1e1e2e; // tabbox background
+$bg-selected: #313244; // selected tab background
+$color-default: #a6adc8; // tabs text color
+$color-selected: #cdd6f4; // selected tab text color
+$border-color: #6c7086; // tabs right border
 $header-height: 24px;
 $tabbox-height: 10px;
 $font-mono: monospace;
