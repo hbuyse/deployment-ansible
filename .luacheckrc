@@ -1,5 +1,5 @@
 std = 'max'
-globals = { 'vim', 'Snacks' }
+globals = { 'vim', 'Snacks', 'hl' }
 read_globals = { 'alsa_monitor' }
 
 -- "String" lines have their line ending inside a string, typically a long string using [[...]] syntax.

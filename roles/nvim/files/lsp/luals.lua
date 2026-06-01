@@ -22,7 +22,7 @@ return {
       },
       diagnostics = {
         enable = true,
-        globals = { 'vim', 'Snacks' },
+        globals = { 'vim', 'Snacks', 'hl' },
       },
       workspace = {
         checkThirdParty = false,
@@ -30,6 +30,7 @@ return {
           vim.env.VIMRUNTIME,
           '${3rd}/luv/library',
           -- "${3rd}/busted/library",
+          '/usr/share/hypr/stubs',
         },
         -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
         -- library = vim.api.nvim_get_runtime_file("", true)

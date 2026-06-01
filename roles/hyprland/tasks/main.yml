@@ -1,0 +1,42 @@
+---
+- name: "Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_facts.os_family | lower }}.yml"
+      skip: true
+  tags: hyprland
+
+- name: "Install repository [Debian]"
+  ansible.builtin.include_tasks:
+    file: debian.yml
+    apply:
+      tags: hyprland
+  when: ansible_facts.os_family == 'Debian'
+  tags: hyprland
+
+- name: "Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ hyprland_packages }}"
+    state: present
+  tags: hyprland
+
+- name: "Copy hyprland configuration"
+  tags: hyprland
+  block:
+    - name: "Ensure configuration directory exists"
+      ansible.builtin.file:
+        path: "{{ hyprland_config_dir}}"
+        state: directory
+        mode: "0755"
+
+  # - name: "Copy hyprland configuration"
+  #   ansible.builtin.copy:
+  #     src: "{{ item }}"
+  #     dest: "{{ ansible_facts.user_dir }}/.config/hyprland"
+  #     mode: "0644"
+  #   loop:
+  #     - config
+  #     - attributes
+  #     - hyprlandk

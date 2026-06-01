@@ -1,0 +1,17 @@
+---
+- name: "Add PPA"
+  become: true
+  ansible.builtin.deb822_repository:
+    name: cppiber-hyprland
+    enabled: true
+    types: deb
+    uris: "https://ppa.launchpadcontent.net/cppiber/hyperland/ubuntu"
+    suites: "{{ ansible_facts.distribution_release | lower }}"
+    signed_by: "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xa54d23b62ff3fcc76eff71e8fdbaaa1cf0ccf48e"
+    components:
+      - main
+
+- name: "Update APT cache"
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
