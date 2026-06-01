@@ -38,6 +38,9 @@ tabbar {
       &:selected {
         background-color: $bg-selected;
         color: $color-selected;
+        label {
+          font-weight: bold;
+        }
       }
 
       // Tab label
