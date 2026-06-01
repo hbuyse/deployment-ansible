@@ -11,8 +11,8 @@ $color-selected: #cdd6f4; // selected tab text color
 $border-color: #6c7086; // tabs right border
 $header-height: 24px;
 $tabbox-height: 10px;
-$font-mono: monospace;
-$font-size-label: 10px;
+$font-mono: "Iosevka Nerd Font Mono, Hack Nerd Font Mono, monospace";
+$font-size-label: 12px;
 
 headerbar {
   min-height: $header-height;
