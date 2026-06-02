@@ -37,3 +37,4 @@
     - role: "lazygit"
     - role: "direnv"
     - role: "minicom"
+    - role: "btop"

@@ -1,0 +1,6 @@
+---
+btop_config_dir: "{{ ansible_facts.user_dir }}/.config/btop"
+btop_themes_dir: "{{ btop_config_dir }}/themes"
+
+btop_catppuccin_gh_user: "catppuccin"
+btop_catppuccin_gh_repo: "btop"

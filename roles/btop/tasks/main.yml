@@ -1,0 +1,73 @@
+---
+- name: "Include OS specific variables"
+  ansible.builtin.include_vars: "{{ ansible_facts.os_family | lower }}.yml"
+  tags: btop
+
+- name: "Install packages"
+  become: true
+  ansible.builtin.package:
+    name: "{{ btop_packages }}"
+    state: "present"
+  when: btop_packages is defined
+  tags: btop
+
+- name: "Ensure configuration directories exist"
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: "directory"
+    mode: "0755"
+  loop:
+    - "{{ btop_config_dir }}"
+    - "{{ btop_themes_dir }}"
+  tags: btop
+
+- name: "Copy configuration files"
+  tags: btop
+  block:
+    - name: "Ensure configuration directories exist"
+      ansible.builtin.file:
+        path: "{{ btop_config_dir }}"
+        state: "directory"
+        mode: "0755"
+
+    - name: "Copy configuration files"
+      ansible.builtin.copy:
+        src: "btop.conf"
+        dest: "{{ btop_config_dir }}"
+        mode: "0644"
+
+- name: "Download catppuccin themes"
+  tags: btop
+  block:
+    - name: "Get latest version number"
+      register: btop_latest_json
+      ansible.builtin.uri:
+        url: "https://api.github.com/repos/{{ btop_catppuccin_gh_user }}/{{ btop_catppuccin_gh_repo }}/releases/latest"
+        method: GET
+        return_content: true
+        status_code: 200
+        body_format: json
+
+    - name: "Set facts"
+      ansible.builtin.set_fact:
+        btop_latest_version: "{{ btop_latest_json.json.tag_name }}"
+
+    - name: "Ensure themes directory exist"
+      ansible.builtin.file:
+        path: "{{ btop_themes_dir }}"
+        state: "directory"
+        mode: "0755"
+
+    - name: "Install Catppuccin themes"
+      ansible.builtin.unarchive:
+        src: "https://github.com/{{ btop_catppuccin_gh_user }}/{{ btop_catppuccin_gh_repo }}/releases/download/{{ btop_latest_version
+          }}/themes.tar.gz"
+        dest: "{{ btop_themes_dir }}"
+        # mode: "0644"
+        owner: "{{ ansible_facts.user_uid }}"
+        group: "{{ ansible_facts.user_gid }}"
+        include:
+          - "themes"
+        extra_opts:
+          - "--strip-components=1"
+        remote_src: true
