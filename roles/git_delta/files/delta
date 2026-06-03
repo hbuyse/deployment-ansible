@@ -1,3 +1,5 @@
+;  vim: set ts=4 sw=4 tw=0 et ft=gitconfig :
+
 [include]
 path = themes/catppuccin.conf
 path = themes/themes.conf
@@ -17,5 +19,3 @@ blame-timestamp-output-format = %d/%m/%Y %H:%M
 # author left aligned - columns on 20 characters but show only the first 18 characters
 # commit left aligned - columns on 13 characters
 blame-format = "{timestamp:<18} {author:<20.18} {commit:<13}"
-
-;  vim: set ts=4 sw=4 tw=0 et ft=gitconfig :
