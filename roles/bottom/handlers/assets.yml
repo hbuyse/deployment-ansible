@@ -20,7 +20,7 @@
   loop:
     - completion
     - manpage
-  notify: "Remove downloaded archives"
+  notify: "Remove bottom downloaded archives"
 
 - name: "Install completion shell files"
   ansible.builtin.include_tasks:

@@ -15,7 +15,7 @@
   when: bottom_packages is not defined
   tags: bottom
   notify:
-    - "Bottom | Install assets"
+    - "Install bottom assets"
 
 - name: "Install from package manager"
   become: true
