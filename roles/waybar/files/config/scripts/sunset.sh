@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 send_signal() {
     pkill -x -SIGRTMIN+6 'waybar'
