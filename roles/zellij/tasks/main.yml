@@ -14,7 +14,7 @@
     locked: true
   when: zellij_packages is not defined
   tags: zellij
-  notify: "Install completion files"
+  notify: "Install zellij completion files"
 
 - name: "Install from package manager"
   when: zellij_packages is defined
@@ -35,7 +35,7 @@
       ansible.builtin.package:
         name: "{{ zellij_packages }}"
         state: present
-      notify: "Install completion files"
+      notify: "Install zellij completion files"
 
 - name: "Copy configuration files"
   tags: zellij
