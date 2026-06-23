@@ -1,8 +1,8 @@
 ---
-- name: "Install completions and manpage"
+- name: "Install eza completions and manpage"
   ansible.builtin.include_tasks: extras.yml
 
-- name: "Remove downloaded archives"
+- name: "Remove eza downloaded archives"
   ansible.builtin.file:
     path: "/tmp/{{ item }}-{{ eza_latest_version }}.tar.gz"
     state: absent
