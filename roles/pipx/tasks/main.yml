@@ -30,7 +30,7 @@
         name: "pipx"
         state: "latest"
         virtualenv: "{{ pipx_tmpdir.path }}"
-      notify: "Remove temporary venv"
+      notify: "Remove pipx temporary venv"
 
     - name: "Install in user space"
       community.general.pipx:

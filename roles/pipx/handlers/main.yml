@@ -1,5 +1,5 @@
 ---
-- name: "Remove temporary venv"
+- name: "Remove pipx temporary venv"
   ansible.builtin.file:
     path: "{{ pipx_tmpdir.path }}"
     state: "absent"
