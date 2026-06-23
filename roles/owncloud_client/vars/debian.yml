@@ -2,4 +2,4 @@
 owncloud_client_packages:
   - owncloud-client
 
-owncloud_client_version: "latest"
+owncloud_client_debian_version: "6.0"
