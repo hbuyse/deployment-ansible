@@ -1,13 +1,13 @@
 ---
-- name: "Remove downloaded archives"
+- name: "Remove bat downloaded archives"
   ansible.builtin.file:
     path: "/tmp/{{ bat_archive_fullname }}"
     state: absent
 
-- name: "Install assets"
+- name: "Install bat assets"
   ansible.builtin.include_tasks: assets.yml
 
-- name: "Rebuild cache"
+- name: "Rebuild bat cache"
   ansible.builtin.command: "bat cache --build"
   register: bat_out
   changed_when: bat_out.rc != 0

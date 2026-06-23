@@ -19,7 +19,7 @@
     url: "https://github.com/sharkdp/bat/releases/download/v{{ bat_latest_version }}/{{ bat_archive_fullname }}"
     dest: "/tmp/"
     mode: "0644"
-  notify: "Remove downloaded archives"
+  notify: "Remove bat downloaded archives"
 
 - name: "Install completion shell files"
   ansible.builtin.include_tasks:
