@@ -17,7 +17,7 @@
     state: directory
     suffix: _matcha_gtk_theme
   register: themes_matcha_tmpdir
-  notify: "Remove temporary directory"
+  notify: "Remove matcha temporary directory"
 
 - name: "Decompress archive"
   ansible.builtin.unarchive:

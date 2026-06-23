@@ -4,7 +4,7 @@
     state: directory
     suffix: _vimix_gtk_theme
   register: themes_vimix_tmpdir
-  notify: "Remove temporary directory"
+  notify: "Remove vimix temporary directory"
 
 - name: "Decompress archive"
   ansible.builtin.unarchive:
