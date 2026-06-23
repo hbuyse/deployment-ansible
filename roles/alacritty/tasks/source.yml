@@ -17,4 +17,4 @@
     name: alacritty
     state: latest
     locked: true
-  notify: "Install extras"
+  notify: "Install alacritty extras"
