@@ -1,3 +1,5 @@
 ---
 owncloud_client_packages:
   - owncloud-client
+
+owncloud_client_version: "latest"
