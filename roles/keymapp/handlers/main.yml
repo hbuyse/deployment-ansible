@@ -1,5 +1,5 @@
 ---
-- name: "Remove downloaded archive"
+- name: "Remove keymapp downloaded archive"
   ansible.builtin.file:
     path: "/tmp/keymapp-latest.tar.gz"
     state: "absent"
