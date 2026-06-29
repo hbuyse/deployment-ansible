@@ -1,0 +1,44 @@
+---
+- name: "Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_facts.os_family | lower }}.yml"
+      skip: true
+  tags:
+    - ripgrep
+
+- name: "Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ yq_packages }}"
+  when: yq_packages is defined
+  tags:
+    - yq
+
+- name: "Install from source"
+  tags: yq
+  when: yq_packages is not defined
+  block:
+    - name: "Get latest version number"
+      register: yq_latest_json
+      ansible.builtin.uri:
+        url: "https://api.github.com/repos/{{ yq_github_user }}/{{ yq_github_repo }}/releases/latest"
+        method: GET
+        return_content: true
+        status_code: 200
+        body_format: json
+
+    - name: "Set facts"
+      ansible.builtin.set_fact:
+        yq_latest_version: "{{ yq_latest_json.json.tag_name }}"
+
+    - name: "Install executable"
+      ansible.builtin.get_url:
+        url: "https://github.com/{{ yq_github_user }}/{{ yq_github_repo }}/releases/download/{{ yq_latest_version }}/yq_{{
+          ansible_facts.system | lower }}_{{ alt_arch }}"
+        dest: "{{ yq_install_bin_dir }}/yq"
+        owner: "{{ ansible_facts.user_uid }}"
+        group: "{{ ansible_facts.user_gid }}"
+        mode: "0755"
+      notify: "Download manpages for yq"

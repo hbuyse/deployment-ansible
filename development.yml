@@ -40,6 +40,7 @@
     - role: "opencode"
     - role: "ansiblels"
     - role: "jq"
+    - role: "yq"
     - role: "bashls"
     - role: "composels"
     - role: "cssls"
