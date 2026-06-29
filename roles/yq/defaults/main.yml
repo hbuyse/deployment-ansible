@@ -1,0 +1,6 @@
+---
+yq_install_bin_dir: "{{ ansible_facts.user_dir }}/.local/bin"
+yq_install_man_dir: "{{ ansible_facts.user_dir }}/.local/share/man/man1"
+
+yq_github_user: "mikefarah"
+yq_github_repo: "yq"

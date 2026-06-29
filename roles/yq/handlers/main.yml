@@ -1,0 +1,11 @@
+---
+- name: "Download manpages for yq"
+  ansible.builtin.unarchive:
+    src: "https://github.com/{{ yq_github_user }}/{{ yq_github_repo }}/releases/download/{{ yq_latest_version }}/yq_man_page_only.tar.gz"
+    dest: "{{ yq_install_man_dir }}"
+    owner: "{{ ansible_facts.user_uid }}"
+    group: "{{ ansible_facts.user_gid }}"
+    mode: "0644"
+    include:
+      - "yq.1"
+    remote_src: true
