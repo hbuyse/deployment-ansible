@@ -1,0 +1,16 @@
+---
+- name: "Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_facts.os_family | lower }}.yml"
+      skip: true
+  tags: pre-commit
+
+- name: "Install packages"
+  become: true
+  ansible.builtin.package:
+    name: "{{ jq_packages }}"
+    state: "present"
+  when: jq_packages is defined
+  tags: jq

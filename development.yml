@@ -39,6 +39,7 @@
     - role: "pre_commit"
     - role: "opencode"
     - role: "ansiblels"
+    - role: "jq"
     - role: "bashls"
     - role: "composels"
     - role: "cssls"
