@@ -62,10 +62,6 @@ HIST_STAMPS="dd.mm.yyyy"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-in_chroot() {
-    [ "$(awk '$5=="/" {print $1}' </proc/1/mountinfo)" != "$(awk '$5=="/" {print $1}' </proc/$$/mountinfo)" ] && return 0 || return 1;
-}
-
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
@@ -81,16 +77,15 @@ plugins+=(sudo)
 plugins+=(docker)
 plugins+=(docker-compose)
 plugins+=(lxd)
-if ! in_chroot; then
-	plugins+=(direnv)
-	plugins+=(fzf)
-	plugins+=(pyenv)
-	plugins+=(virtualenv)
-	plugins+=(virtualenvwrapper)
-	plugins+=(poetry)
-	plugins+=(rust)
-	plugins+=(eza)
-fi
+plugins+=(direnv)
+plugins+=(fzf)
+plugins+=(pyenv)
+plugins+=(virtualenv)
+plugins+=(virtualenvwrapper)
+plugins+=(poetry)
+plugins+=(rust)
+plugins+=(eza)
+plugins+=(aws)
 
 # Custom oh-my-zsh plugins
 plugins+=(you-should-use)
