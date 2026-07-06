@@ -1,5 +1,5 @@
 ---
-- name: "Install completions"
+- name: "Install ripgrep completions"
   ansible.builtin.include_tasks:
     file: completions.yml
   loop:

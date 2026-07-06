@@ -12,7 +12,7 @@
     name: eza
     state: latest
     locked: true
-  notify: "Install completions and manpage"
+  notify: "Install eza completions and manpage"
   when: eza_packages is not defined
   tags: eza
 

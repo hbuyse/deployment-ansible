@@ -17,7 +17,7 @@
     state: "directory"
     mode: "0755"
   notify:
-    - "Yazi | Download Catppuccin Mocha theme (peach variant)"
+    - "Download Yazi Catppuccin Mocha theme (peach variant)"
   tags: yazi
 
 - name: "Copy configuration files"

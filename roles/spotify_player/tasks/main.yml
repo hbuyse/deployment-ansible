@@ -35,8 +35,8 @@
         locked: true
         features: "{{ spotify_player_features }}"
       notify:
-        - "Spotify Player | Install zsh completion file"
-        - "Spotify Player | Install bash completion file"
+        - "Install spotify-player zsh completion file"
+        - "Install spotify-player bash completion file"
 
 - name: "Install from package manager"  # noqa: package-latest
   become: true
@@ -46,8 +46,8 @@
   when: spotify_player_packages is defined
   tags: spotify_player
   notify:
-    - "Spotify Player | Install zsh completion file"
-    - "Spotify Player | Install bash completion file"
+    - "Install spotify-player zsh completion file"
+    - "Install spotify-player bash completion file"
 
 - name: "Copy configuration files"
   tags: spotify_player

@@ -1,6 +1,5 @@
 ---
-- name: "Enable service"
-  become: false
+- name: "Enable and restart swaync service"
   ansible.builtin.systemd:
     name: "swaync.service"
     daemon_reload: true

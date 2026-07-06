@@ -13,7 +13,7 @@
     state: latest
     locked: true
   notify:
-    - "Bat | Install assets"
+    - "Install bat assets"
   when: bat_packages is not defined
   tags: bat
 
@@ -59,4 +59,4 @@
         - Mocha
         - Latte
         - Macchiato
-      notify: "Rebuild cache"
+      notify: "Rebuild bat cache"

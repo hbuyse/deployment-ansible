@@ -21,7 +21,7 @@
   loop:
     - completions
     - man
-  notify: "Remove downloaded archives"
+  notify: "Remove eza downloaded archives"
 
 - name: "Install completion shell files"
   ansible.builtin.include_tasks:

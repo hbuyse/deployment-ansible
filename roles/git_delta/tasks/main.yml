@@ -28,7 +28,7 @@
   tags:
     - git
     - git-delta
-  notify: "Install completion files"
+  notify: "Install git-delta completion files"
 
 - name: "Install configuration"
   tags:

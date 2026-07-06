@@ -20,7 +20,7 @@
     url: "https://oryx.nyc3.cdn.digitaloceanspaces.com/keymapp/keymapp-latest.tar.gz"
     dest: "/tmp/"
     mode: "0644"
-  notify: "Remove downloaded archive"
+  notify: "Remove keymapp downloaded archive"
   tags: keymapp
 
 - name: "Ensure directory exist"

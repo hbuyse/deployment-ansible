@@ -13,7 +13,7 @@
     name: ripgrep
     state: latest
     locked: true
-  notify: "Install completions"
+  notify: "Install ripgrep completions"
   tags: ripgrep
   when: ripgrep_packages is not defined
 

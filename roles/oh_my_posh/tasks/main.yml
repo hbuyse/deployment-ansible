@@ -26,7 +26,7 @@
     mode: "0755"
     owner: "{{ ansible_facts.user_uid }}"
     group: "{{ ansible_facts.user_gid }}"
-  notify: "Clear cache"
+  notify: "Clear oh-my-posh cache"
   tags:
     - oh_my_posh
     - shell
@@ -45,7 +45,7 @@
     src: "config.omp.yaml"
     dest: "{{ ansible_facts.user_dir }}/.config/oh-my-posh"
     mode: "0644"
-  notify: "Clear cache"
+  notify: "Clear oh-my-posh cache"
   tags:
     - oh_my_posh
     - shell

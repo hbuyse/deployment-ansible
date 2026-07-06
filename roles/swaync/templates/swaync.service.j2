@@ -1,8 +1,8 @@
 [Unit]
 Description=Swaync notification daemon
 Documentation=https://github.com/ErikReider/SwayNotificationCenter
-PartOf=wayland-session.target
-After=wayland-session.target
+PartOf=sway-session.target
+After=sway-session.target
 # ConditionEnvironment requires systemd v247 to work correctly
 ConditionEnvironment=WAYLAND_DISPLAY
 
@@ -19,5 +19,5 @@ Restart=on-failure
 RestartSec=5
 
 [Install]
-WantedBy=wayland-session.target
+WantedBy=sway-session.target
 ;  vim: set ts=4 sw=4 tw=0 noet ft=systemd :
