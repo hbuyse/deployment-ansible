@@ -37,6 +37,13 @@ if [ -d "${HOME}/work/arcanist" ]; then
 fi
 {% endif %}
 
+{% if ansible_facts.hostname == "hbuyse-promax14" %}
+PERL5_LIB="${HOME}/.local/lib/perl5"
+PERL_MB_OPT="--install_base \"${PERL5_LIB}\""
+PERL_MM_OPT="INSTALL_BASE=${PERL5_LIB}"
+export PERL_MB_OPT PERL_MM_OPT
+{% endif %}
+
 export PATH {% if ansible_facts.system | lower == "linux" %}DOCKER_HOST{% endif %}
 
 #  vim: set ts=4 sw=4 tw=0 noet ft=sh :
