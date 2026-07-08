@@ -9,3 +9,9 @@ bash ./install.sh
 ```
 
 > [!WARNING] Do not forget to specify some variables in the host_vars/localhost.yml file
+
+## Troubleshooting
+
+```sh
+ANSIBLE_STDOUT_CALLBACK=default ansible-playbook -K --vault-password-file=~/.ansible-pass.txt <playbook>.yml -vv
+```
