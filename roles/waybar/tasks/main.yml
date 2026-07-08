@@ -23,23 +23,32 @@
   tags: waybar
 
 - name: "Install service file"
-  become: true
   tags: waybar
   block:
     - name: "Ensure directories exists"
       ansible.builtin.file:
-        path: "{{ ansible_facts.user_dir }}/.config/systemd/user"
+        path: "{{ waybar_systemd_dir }}"
         state: "directory"
         mode: "0755"
+        owner: "{{ ansible_facts.user_id }}"
+        group: "{{ ansible_facts.user_gid }}"
 
     - name: "Copy service file"
       ansible.builtin.copy:
         src: "waybar.service"
-        dest: "{{ ansible_facts.user_dir }}/.config/systemd/user/waybar-user.service"
+        dest: "{{ waybar_systemd_dir }}/waybar-user.service"
         mode: "0644"
+        owner: "{{ ansible_facts.user_id }}"
+        group: "{{ ansible_facts.user_gid }}"
+      notify:
+        - "Restart 'waybar-user' service"
+
+    - name: "Copy service file"
+      ansible.builtin.file:
+        path: "{{ waybar_systemd_dir }}/waybar.service"
+        state: absent
       notify:
         - "Disable 'waybar' service"
-        - "Restart 'waybar-user' service"
 
 - name: "Install configuration files"
   tags: waybar
@@ -52,6 +61,8 @@
         path: "{{ waybar_config_dir }}"
         state: directory
         mode: "0755"
+        owner: "{{ ansible_facts.user_id }}"
+        group: "{{ ansible_facts.user_gid }}"
 
     - name: "Copy static configuration files"
       ansible.builtin.copy:
@@ -59,6 +70,8 @@
         dest: "{{ waybar_config_dir }}"
         mode: "preserve"
         directory_mode: "0755"
+        owner: "{{ ansible_facts.user_id }}"
+        group: "{{ ansible_facts.user_gid }}"
 
     - name: "Generated CSS"
       ansible.builtin.command:
@@ -72,6 +85,8 @@
         src: "{{ item }}.j2"
         dest: "{{ waybar_config_dir }}/{{ item }}"
         mode: "0644"
+        owner: "{{ ansible_facts.user_id }}"
+        group: "{{ ansible_facts.user_gid }}"
       loop:
         - sway.jsonc
         - hyprland.jsonc
