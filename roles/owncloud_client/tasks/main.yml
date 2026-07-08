@@ -31,20 +31,12 @@
     name: "{{ owncloud_client_packages }}"
   tags: owncloud_client
 
-- name: "Install service"
+- name: "Copy service file"
+  ansible.builtin.copy:
+    src: "owncloud-client.service"
+    dest: "{{ owncloud_client_service_dir }}"
+    owner: "{{ ansible_facts.user_id }}"
+    group: "{{ ansible_facts.user_gid }}"
+    mode: "0644"
+  notify: "Restart owncloud client service"
   tags: owncloud_client
-  block:
-    - name: "Ensure directory exist"
-      ansible.builtin.file:
-        path: "{{ owncloud_client_service_dir }}"
-        state: directory
-        mode: "0755"
-
-    - name: "Copy service file"
-      ansible.builtin.copy:
-        src: "owncloud-client.service"
-        dest: "{{ owncloud_client_service_dir }}"
-        owner: "{{ ansible_facts.user_id }}"
-        group: "{{ ansible_facts.user_gid }}"
-        mode: "0644"
-      notify: "Restart owncloud client service"

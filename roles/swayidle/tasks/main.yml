@@ -30,18 +30,10 @@
         mode: "0644"
       notify: "Enable and restart swayidle service"
 
-- name: "Install service file"
+- name: "Copy service file"
+  ansible.builtin.copy:
+    src: "swayidle.service"
+    dest: "{{ swayidle_service_dir }}"
+    mode: "0644"
+  notify: "Enable and restart swayidle service"
   tags: swayidle
-  block:
-    - name: "Ensure directory exist"
-      ansible.builtin.file:
-        path: "{{ swayidle_service_dir }}"
-        state: directory
-        mode: "0755"
-
-    - name: "Copy service file"
-      ansible.builtin.copy:
-        src: "swayidle.service"
-        dest: "{{ swayidle_service_dir }}"
-        mode: "0644"
-      notify: "Enable and restart swayidle service"
