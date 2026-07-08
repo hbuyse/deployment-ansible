@@ -2,9 +2,13 @@
 - name: "Check that latitude and longitude is populated"
   ansible.builtin.assert:
     that:
+      - wlsunset_config is defined
+      - wlsunset_config is mapping
       - wlsunset_config.latitude is defined
+      - wlsunset_config.latitude is float
       - wlsunset_config.longitude is defined
-    fail_msg: "wlsunset_config.latitude and wlsunset_config.longitude must not be empty (check your host_vars/localhost.yml)"
+      - wlsunset_config.longitude is float
+    fail_msg: "wlsunset_config must not be empty (check your host_vars/localhost.yml)"
     quiet: true
   tags: wlsunset
 
@@ -17,24 +21,28 @@
   tags: wlsunset
 
 - name: "Install"
-  become: true
   tags: wlsunset
   when: wlsunset_packages is defined
   block:
     - name: "Install packages"
+      become: true
       ansible.builtin.package:
         name: "{{ wlsunset_packages }}"
         state: present
 
     - name: "Ensure systemd directory exist"
       ansible.builtin.file:
-        path: "{{ ansible_facts.user_dir }}/.config/systemd/user/"
+        path: "{{ wlsunset_systemd_dir }}"
         state: directory
         mode: "0755"
+        owner: "{{ ansible_facts.user_id }}"
+        group: "{{ ansible_facts.user_gid }}"
 
     - name: "Copy service file"
       ansible.builtin.template:
         src: "wlsunset.service.j2"
-        dest: "{{ ansible_facts.user_dir }}/.config/systemd/user/wlsunset.service"
+        dest: "{{ wlsunset_systemd_dir }}/wlsunset.service"
         mode: "0644"
+        owner: "{{ ansible_facts.user_id }}"
+        group: "{{ ansible_facts.user_gid }}"
       notify: "Restart wlsunset service"

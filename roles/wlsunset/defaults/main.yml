@@ -1,4 +1,5 @@
 ---
+wlsunset_systemd_dir: "{{ ansible_facts.user_dir }}/.config/systemd/user"
 wlsunset_config:
   latitude: 48.86
   longitude: 2.33

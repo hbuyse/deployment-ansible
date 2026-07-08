@@ -6,7 +6,16 @@ After=sway-session.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/wlsunset -l {{ wlsunset_config.latitude }} -L {{ wlsunset_config.longitude }} -t {{ wlsunset_config.temp_low }} -T {{ wlsunset_config.temp_high }} -d {{ wlsunset_config.duration }}
+ExecStart=/usr/bin/wlsunset -l {{ wlsunset_config.latitude }} -L {{ wlsunset_config.longitude }}
+{%- if wlsunset_config.temp_low %}
+  -t {{ wlsunset_config.temp_low }}
+{%- endif %}
+{% if wlsunset_config.temp_high %}
+  -T {{ wlsunset_config.temp_high }}
+{%- endif %}
+{% if wlsunset_config.duration %}
+  -d {{ wlsunset_config.duration }}
+{% endif %}
 Restart=on-failure
 RestartSec=5
 
