@@ -1,3 +1,6 @@
 ---
 kanshi_config_dir: "{{ ansible_facts.user_dir }}/.config/kanshi"
+kanshi_configd_dir: "{{ ansible_facts.user_dir }}/.config/kanshi/config.d"
+kanshi_config_owner: "{{ ansible_facts.user_id }}"
+kanshi_config_group: "{{ ansible_facts.user_gid }}"
 kanshi_systemd_dir: "{{ ansible_facts.user_dir }}/.config/systemd/user"

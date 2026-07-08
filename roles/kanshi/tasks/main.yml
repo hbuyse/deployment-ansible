@@ -31,12 +31,16 @@
         path: "{{ kanshi_config_dir }}"
         state: directory
         mode: "0755"
+        owner: "{{ kanshi_config_owner }}"
+        group: "{{ kanshi_config_group }}"
 
     - name: "Copy root configuration"
       ansible.builtin.copy:
         src: "{{ item.src }}"
         dest: "{{ kanshi_config_dir }}"
         mode: "{{ item.mode }}"
+        owner: "{{ kanshi_config_owner }}"
+        group: "{{ kanshi_config_group }}"
       notify: "Enable and restart kanshi service"
       loop:
         - src: "config"
@@ -44,25 +48,24 @@
         - src: "notify.sh"
           mode: "0755"
 
-- name: "Include 'work' variables"
-  ansible.builtin.include_vars:
-    file: "work.yml"
-  tags: kanshi
-
 - name: "Install dynamic configuration files"
   tags: kanshi
   block:
     - name: "Ensure directory exist"
       ansible.builtin.file:
-        path: "{{ kanshi_config_dir }}/config.d"
+        path: "{{ kanshi_configd_dir }}"
         state: directory
         mode: "0755"
+        owner: "{{ kanshi_config_owner }}"
+        group: "{{ kanshi_config_group }}"
 
     - name: "Generate basic configuration"
       ansible.builtin.template:
         src: "{{ item }}"
-        dest: "{{ kanshi_config_dir }}/config.d/{{ item | replace('.j2', '') }}"
+        dest: "{{ kanshi_configd_dir }}/{{ item | replace('.j2', '') }}"
         mode: "0644"
+        owner: "{{ kanshi_config_owner }}"
+        group: "{{ kanshi_config_group }}"
       notify: "Enable and restart kanshi service"
       loop:
         - "home.j2"
@@ -71,14 +74,15 @@
     - name: "Generate work configuration"
       ansible.builtin.template:
         src: "{{ item }}"
-        dest: "{{ kanshi_config_dir }}/config.d/{{ item | replace('.j2', '') }}"
+        dest: "{{ kanshi_configd_dir }}/{{ item | replace('.j2', '') }}"
         mode: "0644"
+        owner: "{{ kanshi_config_owner }}"
+        group: "{{ kanshi_config_group }}"
       notify: "Enable and restart kanshi service"
       loop:
         - "work-com.j2"
         - "work.j2"
       when:
-        - ansible_facts.hostname == 'hbuyse-promax14'
         - kanshi_work_confs is defined
 
 - name: "Install service file"
@@ -90,11 +94,15 @@
         path: "{{ kanshi_systemd_dir }}"
         state: directory
         mode: "0755"
+        owner: "{{ kanshi_config_owner }}"
+        group: "{{ kanshi_config_group }}"
 
     - name: "Copy service file"
       ansible.builtin.copy:
         src: "kanshi.service"
         dest: "{{ kanshi_systemd_dir }}"
         mode: "0644"
+        owner: "{{ kanshi_config_owner }}"
+        group: "{{ kanshi_config_group }}"
       tags: kanshi
       notify: "Enable and restart kanshi service"
