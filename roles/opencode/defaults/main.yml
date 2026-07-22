@@ -2,5 +2,5 @@
 opencode_npm_package: "opencode-ai"
 opencode_config_dir: "{{ ansible_facts.user_dir }}/.config/opencode"
 opencode_agents_dir: "{{ opencode_config_dir }}/agents"
-opencode_providers: []
-opencode_mcps: []
+opencode_providers: {}
+opencode_mcps: {}
