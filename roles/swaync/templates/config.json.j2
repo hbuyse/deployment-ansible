@@ -163,10 +163,7 @@
         },
         {
           "label": "",
-          "type": "toggle",
-          "active": false,
-          "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && systemctl --user start wlsunset || systemctl --user stop wlsunset'",
-          "update-command": "sh -c 'systemctl --user is-active -q wlsunset && echo true || echo false'"
+          "command": "$HOME/.config/sway/scripts/toggle-wlsunset.sh"
         }
       ]
     }
