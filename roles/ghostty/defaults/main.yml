@@ -1,3 +1,5 @@
 ---
 ghostty_config_dir: "{{ ansible_facts.user_dir }}/.config/ghostty"
 ghostty_themes_dir: "{{ ghostty_config_dir }}/themes"
+
+ghostty_systemd_user_dir: "{{ ansible_facts.user_dir }}/.config/systemd/user/app-com.mitchellh.ghostty.service.d"

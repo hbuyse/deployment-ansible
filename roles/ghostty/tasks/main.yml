@@ -54,6 +54,22 @@
       changed_when: ghostty_sassc.rc == 0
       failed_when: ghostty_sassc.rc != 0
 
+- name: "Override systemd user configuration"
+  when: ansible_facts.service_mgr == "systemd"
+  tags: ghostty
+  block:
+    - name: "Ensure ghostty systemd user-space directory exists"
+      ansible.builtin.file:
+        path: "{{ ghostty_systemd_user_dir }}"
+        state: "directory"
+        mode: "0755"
+
+    - name: "Copy override.conf file"
+      ansible.builtin.copy:
+        src: "override.conf"
+        dest: "{{ ghostty_systemd_user_dir }}"
+        mode: "0644"
+
 - name: "Download themes"
   tags: ghostty
   block:
