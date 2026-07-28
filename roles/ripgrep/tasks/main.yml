@@ -17,7 +17,7 @@
   tags: ripgrep
   when: ripgrep_packages is not defined
 
-- name: "Install from package manager [{{ ansible_facts.os_family }}]"
+- name: "Install from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ ripgrep_packages }}"

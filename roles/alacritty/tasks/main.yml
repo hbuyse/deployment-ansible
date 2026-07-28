@@ -8,7 +8,7 @@
   tags:
     - alacritty
 
-- name: "Install from source [{{ ansible_facts.os_family }}]"
+- name: "Install from source"
   ansible.builtin.include_tasks:
     file: source.yml
     apply:
@@ -17,7 +17,7 @@
   tags:
     - alacritty
 
-- name: "Install from package manager [{{ ansible_facts.os_family }}]"
+- name: "Install from package manager"
   ansible.builtin.include_tasks:
     file: package.yml
     apply:

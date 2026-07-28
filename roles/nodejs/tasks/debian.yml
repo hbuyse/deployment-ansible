@@ -1,11 +1,11 @@
 ---
-- name: "Install dependencies [{{ ansible_facts.os_family }}]"
+- name: "Install dependencies"
   become: true
   ansible.builtin.package:
     name: "{{ nodejs_dependencies }}"
     state: present
 
-- name: "Add NodeSource deb repository {{ ansible_facts.os_family }}]"
+- name: "Add NodeSource deb repository"
   become: true
   ansible.builtin.deb822_repository:
     name: nodesource
@@ -18,7 +18,7 @@
     architectures: "{{ deb_arch }}"
     signed_by: "https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key"
 
-- name: "Create preference files [{{ ansible_facts.os_family }}]"
+- name: "Create preference files"
   become: true
   ansible.builtin.copy:
     src: "nodejs.pref"
