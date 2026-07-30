@@ -73,7 +73,7 @@ local wopts = {
   foldmethod = 'expr',
   foldexpr = 'nvim_treesitter#foldexpr()',
   foldnestmax = 10,
-  foldenable = true,
+  foldenable = false,
   foldlevel = 4,
 
   -- Show tab delimiter
