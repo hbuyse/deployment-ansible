@@ -35,7 +35,7 @@
       notify:
         - "Restart 'waybar-user' service"
 
-    - name: "Copy service file"
+    - name: "Remove waybar service file (if present in userspace)"
       ansible.builtin.file:
         path: "{{ waybar_systemd_dir }}/waybar.service"
         state: absent
