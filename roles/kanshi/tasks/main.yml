@@ -73,15 +73,12 @@
 
     - name: "Generate work configuration"
       ansible.builtin.template:
-        src: "{{ item }}"
-        dest: "{{ kanshi_configd_dir }}/{{ item | replace('.j2', '') }}"
+        src: "work.j2"
+        dest: "{{ kanshi_configd_dir }}/work"
         mode: "0644"
         owner: "{{ kanshi_config_owner }}"
         group: "{{ kanshi_config_group }}"
       notify: "Enable and restart kanshi service"
-      loop:
-        - "work-com.j2"
-        - "work.j2"
       when:
         - kanshi_work_confs is defined
 
