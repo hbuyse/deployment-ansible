@@ -1,14 +1,52 @@
 ---
-- name: "Install from Node Package Manager"
-  community.general.npm:
-    name: "{{ opencode_npm_package }}"
-    global: true
-    state: latest
-    production: true
-    no_optional: true
+- name: "Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_facts.os_family | lower }}.yml"
+      skip: true
   tags:
     - opencode
     - ai
+
+- name: "Install program from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ opencode_packages }}"
+    state: present
+  when: opencode_packages is defined
+  tags:
+    - opencode
+    - ai
+
+- name: "Install program from static binary"
+  when: opencode_packages is not defined
+  tags:
+    - opencode
+    - ai
+  block:
+    - name: "Get latest version number"
+      register: opencode_latest_json
+      ansible.builtin.uri:
+        url: "https://api.github.com/repos/{{ opencode_gh_user }}/{{ opencode_gh_repo }}/releases/latest"
+        method: GET
+        return_content: true
+        status_code: 200
+        body_format: json
+
+    - name: "Set facts"
+      ansible.builtin.set_fact:
+        opencode_latest_version: "{{ opencode_latest_json.json.tag_name[1:] }}"
+
+    - name: "Install program from static binary"
+      become: true
+      ansible.builtin.unarchive:
+        src: "https://github.com/{{ opencode_gh_user }}/{{ opencode_gh_repo }}/releases/download/v{{ opencode_latest_version
+          }}/opencode-{{ ansible_facts.system | lower }}-x64.tar.gz"
+        dest: "{{ ansible_facts.user_dir }}/.local/bin"
+        owner: "{{ ansible_facts.user_uid }}"
+        group: "{{ ansible_facts.user_gid }}"
+        remote_src: true
 
 - name: "Copy configuration"
   tags:
