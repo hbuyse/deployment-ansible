@@ -6,7 +6,6 @@ keybind=clear
 ## Global
 
 ### Config
-keybind = F5=reload_config
 keybind = ctrl+b>r=reload_config
 
 ### Search
