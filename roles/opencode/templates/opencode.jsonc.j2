@@ -3,5 +3,10 @@
     "default_agent": "plan",
     "enabled_providers": {{ opencode_providers.keys() | list | ansible.builtin.to_json }},
     "provider": {{ opencode_providers | ansible.builtin.to_nice_json(sort_keys=False) }},
-    "mcp": {{ opencode_mcps | ansible.builtin.to_nice_json(sort_keys=False) }}
+    "mcp": {{ opencode_mcps | ansible.builtin.to_nice_json(sort_keys=False) }},
+    "plugin": [
+      "@simonwjackson/opencode-direnv",
+      "@xberg-io/opencode-html-to-markdown",
+      "@xberg-io/opencode-tree-sitter-language-pack"
+    ]
 }
