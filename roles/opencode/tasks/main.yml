@@ -76,7 +76,10 @@
 
     - name: "Copy Opencode agent files"
       ansible.builtin.template:
-        src: "agents/review.md.j2"
-        dest: "{{ opencode_agents_dir }}/review.md"
+        src: "{{ item }}.j2"
+        dest: "{{ opencode_agents_dir }}/{{ item | basename }}"
         mode: "0644"
+      loop:
+        - agents/review.md
+        - agents/testu.md
       when: opencode_code_review_model is defined
