@@ -137,12 +137,12 @@ display_info "${0}"
 
 # Install packages
 declare -A PACKAGES=(
-    ["linux-arch"]="git ansible python-watchdog"
-    ["linux-endeavouros"]="git ansible python-watchdog"
-    ["linux-manjaro"]="git ansible python-watchdog"
-    ["linux-ubuntu"]="git ansible python3-watchdog python3-debian"
-    ["linux-debian"]="git ansible python3-watchdog python3-debian"
-    ["linux-fedora"]="git ansible python3-watchdog"
+    ["linux-arch"]="git ansible"
+    ["linux-endeavouros"]="git ansible"
+    ["linux-manjaro"]="git ansible"
+    ["linux-ubuntu"]="git ansible python3-debian"
+    ["linux-debian"]="git ansible python3-debian"
+    ["linux-fedora"]="git ansible"
 )
 
 install_packages ${PACKAGES["${OS}-${ID}"]}
