@@ -51,7 +51,6 @@
     - role: "markdownls"
     - role: "neocmakelsp"
     - role: "perlnavigator"
-    - role: "pyright"
     - role: "ruff"
     - role: "rust_analyzer"
     - role: "tailwindcss_lsp"

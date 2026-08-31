@@ -204,7 +204,6 @@ vim.lsp.enable({
   'yamlls', -- Yaml
   'bashls', -- Shell
   'luals', -- Lua
-  'pyright', -- Python
   'ruff', -- Python
   'cmake', -- CMake
   'cssls', -- CSS
