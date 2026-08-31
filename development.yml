@@ -44,6 +44,7 @@
     - role: "bashls"
     - role: "composels"
     - role: "cssls"
+    - role: "gopls"
     - role: "htmlls"
     - role: "jsonls"
     - role: "luals"

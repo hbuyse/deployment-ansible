@@ -1,0 +1,37 @@
+---
+- name: "Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_facts.os_family | lower }}.yml"
+      skip: true
+  tags:
+    - go
+    - gopls
+
+- name: "Install from package manager"
+  become: true
+  when: gopls_package is defined
+  ansible.builtin.package:
+    name: "{{ gopls_package }}"
+    state: present
+  tags:
+    - go
+    - gopls
+
+- name: "Install from Golang"
+  when: gopls_package is not defined
+  tags:
+    - go
+    - gopls
+  block:
+    - name: "Ensure Go is installed"
+      become: true
+      ansible.builtin.package:
+        name: "{{ gopls_golang_package }}"
+        state: present
+
+    - name: "Install from Golang"
+      community.general.golang_package:
+        name: "{{ gopls_golang_name }}"
+        version: "{{ gopls_golang_version }}"

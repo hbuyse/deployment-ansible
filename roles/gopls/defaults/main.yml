@@ -1,0 +1,3 @@
+---
+gopls_golang_name: "golang.org/x/tools/gopls"
+gopls_golang_version: "latest"
