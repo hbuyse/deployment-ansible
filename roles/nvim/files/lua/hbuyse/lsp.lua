@@ -215,4 +215,5 @@ vim.lsp.enable({
   'tombi', -- Toml
   'tailwindcss', -- Tailwindcss
   'perlnavigator', -- Perl
+  'gopls', -- Go
 })
