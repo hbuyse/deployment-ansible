@@ -1,0 +1,36 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: nvim-debian12
+    image: geerlingguy/docker-debian12-ansible:latest
+    pre_build_image: geerlingguy/docker-debian12-ansible:latest
+    # Debian uses fallback binary install (no Debian.yml in vars/)
+  - name: nvim-ubuntu2404
+    image: geerlingguy/docker-ubuntu2404-ansible:latest
+    pre_build_image: geerlingguy/docker-ubuntu2404-ansible:latest
+    # Ubuntu uses fallback binary install (os_family=Debian, no Debian.yml in vars/)
+  - name: nvim-archlinux
+    image: archlinux:base
+    pre_build_image: archlinux:base
+    privileged: true
+    # Arch doesn't use systemd by default in minimal image
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    tmpfs:
+      - /run
+      - /tmp
+      # Archlinux has vars/archlinux.yml -> installs via pacman
+provisioner:
+  name: ansible
+  playbooks:
+    converge: converge.yml
+    prepare: prepare.yml
+  inventory:
+    host_vars:
+      localhost: {}
+  ansible_args: []
+verifier:
+  name: testinfra

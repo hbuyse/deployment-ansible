@@ -10,6 +10,18 @@ bash ./install.sh
 
 > [!WARNING] Do not forget to specify some variables in the host_vars/localhost.yml file
 
+## Testing
+
+Some roles have tests. Here is the list:
+
+- nvim
+
+To run the tests, change your directory to the role you want to test and run the following:
+
+```sh
+molecule test
+```
+
 ## Troubleshooting
 
 ```sh
