@@ -15,6 +15,7 @@ bash ./install.sh
 Some roles have tests. Here is the list:
 
 - nvim
+- opencode
 
 To run the tests, change your directory to the role you want to test and run the following:
 

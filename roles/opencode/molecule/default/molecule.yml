@@ -1,0 +1,29 @@
+---
+driver:
+  name: docker
+
+platforms:
+  - name: opencode-debian
+    image: debian:12
+    pre_installed_packages:
+      - tar
+      - gzip
+    privileged: true
+
+provisioner:
+  name: ansible
+  playbooks:
+    prepare: prepare.yml
+    converge: converge.yml
+  inventory:
+    host_vars:
+      opencode-debian:
+        opencode_providers:
+          openai:
+            api_key: "sk-test-key-12345"
+            api_base: "https://api.openai.com/v1"
+        opencode_mcps: {}
+        opencode_code_review_model: "gpt-4"
+
+verifier:
+  name: testinfra
