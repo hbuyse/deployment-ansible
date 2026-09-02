@@ -1,0 +1,19 @@
+---
+- name: Prepare
+  hosts: all
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: "Install system dependencies"
+      ansible.builtin.apt:
+        name:
+          - ca-certificates
+          - sudo
+        update_cache: true
+
+    - name: "Create user local bin directory"
+      ansible.builtin.file:
+        path: /root/.local/bin
+        state: directory
+        mode: "0755"
