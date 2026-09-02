@@ -6,15 +6,15 @@ driver:
 platforms:
   - name: nvim-debian12
     image: geerlingguy/docker-debian12-ansible:latest
-    pre_build_image: geerlingguy/docker-debian12-ansible:latest
+    pre_build_image: true
     # Debian uses fallback binary install (no Debian.yml in vars/)
   - name: nvim-ubuntu2404
     image: geerlingguy/docker-ubuntu2404-ansible:latest
-    pre_build_image: geerlingguy/docker-ubuntu2404-ansible:latest
+    pre_build_image: true
     # Ubuntu uses fallback binary install (os_family=Debian, no Debian.yml in vars/)
   - name: nvim-archlinux
     image: archlinux:base
-    pre_build_image: archlinux:base
+    pre_build_image: false
     privileged: true
     # Arch doesn't use systemd by default in minimal image
     volumes:
