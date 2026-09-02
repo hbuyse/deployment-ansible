@@ -1,0 +1,16 @@
+---
+driver:
+  name: docker
+
+platforms:
+  - name: podman-debian
+    image: debian:12
+
+provisioner:
+  name: ansible
+  playbooks:
+    prepare: prepare.yml
+    converge: converge.yml
+
+verifier:
+  name: testinfra
