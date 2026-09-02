@@ -14,10 +14,15 @@ repos:
     rev: v2.4.1
     hooks:
       - id: codespell
-  - repo: https://github.com/lunarmodules/luacheck/
-    rev: v1.2.0
+  - repo: local
     hooks:
       - id: luacheck
+        name: Luacheck
+        description: Lint Lua files with luacheck (built for Lua 5.4)
+        entry: scripts/run-luacheck.sh
+        language: script
+        files: \.lua$
+        require_serial: true
   - repo: https://github.com/ansible/ansible-lint.git
     rev: v25.8.2
     hooks:
@@ -38,3 +43,4 @@ repos:
         language: script
         files: ^roles/[^/]+/
         pass_filenames: true
+        require_serial: true
