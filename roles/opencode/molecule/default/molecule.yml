@@ -5,9 +5,6 @@ driver:
 platforms:
   - name: opencode-debian
     image: debian:12
-    pre_installed_packages:
-      - tar
-      - gzip
     privileged: true
 
 provisioner:
