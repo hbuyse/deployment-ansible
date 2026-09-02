@@ -5,4 +5,4 @@
   tasks:
     - name: Apply opencode role
       ansible.builtin.import_role:
-        name: /home/henrib/Programming/deployment-ansible/roles/opencode  # noqa: role-name[path]
+        name: ../../..  # noqa: role-name[path]
