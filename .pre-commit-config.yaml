@@ -29,3 +29,12 @@ repos:
         args:
           - -p
           - -q
+  - repo: local
+    hooks:
+      - id: molecule-test
+        name: Molecule Test
+        description: Run "molecule test" for changed roles that have one
+        entry: scripts/run-molecule-tests.sh
+        language: script
+        files: ^roles/[^/]+/
+        pass_filenames: true
