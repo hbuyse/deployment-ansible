@@ -1,0 +1,5 @@
+molecule>=6.0,<7.0
+molecule-plugins[docker]
+ansible-lint
+python-ansible-lint
+yamllint
