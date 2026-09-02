@@ -1,0 +1,15 @@
+---
+driver:
+  name: docker
+
+platforms:
+  - name: npmrc-debian
+    image: debian:12
+
+provisioner:
+  name: ansible
+  playbooks:
+    converge: converge.yml
+
+verifier:
+  name: testinfra
