@@ -19,7 +19,7 @@
     name: "{{ lazygit_packages }}"
     state: "present"
 
-- name: "Install from source"
+- name: "Install from Golang"
   when: lazygit_packages is not defined
   tags:
     - lazygit
@@ -36,20 +36,14 @@
 
     - name: "Set facts"
       ansible.builtin.set_fact:
-        lazygit_latest_version: "{{ lazygit_latest_json.json.tag_name[1:] }}"
+        lazygit_latest_version: "{{ lazygit_latest_json.json.tag_name }}"
 
-    - name: "Install executable"
-      become: true
-      ansible.builtin.unarchive:
-        src: "https://github.com/{{ lazygit_github_user }}/{{ lazygit_github_repo }}/releases/download/v{{ lazygit_latest_version
-          }}/lazygit_{{ lazygit_latest_version }}_{{ ansible_facts.system }}_{{ ansible_facts.architecture }}.tar.gz"
-        dest: "{{ ansible_facts.user_dir }}/.local/bin"
-        mode: "0755"
-        owner: "{{ ansible_facts.user_uid }}"
-        group: "{{ ansible_facts.user_gid }}"
-        include:
-          - "lazygit"
-        remote_src: true
+    - name: "Install from Golang"
+      community.general.golang_package:
+        name: "github.com/{{ lazygit_github_user }}/{{ lazygit_github_repo }}"
+        version: "{{ lazygit_latest_version }}"
+      environment:
+        GOBIN: "{{ lazygit_install_dir }}"
 
 - name: "Install configuration"
   tags:

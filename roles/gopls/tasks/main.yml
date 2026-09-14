@@ -25,13 +25,22 @@
     - go
     - gopls
   block:
-    - name: "Ensure Go is installed"
-      become: true
-      ansible.builtin.package:
-        name: "{{ gopls_golang_package }}"
-        state: present
+    - name: "Get latest version number"
+      register: gopls_latest_json
+      ansible.builtin.uri:
+        url: "https://api.github.com/repos/{{ gopls_github_user }}/{{ gopls_github_repo }}/releases/latest"
+        method: GET
+        return_content: true
+        status_code: 200
+        body_format: json
+
+    - name: "Set facts"
+      ansible.builtin.set_fact:
+        gopls_latest_version: "{{ gopls_latest_json.json.tag_name }}"
 
     - name: "Install from Golang"
       community.general.golang_package:
         name: "{{ gopls_golang_name }}"
-        version: "{{ gopls_golang_version }}"
+        version: "{{ gopls_latest_version }}"
+      environment:
+        GOBIN: "{{ gopls_install_dir }}"

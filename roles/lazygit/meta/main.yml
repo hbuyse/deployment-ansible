@@ -1,4 +1,4 @@
 ---
 dependencies:
-  - role: "debian_griffo"
+  - role: golang
     when: ansible_facts.os_family in ["Debian"]
