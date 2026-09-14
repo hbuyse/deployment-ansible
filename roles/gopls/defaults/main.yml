@@ -1,3 +1,5 @@
 ---
+gopls_github_user: "golang"
+gopls_github_repo: "tools"
 gopls_golang_name: "golang.org/x/tools/gopls"
-gopls_golang_version: "latest"
+gopls_install_dir: "{{ ansible_facts.user_dir }}/.local/bin"
