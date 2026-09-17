@@ -1,0 +1,4 @@
+---
+claude_code_download_base_url: "https://downloads.claude.ai/claude-code-releases"
+claude_code_latest_version_uri: "{{ claude_code_download_base_url }}/latest"
+claude_code_install_dir: "{{ ansible_facts.user_dir }}/.local/bin"

@@ -38,6 +38,7 @@
     - role: "podman"
     - role: "pre_commit"
     - role: "opencode"
+    - role: "claude_code"
     - role: "ansiblels"
     - role: "jq"
     - role: "yq"
