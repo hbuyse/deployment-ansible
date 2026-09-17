@@ -7,6 +7,10 @@
 - name: "Pre-tasks | Get list of services"
   ansible.builtin.service_facts:
 
+- name: "Pre-tasks | Gather package facts"
+  ansible.builtin.package_facts:
+    manager: auto
+
 - name: "Pre-tasks | Run some OS specific tasks"
   ansible.builtin.include_tasks:
     file: "{{ item }}"

@@ -13,6 +13,7 @@
         - "nonfree"
       loop_control:
         loop_var: repo
+      when: "'rpmfusion-{{ repo }}-release-{{ ansible_facts.distribution_major_version }}' in ansible_facts.packages"
 
     - name: "RPM Fusion | Install repo package"
       ansible.builtin.dnf:
@@ -24,6 +25,7 @@
         - "nonfree"
       loop_control:
         loop_var: repo
+      when: "'rpmfusion-{{ repo }}-release-{{ ansible_facts.distribution_major_version }}' in ansible_facts.packages"
 
 - name: "Terra | Install repository"
   tags: "terra"
