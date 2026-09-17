@@ -11,10 +11,10 @@
 
 - name: "Install from package manager"
   become: true
+  ansible.builtin.package:
+    name: "{{ golang_packages }}"
+    state: "present"
   when: golang_packages is defined
   tags:
     - golang
     - go
-  ansible.builtin.package:
-    name: "{{ golang_packages }}"
-    state: "present"
