@@ -1,0 +1,46 @@
+---
+- name: "Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_facts.os_family | lower }}.yml"
+      skip: true
+  tags:
+    - go
+    - termshark
+
+- name: "Install from package manager"
+  become: true
+  when: termshark_package is defined
+  ansible.builtin.package:
+    name: "{{ termshark_package }}"
+    state: present
+  tags:
+    - go
+    - termshark
+
+- name: "Install from Golang"
+  when: termshark_package is not defined
+  tags:
+    - go
+    - termshark
+  block:
+    - name: "Get latest version number"
+      register: termshark_latest_json
+      ansible.builtin.uri:
+        url: "https://api.github.com/repos/{{ termshark_github_user }}/{{ termshark_github_repo }}/releases/latest"
+        method: GET
+        return_content: true
+        status_code: 200
+        body_format: json
+
+    - name: "Set facts"
+      ansible.builtin.set_fact:
+        termshark_latest_version: "{{ termshark_latest_json.json.tag_name[6:] }}"
+
+    - name: "Install from Golang"
+      community.general.golang_package:
+        name: "{{ termshark_golang_name }}"
+        version: "{{ termshark_latest_version }}"
+      environment:
+        GOBIN: "{{ termshark_install_dir }}"

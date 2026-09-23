@@ -27,6 +27,7 @@
     - role: "thunderbird"
     - role: "minicom"
     - role: "wireshark"
+    - role: "termshark"
     - role: "qemu_kvm"
     - role: "keymapp"
     - role: "bitwarden"

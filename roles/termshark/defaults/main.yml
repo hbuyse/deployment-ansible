@@ -1,0 +1,5 @@
+---
+termshark_github_user: "gcla"
+termshark_github_repo: "termshark"
+termshark_golang_name: "github.com/gcla/termshark/v2/cmd/termshark"
+termshark_install_dir: "{{ ansible_facts.user_dir }}/.local/bin"
