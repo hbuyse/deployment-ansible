@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+#
+# pcap‑textconv.sh – Git “textconv” driver for .pcap files
+#
+# Usage:   pcap-textconv.sh <pcap‑file>
+#
+# Git will invoke this script whenever it needs a textual representation
+# of a .pcap file (e.g. for `git diff`).  The script:
+#   - Checks that the required programs (git, tshark) are available.
+#   - Determines the repository root (so the Lua script can be addressed
+#     relative to the repo, not the current working directory).
+#   - Checks whether a Lua script named `tshark.lua` exists at that root.
+#   - Calls `tshark` with the appropriate options, passing the file that
+#      Git supplied.
+#
+# If the Lua file does not exist, `tshark` is invoked without the
+# `-X lua_script:` argument – the diff still works, just without the extra
+# Lua processing.
+
+# safer bash scripting (exit on error, undefined vars, etc.)
+set -euo pipefail
+
+# Helper: pretty error printing
+msg_err() {
+    printf 'pcap-textconv: %s\n' "$*" >&2
+}
+
+# ----------------------------------------------------------------------
+# 1️⃣ Verify that external commands we need are on the $PATH.
+# ----------------------------------------------------------------------
+missing=0
+
+for prog in git tshark; do
+    if ! command -v "$prog" > /dev/null 2>&1; then
+        msg_err "required program ‘$prog’ is NOT installed or not in PATH"
+        missing=1
+    fi
+done
+
+# If any program is missing we cannot do the fancy conversion.
+# Cat the input file and exit successfully – Git will treat the result as a
+# binary diff (the best we can do without the tools).
+if ((missing)); then
+    # $1 is the pcap file that Git asked us to convert.
+    cat "$1"
+    exit 0
+fi
+
+# Get the name of the file that Git wants us to convert.
+pcap_file="${1:-}" # first argument, supplied by Git
+if [[ -z "$pcap_file" ]]; then
+    echo "Error: no file given to pcap-textconv.sh" >&2
+    exit 1
+fi
+
+# Find the repository root.
+repo_root=$(git rev-parse --show-toplevel 2> /dev/null) || {
+    # Not inside a git repo – just output the file unchanged.
+    cat "$pcap_file"
+    exit 0
+}
+
+# Locate the optional Lua script (relative to the repo root).
+lua_script="$repo_root/crossplatform/src/ASQ/tools/hasync/packet-hasync.lua"
+
+# Build the argument for tshark only if the script is present.
+lua_opt=""
+if [[ -f "$lua_script" ]]; then
+    lua_opt="-X lua_script:$lua_script"
+fi
+
+# Run tshark.
+# The `exec` builtin replaces the current shell process with tshark,
+# which means no extra process is left behind.
+exec tshark $lua_opt \
+    --hexdump all \
+    --hexdump ascii \
+    -V \
+    --print \
+    --read-file "$pcap_file"

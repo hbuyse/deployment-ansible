@@ -27,16 +27,31 @@
   block:
     - name: "Ensure configuration directory exists"
       ansible.builtin.file:
-        path: "{{ ansible_facts.user_dir }}/.config/git"
+        path: "{{ git_config_dir }}"
         state: directory
         mode: "0755"
+        owner: "{{ ansible_facts.user_uid }}"
+        group: "{{ ansible_facts.user_gid }}"
+      loop:
+        - "{{ git_config_dir }}"
+        - "{{ git_config_bin_dir }}"
 
     - name: "Copy git configuration"
       ansible.builtin.copy:
         src: "{{ item }}"
-        dest: "{{ ansible_facts.user_dir }}/.config/git"
+        dest: "{{ git_config_dir }}"
         mode: "0644"
+        owner: "{{ ansible_facts.user_uid }}"
+        group: "{{ ansible_facts.user_gid }}"
       loop:
         - config
         - attributes
         - gitk
+
+    - name: "Copy pcap files diff helper"
+      ansible.builtin.copy:
+        src: "bin/pcap-diff-textconv"
+        dest: "{{ git_config_dir }}"
+        mode: "0755"
+        owner: "{{ ansible_facts.user_uid }}"
+        group: "{{ ansible_facts.user_gid }}"
