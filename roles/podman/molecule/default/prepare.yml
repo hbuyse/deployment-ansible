@@ -1,0 +1,12 @@
+---
+- name: Prepare
+  hosts: all
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: "Install system dependencies"
+      ansible.builtin.apt:
+        name:
+          - sudo
+        update_cache: true
