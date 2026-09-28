@@ -1,0 +1,3 @@
+---
+shellcheck_packages:
+  - ShellCheck

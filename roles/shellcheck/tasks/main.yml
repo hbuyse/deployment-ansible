@@ -1,0 +1,54 @@
+---
+- name: "Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_facts.os_family | lower }}.yml"
+      skip: true
+  tags:
+    - lint
+    - shellcheck
+
+- name: "Install from package manager"
+  become: true
+  when: shellcheck_packages is defined
+  ansible.builtin.package:
+    name: "{{ shellcheck_package }}"
+    state: present
+  tags:
+    - lint
+    - shellcheck
+
+- name: "Install from GitHub"
+  when: shellcheck_packages is not defined
+  tags:
+    - lint
+    - shellcheck
+  block:
+    - name: "Get latest version number"
+      register: shellcheck_latest_json
+      ansible.builtin.uri:
+        url: "https://api.github.com/repos/{{ shellcheck_github_user }}/{{ shellcheck_github_repo }}/releases/latest"
+        method: GET
+        return_content: true
+        status_code: 200
+        body_format: json
+
+    - name: "Set facts"
+      ansible.builtin.set_fact:
+        shellcheck_latest_version: "{{ shellcheck_latest_json.json.tag_name[1:] }}"
+
+    - name: "Install executable"
+      ansible.builtin.unarchive:
+        src: "https://github.com/{{ shellcheck_github_user }}/{{ shellcheck_github_repo }}/releases/download/v{{ shellcheck_latest_version
+          }}/shellcheck-v{{ shellcheck_latest_version }}.{{ ansible_facts.system | lower }}.{{ ansible_facts.architecture
+          }}.tar.gz"
+        dest: "{{ ansible_facts.user_dir }}/.local/bin"
+        owner: "{{ ansible_facts.user_uid }}"
+        group: "{{ ansible_facts.user_gid }}"
+        mode: "0755"
+        include:
+          - "shellcheck-v{{ shellcheck_latest_version }}/shellcheck"
+        remote_src: true
+        extra_opts:
+          - "--strip-components=1"

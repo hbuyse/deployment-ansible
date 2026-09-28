@@ -57,3 +57,4 @@
     - role: "texlab"
     - role: "tombi"
     - role: "yamlls"
+    - role: "shellcheck"
