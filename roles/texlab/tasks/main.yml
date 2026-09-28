@@ -39,7 +39,6 @@
         texlab_latest_version: "{{ texlab_latest_json.json.tag_name[1:] }}"
 
     - name: "Install executable"
-      become: true
       ansible.builtin.unarchive:
         src: "https://github.com/{{ texlab_github_user }}/{{ texlab_github_repo }}/releases/download/v{{ texlab_latest_version
           }}/texlab-{{ ansible_facts.architecture }}-{{ ansible_facts.system | lower }}.tar.gz"
