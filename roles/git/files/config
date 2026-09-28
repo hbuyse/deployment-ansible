@@ -1,110 +1,110 @@
 ;  vim: set ts=4 sw=4 tw=0 et ft=gitconfig :
 
 [user]
-name = "Henri Buyse"
-email = "henri.buyse@gmail.com"
+    name = "Henri Buyse"
+    email = "henri.buyse@gmail.com"
 
 [include]
-path = delta
-path = local ; find "local" relative to the current file
+    path = delta
+    path = local ; find "local" relative to the current file
 
 # include "work" configuration file if currently in a git directory stored in ~/work (works with symlink)
 [includeIf "gitdir:~/work/"]
-path = ~/work/.gitconfig
+    path = ~/work/.gitconfig
 
 [core]
-editor = nvim
-attributesFile = ~/.config/git/attributes
-excludesFile = ~/.config/git/ignore
+    editor = nvim
+    attributesFile = ~/.config/git/attributes
+    excludesFile = ~/.config/git/ignore
 
 [color]
-ui = true
+    ui = true
 
 [color "diff"]
-meta = 11
-frag = magenta bold
-commit = yellow bold
-old = red bold
-new = green bold
-whitespace = red reverse
+    meta = 11
+    frag = magenta bold
+    commit = yellow bold
+    old = red bold
+    new = green bold
+    whitespace = red reverse
 
 [grep]
-lineNumber = true
+    lineNumber = true
 
 [merge]
-tool = meld
-conflictstyle = zdiff3
+    tool = meld
+    conflictstyle = zdiff3
 
 [alias]
-lg = log --color --graph --pretty=logger --abbrev-commit
-rl = reflog --pretty=reflog
-change-commits = "!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \"if [[ \\\"$`echo $VAR`\\\" = '$OLD' ]]; then export $VAR='$NEW'; fi\" $@; }; f"
+    lg = log --color --graph --pretty=logger --abbrev-commit
+    rl = reflog --pretty=reflog
+    change-commits = "!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \"if [[ \\\"$`echo $VAR`\\\" = '$OLD' ]]; then export $VAR='$NEW'; fi\" $@; }; f"
 
 [pretty]
-logger = %C(red)%h%C(reset) - %C(green)%cd%C(reset) -%C(yellow)%d%C(reset) %s %C(bold blue)<%an>%C(reset)
+    logger = %C(red)%h%C(reset) - %C(green)%cd%C(reset) -%C(yellow)%d%C(reset) %s %C(bold blue)<%an>%C(reset)
 # reflog, with relative date:
-reflog = %C(auto)%h %<|(17)%gd %C(blue)%ci%C(reset) %gs
+    reflog = %C(auto)%h %<|(17)%gd %C(blue)%ci%C(reset) %gs
 
 [log]
-date = format-local:%d/%m/%Y %H:%M
+    date = format-local:%d/%m/%Y %H:%M
 
 [credential]
 # Do not ask for the passphrase or user + password during 5 minutes
-helper = "cache --timeout 300"
+    helper = "cache --timeout 300"
 
 [fetch]
 # If true, fetch will automatically behave as if the --prune option was given on the command line.
 # See also remote.<name>.prune and the PRUNING section of git-fetch[1].
-prune = true
-pruneTags = true
+    prune = true
+    pruneTags = true
 # Specifies the maximal number of fetch operations to be run in parallel at a time (submodules, or remotes when
 # the --multiple option of git-fetch[1] is in effect).
 # A value of 0 will give some reasonable default. If unset, it defaults to 1.
-parallel = 0
+    parallel = 0
 # When set to yes, all populated submodules are fetched and submodules that are both unpopulated and changed are fetched.
 # When set to on-demand, only changed submodules are fetched.
 # When set to no, submodules are never fetched.
-recurseSubmodules = true
+    recurseSubmodules = true
 
 [push]
-followTags = true
+    followTags = true
 
 [mergetool "vimdiff"]
-path = nvim
+    path = nvim
 
 [stash]
-showPatch = true
+    showPatch = true
 
 [status]
 # Show the branch and tracking info even in short-format
-branch = false
+    branch = false
 # Set to true to enable --short by default in git-status
-short = false
+    short = false
 # If set to true, git-status will display the number of entries currently stashed away.
-showStash = true
+    showStash = true
 # Show also individual files in untracked directories
-showUntrackedFiles = all
+    showUntrackedFiles = all
 
 [rebase]
 # Show a diffstat of what changed upstream since the last rebase
-stat = true
+    stat = true
 # Automatically create a temporary stash entry before the operation begins, and apply it after the operation ends
-autostash = true
+    autostash = true
 # Setting configuration variable rebase.autoSquash to true enables auto-squashing by default for interactive rebase
-autosquash = true
+    autosquash = true
 
 [diff "bin"]
 # Allow files following the diff=bin (defined in ~/.config/git/attributes) to be correctly differentiate
-binary = true
-textconv = hexdump -C
+    binary = true
+    textconv = hexdump -C
 
 [diff "pcap"]
 # Allow files following the diff=pcap (defined in ~/.config/git/attributes) to be correctly differentiate
-binary = true
-textconv = ~/.config/git/bin/pcap-diff-textconv
+    binary = true
+    textconv = ~/.config/git/bin/pcap-diff-textconv
 
 [init]
-defaultBranch = main
+    defaultBranch = main
 
 [diff]
-tool = meld
+    tool = meld
