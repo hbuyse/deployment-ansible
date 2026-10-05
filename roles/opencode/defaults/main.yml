@@ -5,5 +5,4 @@ opencode_providers: {}
 opencode_mcps: {}
 opencode_code_review_model: null
 
-opencode_gh_user: "anomalyco"
-opencode_gh_repo: "opencode"
+opencode_npm_package: "@opencode/cli"
