@@ -38,13 +38,14 @@ def test_agents_directory_created(host):
     assert agents_dir.is_directory
 
 
-def test_tui_config(host):
-    """Test that tui.jsonc was copied with correct content."""
-    tui = host.file("/root/.config/opencode/tui.jsonc")
-    assert tui.exists
-    assert tui.is_file
-    content = json.loads(tui.content_string)
-    assert content["theme"] == "catppuccin"
+def test_cli_config(host):
+    """Test that cli.json was copied with correct content."""
+    cli = host.file("/root/.config/opencode/cli.json")
+    assert cli.exists
+    assert cli.is_file
+    content = json.loads(cli.content_string)
+    assert content["theme"]["name"] == "catppuccin"
+    assert content["theme"]["mode"] == "dark"
 
 
 def test_opencode_config_providers(host):
@@ -88,7 +89,7 @@ def test_config_file_permissions(host):
     """Test that config files have correct permissions (0644)."""
     for path in [
         "/root/.config/opencode/opencode.jsonc",
-        "/root/.config/opencode/tui.jsonc",
+        "/root/.config/opencode/cli.json",
         "/root/.config/opencode/agents/review.md",
     ]:
         f = host.file(path)
