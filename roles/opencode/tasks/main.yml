@@ -47,7 +47,7 @@
 
     - name: "Copy static configuration files"
       ansible.builtin.copy:
-        src: "tui.jsonc"
+        src: "cli.json"
         dest: "{{ opencode_config_dir }}"
         mode: "0644"
 
@@ -66,3 +66,10 @@
         - agents/review.md
         - agents/testu.md
       when: opencode_code_review_model is defined
+
+    - name: "Remove old configuration files"
+      ansible.builtin.file:
+        path: "{{ opencode_config_dir }}/{{ item }}"
+        state: "absent"
+      loop:
+        - tui.jsonc
