@@ -56,8 +56,8 @@ def test_opencode_config_providers(host):
     content = json.loads(config.content_string)
     assert "enabled_providers" in content
     assert "openai" in content["enabled_providers"]
-    assert "provider" in content
-    assert content["provider"]["openai"]["api_key"] == "sk-test-key-12345"
+    assert "providers" in content
+    assert content["providers"]["openai"]["api_key"] == "sk-test-key-12345"
 
 
 def test_opencode_config_default_agent(host):
