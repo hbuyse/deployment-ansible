@@ -1,0 +1,37 @@
+---
+- name: "Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_facts.os_family | lower }}.yml"
+      skip: true
+  tags:
+    - rtk
+    - ai
+
+- name: "Install Rust package from git repository"
+  ansible.builtin.command:
+    cmd: "cargo install --git https://github.com/{{ rtk_gh_user }}/{{ rtk_gh_repo }} rtk"
+    creates: "{{ ansible_facts.user_dir }}/.cargo/bin/rtk"
+  tags:
+    - rtk
+    - ai
+
+# - name: "Install Rust package with locked dependencies"
+#   community.general.cargo:
+#     name: https://github.com/rtk-ai/rtk
+#     state: latest
+#     locked: true
+#   tags:
+#     - rtk
+#     - ai
+#   when: rtk_packages is not defined
+#
+# - name: "Install from package manager"
+#   become: true
+#   ansible.builtin.package:
+#     name: "{{ rtk_packages }}"
+#   when: rtk_packages is defined
+#   tags:
+#     - rtk
+#     - ai
