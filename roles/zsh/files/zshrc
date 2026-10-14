@@ -95,6 +95,7 @@ plugins+=(zsh-syntax-highlighting)
 
 autoload -U compinit && compinit
 fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
+fpath+=${HOME}/.local/share/zsh/site-functions
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
