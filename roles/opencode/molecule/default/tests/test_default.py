@@ -2,12 +2,26 @@ import json
 import stat
 
 
-def test_binary_installed(host):
-    """Test that the opencode binary was installed."""
-    binary = host.file("/root/.local/bin/opencode")
-    assert binary.exists
+def test_opencode_command_available(host):
+    """Test that the opencode command is available on the PATH."""
+    cmd = host.command("which opencode")
+    assert cmd.rc == 0
+    assert cmd.stdout.strip() != ""
+
+    binary = host.file(cmd.stdout.strip())
     assert binary.is_file
-    assert stat.S_IXUSR & binary.mode or stat.S_IXGRP & binary.mode or stat.S_IXOTH & binary.mode
+    assert (
+        stat.S_IXUSR & binary.mode
+        or stat.S_IXGRP & binary.mode
+        or stat.S_IXOTH & binary.mode
+    )
+
+
+def test_opencode_npm_package_installed(host):
+    """Test that the @opencode/cli npm package is installed globally."""
+    cmd = host.command("npm ls -g --depth=0 @opencode/cli")
+    assert cmd.rc == 0
+    assert "@opencode/cli@" in cmd.stdout
 
 
 def test_config_directory_created(host):
@@ -24,13 +38,14 @@ def test_agents_directory_created(host):
     assert agents_dir.is_directory
 
 
-def test_tui_config(host):
-    """Test that tui.jsonc was copied with correct content."""
-    tui = host.file("/root/.config/opencode/tui.jsonc")
-    assert tui.exists
-    assert tui.is_file
-    content = json.loads(tui.content_string)
-    assert content["theme"] == "catppuccin"
+def test_cli_config(host):
+    """Test that cli.json was copied with correct content."""
+    cli = host.file("/root/.config/opencode/cli.json")
+    assert cli.exists
+    assert cli.is_file
+    content = json.loads(cli.content_string)
+    assert content["theme"]["name"] == "catppuccin"
+    assert content["theme"]["mode"] == "dark"
 
 
 def test_opencode_config_providers(host):
@@ -41,8 +56,8 @@ def test_opencode_config_providers(host):
     content = json.loads(config.content_string)
     assert "enabled_providers" in content
     assert "openai" in content["enabled_providers"]
-    assert "provider" in content
-    assert content["provider"]["openai"]["api_key"] == "sk-test-key-12345"
+    assert "providers" in content
+    assert content["providers"]["openai"]["api_key"] == "sk-test-key-12345"
 
 
 def test_opencode_config_default_agent(host):
@@ -74,7 +89,7 @@ def test_config_file_permissions(host):
     """Test that config files have correct permissions (0644)."""
     for path in [
         "/root/.config/opencode/opencode.jsonc",
-        "/root/.config/opencode/tui.jsonc",
+        "/root/.config/opencode/cli.json",
         "/root/.config/opencode/agents/review.md",
     ]:
         f = host.file(path)

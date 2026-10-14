@@ -5,5 +5,8 @@ opencode_providers: {}
 opencode_mcps: {}
 opencode_code_review_model: null
 
-opencode_gh_user: "anomalyco"
-opencode_gh_repo: "opencode"
+opencode_npm_package: "@opencode/cli"
+
+# Completion file paths
+opencode_zsh_completion_file: "{{ ansible_facts.user_dir }}/.local/share/zsh/site-functions/_opencode"
+opencode_bash_completion_file: "{{ ansible_facts.user_dir }}/.local/share/bash-completion/completions/opencode"
