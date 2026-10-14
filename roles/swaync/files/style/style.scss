@@ -11,6 +11,7 @@ $accentuation: "peach";
   --noti-bg: var(--cc-bg);
   --noti-bg-alpha: 99%;
   --noti-bg-darker: var(--cc-bg);
+  --noti-bg-alt: var(--ctp-#{$theme}-base);
   --noti-bg-hover: var(--ctp-#{$theme}-surface1);
   --noti-bg-focus: var(--cc-bg);
   --noti-close-bg: var(--ctp-#{$theme}-red);
@@ -46,7 +47,7 @@ $accentuation: "peach";
 
   --priority-low: var(--ctp-#{$theme}-green);
   --priority-normal: var(--ctp-#{$theme}-blue);
-  --priority-critical:var(--ctp-#{$theme}-red);
+  --priority-critical: var(--ctp-#{$theme}-red);
 }
 
 @import "pre-gtk4-variables";
@@ -55,6 +56,17 @@ $margin: 4px;
 
 * {
   font-family: "Iosevka NerdFont Mono";
+}
+
+/* Reset du style de base (Adwaita claire) des widgets GTK4 :
+   supprime les bordures/halos clairs qui "fuyaient" sur les boutons et
+   les sliders, et pose un fond sombre par défaut sur les boutons.
+   Les règles plus spécifiques ci-dessous continuent de l'emporter. */
+button {
+  border: none;
+  box-shadow: none;
+  background-color: var(--ctp-#{$theme}-surface1);
+  color: var(--text-color);
 }
 
 .close-button {

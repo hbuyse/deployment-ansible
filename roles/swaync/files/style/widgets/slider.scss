@@ -2,6 +2,7 @@
 scale {
   margin: 0;
   padding: 0px;
+  border: none;
 
   trough { // codespell:ignore trough
     margin: 0rem 1rem;
@@ -11,10 +12,12 @@ scale {
 
     /* Right color in slider */
     background-color: var(--slider-right-color);
+    border: none;
 
     /* Left color in slider */
     highlight {
       background-color: var(--slider-left-color);
+      border: none;
     }
 
     /* The slider */
@@ -24,6 +27,7 @@ scale {
       box-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
       transition: all 0.2s ease;
       background: var(--slider-button-color);
+      border: none;
       &:hover {
         box-shadow:
           0 0 2px rgba(0, 0, 0, 0.8),

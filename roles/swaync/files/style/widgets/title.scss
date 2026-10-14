@@ -8,11 +8,14 @@
   & > button {
     margin-left: $margin;
     border-radius: var(--border-radius);
+    background-color: var(--ctp-#{$theme}-base);
+    background-image: none;
 
     /* style given to the active toggle button */
     &:checked,
+    &:hover,
     &:active {
-      background: var(--noti-bg-hover);
+      background-color: var(--ctp-#{$theme}-surface0);
     }
   }
 }

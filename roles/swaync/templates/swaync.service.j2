@@ -1,3 +1,8 @@
+{% set ns = namespace(prefix="/usr/bin/swaync") %}
+{% if ansible_facts.hostname == "hbuyse-promax14" %}
+{% set ns.prefix = "/usr/local/bin" %}
+{% endif %}
+
 [Unit]
 Description=Swaync notification daemon
 Documentation=https://github.com/ErikReider/SwayNotificationCenter
@@ -10,11 +15,11 @@ ConditionEnvironment=WAYLAND_DISPLAY
 Type=dbus
 BusName=org.freedesktop.Notifications
 {% if swaync_current_version.split('.') | map('int') | list >= [0, 12, 0] %}
-ExecStart=/usr/bin/swaync --skip-system-css
+ExecStart={{ ns.prefix }}/swaync --skip-system-css
 {% else %}
-ExecStart=/usr/bin/swaync
+ExecStart={{ ns.prefix }}/swaync
 {% endif %}
-ExecReload=/usr/bin/swaync-client --reload-config ; /usr/bin/swaync-client --reload-css
+ExecReload={{ ns.prefix }}/swaync-client --reload-config ; {{ ns.prefix }}/swaync-client --reload-css
 Restart=on-failure
 RestartSec=5
 

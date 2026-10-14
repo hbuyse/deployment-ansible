@@ -10,12 +10,19 @@
   switch {
     border-radius: var(--border-radius);
     margin-left: $margin;
+    border: none;
+    box-shadow: none;
+    background: var(--ctp-#{$theme}-base);
 
     &:checked {
+      background: var(--ctp-#{$theme}-blue);
     }
 
     slider {
       border-radius: var(--border-radius);
+      border: none;
+      box-shadow: none;
+      background: var(--ctp-#{$theme}-text);
     }
   }
 }
