@@ -31,10 +31,6 @@ kmap('n', '<F9>', 'za')
 kmap('o', '<F9>', '<C-C>za')
 kmap('v', '<F9>', 'zf')
 
--- Some good remaps from ThePrimeagen (https://www.youtube.com/watch?v=hSHATqh8svM)
-kmap('n', 'n', 'nzzzv', 'Keep the search centered') -- Keep the search centered
-kmap('n', 'N', 'Nzzzv', 'Keep the search centered') -- Keep the search centered
-
 -- From one of my colleagues
 kmap('n', '*', '*N') -- Do not go to the next word but highlight all iterations of the current word
 
