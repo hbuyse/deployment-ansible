@@ -30,6 +30,9 @@
   tags:
     - opencode
     - ai
+  notify:
+    - "Install zsh completion file"
+    - "Install bash completion file"
 
 - name: "Copy configuration"
   tags:
