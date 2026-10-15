@@ -66,6 +66,7 @@ button {
   border: none;
   box-shadow: none;
   background-color: var(--ctp-#{$theme}-surface1);
+  background-image: none;
   color: var(--text-color);
 }
 
