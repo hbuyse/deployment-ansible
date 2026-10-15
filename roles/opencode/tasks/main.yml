@@ -31,7 +31,9 @@
     - opencode
     - ai
   notify:
+    - "Ensure zsh-completion directory exists"
     - "Install zsh completion file"
+    - "Ensure bash-completion directory exists"
     - "Install bash completion file"
 
 - name: "Copy configuration"
@@ -58,20 +60,6 @@
       ansible.builtin.template:
         src: "opencode.jsonc.j2"
         dest: "{{ opencode_config_dir }}/opencode.jsonc"
-        mode: "0644"
-
-    - name: "Read JSON configuration file"
-      ansible.builtin.slurp:
-        src: "{{ opencode_config_dir }}/opencode.jsonc"
-      register: opencode_config_json_file_content
-
-    - name: "Rewrite with indent"
-      ansible.builtin.copy:
-        content: >-
-          {{ opencode_config_json_file_content['content'] | b64decode | from_json | to_nice_json(indent=2) }}
-        dest: "{{ opencode_config_dir }}/opencode.jsonc"
-        owner: "{{ ansible_facts.user_id }}"
-        group: "{{ ansible_facts.user_gid }}"
         mode: "0644"
 
     - name: "Copy Opencode agent files"

@@ -1,30 +1,34 @@
 ---
-- name: "Install zsh completion file"
+- name: "Ensure zsh-completion directory exists"
+  ansible.builtin.file:
+    path: "{{ opencode_zsh_completion_file | dirname }}"
+    state: "directory"
+    mode: "0755"
   tags:
     - opencode
     - ai
-  block:
-    - name: "Ensure zsh-completion directory exists"
-      ansible.builtin.file:
-        path: "{{ opencode_zsh_completion_file | dirname }}"
-        state: "directory"
-        mode: "0755"
 
-    - name: "Install zsh completion file"
-      ansible.builtin.shell:
-        cmd: "opencode --completions zsh > {{ opencode_zsh_completion_file }}"
+- name: "Install zsh completion file"
+  ansible.builtin.shell:
+    cmd: "opencode --completions zsh > {{ opencode_zsh_completion_file }}"
+  changed_when: true
+  tags:
+    - opencode
+    - ai
+
+- name: "Ensure bash-completion directory exists"
+  ansible.builtin.file:
+    path: "{{ opencode_bash_completion_file | dirname }}"
+    state: "directory"
+    mode: "0755"
+  tags:
+    - opencode
+    - ai
 
 - name: "Install bash completion file"
+  ansible.builtin.shell:
+    cmd: "opencode --completions bash > {{ opencode_bash_completion_file }}"
+  changed_when: true
   tags:
     - opencode
     - ai
-  block:
-    - name: "Ensure bash-completion directory exists"
-      ansible.builtin.file:
-        path: "{{ opencode_bash_completion_file | dirname }}"
-        state: "directory"
-        mode: "0755"
-
-    - name: "Install bash completion file"
-      ansible.builtin.shell:
-        cmd: "opencode --completions bash > {{ opencode_bash_completion_file }}"

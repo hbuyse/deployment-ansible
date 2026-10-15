@@ -1,12 +1,12 @@
-{
+{{ {
     "$schema": "https://opencode.ai/config.json",
     "default_agent": "plan",
-    "enabled_providers": {{ opencode_providers.keys() | list | ansible.builtin.to_json }},
-    "providers": {{ opencode_providers | ansible.builtin.to_nice_json(sort_keys=False) }},
-    "mcp": { "servers": {{ opencode_mcps | ansible.builtin.to_nice_json(sort_keys=False) }} },
+    "enabled_providers": opencode_providers.keys() | list,
+    "providers": opencode_providers,
+    "mcp": { "servers": opencode_mcps },
     "plugin": [
       "@simonwjackson/opencode-direnv",
       "@xberg-io/opencode-html-to-markdown",
       "@xberg-io/opencode-tree-sitter-language-pack"
     ]
-}
+  } | ansible.builtin.to_nice_json(indent=2) }}
