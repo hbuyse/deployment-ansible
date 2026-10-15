@@ -24,6 +24,24 @@ def test_opencode_npm_package_installed(host):
     assert "@opencode/cli@" in cmd.stdout
 
 
+def test_zsh_completion_file(host):
+    """Test that the zsh completion file was generated."""
+    completion = host.file("/root/.local/share/zsh/site-functions/_opencode")
+    assert completion.exists
+    assert completion.is_file
+    assert completion.content_string.strip() != ""
+    assert "opencode" in completion.content_string
+
+
+def test_bash_completion_file(host):
+    """Test that the bash completion file was generated."""
+    completion = host.file("/root/.local/share/bash-completion/completions/opencode")
+    assert completion.exists
+    assert completion.is_file
+    assert completion.content_string.strip() != ""
+    assert "opencode" in completion.content_string
+
+
 def test_config_directory_created(host):
     """Test that the opencode config directory was created."""
     config_dir = host.file("/root/.config/opencode")
@@ -46,6 +64,21 @@ def test_cli_config(host):
     content = json.loads(cli.content_string)
     assert content["theme"]["name"] == "catppuccin"
     assert content["theme"]["mode"] == "dark"
+
+
+def test_old_tui_config_removed(host):
+    """Test that the old tui.jsonc configuration file was removed."""
+    tui = host.file("/root/.config/opencode/tui.jsonc")
+    assert not tui.exists
+
+
+def test_opencode_config_prettified(host):
+    """Test that opencode.jsonc was rewritten with 2-space indentation."""
+    config = host.file("/root/.config/opencode/opencode.jsonc")
+    lines = config.content_string.strip().splitlines()
+    assert len(lines) > 1
+    assert lines[0] == "{"
+    assert lines[1].startswith('  "$schema"')
 
 
 def test_opencode_config_providers(host):
@@ -103,6 +136,8 @@ def test_config_directory_permissions(host):
     for path in [
         "/root/.config/opencode",
         "/root/.config/opencode/agents",
+        "/root/.local/share/zsh/site-functions",
+        "/root/.local/share/bash-completion/completions",
     ]:
         d = host.file(path)
         assert d.exists

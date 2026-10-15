@@ -10,3 +10,17 @@
         name:
           - npm
         update_cache: true
+
+    - name: "Create old tui configuration file"
+      block:
+        - name: "Create old configuration directory"
+          ansible.builtin.file:
+            path: /root/.config/opencode
+            state: directory
+            mode: "0755"
+
+        - name: "Copy old tui configuration file"
+          ansible.builtin.copy:
+            content: '{"theme": "catppuccin"}\n'
+            dest: /root/.config/opencode/tui.jsonc
+            mode: "0644"
