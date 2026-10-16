@@ -1,0 +1,43 @@
+---
+# roles/netrc/files/netrc is encrypted with ansible-vault, so the real role cannot be applied without the vault
+# password. Build a copy of the role in the ephemeral directory where the file is replaced by a plain text fixture.
+# Like in a fresh git checkout, the fixture is written with mode 0644 (git does not track anything but the executable
+# bit).
+- name: Build a testable copy of the role
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    netrc_molecule_role_src: "{{ playbook_dir }}/../../"
+    netrc_molecule_role_copy: "{{ lookup('ansible.builtin.env', 'MOLECULE_EPHEMERAL_DIRECTORY') }}/netrc"
+  tasks:
+    - name: Create the role copy directories
+      ansible.builtin.file:
+        path: "{{ netrc_molecule_role_copy }}/{{ item }}"
+        state: directory
+        mode: "0755"
+      loop:
+        - tasks
+        - files
+
+    - name: Copy the tasks
+      ansible.builtin.copy:
+        src: "{{ netrc_molecule_role_src }}tasks/"
+        dest: "{{ netrc_molecule_role_copy }}/tasks"
+        mode: preserve
+
+    - name: Write the netrc fixture
+      ansible.builtin.copy:
+        content: "machine example.com login molecule password not-a-secret\n"
+        dest: "{{ netrc_molecule_role_copy }}/files/netrc"
+        mode: "0644"
+
+- name: Converge
+  hosts: all
+  gather_facts: true
+  vars:
+    netrc_molecule_role_copy: "{{ lookup('ansible.builtin.env', 'MOLECULE_EPHEMERAL_DIRECTORY') }}/netrc"
+  tasks:
+    - name: Apply the netrc role
+      ansible.builtin.include_role:
+        name: "{{ netrc_molecule_role_copy }}"
