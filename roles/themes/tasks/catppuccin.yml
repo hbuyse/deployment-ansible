@@ -4,7 +4,7 @@
     cmd: "set -o pipefail && gnome-shell --version | grep -oE '[0-9]+\\.[0-9]+'"
     executable: /bin/bash
   register: themes_gnome_shell_version
-  changed_when: themes_gnome_shell_version.rc != 0
+  changed_when: false
 
 - name: "Install themes"
   when: "themes_gnome_shell_version.stdout_lines[0] is version('49.0', '>=')"

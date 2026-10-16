@@ -15,7 +15,7 @@
   ansible.builtin.command:
     cmd: "swaync --version"
   register: swaync_version
-  changed_when: swaync_version.rc != 0
+  changed_when: false
   tags: swaync
 
 - name: "Extract version"

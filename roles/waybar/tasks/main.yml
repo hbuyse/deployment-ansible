@@ -14,7 +14,7 @@
   ansible.builtin.command:
     cmd: "waybar --version"
   register: waybar_version
-  changed_when: waybar_version.rc != 0
+  changed_when: false
   tags: waybar
 
 - name: "Extract version"
