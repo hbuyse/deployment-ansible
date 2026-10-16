@@ -14,15 +14,25 @@ bash ./install.sh
 
 Some roles have tests. Here is the list:
 
+- brightnessctl
 - clang
 - claude_code
 - claude_desktop
 - docker
+- fd
+- golang
+- jq
+- mimeapps
+- minicom
+- netrc
 - nodejs
+- npmrc
 - nvim
 - opencode
+- podman
 - rustup
 - ssh
+- user
 - zsh
 
 To run the tests, change your directory to the role you want to test and run the following:
