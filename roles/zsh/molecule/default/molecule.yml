@@ -1,0 +1,41 @@
+---
+# The role has no galaxy_info in meta/main.yml, so Molecule cannot install it as a Galaxy role: use it from the
+# repository and look for its dependencies (direnv, fastfetch, tmux, fzf) in the sibling directories.
+prerun: false
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: zsh-debian12
+    image: geerlingguy/docker-debian12-ansible:latest
+    pre_build_image: true
+  - name: zsh-ubuntu2404
+    image: geerlingguy/docker-ubuntu2404-ansible:latest
+    pre_build_image: true
+  - name: zsh-archlinux
+    image: archlinux:base
+    pre_build_image: false
+    # Minimal Arch image has no systemd and no Python, see prepare.yml
+provisioner:
+  name: ansible
+  env:
+    ANSIBLE_ROLES_PATH: "${MOLECULE_PROJECT_DIRECTORY}/.."
+    # The fzf dependency needs community.general.golang_package, only available in the collections vendored here
+    ANSIBLE_COLLECTIONS_PATH: "${MOLECULE_PROJECT_DIRECTORY}/../../collections:${HOME}/.ansible/collections"
+  playbooks:
+    prepare: prepare.yml
+    converge: converge.yml
+scenario:
+  # No idempotence step: the direnv dependency is not idempotent on Debian family ("Ensure Man pages directory exists"
+  # recursively sets 0755 on the man pages that the next task unpacks as 0644), which is unrelated to the zsh role.
+  test_sequence:
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    - verify
+    - destroy
+verifier:
+  name: testinfra

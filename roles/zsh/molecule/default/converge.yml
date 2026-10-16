@@ -1,0 +1,12 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: true
+  pre_tasks:
+    # Same fact as pre_tasks/main.yml, which the direnv and fastfetch dependencies use on Debian family
+    - name: Define alternative architecture naming  # noqa: var-naming[no-role-prefix]
+      ansible.builtin.set_fact:
+        alt_arch: >-
+          {{ ansible_facts.machine | replace('x86_64', 'amd64') | replace('aarch64', 'arm64') }}
+  roles:
+    - role: ../../..  # noqa: role-name[path]
