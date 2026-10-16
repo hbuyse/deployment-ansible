@@ -50,6 +50,9 @@ repo, and seeds `host_vars/localhost.yml`.
   prints the role / `pre-tasks` / `post-tasks` / `handlers` header above them.
 - When a task/variable differs by OS, follow the existing pattern in that role (`vars/<os_family>.yml` include,
   or `when: ansible_facts.os_family == "..."`) rather than inventing a new mechanism.
+  OS variables are loaded with `include_vars: "{{ item }}"` looping over
+  `query('ansible.builtin.first_found', ansible_facts.os_family | lower ~ '.yml', skip=true)` (no `skip` when the file
+  must exist), copy that task from a role.
 - Tags: the tags shared by all the tasks of a role are declared once on its entry in the playbooks
   (`- role: "yq"` then `tags: yq`), not on each task, because role tags are also inherited by the tasks it includes.
   Only put `tags:` on a task for a subset of the role (e.g. `clangd`). A role with `meta` dependencies, or used as a
