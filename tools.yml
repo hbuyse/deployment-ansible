@@ -49,6 +49,10 @@
       tags: keymapp
     - role: "bitwarden"
       tags: bitwarden
+    - role: "claude_desktop"
+      tags:
+        - ai
+        - claude-desktop
     - role: "zoom"
       tags: zoom
       when: ansible_facts.hostname == "hbuyse-promax14"

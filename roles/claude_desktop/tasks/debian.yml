@@ -1,0 +1,22 @@
+---
+# Same files as the ones the claude-desktop package registers, so that installing it does not duplicate the repository
+- name: "Install signing key"
+  become: true
+  ansible.builtin.get_url:
+    url: "https://downloads.claude.ai/claude-desktop/key.asc"
+    dest: "/usr/share/keyrings/claude-desktop-archive-keyring.asc"
+    mode: "0644"
+
+- name: "Install repository [Debian]"
+  become: true
+  ansible.builtin.template:
+    src: "claude-desktop.list.j2"
+    dest: "/etc/apt/sources.list.d/claude-desktop.list"
+    mode: "0644"
+  register: claude_desktop_apt_repository
+
+- name: "Update APT cache"  # noqa: no-handler
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+  when: claude_desktop_apt_repository is changed

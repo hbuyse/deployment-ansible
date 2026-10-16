@@ -1,0 +1,49 @@
+---
+- name: "Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  loop: "{{ query('ansible.builtin.first_found', ansible_facts.os_family | lower ~ '.yml', skip=true) }}"
+
+- name: "Add repository"
+  ansible.builtin.include_tasks: "{{ item }}"
+  loop: "{{ query('ansible.builtin.first_found', ansible_facts.os_family | lower ~ '.yml', skip=true) }}"
+
+- name: "Install from package manager"
+  become: true
+  ansible.builtin.apt:
+    name: "{{ claude_desktop_packages }}"
+    state: present
+    install_recommends: "{{ claude_desktop_install_recommends }}"
+  when: claude_desktop_packages is defined
+
+- name: "Install from AUR"
+  kewlfft.aur.aur:
+    name: "{{ claude_desktop_aur_packages }}"
+    use: yay
+    state: present
+  when: claude_desktop_aur_packages is defined
+
+- name: "Warn that there is nothing to install"
+  ansible.builtin.debug:
+    msg: "Claude Desktop is not available on {{ ansible_facts.os_family }}, nothing to install"
+  when:
+    - claude_desktop_packages is not defined
+    - claude_desktop_aur_packages is not defined
+
+- name: "Allow the user to use KVM for Cowork"
+  become: true
+  when:
+    - claude_desktop_kvm_group | bool
+    - claude_desktop_packages is defined or claude_desktop_aur_packages is defined
+  block:
+    # Normally created with the QEMU packages, make sure it exists when they are not installed
+    - name: "Ensure the kvm group exists"
+      ansible.builtin.group:
+        name: kvm
+        system: true
+        state: present
+
+    - name: "Add the user to the kvm group"
+      ansible.builtin.user:
+        name: "{{ ansible_facts.user_id }}"
+        groups: kvm
+        append: true

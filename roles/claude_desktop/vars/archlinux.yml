@@ -1,0 +1,4 @@
+---
+# Community package repackaging the Debian build of Claude Desktop, Anthropic does not publish anything for Arch
+claude_desktop_aur_packages:
+  - claude-desktop-bin

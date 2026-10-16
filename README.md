@@ -16,6 +16,7 @@ Some roles have tests. Here is the list:
 
 - clang
 - claude_code
+- claude_desktop
 - docker
 - nodejs
 - nvim

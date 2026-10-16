@@ -1,0 +1,5 @@
+---
+# The Cowork tab runs its virtual machine with QEMU and KVM: install the recommended packages of claude-desktop and
+# allow the user to open /dev/kvm and /dev/vhost-vsock.
+claude_desktop_install_recommends: true
+claude_desktop_kvm_group: true
