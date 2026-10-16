@@ -1,0 +1,16 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: true
+  pre_tasks:
+    # Same fact as pre_tasks/debian.yml, which the docker role relies on for the Docker repository
+    - name: Get dpkg architecture
+      ansible.builtin.command: dpkg --print-architecture
+      register: docker_molecule_dpkg_arch
+      changed_when: false
+
+    - name: Store DPKG architecture as fact
+      ansible.builtin.set_fact:
+        deb_arch: "{{ docker_molecule_dpkg_arch.stdout }}"  # noqa: var-naming[no-role-prefix]
+  roles:
+    - role: ../../..  # noqa: role-name[path]
