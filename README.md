@@ -14,8 +14,14 @@ bash ./install.sh
 
 Some roles have tests. Here is the list:
 
+- clang
+- docker
+- nodejs
 - nvim
 - opencode
+- rustup
+- ssh
+- zsh
 
 To run the tests, change your directory to the role you want to test and run the following:
 
