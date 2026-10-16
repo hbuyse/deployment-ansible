@@ -1,0 +1,16 @@
+---
+- name: Prepare
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Refresh the APT cache
+      ansible.builtin.apt:
+        update_cache: true
+      when: ansible_facts.os_family == "Debian"
+
+    # Created by AccountsService, installed with every desktop environment
+    - name: Create the AccountsService icons directory
+      ansible.builtin.file:
+        path: /var/lib/AccountsService/icons
+        state: directory
+        mode: "0775"
