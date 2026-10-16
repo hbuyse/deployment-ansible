@@ -39,9 +39,6 @@
           - name: llvm-mc
             link: /usr/bin/llvm-mc
             path: "/usr/bin/llvm-mc-{{ clang_latest_llvm_version }}"
-          - name: llvm-mcmarkup
-            link: /usr/bin/llvm-mcmarkup
-            path: "/usr/bin/llvm-mcmarkup-{{ clang_latest_llvm_version }}"
           - name: llvm-nm
             link: /usr/bin/llvm-nm
             path: "/usr/bin/llvm-nm-{{ clang_latest_llvm_version }}"
@@ -101,9 +98,6 @@
           - name: clang-format-diff
             link: /usr/bin/clang-format-diff
             path: "/usr/bin/clang-format-diff-{{ clang_latest_llvm_version }}"
-          - name: clang-import-test
-            link: /usr/bin/clang-import-test
-            path: "/usr/bin/clang-import-test-{{ clang_latest_llvm_version }}"
           - name: clang-include-fixer
             link: /usr/bin/clang-include-fixer
             path: "/usr/bin/clang-include-fixer-{{ clang_latest_llvm_version }}"
@@ -113,9 +107,6 @@
           - name: clang-query
             link: /usr/bin/clang-query
             path: "/usr/bin/clang-query-{{ clang_latest_llvm_version }}"
-          - name: clang-rename
-            link: /usr/bin/clang-rename
-            path: "/usr/bin/clang-rename-{{ clang_latest_llvm_version }}"
           - name: clang-reorder-fields
             link: /usr/bin/clang-reorder-fields
             path: "/usr/bin/clang-reorder-fields-{{ clang_latest_llvm_version }}"
