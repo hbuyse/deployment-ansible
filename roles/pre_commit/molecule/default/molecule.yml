@@ -1,0 +1,26 @@
+---
+# Molecule cannot install the role as a Galaxy role: its meta/main.yml has no galaxy_info
+prerun: false
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  # Debian family has no package: pre-commit is installed with pipx
+  - name: pre_commit-debian12
+    image: geerlingguy/docker-debian12-ansible:latest
+    pre_build_image: true
+  - name: pre_commit-ubuntu2404
+    image: geerlingguy/docker-ubuntu2404-ansible:latest
+    pre_build_image: true
+  - name: pre_commit-archlinux
+    image: archlinux:base
+    pre_build_image: false
+    # Minimal Arch image has no systemd and no Python, see prepare.yml
+provisioner:
+  name: ansible
+  playbooks:
+    prepare: prepare.yml
+    converge: converge.yml
+verifier:
+  name: testinfra
