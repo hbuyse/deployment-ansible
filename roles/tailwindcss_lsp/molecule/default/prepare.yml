@@ -1,0 +1,25 @@
+---
+- name: Pre-install Python on Arch Linux
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Install Python and sudo on Arch
+      ansible.builtin.raw: pacman -Syu --noconfirm python sudo
+      when: inventory_hostname == "tailwindcss_lsp-archlinux"
+      changed_when: true
+
+- name: Prepare
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Refresh the APT cache
+      ansible.builtin.apt:
+        update_cache: true
+      when: ansible_facts.os_family == "Debian"
+
+    - name: Install the packages the role expects on a regular install
+      ansible.builtin.package:
+        name:
+          - nodejs
+          - npm
+        state: present
