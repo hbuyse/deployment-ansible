@@ -1,17 +1,17 @@
 ---
-- name: "Pre-tasks | Define alternative architecture naming"
+- name: "Define alternative architecture naming"
   ansible.builtin.set_fact:
     alt_arch: "{{ ansible_facts.machine | replace('x86_64', 'amd64') | replace('aarch64', 'arm64') }}"
   tags: always
 
-- name: "Pre-tasks | Get list of services"
+- name: "Get list of services"
   ansible.builtin.service_facts:
 
-- name: "Pre-tasks | Gather package facts"
+- name: "Gather package facts"
   ansible.builtin.package_facts:
     manager: auto
 
-- name: "Pre-tasks | Run some OS specific tasks"
+- name: "Run some OS specific tasks"
   ansible.builtin.include_tasks:
     file: "{{ item }}"
     apply:
@@ -22,7 +22,7 @@
       skip: true
   tags: always
 
-- name: "Pre-tasks | Create user config directory"
+- name: "Create user config directory"
   ansible.builtin.file:
     path: "{{ ansible_facts.user_dir }}/.config"
     state: directory
@@ -31,7 +31,7 @@
     group: "{{ ansible_facts.user_gid }}"
   tags: always
 
-- name: "Pre-tasks | Create user systemd config directory"
+- name: "Create user systemd config directory"
   ansible.builtin.file:
     path: "{{ ansible_facts.user_dir }}/.config/systemd/user"
     state: directory

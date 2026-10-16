@@ -1,15 +1,15 @@
 ---
-- name: "Terminal tools | Installation"
+- name: "Installation"
   hosts: localhost
   pre_tasks:
-    - name: "Terminal tools | Prepare installation"
+    - name: "Prepare installation"
       ansible.builtin.include_tasks:
         file: pre_tasks/main.yml
         apply:
           tags: always
       tags: always
   post_tasks:
-    - name: "Terminal tools | Finalize installation"
+    - name: "Finalize installation"
       ansible.builtin.include_tasks:
         file: post_tasks/main.yml
         apply:

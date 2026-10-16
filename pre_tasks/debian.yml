@@ -1,8 +1,8 @@
 ---
-- name: "Pre-tasks | Get dpkg architecture"
+- name: "Get dpkg architecture"
   shell: dpkg --print-architecture
   register: deb_arch_tmp
 
-- name: "Pre-tasks | Store DPKG architecture as fact"
+- name: "Store DPKG architecture as fact"
   ansible.builtin.set_fact:
     deb_arch: "{{ deb_arch_tmp.stdout }}"

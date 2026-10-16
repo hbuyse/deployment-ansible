@@ -1,15 +1,15 @@
 ---
-- name: "GUI tools | Installation"
+- name: "Installation"
   hosts: localhost
   pre_tasks:
-    - name: "GUI tools | Prepare installation"
+    - name: "Prepare installation"
       ansible.builtin.include_tasks:
         file: pre_tasks/main.yml
         apply:
           tags: always
       tags: always
   post_tasks:
-    - name: "GUI tools | Finalize installation"
+    - name: "Finalize installation"
       ansible.builtin.include_tasks:
         file: post_tasks/main.yml
         apply:

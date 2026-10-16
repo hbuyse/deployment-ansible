@@ -1,26 +1,26 @@
 ---
-- name: "Post-tasks | Update distro"
+- name: "Update distro"
   become: true
   block:
-    - name: "Post-tasks | Upgrade packages to latest version"
+    - name: "Upgrade packages to latest version"
       ansible.builtin.apt:
         force_apt_get: true
         state: "latest"
         upgrade: "safe"
         update_cache: true
 
-    - name: "Post-tasks | Remove APT cache"
+    - name: "Remove APT cache"
       ansible.builtin.apt:
         force_apt_get: true
         state: "latest"
         upgrade: "safe"
         update_cache: true
 
-    - name: "Post-tasks | Remove dependencies that are no longer required and purge their configuration files"
+    - name: "Remove dependencies that are no longer required and purge their configuration files"
       ansible.builtin.apt:
         autoremove: true
         purge: true
 
-    - name: "Post-tasks | The apt-get clean command clears the local repository of retrieved package files"
+    - name: "The apt-get clean command clears the local repository of retrieved package files"
       ansible.builtin.apt:
         clean: true

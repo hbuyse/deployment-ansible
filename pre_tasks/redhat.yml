@@ -1,9 +1,9 @@
 ---
-- name: "RPM Fusion | Install repositories"
+- name: "RPM Fusion - Install repositories"
   become: true
   tags: rpmfusion
   block:
-    - name: "RPM Fusion | Import GPG keys"
+    - name: "RPM Fusion - Import GPG keys"
       ansible.builtin.rpm_key:
         key: "https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-{{ repo }}-{{ ansible_facts.distribution
           | lower }}-2020"
@@ -15,7 +15,7 @@
         loop_var: repo
       when: "'rpmfusion-{{ repo }}-release-{{ ansible_facts.distribution_major_version }}' in ansible_facts.packages"
 
-    - name: "RPM Fusion | Install repo package"
+    - name: "RPM Fusion - Install repo package"
       ansible.builtin.dnf:
         name: "https://mirrors.rpmfusion.org/{{ repo }}/{{ ansible_facts.distribution | lower }}/rpmfusion-{{ repo }}-release-{{
           ansible_facts.distribution_major_version }}.noarch.rpm"
@@ -27,15 +27,15 @@
         loop_var: repo
       when: "'rpmfusion-{{ repo }}-release-{{ ansible_facts.distribution_major_version }}' in ansible_facts.packages"
 
-- name: "Terra | Install repository"
+- name: "Terra - Install repository"
   tags: "terra"
   block:
-    - name: "Terra | Check if repository is installed"
+    - name: "Terra - Check if repository is installed"
       ansible.builtin.stat:
         name: "/etc/yum.repos.d/terra.repo"
       register: terra_repo_stat_result
 
-    - name: "Terra | Install repo package"
+    - name: "Terra - Install repo package"
       become: true
       ansible.builtin.command:
         cmd: >

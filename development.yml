@@ -1,15 +1,15 @@
 ---
-- name: "Development | Installation"
+- name: "Installation"
   hosts: localhost
   pre_tasks:
-    - name: "Development | Prepare installation"
+    - name: "Prepare installation"
       ansible.builtin.include_tasks:
         file: pre_tasks/main.yml
         apply:
           tags: always
       tags: always
   post_tasks:
-    - name: "Development | Finalize installation"
+    - name: "Finalize installation"
       ansible.builtin.include_tasks:
         file: post_tasks/main.yml
         apply:
