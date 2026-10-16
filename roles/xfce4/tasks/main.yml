@@ -45,7 +45,7 @@
     - xfce4
 
 - name: "Copy dynamic configuration files"
-  ansible.builtin.copy:
+  ansible.builtin.template:
     src: "{{ item }}.j2"
     dest: "{{ ansible_facts.user_dir }}/.config/xfce4/{{ item }}"
     owner: "{{ ansible_facts.user_uid }}"
