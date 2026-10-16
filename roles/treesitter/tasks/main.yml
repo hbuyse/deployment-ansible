@@ -5,4 +5,3 @@
     state: latest
     locked: true
   when: treesitter_packages is not defined
-  tags: treesitter

@@ -5,9 +5,6 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags:
-    - luals
-    - lsp
 
 - name: "Install from package manager"
   become: true
@@ -15,18 +12,8 @@
   ansible.builtin.package:
     name: "{{ luals_package }}"
     state: present
-  tags:
-    - luals
-    - lsp
 
 - name: "Install from GitHub"
   when: luals_package is not defined
   ansible.builtin.include_tasks:
     file: source.yml
-    apply:
-      tags:
-        - luals
-        - lsp
-  tags:
-    - luals
-    - lsp

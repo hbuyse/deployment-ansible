@@ -6,28 +6,24 @@
       - ssh_pubkey_email | length > 0
     fail_msg: "ssh_pubkey_email must not be empty (check your host_vars/localhost.yml)"
     quiet: true
-  tags: ssh
 
 - name: "Ensure directory exists"
   ansible.builtin.file:
     path: "{{ ansible_facts.user_dir }}/.ssh"
     state: "directory"
     mode: "0700"
-  tags: ssh
 
 - name: "Copy private key"
   ansible.builtin.copy:
     src: "id_rsa"
     dest: "{{ ansible_facts.user_dir }}/.ssh/id_rsa"
     mode: "0600"
-  tags: ssh
 
 - name: "Copy config file"
   ansible.builtin.copy:
     src: "config"
     dest: "{{ ansible_facts.user_dir }}/.ssh/config"
     mode: "0644"
-  tags: ssh
 
 - name: "Copy config drop-in files"
   ansible.builtin.copy:
@@ -35,11 +31,9 @@
     dest: "{{ ansible_facts.user_dir }}/.ssh/config.d"
     mode: "0644"
     directory_mode: "0755"
-  tags: ssh
 
 - name: "Copy public key"
   ansible.builtin.template:
     src: "id_rsa.pub.j2"
     dest: "{{ ansible_facts.user_dir }}/.ssh/id_rsa.pub"
     mode: "0644"
-  tags: ssh

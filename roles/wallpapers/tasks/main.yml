@@ -5,24 +5,20 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags: wallpapers
 
 - name: "Install dependencies"
   become: true
   ansible.builtin.package:
     name: "{{ wallpapers_dependencies }}"
     state: present
-  tags: wallpapers
 
 - name: "Ensure wallpaper directory exists"
   ansible.builtin.file:
     path: "{{ wallpapers_install_dir }}"
     state: directory
     mode: "0755"
-  tags: wallpapers
 
 - name: "Install SVG files"
-  tags: wallpapers
   block:
     - name: "Generate SVG file with colors"
       ansible.builtin.shell:
@@ -48,7 +44,6 @@
         - "locker"
 
 - name: "Install PNG files"
-  tags: wallpapers
   block:
     - name: "Convert SVG to PNG files"
       ansible.builtin.command:

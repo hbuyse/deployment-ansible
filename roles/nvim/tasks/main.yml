@@ -5,9 +5,6 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags:
-    - neovim
-    - nvim
 
 - name: "Install program from package manager"
   become: true
@@ -15,15 +12,9 @@
     name: "{{ nvim_package }}"
     state: present
   when: nvim_package is defined
-  tags:
-    - neovim
-    - nvim
 
 - name: "Install program from static binary"
   when: nvim_package is not defined
-  tags:
-    - neovim
-    - nvim
   block:
     - name: "Get latest version number"
       ansible.builtin.set_fact:
@@ -53,9 +44,6 @@
     mode: "0755"
     path: "{{ nvim_config_dir }}"
     state: directory
-  tags:
-    - neovim
-    - nvim
 
 - name: "Copy static files in configuration directory"
   ansible.builtin.copy:
@@ -63,9 +51,6 @@
     dest: "{{ nvim_config_dir }}/"
     mode: "0644"
     directory_mode: "0755"
-  tags:
-    - neovim
-    - nvim
 
 - name: "Copy templates files in configuration directory"
   ansible.builtin.template:
@@ -76,14 +61,8 @@
     - "lua/hbuyse/plugins/formatter.lua"
     - "lua/hbuyse/init.lua"
     - "lsp/perlnavigator.lua"
-  tags:
-    - neovim
-    - nvim
 
 - name: "Sync plugins"
   when: nvim_update_plugins|bool
   ansible.builtin.command: nvim --headless "+Lazy! sync" +qa
   changed_when: false
-  tags:
-    - neovim
-    - nvim

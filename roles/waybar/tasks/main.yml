@@ -1,29 +1,24 @@
 ---
 - name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ ansible_facts.os_family | lower }}.yml"
-  tags: waybar
 
 - name: "Install packages"
   become: true
   ansible.builtin.package:
     name: "{{ waybar_packages }}"
     state: "present"
-  tags: waybar
 
 - name: "Get version"
   ansible.builtin.command:
     cmd: "waybar --version"
   register: waybar_version
   changed_when: false
-  tags: waybar
 
 - name: "Extract version"
   ansible.builtin.set_fact:
     waybar_current_version: "{{ waybar_version.stdout | regex_search('[0-9]+.[0-9]+.[0-9]+') }}"
-  tags: waybar
 
 - name: "Install service file"
-  tags: waybar
   block:
     - name: "Copy service file"
       ansible.builtin.copy:
@@ -43,7 +38,6 @@
         - "Disable 'waybar' service"
 
 - name: "Install configuration files"
-  tags: waybar
   notify:
     - "Disable 'waybar' service"
     - "Restart 'waybar-user' service"
@@ -89,4 +83,3 @@
     name: "{{ waybar_pip_packages }}"
     state: "present"
     virtualenv: "{{ waybar_config_dir }}/scripts/.venv"
-  tags: waybar

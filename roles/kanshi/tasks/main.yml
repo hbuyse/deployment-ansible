@@ -4,27 +4,22 @@
   with_first_found:
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
-  tags: kanshi
 
 - name: "Install required packages"
   become: true
   ansible.builtin.package:
     name: "{{ kanshi_packages }}"
-  tags: kanshi
 
 - name: "Gather the package facts"
   ansible.builtin.package_facts:
     manager: "{{ (ansible_facts.os_family == 'RedHat') | ansible.builtin.ternary('dnf5', 'auto') }}"
     strategy: first
-  tags: kanshi
 
 - name: "Store version as fact"
   ansible.builtin.set_fact:
     kanshi_version: "{{ ansible_facts.packages['kanshi'][0]['version'] | regex_search('[0-9]+.[0-9]+.[0-9]+') }}"
-  tags: kanshi
 
 - name: "Install static configuration files"
-  tags: kanshi
   block:
     - name: "Ensure directory exist"
       ansible.builtin.file:
@@ -49,7 +44,6 @@
           mode: "0755"
 
 - name: "Install dynamic configuration files"
-  tags: kanshi
   block:
     - name: "Ensure directory exist"
       ansible.builtin.file:
@@ -84,7 +78,6 @@
 
 - name: "Install service file"
   become: true
-  tags: kanshi
   block:
     - name: "Ensure directory exist"
       ansible.builtin.file:
@@ -101,5 +94,4 @@
         mode: "0644"
         owner: "{{ kanshi_config_owner }}"
         group: "{{ kanshi_config_group }}"
-      tags: kanshi
       notify: "Enable and restart kanshi service"

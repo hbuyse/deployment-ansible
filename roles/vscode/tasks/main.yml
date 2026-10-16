@@ -5,23 +5,17 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags: vscode
 
 - name: "Add dependencies and repo"
   ansible.builtin.include_tasks:
     file: "{{ item }}"
-    apply:
-      tags: vscode
   with_first_found:
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags: vscode
 
 - name: "Install VS Code"
   become: true
   ansible.builtin.package:
     state: present
     name: "{{ vscode_packages }}"
-  tags:
-    - vscode

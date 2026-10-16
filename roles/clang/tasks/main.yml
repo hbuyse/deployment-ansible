@@ -5,37 +5,28 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags: clang
 
 - name: "Add LLVM repository"
   ansible.builtin.include_tasks:
     file: "{{ item }}"
-    apply:
-      tags: clang
   with_first_found:
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags: clang
 
 - name: "Install LLVM packages"
   become: true
   ansible.builtin.package:
     state: present
     name: "{{ clang_packages }}"
-  tags: clang
 
 - name: "Update Clang and LLVM alternatives [Debian]"
   when: ansible_facts.os_family in ['Debian']
   ansible.builtin.include_tasks:
     file: alternatives.yml
-    apply:
-      tags: clang
-  tags: clang
 
 - name: "Copy configuration file"
   tags:
-    - clang
     - clangd
   block:
     - name: "Ensure configuration directory exists"

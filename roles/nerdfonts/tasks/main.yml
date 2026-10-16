@@ -5,7 +5,6 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags: nerdfonts
 
 - name: "Install packages"
   become: true
@@ -13,21 +12,15 @@
     state: present
     name: "{{ nerdfonts_packages }}"
   when: nerdfonts_packages is defined
-  tags: nerdfonts
 
 - name: "Install from source"
   when: nerdfonts_packages is not defined
-  tags: nerdfonts
   block:
     - name: "Get latest version number"
       ansible.builtin.set_fact:
         nerdfonts_latest_version: "{{ lookup('github_latest_release', 'ryanoasis/nerd-fonts')[1:] }}"
-      tags: nerdfonts
 
     - name: "Download fonts"
       ansible.builtin.include_tasks:
         file: font-download.yml
-        apply:
-          tags: nerdfonts
       loop: "{{ nerdfonts_list }}"
-      tags: nerdfonts

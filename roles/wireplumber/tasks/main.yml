@@ -5,16 +5,12 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags:
-    - wireplumber
 
 - name: "Uninstall pipewire-media-session"
   become: true
   ansible.builtin.package:
     name: "pipewire-media-session"
     state: "absent"
-  tags:
-    - wireplumber
 
 - name: "Uninstall pipewire-media-session-docs"
   become: true
@@ -22,8 +18,6 @@
     name: "pipewire-media-session-docs"
     state: "absent"
   ignore_errors: "{{ ansible_check_mode }}"
-  tags:
-    - wireplumber
 
 - name: "Install packages"
   become: true
@@ -31,8 +25,6 @@
     name: "{{ wireplumber_packages }}"
     state: "present"
   when: wireplumber_packages is defined
-  tags:
-    - wireplumber
 
 - name: "Stop PulseAudio"
   ansible.builtin.systemd:
@@ -44,8 +36,6 @@
   loop:
     - pulseaudio.socket
     - pulseaudio.service
-  tags:
-    - wireplumber
 
 # - name: "Uninstall PulseAudio"
 #   become: true
@@ -65,12 +55,8 @@
     - "pipewire"
     - "pipewire-pulse"
     - "wireplumber"
-  tags:
-    - wireplumber
 
 - name: "Copy configuration"
-  tags:
-    - wireplumber
   block:
     - name: "Ensure configuration directory exists"
       ansible.builtin.file:

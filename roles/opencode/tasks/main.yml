@@ -5,9 +5,6 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags:
-    - opencode
-    - ai
 
 - name: "Install program from package manager"
   become: true
@@ -15,9 +12,6 @@
     name: "{{ opencode_packages }}"
     state: present
   when: opencode_packages is defined
-  tags:
-    - opencode
-    - ai
 
 - name: "Install from Node Package Manager"
   when: opencode_packages is not defined
@@ -27,9 +21,6 @@
     state: latest
     production: true
     no_optional: true
-  tags:
-    - opencode
-    - ai
   notify:
     - "Ensure zsh-completion directory exists"
     - "Install zsh completion file"
@@ -37,9 +28,6 @@
     - "Install bash completion file"
 
 - name: "Copy configuration"
-  tags:
-    - opencode
-    - ai
   block:
     - name: "Ensure configuration directory exists"
       ansible.builtin.file:

@@ -4,9 +4,6 @@
     path: "{{ item }}"
     state: directory
     mode: "0755"
-  tags:
-    - themes
-    - theming
   loop:
     - "{{ themes_gtk_dir }}"
     - "{{ themes_gtk3_config_dir }}"
@@ -18,42 +15,18 @@
     state: present
     name: "{{ themes_packages }}"
   when: themes_packages_dependencies is defined
-  tags:
-    - themes
-    - theming
 
 - name: "Install Matcha themes"
   ansible.builtin.include_tasks:
     file: "matcha.yml"
-    apply:
-      tags:
-        - themes
-        - theming
   when: themes_matcha_enable
-  tags:
-    - themes
-    - theming
 
 - name: "Install Catppuccin themes"
   ansible.builtin.include_tasks:
     file: "catppuccin.yml"
-    apply:
-      tags:
-        - themes
-        - theming
   when: themes_catppuccin_enable
-  tags:
-    - themes
-    - theming
 
 - name: "Install Vimix Cursors"
   ansible.builtin.include_tasks:
     file: "vimix_cursors.yml"
-    apply:
-      tags:
-        - themes
-        - theming
   when: themes_catppuccin_enable
-  tags:
-    - themes
-    - theming

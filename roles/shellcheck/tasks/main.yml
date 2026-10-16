@@ -5,9 +5,6 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags:
-    - lint
-    - shellcheck
 
 - name: "Install from package manager"
   become: true
@@ -15,15 +12,9 @@
   ansible.builtin.package:
     name: "{{ shellcheck_packages }}"
     state: present
-  tags:
-    - lint
-    - shellcheck
 
 - name: "Install from GitHub"
   when: shellcheck_packages is not defined
-  tags:
-    - lint
-    - shellcheck
   block:
     - name: "Get latest version number"
       ansible.builtin.set_fact:

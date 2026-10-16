@@ -1,6 +1,5 @@
 ---
 - name: "Copy the face image in /var/lib/AccountsService/icons"
-  tags: user
   become: true
   ansible.builtin.copy:
     src: "face.png"
@@ -8,7 +7,6 @@
     mode: "0644"
 
 - name: "Copy the face image in home directory"
-  tags: user
   ansible.builtin.copy:
     src: "face.png"
     dest: "{{ ansible_facts.user_dir }}/.face"

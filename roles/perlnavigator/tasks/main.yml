@@ -5,9 +5,6 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags:
-    - perlnavigator
-    - lsp
 
 - name: "Install program from package manager"
   become: true
@@ -15,15 +12,9 @@
     name: "{{ perlnavigator_package }}"
     state: present
   when: perlnavigator_package is defined
-  tags:
-    - lsp
-    - perlnavigator
 
 - name: "Install program from static binary"
   when: perlnavigator_package is not defined
-  tags:
-    - lsp
-    - perlnavigator
   block:
     - name: "Get latest version number"
       ansible.builtin.set_fact:

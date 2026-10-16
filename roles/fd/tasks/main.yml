@@ -5,14 +5,12 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags: fd
 
 - name: "Install from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ fd_packages }}"
     state: present
-  tags: fd
   when: fd_packages is defined
 
 - name: "Install Rust package with locked dependencies"
@@ -20,5 +18,4 @@
     name: fd-find
     state: latest
     locked: true
-  tags: fd
   when: fd_packages is not defined

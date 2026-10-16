@@ -5,17 +5,14 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags: wofi
 
 - name: "Install packages"
   become: true
   ansible.builtin.package:
     name: "{{ wofi_packages }}"
     state: present
-  tags: wofi
 
 - name: "Install configuration"
-  tags: wofi
   block:
     - name: "Ensure directory exist"
       ansible.builtin.file:

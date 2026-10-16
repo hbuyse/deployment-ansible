@@ -4,5 +4,3 @@
     name: cargo-cache
     state: latest
     locked: true
-  tags:
-    - cargo

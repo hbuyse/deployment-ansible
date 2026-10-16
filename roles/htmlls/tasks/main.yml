@@ -5,9 +5,6 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags:
-    - htmlls
-    - lsp
 
 - name: "Install from package manager"
   become: true
@@ -15,9 +12,6 @@
   ansible.builtin.package:
     name: "{{ htmlls_package }}"
     state: present
-  tags:
-    - htmlls
-    - lsp
 
 - name: "Install from Node Package Manager"
   when: htmlls_package is not defined
@@ -27,6 +21,3 @@
     state: latest
     production: true
     no_optional: true
-  tags:
-    - htmlls
-    - lsp

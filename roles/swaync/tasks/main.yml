@@ -1,14 +1,12 @@
 ---
 - name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ ansible_facts.os_family | lower }}.yml"
-  tags: swaync
 
 - name: "Install packages"
   become: true
   ansible.builtin.package:
     name: "{{ swaync_packages }}"
     state: "present"
-  tags: swaync
   notify: "Enable and restart swaync service"
 
 - name: "Get version"
@@ -16,12 +14,10 @@
     cmd: "swaync --version"
   register: swaync_version
   changed_when: false
-  tags: swaync
 
 - name: "Extract version"
   ansible.builtin.set_fact:
     swaync_current_version: "{{ swaync_version.stdout | regex_search('[0-9]+.[0-9]+.[0-9]+') }}"
-  tags: swaync
 
 - name: "Copy service file"
   ansible.builtin.template:
@@ -31,10 +27,8 @@
     owner: "{{ ansible_facts.user_uid }}"
     group: "{{ ansible_facts.user_gid }}"
   notify: "Enable and restart swaync service"
-  tags: swaync
 
 - name: "Install configuration files"
-  tags: swaync
   notify: "Enable and restart swaync service"
   block:
     - name: "Ensure directories exists"

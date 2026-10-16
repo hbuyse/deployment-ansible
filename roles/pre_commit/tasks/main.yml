@@ -5,7 +5,6 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags: pre-commit
 
 - name: "Install packages"
   become: true
@@ -13,7 +12,6 @@
     name: "{{ pre_commit_packages }}"
     state: "present"
   when: pre_commit_packages is defined
-  tags: pre-commit
 
 - name: "Install using Pipx"
   community.general.pipx:
@@ -21,4 +19,3 @@
     state: "latest"
     executable: "{{ ansible_facts.user_dir }}/.local/bin/pipx"
   when: pre_commit_packages is not defined
-  tags: pre-commit

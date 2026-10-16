@@ -5,19 +5,14 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags:
-    - yq
 
 - name: "Install from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ yq_packages }}"
   when: yq_packages is defined
-  tags:
-    - yq
 
 - name: "Install from source"
-  tags: yq
   when: yq_packages is not defined
   block:
     - name: "Get latest version number"

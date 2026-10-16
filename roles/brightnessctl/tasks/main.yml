@@ -13,12 +13,10 @@
     state: present
     name: "{{ brightnessctl_packages }}"
   when: brightnessctl_packages is defined
-  tags: brightnessctl
 
 # Allow brightnessctl to work without 'sudo'
 - name: "Add current user to 'video' group"
   become: true
-  tags: brightnessctl
   ansible.builtin.user:
     name: "{{ ansible_facts.user_id }}"
     groups: "{{ brightnessctl_group }}"

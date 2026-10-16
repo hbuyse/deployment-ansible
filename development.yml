@@ -17,19 +17,33 @@
       tags: always
   roles:
     - role: "netrc"
+      tags: netrc
     - role: "ssh"
+      tags: ssh
     - role: "python"
+      tags: python
     - role: "pipx"
+      tags: pipx
     - role: "npmrc"
+      tags: npmrc
     - role: "nodejs"
+      tags: nodejs
     - role: "rustup"
     - role: "clang"
+      tags: clang
     - role: "cargo_cache"
+      tags: cargo
     - role: "ripgrep"
     - role: "fd"
+      tags: fd
     - role: "treesitter"
+      tags: treesitter
     - role: "nvim"
+      tags:
+        - neovim
+        - nvim
     - role: "vscode"
+      tags: vscode
     - role: "git"
     - role: "git_delta"
     - role: "lazygit"
@@ -37,25 +51,86 @@
     - role: "docker"
     - role: "podman"
     - role: "pre_commit"
+      tags: pre-commit
     - role: "opencode"
+      tags:
+        - ai
+        - opencode
     - role: "rtk"
+      tags:
+        - ai
+        - rtk
     - role: "ansiblels"
+      tags:
+        - ansiblels
+        - lsp
     - role: "jq"
     - role: "yq"
+      tags: yq
     - role: "bashls"
+      tags:
+        - bashls
+        - lsp
     - role: "composels"
+      tags:
+        - composels
+        - lsp
     - role: "cssls"
+      tags:
+        - cssls
+        - lsp
     - role: "gopls"
     - role: "htmlls"
+      tags:
+        - htmlls
+        - lsp
     - role: "jsonls"
+      tags:
+        - jsonls
+        - lsp
     - role: "luals"
+      tags:
+        - lsp
+        - luals
     - role: "markdownls"
+      tags:
+        - lsp
+        - markdownls
     - role: "neocmakelsp"
+      tags: neocmakelsp
     - role: "perlnavigator"
+      tags:
+        - lsp
+        - perlnavigator
     - role: "ruff"
+      tags:
+        - formatter
+        - linter
+        - lsp
+        - ruff
     - role: "rust_analyzer"
+      tags:
+        - lsp
+        - rust_analyzer
     - role: "tailwindcss_lsp"
+      tags:
+        - lsp
+        - tailwindcss
     - role: "texlab"
+      tags:
+        - lsp
+        - texlab
     - role: "tombi"
+      tags:
+        - formatter
+        - linter
+        - lsp
+        - tombi
     - role: "yamlls"
+      tags:
+        - lsp
+        - yamlls
     - role: "shellcheck"
+      tags:
+        - lint
+        - shellcheck

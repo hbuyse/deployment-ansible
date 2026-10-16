@@ -5,9 +5,6 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags:
-    - composels
-    - lsp
 
 - name: "Install from package manager"
   become: true
@@ -15,9 +12,6 @@
   ansible.builtin.package:
     name: "{{ composels_package }}"
     state: present
-  tags:
-    - composels
-    - lsp
 
 - name: "Install from Node Package Manager"
   when: composels_package is not defined
@@ -27,6 +21,3 @@
     state: latest
     production: true
     no_optional: true
-  tags:
-    - composels
-    - lsp

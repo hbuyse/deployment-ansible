@@ -5,18 +5,12 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags:
-    - minicom
-    - serial
 
 - name: "Install from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ minicom_packages }}"
     state: present
-  tags:
-    - minicom
-    - serial
   when: minicom_packages is defined
 
 - name: "Add '{{ minicom_group }}' group to user"  # noqa: name[template]
@@ -25,15 +19,9 @@
     name: "{{ ansible_facts.user_id }}"
     groups: "{{ minicom_group }}"
     append: true
-  tags:
-    - minicom
-    - serial
 
 - name: "Copy default file"
   ansible.builtin.template:
     src: "minirc.dfl.j2"
     dest: "{{ minicom_dfl_file_location }}"
     mode: "0644"
-  tags:
-    - minicom
-    - serial

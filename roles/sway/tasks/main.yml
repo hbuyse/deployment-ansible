@@ -5,30 +5,21 @@
   with_first_found:
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
-  tags: sway
 
 - name: "Install required packages"
   become: true
   ansible.builtin.package:
     name: "{{ sway_packages }}"
-  tags: sway
 
 - name: "Copy Sway session files"
-  tags: sway
   ansible.builtin.include_tasks:
     file: "copy-service.yml"
-    apply:
-      tags: sway
 
 - name: "Copy configuration"
-  tags: sway
   ansible.builtin.include_tasks:
     file: "copy-sway-conf.yml"
-    apply:
-      tags: sway
 
 - name: "Copy preferred-terminal script"
-  tags: sway
   block:
     - name: "Ensure ~/.local/bin exists"
       ansible.builtin.file:

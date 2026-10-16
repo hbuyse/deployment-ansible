@@ -5,34 +5,17 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags:
-    - web
-    - browser
-    - browsers
 
 - name: "Include OS specific tasks"
   ansible.builtin.include_tasks:
     file: "{{ item }}"
-    apply:
-      tags:
-        - web
-        - browser
-        - browsers
   with_first_found:
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags:
-    - web
-    - browser
-    - browsers
 
 - name: "Install from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ web_browsers_packages }}"
     state: present
-  tags:
-    - web
-    - browser
-    - browsers

@@ -5,7 +5,6 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags: python
 
 - name: "Install packages"
   become: true
@@ -13,4 +12,3 @@
     name: "{{ python_packages }}"
     state: present
   when: python_packages is defined
-  tags: python

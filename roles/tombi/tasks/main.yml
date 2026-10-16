@@ -5,11 +5,6 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags:
-    - tombi
-    - lsp
-    - formatter
-    - linter
 
 - name: "Install from package manager"
   become: true
@@ -17,11 +12,6 @@
   ansible.builtin.package:
     name: "{{ tombi_package }}"
     state: present
-  tags:
-    - tombi
-    - lsp
-    - formatter
-    - linter
 
 - name: "Install from Node Package Manager"
   when: tombi_package is not defined
@@ -31,8 +21,3 @@
     state: latest
     production: true
     no_optional: true
-  tags:
-    - tombi
-    - lsp
-    - formatter
-    - linter

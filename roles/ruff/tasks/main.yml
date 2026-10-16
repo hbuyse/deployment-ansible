@@ -5,11 +5,6 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags:
-    - ruff
-    - lsp
-    - formatter
-    - linter
 
 - name: "Install from package manager"
   become: true
@@ -17,11 +12,6 @@
   ansible.builtin.package:
     name: "{{ ruff_package }}"
     state: "present"
-  tags:
-    - ruff
-    - lsp
-    - formatter
-    - linter
 
 - name: "Install from PIP"
   when: ruff_package is not defined
@@ -29,8 +19,3 @@
     name: "ruff"
     state: "latest"
     executable: "{{ ansible_facts.user_dir }}/.local/bin/pipx"
-  tags:
-    - ruff
-    - lsp
-    - formatter
-    - linter

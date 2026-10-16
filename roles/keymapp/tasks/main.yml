@@ -5,7 +5,6 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags: keymapp
 
 - name: "Install dependencies"
   become: true
@@ -13,7 +12,6 @@
     state: present
     name: "{{ keymapp_dependencies }}"
   when: keymapp_dependencies is defined
-  tags: keymapp
 
 - name: "Download latest archive"
   ansible.builtin.get_url:
@@ -21,7 +19,6 @@
     dest: "/tmp/"
     mode: "0644"
   notify: "Remove keymapp downloaded archive"
-  tags: keymapp
 
 - name: "Ensure directory exist"
   become: "{{ keymapp_become }}"
@@ -32,7 +29,6 @@
   loop:
     - "{{ keymapp_bin_dir }}"
     - "{{ keymapp_icons_dir }}"
-  tags: keymapp
 
 - name: "Extract archive files"
   become: "{{ keymapp_become }}"
@@ -51,11 +47,9 @@
     - file: icon.png
       dest: "{{ keymapp_icons_dir }}"
       mode: "0644"
-  tags: keymapp
 
 - name: "Rename icon file"
   become: "{{ keymapp_become }}"
-  tags: keymapp
   block:
     - name: "Copy icon file"
       ansible.builtin.copy:
@@ -74,7 +68,6 @@
     src: "keymapp.desktop"
     dest: "{{ keymapp_desktop_dir }}"
     mode: "0644"
-  tags: keymapp
 
 - name: "Copy udev rule files"
   become: true
@@ -82,7 +75,6 @@
     src: "50-zsa.rules.j2"
     dest: "/etc/udev/rules.d/50-zsa.rules"
     mode: "0644"
-  tags: keymapp
 
 - name: "Add current user to 'plugdev' group"
   become: true
@@ -91,4 +83,3 @@
     name: "{{ ansible_facts.user_id }}"
     groups: "plugdev"
     append: true
-  tags: keymapp

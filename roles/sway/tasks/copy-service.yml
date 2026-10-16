@@ -18,5 +18,4 @@
     enabled: true
     scope: "user"
   tags:
-    - sway
     - lxpolkit

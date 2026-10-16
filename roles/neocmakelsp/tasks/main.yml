@@ -4,4 +4,3 @@
     name: "{{ neocmakelsp_cargo_package }}"
     state: latest
     locked: true
-  tags: neocmakelsp

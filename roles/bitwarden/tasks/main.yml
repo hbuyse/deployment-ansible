@@ -7,7 +7,6 @@
     return_content: true
     status_code: 200
     body_format: json
-  tags: bitwarden
 
 - name: "Set facts"
   ansible.builtin.set_fact:
@@ -15,7 +14,6 @@
       }}"
     bitwarden_desktop_latest_version: "{{ (bitwarden_releases_json.json | selectattr('tag_name', 'search', '^desktop') | first).tag_name[9:]
       }}"
-  tags: bitwarden
 
 - name: "Install man pages"
   ansible.builtin.get_url:
@@ -25,7 +23,6 @@
     mode: "0755"
     owner: "{{ ansible_facts.user_uid }}"
     group: "{{ ansible_facts.user_gid }}"
-  tags: bitwarden
 
 - name: "Install desktop file"
   ansible.builtin.get_url:
@@ -34,4 +31,3 @@
     mode: "0644"
     owner: "{{ ansible_facts.user_uid }}"
     group: "{{ ansible_facts.user_gid }}"
-  tags: bitwarden

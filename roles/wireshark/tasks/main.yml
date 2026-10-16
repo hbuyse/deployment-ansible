@@ -1,18 +1,14 @@
 ---
 - name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ ansible_facts.os_family | lower }}.yml"
-  tags: wireshark
 
 - name: "Add repository"
   ansible.builtin.include_tasks:
     file: "{{ item }}"
-    apply:
-      tags: wireshark
   with_first_found:
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags: wireshark
 
 - name: "Enable non-privileged users to run wireshark"
   become: true
@@ -22,7 +18,6 @@
     value: "true"
     vtype: boolean
   when: ansible_facts.os_family == 'Debian'
-  tags: wireshark
 
 - name: "Install packages"
   become: true
@@ -30,10 +25,8 @@
     name: "{{ wireshark_packages }}"
     state: "present"
   when: wireshark_packages is defined
-  tags: wireshark
 
 - name: "Install configuration files"
-  tags: wireshark
   block:
     - name: "Ensure directories exists"
       ansible.builtin.file:
@@ -54,4 +47,3 @@
     name: "{{ ansible_facts.user_id }}"
     groups: "{{ wireshark_group }}"
     append: true
-  tags: wireshark

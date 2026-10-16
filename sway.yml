@@ -18,28 +18,45 @@
   roles:
     # Terminals
     - role: "foot"
+      tags: foot
     - role: "alacritty"
     - role: "ghostty"
+      tags: ghostty
 
     # Sway
     - role: "sway"
+      tags: sway
     - role: "wallpapers"
+      tags: wallpapers
     - role: "themes"
+      tags:
+        - themes
+        - theming
     # Tools for sway
     - role: "swaylock"
     - role: "swayidle"
     - role: "brightnessctl"
+      tags: brightnessctl
     # Wayland tools
     - role: "waybar"
+      tags: waybar
     - role: "kanshi"
+      tags: kanshi
     - role: "swaync"
+      tags: swaync
     - role: "wofi"
+      tags: wofi
       when: ansible_facts.os_family in ["Debian"]
     - role: "fuzzel"
+      tags: fuzzel
       when: ansible_facts.os_family not in ["Debian"]
     - role: "wlprop"
     - role: "wlsunset"
+      tags: wlsunset
     # Portal to select which screen to cast
     - role: "xdg_desktop_portal"
+      tags: xdg_desktop_portal
     - role: "wireplumber"
+      tags: wireplumber
     - role: "tuned"
+      tags: tuned

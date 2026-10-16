@@ -5,8 +5,6 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags:
-    - thunderbird
 
 - name: "Install packages"
   become: true
@@ -14,8 +12,6 @@
     name: "{{ thunderbird_packages }}"
     state: "present"
   when: thunderbird_packages is defined
-  tags:
-    - thunderbird
 
 - name: "Install packages with Snap"
   become: true
@@ -24,5 +20,3 @@
     state: "present"
     channel: "{{ thunderbird_snap_channel }}"
   when: thunderbird_packages is not defined
-  tags:
-    - thunderbird

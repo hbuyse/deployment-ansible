@@ -5,17 +5,14 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags: webapplications
 
 - name: "Install from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ webapplications_packages }}"
     state: present
-  tags: webapplications
 
 - name: "Copy desktop files"
-  tags: webapplications
   become: true
   block:
     - name: "Ensure applications directory exist"

@@ -5,20 +5,14 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags:
-    - xdg_desktop_portal
 
 - name: "Install packages"
   become: true
   ansible.builtin.package:
     name: "{{ xdg_desktop_portal_packages }}"
     state: "present"
-  tags:
-    - xdg_desktop_portal
 
 - name: "Copy configuration"
-  tags:
-    - xdg_desktop_portal
   block:
     - name: "Ensure configuration directory exists"
       ansible.builtin.file:

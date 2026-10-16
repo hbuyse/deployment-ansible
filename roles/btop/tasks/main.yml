@@ -1,7 +1,6 @@
 ---
 - name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ ansible_facts.os_family | lower }}.yml"
-  tags: btop
 
 - name: "Install packages"
   become: true
@@ -9,7 +8,6 @@
     name: "{{ btop_packages }}"
     state: "present"
   when: btop_packages is defined
-  tags: btop
 
 - name: "Ensure configuration directories exist"
   ansible.builtin.file:
@@ -19,10 +17,8 @@
   loop:
     - "{{ btop_config_dir }}"
     - "{{ btop_themes_dir }}"
-  tags: btop
 
 - name: "Copy configuration files"
-  tags: btop
   block:
     - name: "Ensure configuration directories exist"
       ansible.builtin.file:
@@ -37,7 +33,6 @@
         mode: "0644"
 
 - name: "Download catppuccin themes"
-  tags: btop
   block:
     - name: "Get latest version number"
       ansible.builtin.set_fact:

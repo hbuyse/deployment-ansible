@@ -5,7 +5,6 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags: fuzzel
 
 - name: "Check that the package list is not empty"
   ansible.builtin.assert:
@@ -14,17 +13,14 @@
       - fuzzel_packages | length > 0
     fail_msg: "fuzzel_packages must not be empty (check your roles/fuzzel/vars/{{ ansible_facts.os_family | lower }}.yml)"
     quiet: true
-  tags: fuzzel
 
 - name: "Install from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ fuzzel_packages }}"
   when: fuzzel_packages is defined
-  tags: fuzzel
 
 - name: "Install configuration files"
-  tags: fuzzel
   when: fuzzel_packages is defined
   block:
     - name: "Ensure directory exist"

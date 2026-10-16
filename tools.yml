@@ -18,20 +18,39 @@
   roles:
     # Configuration
     - role: "netrc"
+      tags: netrc
     - role: "ssh"
+      tags: ssh
     - role: "user"
+      tags: user
     - role: "network"
+      tags:
+        - networkmanager
+        - nmcli
     - role: "mimeapps"
+      tags: mimeapps
     # Tools
     - role: "web_browsers"
+      tags:
+        - browser
+        - browsers
+        - web
     - role: "thunderbird"
+      tags: thunderbird
     - role: "minicom"
+      tags:
+        - minicom
+        - serial
     - role: "wireshark"
+      tags: wireshark
     - role: "termshark"
     - role: "qemu_kvm"
     - role: "keymapp"
+      tags: keymapp
     - role: "bitwarden"
+      tags: bitwarden
     - role: "zoom"
+      tags: zoom
       when: ansible_facts.hostname == "hbuyse-promax14"
     # Desktop client for cloud
     - role: "nextcloud"
@@ -39,5 +58,7 @@
       when: ansible_facts.hostname == "hbuyse-promax14"
     # Web applications
     - role: "webapplications"
+      tags: webapplications
     # CPU management
     - role: "tuned"
+      tags: tuned

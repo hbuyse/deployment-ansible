@@ -17,18 +17,25 @@
       tags: always
   roles:
     - role: "nerdfonts"
+      tags: nerdfonts
     - role: "rustup"
     - role: "zsh"
     - role: "foot"
+      tags: foot
     - role: "alacritty"
     - role: "ghostty"
+      tags: ghostty
     - role: "oh_my_posh"
+      tags:
+        - oh_my_posh
+        - shell
     - role: "fastfetch"
     - role: "tmux"
     - role: "fzf"
     - role: "eza"
     - role: "bat"
     - role: "fd"
+      tags: fd
     - role: "ripgrep"
     - role: "yazi"
     - role: "bottom"
@@ -37,4 +44,8 @@
     - role: "lazygit"
     - role: "direnv"
     - role: "minicom"
+      tags:
+        - minicom
+        - serial
     - role: "btop"
+      tags: btop

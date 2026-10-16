@@ -5,7 +5,6 @@
     - files:
         - "{{ ansible_facts.os_family | lower }}.yml"
       skip: true
-  tags: pipx
 
 - name: "Install packages"
   become: true
@@ -13,10 +12,8 @@
     name: "{{ pipx_packages }}"
     state: "present"
   when: pipx_packages is defined
-  tags: pipx
 
 - name: "Install self-managed Pipx"
-  tags: pipx
   when: pipx_packages is not defined
   block:
     - name: "Create temporary directory"
