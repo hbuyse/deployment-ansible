@@ -1,0 +1,20 @@
+---
+- name: Pre-install Python on Arch Linux
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Install Python and sudo on Arch
+      ansible.builtin.raw: pacman -Syu --noconfirm python sudo
+      when: inventory_hostname == "clang-archlinux"
+      changed_when: true
+
+- name: Prepare Debian family containers
+  hosts: all
+  gather_facts: true
+  tasks:
+    # Needed by ansible.builtin.deb822_repository, present on a regular desktop install but not in the images
+    - name: Install python3-debian
+      ansible.builtin.apt:
+        name: python3-debian
+        update_cache: true
+      when: ansible_facts.os_family == "Debian"
