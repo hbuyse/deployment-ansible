@@ -1,0 +1,10 @@
+---
+- name: "Install repository [Red Hat]"
+  become: true
+  ansible.builtin.yum_repository:
+    name: claude-code
+    description: Claude Code
+    baseurl: "https://downloads.claude.ai/claude-code/rpm/{{ claude_code_channel }}"
+    gpgcheck: true
+    gpgkey: "https://downloads.claude.ai/keys/claude-code.asc"
+    enabled: true

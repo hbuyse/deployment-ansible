@@ -1,0 +1,33 @@
+---
+# Anthropic does not publish a package for this distribution: use the native installer, which installs claude in
+# ~/.local/bin and updates itself in the background.
+- name: "Check if Claude Code is installed"
+  ansible.builtin.stat:
+    path: "{{ claude_code_bin }}"
+  register: claude_code_stat
+
+- name: "Install Claude Code"
+  when: not claude_code_stat.stat.exists
+  block:
+    - name: "Install dependencies"
+      become: true
+      ansible.builtin.package:
+        name: curl
+        state: present
+
+    - name: "Download installer"
+      ansible.builtin.get_url:
+        url: "{{ claude_code_install_script_url }}"
+        dest: "{{ ansible_facts.env.TMPDIR | default('/tmp') }}/claude-code-install.sh"
+        mode: "0755"
+      register: claude_code_installer
+
+    - name: "Run installer"
+      ansible.builtin.command:
+        cmd: "bash {{ claude_code_installer.dest }} {{ claude_code_channel }}"
+        creates: "{{ claude_code_bin }}"
+
+    - name: "Remove installer"
+      ansible.builtin.file:
+        path: "{{ claude_code_installer.dest }}"
+        state: absent

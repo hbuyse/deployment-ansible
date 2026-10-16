@@ -15,6 +15,7 @@ bash ./install.sh
 Some roles have tests. Here is the list:
 
 - clang
+- claude_code
 - docker
 - nodejs
 - nvim

@@ -1,0 +1,25 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  # Debian family: apt repository of Anthropic
+  - name: claude-code-debian12
+    image: geerlingguy/docker-debian12-ansible:latest
+    pre_build_image: true
+  - name: claude-code-ubuntu2404
+    image: geerlingguy/docker-ubuntu2404-ansible:latest
+    pre_build_image: true
+  # Anthropic has no package for Arch: native installer
+  - name: claude-code-archlinux
+    image: archlinux:base
+    pre_build_image: false
+    # Minimal Arch image has no systemd and no Python, see prepare.yml
+provisioner:
+  name: ansible
+  playbooks:
+    prepare: prepare.yml
+    converge: converge.yml
+verifier:
+  name: testinfra

@@ -60,6 +60,10 @@
       tags:
         - ai
         - rtk
+    - role: "claude_code"
+      tags:
+        - ai
+        - claude-code
     - role: "ansiblels"
       tags:
         - ansiblels

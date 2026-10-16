@@ -1,0 +1,19 @@
+---
+- name: "Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  loop: "{{ query('ansible.builtin.first_found', ansible_facts.os_family | lower ~ '.yml', skip=true) }}"
+
+- name: "Add repository"
+  ansible.builtin.include_tasks: "{{ item }}"
+  loop: "{{ query('ansible.builtin.first_found', ansible_facts.os_family | lower ~ '.yml', skip=true) }}"
+
+- name: "Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ claude_code_packages }}"
+    state: present
+  when: claude_code_packages is defined
+
+- name: "Install with the native installer"
+  ansible.builtin.include_tasks: native.yml
+  when: claude_code_packages is not defined

@@ -1,0 +1,5 @@
+---
+# Release channel: "stable" (about a week behind, skips releases with major regressions) or "latest"
+claude_code_channel: stable
+claude_code_install_script_url: "https://claude.ai/install.sh"
+claude_code_bin: "{{ ansible_facts.user_dir }}/.local/bin/claude"
