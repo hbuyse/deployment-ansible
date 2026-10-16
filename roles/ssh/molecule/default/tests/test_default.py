@@ -17,10 +17,7 @@ def test_private_key_is_deployed(host):
 def test_private_key_is_not_readable_by_others(host):
     """OpenSSH ignores a private key that is readable by group or others."""
     private_key = host.file(f"{SSH_DIR}/id_rsa")
-    assert private_key.mode & 0o077 == 0, (
-        f"id_rsa has mode {oct(private_key.mode)}, expected 0o600: the role copies the key with "
-        "mode: preserve, so it ends up with the mode of the file in the git checkout"
-    )
+    assert oct(private_key.mode) == "0o600", f"id_rsa has mode {oct(private_key.mode)}, expected 0o600"
 
 
 def test_public_key(host):
