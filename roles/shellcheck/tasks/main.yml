@@ -13,7 +13,7 @@
   become: true
   when: shellcheck_packages is defined
   ansible.builtin.package:
-    name: "{{ shellcheck_package }}"
+    name: "{{ shellcheck_packages }}"
     state: present
   tags:
     - lint
