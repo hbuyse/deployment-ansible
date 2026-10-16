@@ -27,3 +27,45 @@ clang_packages:
   # libc++
   - "libc++-{{ clang_latest_llvm_version }}-dev"
   - "libc++abi-{{ clang_latest_llvm_version }}-dev"
+
+# Binaries managed with update-alternatives: each entry is the master alternative and its subcommands (slaves).
+# Every name must exist as /usr/bin/<name>-<version> for the latest LLVM version, see clang_latest_llvm_version.
+clang_alternatives:
+  - name: llvm-config
+    subcommands:
+      - llvm-ar
+      - llvm-as
+      - llvm-bcanalyzer
+      - llvm-cov
+      - llvm-diff
+      - llvm-dis
+      - llvm-dwarfdump
+      - llvm-extract
+      - llvm-link
+      - llvm-mc
+      - llvm-nm
+      - llvm-objdump
+      - llvm-ranlib
+      - llvm-readobj
+      - llvm-rtdyld
+      - llvm-size
+      - llvm-stress
+      - llvm-symbolizer
+      - llvm-tblgen
+  - name: clang
+    subcommands:
+      - clang++
+      - asan_symbolize
+      - c-index-test
+      - clang-check
+      - clang-cl
+      - clang-cpp
+      - clang-format
+      - clang-format-diff
+      - clang-include-fixer
+      - clang-offload-bundler
+      - clang-query
+      - clang-reorder-fields
+      - clang-tidy
+      - lldb
+      - lldb-server

@@ -16,14 +16,6 @@ def _is_debian_family(host):
     return _os_id(host) in ("debian", "ubuntu")
 
 
-def _flatten(tasks):
-    for task in tasks:
-        if "block" in task:
-            yield from _flatten(task["block"])
-        else:
-            yield task
-
-
 @pytest.fixture(scope="module")
 def llvm_versions():
     defaults = yaml.safe_load((ROLE_DIR / "defaults" / "main.yml").read_text())
@@ -37,13 +29,9 @@ def latest(llvm_versions):
 
 @pytest.fixture(scope="module")
 def alternatives():
-    """{master: [slaves]} as declared in tasks/alternatives.yml."""
-    tasks = yaml.safe_load((ROLE_DIR / "tasks" / "alternatives.yml").read_text())
-    declared = {}
-    for task in _flatten(tasks):
-        module = task["community.general.alternatives"]
-        declared[module["name"]] = [sub["name"] for sub in module["subcommands"]]
-    return declared
+    """{master: [slaves]} as declared in clang_alternatives in vars/debian.yml."""
+    variables = yaml.safe_load((ROLE_DIR / "vars" / "debian.yml").read_text())
+    return {entry["name"]: entry["subcommands"] for entry in variables["clang_alternatives"]}
 
 
 @pytest.fixture
