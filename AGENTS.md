@@ -38,6 +38,9 @@ repo, and seeds `host_vars/localhost.yml`.
   (`install.sh` no longer fetches it, so don't overwrite it with the upstream version). Besides the per-role
   `┌─ <role>` header, it prints dedicated `pre-tasks`, `post-tasks` and `<role> › handlers` sections, handlers
   having their own colors. Test changes with a throwaway playbook using `debug` tasks, not the real playbooks.
+- `lookup_plugins/github_latest_release.py` — lookup returning the tag of the latest release of a GitHub repository
+  (`lookup('github_latest_release', 'owner/repo')`, uses `GITHUB_TOKEN` when set). Its unit tests are in `tests/`
+  (`python3 -m pytest tests`). Roles installing a tool from its GitHub releases use it instead of calling the API.
 - `scripts/` — helper scripts invoked by pre-commit hooks (see below).
 
 ## Making changes

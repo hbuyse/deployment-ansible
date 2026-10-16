@@ -29,6 +29,12 @@ To run the tests, change your directory to the role you want to test and run the
 molecule test
 ```
 
+The `github_latest_release` lookup plugin has unit tests:
+
+```sh
+python3 -m pytest tests
+```
+
 ## Troubleshooting
 
 ```sh
