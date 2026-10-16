@@ -1,0 +1,20 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  # The role only downloads a script: no package, no need for Arch
+  - name: wlprop-debian12
+    image: geerlingguy/docker-debian12-ansible:latest
+    pre_build_image: true
+  - name: wlprop-ubuntu2404
+    image: geerlingguy/docker-ubuntu2404-ansible:latest
+    pre_build_image: true
+provisioner:
+  name: ansible
+  playbooks:
+    prepare: prepare.yml
+    converge: converge.yml
+verifier:
+  name: testinfra
