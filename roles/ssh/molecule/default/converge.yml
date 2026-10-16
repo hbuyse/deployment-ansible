@@ -1,0 +1,57 @@
+---
+# roles/ssh/files/id_rsa is encrypted with ansible-vault, so the real role cannot be applied without the vault
+# password. Build a copy of the role in the ephemeral directory where only the private key is replaced by a
+# plain text fixture, then apply that copy. Like in a fresh git checkout, the fixture is written with mode 0644
+# (git does not track anything but the executable bit).
+- name: Build a testable copy of the role
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    ssh_molecule_role_src: "{{ playbook_dir }}/../../"
+    ssh_molecule_role_copy: "{{ lookup('ansible.builtin.env', 'MOLECULE_EPHEMERAL_DIRECTORY') }}/ssh"
+  tasks:
+    - name: Create the role copy directories
+      ansible.builtin.file:
+        path: "{{ ssh_molecule_role_copy }}/{{ item }}"
+        state: directory
+        mode: "0755"
+      loop:
+        - tasks
+        - templates
+        - files
+        - files/config.d
+
+    - name: Copy the tasks and templates
+      ansible.builtin.copy:
+        src: "{{ ssh_molecule_role_src }}{{ item }}/"
+        dest: "{{ ssh_molecule_role_copy }}/{{ item }}"
+        mode: preserve
+      loop:
+        - tasks
+        - templates
+
+    - name: Copy the plain text static files
+      ansible.builtin.copy:
+        src: "{{ ssh_molecule_role_src }}files/{{ item }}"
+        dest: "{{ ssh_molecule_role_copy }}/files/{{ item }}"
+        mode: preserve
+      loop:
+        - config
+        - config.d/01_forward-agent-x11.conf
+
+    - name: Write the private key fixture
+      ansible.builtin.copy:
+        content: "-----BEGIN OPENSSH PRIVATE KEY-----\nmolecule fixture, not a real key\n-----END OPENSSH PRIVATE KEY-----\n"
+        dest: "{{ ssh_molecule_role_copy }}/files/id_rsa"
+        mode: "0644"
+
+- name: Converge
+  hosts: all
+  gather_facts: true
+  vars:
+    ssh_molecule_role_copy: "{{ lookup('ansible.builtin.env', 'MOLECULE_EPHEMERAL_DIRECTORY') }}/ssh"
+  tasks:
+    - name: Apply the ssh role
+      ansible.builtin.include_role:
+        name: "{{ ssh_molecule_role_copy }}"

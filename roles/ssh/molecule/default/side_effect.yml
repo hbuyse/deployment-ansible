@@ -1,0 +1,24 @@
+---
+- name: The role refuses to run without the public key email
+  hosts: all
+  gather_facts: true
+  vars:
+    ssh_molecule_role_copy: "{{ lookup('ansible.builtin.env', 'MOLECULE_EPHEMERAL_DIRECTORY') }}/ssh"
+  tasks:
+    - name: Apply the ssh role with an empty email
+      block:
+        - name: Include the role
+          ansible.builtin.include_role:
+            name: "{{ ssh_molecule_role_copy }}"
+          vars:
+            ssh_pubkey_email: ""
+
+        - name: The role should have stopped
+          ansible.builtin.fail:
+            msg: The ssh role accepted an empty ssh_pubkey_email
+      rescue:
+        - name: Check that the assertion is what stopped the role
+          ansible.builtin.assert:
+            that:
+              - "'ssh_pubkey_email must not be empty' in ansible_failed_result.msg"
+            quiet: true

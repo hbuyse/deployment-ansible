@@ -1,0 +1,9 @@
+---
+- name: Prepare
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Install the OpenSSH client used by the tests to parse the configuration
+      ansible.builtin.apt:
+        name: openssh-client
+        update_cache: true
