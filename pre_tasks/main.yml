@@ -1,9 +1,4 @@
 ---
-- name: "Define alternative architecture naming"
-  ansible.builtin.set_fact:
-    alt_arch: "{{ ansible_facts.machine | replace('x86_64', 'amd64') | replace('aarch64', 'arm64') }}"
-  tags: always
-
 - name: "Get list of services"
   ansible.builtin.service_facts:
 

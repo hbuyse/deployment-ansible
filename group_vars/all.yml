@@ -1,0 +1,5 @@
+---
+# Architecture name used by the release assets of the tools downloaded by the roles and by the Debian packages
+# (amd64, arm64).
+alt_arch: "{{ ansible_facts.machine | replace('x86_64', 'amd64') | replace('aarch64', 'arm64') }}"
+deb_arch: "{{ alt_arch }}"

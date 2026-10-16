@@ -28,6 +28,7 @@ repo, and seeds `host_vars/localhost.yml`.
   `ansible_facts.os_family` / `ansible_facts.distribution`.
 - `roles/<name>/molecule/default/` — Molecule test scenario, present only for roles that have one (currently
   `nvim`, `opencode`). Not every role is expected to have tests.
+- `group_vars/all.yml` — variables shared by every playbook and by the Molecule scenarios (`alt_arch`, `deb_arch`).
 - `host_vars/localhost.yml` — machine-local secrets/config (e.g. `ssh_pubkey_email`), gitignored, must be
   created before running any playbook.
 - `collections/` — vendored Ansible collections declared in [requirements.yml](requirements.yml)
