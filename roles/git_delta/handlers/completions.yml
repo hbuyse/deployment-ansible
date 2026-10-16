@@ -1,16 +1,7 @@
 ---
 - name: "Get latest version number"
-  register: git_delta_latest_json
-  ansible.builtin.uri:
-    url: "https://api.github.com/repos/dandavison/delta/releases/latest"
-    method: GET
-    return_content: true
-    status_code: 200
-    body_format: json
-
-- name: "Set facts"
   ansible.builtin.set_fact:
-    git_delta_latest_version: "{{ git_delta_latest_json.json.tag_name }}"
+    git_delta_latest_version: "{{ lookup('github_latest_release', 'dandavison/delta') }}"
 
 - name: "Install bash completion file"
   block:

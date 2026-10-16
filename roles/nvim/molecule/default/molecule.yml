@@ -25,6 +25,9 @@ platforms:
       # Archlinux has vars/archlinux.yml -> installs via pacman
 provisioner:
   name: ansible
+  env:
+    # github_latest_release lookup plugin, used to get the latest neovim release
+    ANSIBLE_LOOKUP_PLUGINS: "${MOLECULE_PROJECT_DIRECTORY}/../../lookup_plugins"
   playbooks:
     converge: converge.yml
     prepare: prepare.yml

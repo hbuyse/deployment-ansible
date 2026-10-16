@@ -1,16 +1,7 @@
 ---
 - name: "Get latest version number"
-  register: bottom_latest_json
-  ansible.builtin.uri:
-    url: "https://api.github.com/repos/ClementTsang/bottom/releases/latest"
-    method: GET
-    return_content: true
-    status_code: 200
-    body_format: json
-
-- name: "Set facts"
   ansible.builtin.set_fact:
-    bottom_latest_version: "{{ bottom_latest_json.json.tag_name }}"
+    bottom_latest_version: "{{ lookup('github_latest_release', 'ClementTsang/bottom') }}"
 
 - name: "Download bottom archives"
   ansible.builtin.get_url:
