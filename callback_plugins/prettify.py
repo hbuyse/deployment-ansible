@@ -7,6 +7,7 @@ import sys
 import time
 
 from ansible.plugins.callback import CallbackBase
+from ansible.playbook.handler import Handler
 
 # Simple ANSI color handling for all Ansible versions
 COLORS = {
@@ -17,6 +18,7 @@ COLORS = {
     "bright_red": "\033[1;31m",
     "blue": "\033[0;34m",
     "purple": "\033[1;35m",
+    "magenta": "\033[0;35m",
     "gray": "\033[0;90m",
     "white": "\033[0;37m",
     "normal": "\033[0m",
@@ -52,7 +54,12 @@ class CallbackModule(CallbackBase):
         self.task_start_time = None
         self.play_start_time = None
         self.last_task = None
+        # Name of the section ("role", "pre-tasks", "post-tasks", "role > handlers")
+        # the last displayed task belongs to
         self.last_role = None
+        # uuids of the top-level pre_tasks/post_tasks, filled when a play starts
+        self._pre_uuids = set()
+        self._post_uuids = set()
         self.cached_terminal_width = None
 
         # Tracks whether a "task running" line is currently on screen
@@ -88,6 +95,9 @@ class CallbackModule(CallbackBase):
             "info": "blue",
             "header": "purple",
             "task_name": "normal",  # Default terminal color
+            "section": "blue",  # role, pre-tasks and post-tasks headers
+            "handler_header": "purple",
+            "handler_task_name": "magenta",
             "dots": "gray",
             "timing": "gray",
             "running": "gray",
@@ -159,16 +169,51 @@ class CallbackModule(CallbackBase):
             sys.stdout.flush()
             self._line_in_progress = False
 
+    @staticmethod
+    def _top_level_uuids(blocks):
+        """uuids of the tasks directly listed in the given blocks"""
+        return {task._uuid for block in blocks for task in block.block}
+
+    def _section_label(self, task):
+        """Name of the section a task belongs to: its role, "pre-tasks", "post-tasks"
+        or "<role> › handlers" for the handlers."""
+        role = self._get_task_role(task)
+
+        if isinstance(task, Handler):
+            return f"{role} › handlers" if role else "handlers"
+
+        # Included tasks keep a reference to the top-level include through
+        # _parent, so comparing uuids is enough to know where they come from.
+        node = task
+        while node is not None:
+            if node._uuid in self._pre_uuids:
+                return "pre-tasks"
+            if node._uuid in self._post_uuids:
+                return "post-tasks"
+            node = getattr(node, "_parent", None)
+
+        return role
+
+    def _task_name_color(self, task):
+        """Color used for the task name (handlers get their own)"""
+        if isinstance(task, Handler):
+            return self.colors["handler_task_name"]
+        return self.colors["task_name"]
+
     def _print_role_header_if_needed(self, task):
-        """Print the role header once, the first time we see a new role.
+        """Print the section header once, the first time we see a new section.
         Shared between the 'running' line and the final result line so it
         only ever appears once regardless of which one triggers it first."""
-        current_role = self._get_task_role(task)
-        if current_role and current_role != getattr(self, "last_role", None):
+        label = self._section_label(task)
+        if label and label != self.last_role:
+            color = (
+                self.colors["handler_header"]
+                if isinstance(task, Handler)
+                else self.colors["section"]
+            )
             self._display.display("")
-            role_header = f"┌─ {current_role}"
-            self._display.display(self._colorize(role_header, self.colors["info"]))
-            self.last_role = current_role
+            self._display.display(self._colorize(f"┌─ {label}", color))
+            self.last_role = label
 
     def _print_running(self, task):
         """Print the task name as soon as it starts running, without a
@@ -198,7 +243,8 @@ class CallbackModule(CallbackBase):
             display_name = display_name[: max_task_width - 3] + "..."
 
         symbol = self._colorize(self.symbols["running"], self.colors["running"])
-        line = f"  {symbol} {color_text(display_name, self.colors['task_name'])}"
+        name_color = self._task_name_color(task)
+        line = f"  {symbol} {color_text(display_name, name_color)}"
 
         sys.stdout.write(line)
         sys.stdout.flush()
@@ -265,6 +311,7 @@ class CallbackModule(CallbackBase):
         self._print_role_header_if_needed(result._task)
 
         display_name = task_name
+        name_color = self._task_name_color(result._task)
 
         # Add timing if enabled
         timing_info = ""
@@ -324,12 +371,12 @@ class CallbackModule(CallbackBase):
                 second_part = display_name[best_break:].lstrip()
 
                 # First line - no dots, no timing, no status - just task name
-                first_line = f"  {color_text(symbol, status_color)} {color_text(first_part, self.colors['task_name'])}"
+                first_line = f"  {color_text(symbol, status_color)} {color_text(first_part, name_color)}"
                 self._display.display(first_line)
 
                 # Second line with timing and status - right aligned
                 second_prefix = "    "  # 4 spaces for continuation
-                second_line_prefix = f"{second_prefix}{color_text(second_part, self.colors['task_name'])} "
+                second_line_prefix = f"{second_prefix}{color_text(second_part, name_color)} "
 
                 # Calculate suffix for second line
                 suffix_parts = []
@@ -355,7 +402,7 @@ class CallbackModule(CallbackBase):
                 display_name = display_name[: max_task_width - 3] + "..."
 
         # Normal single line case - build from scratch with right alignment
-        prefix = f"  {color_text(symbol, status_color)} {color_text(display_name, self.colors['task_name'])} "
+        prefix = f"  {color_text(symbol, status_color)} {color_text(display_name, name_color)} "
 
         # Calculate how much space we need for the suffix
         suffix_parts = []
@@ -387,6 +434,8 @@ class CallbackModule(CallbackBase):
     def v2_playbook_on_play_start(self, play):
         """Called when a play starts"""
         self.play_start_time = time.time()
+        self._pre_uuids = self._top_level_uuids(play.pre_tasks)
+        self._post_uuids = self._top_level_uuids(play.post_tasks)
         # Reset terminal width cache for new play (terminal may have been resized)
         self.cached_terminal_width = None
         play_name = play.get_name().strip()

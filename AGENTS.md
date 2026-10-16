@@ -32,8 +32,11 @@ repo, and seeds `host_vars/localhost.yml`.
   created before running any playbook.
 - `collections/` — vendored Ansible collections declared in [requirements.yml](requirements.yml)
   (`ansible.posix`, `community.general`, `kewlfft.aur`).
-- `callback_plugins/prettify.py` — third-party stdout callback, vendored (do not hand-edit; re-fetched by
-  `install.sh` from its upstream repo).
+- `callback_plugins/prettify.py` — stdout callback, originally from
+  [roots/ansible-output-prettify](https://github.com/roots/ansible-output-prettify) and now maintained in this repo
+  (`install.sh` no longer fetches it, so don't overwrite it with the upstream version). Besides the per-role
+  `┌─ <role>` header, it prints dedicated `pre-tasks`, `post-tasks` and `<role> › handlers` sections, handlers
+  having their own colors. Test changes with a throwaway playbook using `debug` tasks, not the real playbooks.
 - `scripts/` — helper scripts invoked by pre-commit hooks (see below).
 
 ## Making changes
