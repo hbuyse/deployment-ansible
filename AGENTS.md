@@ -41,8 +41,9 @@ repo, and seeds `host_vars/localhost.yml`.
 
 ## Making changes
 
-- Match the existing task style: `name:` strings use the `"<Section> | <Step>"` convention (see any file
-  under `pre_tasks/`, `post_tasks/`, or `roles/*/tasks/`).
+- Match the existing task style: `name:` strings are short and capitalized, without a section prefix such as
+  `"Pre-tasks | ..."` (see any file under `pre_tasks/`, `post_tasks/`, or `roles/*/tasks/`). The callback already
+  prints the role / `pre-tasks` / `post-tasks` / `handlers` header above them.
 - When a task/variable differs by OS, follow the existing pattern in that role (`vars/<os_family>.yml` include,
   or `when: ansible_facts.os_family == "..."`) rather than inventing a new mechanism.
 - Keep `ansible-lint` (`profile: production`, see [.ansible-lint.yml](.ansible-lint.yml)) and `yamlfmt`
