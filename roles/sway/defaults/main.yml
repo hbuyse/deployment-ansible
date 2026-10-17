@@ -1,2 +1,5 @@
 ---
 sway_config_dir: "{{ ansible_facts.user_dir }}/.config/sway"
+
+# Install the packages that are only in the AUR (Arch Linux) with yay
+sway_aur: true

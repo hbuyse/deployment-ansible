@@ -9,6 +9,15 @@
   ansible.builtin.package:
     name: "{{ sway_packages }}"
 
+- name: "Install required packages from AUR"
+  kewlfft.aur.aur:
+    name: "{{ sway_aur_packages }}"
+    use: yay
+    state: present
+  when:
+    - sway_aur | bool
+    - sway_aur_packages is defined
+
 - name: "Copy Sway session files"
   ansible.builtin.include_tasks:
     file: "copy-service.yml"

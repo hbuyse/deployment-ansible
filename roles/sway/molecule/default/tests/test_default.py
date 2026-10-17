@@ -11,7 +11,10 @@ def _os_id(host):
 
 def test_packages(host):
     """Sway, the screenshot tools and the file manager are installed."""
-    for name in ("sway", "grim", "slurp", "thunar", "lxsession"):
+    names = ["sway", "grim", "slurp", "thunar"]
+    if _os_id(host) != "arch":
+        names.append("lxsession")  # lxsession-gtk3, in the AUR, on Arch
+    for name in names:
         assert host.package(name).is_installed, name
 
 

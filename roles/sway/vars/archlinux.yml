@@ -1,7 +1,6 @@
 ---
 sway_packages:
   - sway
-  - lxsession-gtk3
   - thunar
   - thunar-archive-plugin
   - thunar-volman
@@ -9,3 +8,7 @@ sway_packages:
   # Screenshots
   - grim
   - slurp
+
+# Not in the official repositories
+sway_aur_packages:
+  - lxsession-gtk3
