@@ -3,6 +3,12 @@
   ansible.builtin.set_fact:
     direnv_latest_version: "{{ lookup('github_latest_release', 'direnv/direnv')[1:] }}"
 
+- name: "Ensure the binary directory exists"
+  ansible.builtin.file:
+    path: "{{ direnv_bin_install_dir }}"
+    state: directory
+    mode: "0755"
+
 - name: "Install binary [v{{ direnv_latest_version }}]"
   ansible.builtin.get_url:
     url: "https://github.com/direnv/direnv/releases/download/v{{ direnv_latest_version }}/direnv.{{ ansible_facts.system |
