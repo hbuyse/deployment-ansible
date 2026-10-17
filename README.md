@@ -14,25 +14,67 @@ bash ./install.sh
 
 Some roles have tests. Here is the list:
 
+- ansiblelint
+- ansiblels
+- bashls
+- bitwarden
+- black
 - brightnessctl
+- btop
+- cava
 - clang
 - claude_code
 - claude_desktop
+- codespell
+- composels
+- cssls
+- direnv
 - docker
+- fastfetch
 - fd
+- fuzzel
+- gdm
 - golang
+- htmlls
+- isort
 - jq
+- jsonls
+- luals
+- markdownls
 - mimeapps
 - minicom
+- nerdfonts
 - netrc
 - nodejs
 - npmrc
 - nvim
+- oh_my_posh
 - opencode
+- perlnavigator
+- perltidy
+- pipx
 - podman
+- pre_commit
+- prettier
+- ruff
 - rustup
+- shellcheck
+- shfmt
 - ssh
+- tailwindcss_lsp
+- texlab
+- thunderbird
+- tmux
+- tombi
+- tuigreet
 - user
+- webapplications
+- wlprop
+- xfce4
+- yamlfmt
+- yamlls
+- yq
+- zoom
 - zsh
 
 To run the tests, change your directory to the role you want to test and run the following:
