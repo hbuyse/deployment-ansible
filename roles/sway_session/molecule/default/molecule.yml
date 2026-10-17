@@ -1,0 +1,20 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  # The role only deploys a unit file
+  - name: sway_session-debian12
+    image: geerlingguy/docker-debian12-ansible:latest
+    pre_build_image: true
+  - name: sway_session-ubuntu2404
+    image: geerlingguy/docker-ubuntu2404-ansible:latest
+    pre_build_image: true
+provisioner:
+  name: ansible
+  playbooks:
+    prepare: ../../../../molecule/shared/prepare.yml
+    converge: ../../../../molecule/shared/converge.yml
+verifier:
+  name: testinfra

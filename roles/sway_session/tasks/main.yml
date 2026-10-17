@@ -1,0 +1,15 @@
+---
+# Target that the services of the desktop (kanshi, swayidle, swaync, waybar, wlsunset...) are part of, started by sway
+- name: "Ensure the systemd user directory exists"
+  ansible.builtin.file:
+    path: "{{ ansible_facts.user_dir }}/.config/systemd/user"
+    state: directory
+    mode: "0755"
+
+- name: "Copy the session target"
+  ansible.builtin.copy:
+    src: "sway-session.target"
+    dest: "{{ ansible_facts.user_dir }}/.config/systemd/user/sway-session.target"
+    mode: "0644"
+    owner: "{{ ansible_facts.user_uid }}"
+    group: "{{ ansible_facts.user_gid }}"

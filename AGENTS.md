@@ -61,6 +61,8 @@ repo, and seeds `host_vars/localhost.yml`.
   Only put `tags:` on a task for a subset of the role (e.g. `clangd`). A role with `meta` dependencies, or used as a
   dependency (`rustup`, `golang`, `direnv`…), keeps its tags on its tasks: Ansible runs a dependency only once, so
   with `--tags` the first inclusion, under the parent's tags, would skip the later explicit entry.
+  A dependency that is never listed in a playbook (`sway_session`) is not concerned: it runs with the tags of the role
+  that needs it, so the roles that only depend on such a role keep their tags in the playbooks.
 - Keep `ansible-lint` (`profile: production`, see [.ansible-lint.yml](.ansible-lint.yml)) and `yamlfmt`
   (see [.yamlfmt.yaml](.yamlfmt.yaml)) happy — both run in pre-commit and CI-equivalent checks.
 - Indentation: 2 spaces for YAML, 4 spaces otherwise, LF line endings, 120 max line length — see
