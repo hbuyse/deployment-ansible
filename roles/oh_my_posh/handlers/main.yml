@@ -2,7 +2,7 @@
 - name: "Clear oh-my-posh cache"
   ansible.builtin.command:
     argv:
-      - oh-my-posh
+      - "{{ ansible_facts.user_dir }}/.local/bin/oh-my-posh"
       - cache
       - clear
   register: oh_my_posh_output
