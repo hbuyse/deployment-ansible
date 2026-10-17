@@ -9,3 +9,12 @@
     name: "{{ python_packages }}"
     state: present
   when: python_packages is defined
+
+- name: "Install from AUR"
+  kewlfft.aur.aur:
+    name: "{{ python_aur_packages }}"
+    use: yay
+    state: present
+  when:
+    - python_aur | bool
+    - python_aur_packages is defined

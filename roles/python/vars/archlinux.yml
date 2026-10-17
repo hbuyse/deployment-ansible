@@ -2,4 +2,7 @@
 python_packages:
   - python
   - python-virtualenv
+
+# Not in the official repositories
+python_aur_packages:
   - python-virtualenvwrapper
