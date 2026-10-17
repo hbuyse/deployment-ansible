@@ -1,0 +1,32 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: wallpapers-debian12
+    image: geerlingguy/docker-debian12-ansible:latest
+    pre_build_image: true
+    volumes:
+      # Some roles use role_path in a command that runs on the target: the target is the controller on a real run
+      - "${MOLECULE_PROJECT_DIRECTORY}:${MOLECULE_PROJECT_DIRECTORY}:ro"
+  - name: wallpapers-ubuntu2404
+    image: geerlingguy/docker-ubuntu2404-ansible:latest
+    pre_build_image: true
+    volumes:
+      # Some roles use role_path in a command that runs on the target: the target is the controller on a real run
+      - "${MOLECULE_PROJECT_DIRECTORY}:${MOLECULE_PROJECT_DIRECTORY}:ro"
+  - name: wallpapers-archlinux
+    image: archlinux:base
+    pre_build_image: false
+    # Minimal Arch image has no systemd and no Python, see prepare.yml
+    volumes:
+      # Some roles use role_path in a command that runs on the target: the target is the controller on a real run
+      - "${MOLECULE_PROJECT_DIRECTORY}:${MOLECULE_PROJECT_DIRECTORY}:ro"
+provisioner:
+  name: ansible
+  playbooks:
+    prepare: prepare.yml
+    converge: converge.yml
+verifier:
+  name: testinfra
