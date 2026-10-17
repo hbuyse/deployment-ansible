@@ -1,14 +1,12 @@
 ---
 - name: "Include OS specific variables"
-  ansible.builtin.include_vars: "{{ ansible_facts.os_family | lower }}.yml"
+  ansible.builtin.include_vars: "{{ item }}"
+  loop: "{{ query('ansible.builtin.first_found', os_vars_files, paths=[role_path ~ '/vars']) }}"
 
 - name: "Add repository"
   ansible.builtin.include_tasks:
     file: "{{ item }}"
-  with_first_found:
-    - files:
-        - "{{ ansible_facts.os_family | lower }}.yml"
-      skip: true
+  loop: "{{ query('ansible.builtin.first_found', os_vars_files, paths=[role_path ~ '/tasks'], skip=true) }}"
 
 - name: "Enable non-privileged users to run wireshark"
   become: true

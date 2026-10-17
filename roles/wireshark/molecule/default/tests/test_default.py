@@ -7,11 +7,19 @@ def _os_id(host):
     return host.check_output(". /etc/os-release && echo $ID").strip()
 
 
-def test_ppa_and_setuid_on_ubuntu(host):
-    """Ubuntu uses the Wireshark PPA and lets non-privileged users capture."""
+def test_ppa_on_ubuntu(host):
+    """Ubuntu uses the Wireshark PPA, the other distributions their own package."""
+    source = host.file("/etc/apt/sources.list.d/wireshark.sources")
+    if _os_id(host) == "ubuntu":
+        assert "wireshark-dev/stable/ubuntu" in source.content_string
+    else:
+        assert not source.exists
+
+
+def test_setuid_answer_on_debian_family(host):
+    """Debian family lets non-privileged users capture."""
     if _os_id(host) == "arch":
         return
-    assert "wireshark-dev/stable/ubuntu" in host.file("/etc/apt/sources.list.d/wireshark.sources").content_string
     assert "* wireshark-common/install-setuid: true" in host.check_output("debconf-show wireshark-common")
 
 
