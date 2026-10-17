@@ -34,8 +34,6 @@ provisioner:
           - tar
           - gzip
           - ca-certificates
-        molecule_user_dirs:
-          - .local/bin
         molecule_group_vars: true
 verifier:
   name: testinfra

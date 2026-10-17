@@ -41,8 +41,6 @@ provisioner:
           - xvfb
         molecule_arch_packages:
           - xorg-server-xvfb
-        molecule_user_dirs:
-          - .config/systemd/user
         molecule_user_session: true
         molecule_environment:
           XDG_RUNTIME_DIR: /run/user/0

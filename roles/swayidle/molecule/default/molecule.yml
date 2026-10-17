@@ -33,8 +33,6 @@ provisioner:
   inventory:
     group_vars:
       all:
-        molecule_user_dirs:
-          - .config/systemd/user
         molecule_user_session: true
         molecule_sway_target: true
         molecule_environment:

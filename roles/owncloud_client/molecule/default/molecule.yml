@@ -23,8 +23,6 @@ provisioner:
       all:
         molecule_debian_packages:
           - python3-debian
-        molecule_user_dirs:
-          - .config/systemd/user
         molecule_user_session: true
         molecule_group_vars: true
         molecule_environment:
