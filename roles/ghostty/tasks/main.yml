@@ -38,12 +38,23 @@
       with_fileglob:
         - "{{ role_path }}/files/*.ghostty"
 
-    - name: "Generate tab-style CSS file"
+    - name: "Copy tab-style CSS file source"
+      ansible.builtin.copy:
+        src: "tab-style.scss"
+        dest: "{{ ghostty_config_dir }}/tab-style.scss"
+        mode: "0644"
+      register: ghostty_scss
+
+    - name: "Check if the tab-style CSS file is generated"
+      ansible.builtin.stat:
+        path: "{{ ghostty_config_dir }}/tab-style.css"
+      register: ghostty_css
+
+    - name: "Generate tab-style CSS file"  # noqa: no-handler
       ansible.builtin.command:
-        cmd: "sassc -t expanded {{ role_path }}/files/tab-style.scss {{ ghostty_config_dir }}/tab-style.css"
-      register: ghostty_sassc
-      changed_when: ghostty_sassc.rc == 0
-      failed_when: ghostty_sassc.rc != 0
+        cmd: "sassc -t expanded {{ ghostty_config_dir }}/tab-style.scss {{ ghostty_config_dir }}/tab-style.css"
+      when: ghostty_scss is changed or not ghostty_css.stat.exists
+      changed_when: true
 
 - name: "Override systemd user configuration"
   when: ansible_facts.service_mgr == "systemd"
