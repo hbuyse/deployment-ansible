@@ -23,6 +23,9 @@
     state: "present"
   when: wireplumber_packages is defined
 
+- name: "Get list of services"
+  ansible.builtin.service_facts:
+
 - name: "Stop PulseAudio"
   ansible.builtin.systemd:
     name: "{{ item }}"
