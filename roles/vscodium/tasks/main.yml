@@ -22,3 +22,15 @@
     name: "{{ vscodium_packages }}"
   tags:
     - vscodium
+  when: vscodium_packages is defined
+
+- name: "Install packages from AUR"
+  kewlfft.aur.aur:
+    name: "{{ vscodium_aur_packages }}"
+    use: yay
+    state: present
+  tags:
+    - vscodium
+  when:
+    - vscodium_aur | bool
+    - vscodium_aur_packages is defined
