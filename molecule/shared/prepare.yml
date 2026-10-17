@@ -4,7 +4,6 @@
 #   molecule_packages / molecule_debian_packages / molecule_arch_packages: packages that a regular install has
 #   molecule_user_dirs: directories of the home directory that the role expects to exist
 #   molecule_user_session: start a systemd user manager for root, like the session of a desktop user
-#   molecule_sway_target: deploy sway-session.target, which the sway role provides to the services of the desktop
 # Anything more specific goes in a tasks/prepare.yml file next to molecule.yml.
 - name: Pre-install Python on Arch Linux
   hosts: all
@@ -83,13 +82,6 @@
           ansible.builtin.wait_for:
             path: /run/user/0/bus
             timeout: 60
-
-    - name: Deploy the unit that the services of the desktop are part of
-      ansible.builtin.copy:
-        src: "{{ lookup('ansible.builtin.env', 'MOLECULE_PROJECT_DIRECTORY') }}/../sway/files/service/sway-session.target"
-        dest: "{{ ansible_facts.user_dir }}/.config/systemd/user/sway-session.target"
-        mode: "0644"
-      when: molecule_sway_target | default(false) | bool
 
     - name: Run the extra preparation of the scenario
       ansible.builtin.include_tasks: "{{ extra }}"
