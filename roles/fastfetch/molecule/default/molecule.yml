@@ -26,8 +26,6 @@ provisioner:
   inventory:
     group_vars:
       all:
-        molecule_user_dirs:
-          - .local
         molecule_group_vars: true
 verifier:
   name: testinfra

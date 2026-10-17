@@ -3,6 +3,12 @@
   ansible.builtin.set_fact:
     fastfetch_latest_version: "{{ lookup('github_latest_release', 'fastfetch-cli/fastfetch') }}"
 
+- name: "Ensure the installation directory exists"
+  ansible.builtin.file:
+    path: "{{ fastfetch_install_dir }}"
+    state: directory
+    mode: "0755"
+
 - name: "Install fastfetch from GitHub [v{{ fastfetch_latest_version }}]"
   become: true
   ansible.builtin.unarchive:
