@@ -59,12 +59,23 @@
         owner: "{{ ansible_facts.user_id }}"
         group: "{{ ansible_facts.user_gid }}"
 
-    - name: "Generated CSS"
+    - name: "Copy style sheet source"
+      ansible.builtin.copy:
+        src: "style.scss"
+        dest: "{{ waybar_config_dir }}/style.scss"
+        mode: "0644"
+      register: waybar_scss
+
+    - name: "Check if the style sheet is generated"
+      ansible.builtin.stat:
+        path: "{{ waybar_config_dir }}/style.css"
+      register: waybar_css
+
+    - name: "Generate style sheet"  # noqa: no-handler
       ansible.builtin.command:
-        cmd: "sassc -t expanded {{ role_path }}/files/style.scss {{ waybar_config_dir }}/style.css"
-      register: waybar_sassc
-      changed_when: waybar_sassc.rc == 0
-      failed_when: waybar_sassc.rc != 0
+        cmd: "sassc -t expanded {{ waybar_config_dir }}/style.scss {{ waybar_config_dir }}/style.css"
+      when: waybar_scss is changed or not waybar_css.stat.exists
+      changed_when: true
 
     - name: "Copy dynamic configuration files"
       ansible.builtin.template:
