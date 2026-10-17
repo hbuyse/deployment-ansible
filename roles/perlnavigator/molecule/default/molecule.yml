@@ -28,18 +28,6 @@ provisioner:
       all:
         molecule_packages:
           - unzip
-        molecule_user_dirs:
-          - .local/bin
         molecule_group_vars: true
-scenario:
-  # No idempotence step: the role downloads and unpacks the release again on every run
-  test_sequence:
-    - destroy
-    - syntax
-    - create
-    - prepare
-    - converge
-    - verify
-    - destroy
 verifier:
   name: testinfra

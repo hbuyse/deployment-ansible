@@ -1,6 +1,0 @@
----
-- name: "Remove perlnavigator temporary directory"
-  ansible.builtin.file:
-    path: "{{ perlnavigator_tmpdir.path }}"
-    state: "absent"
-  when: perlnavigator_tmpdir.path is defined
