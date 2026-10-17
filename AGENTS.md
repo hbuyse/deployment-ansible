@@ -56,6 +56,11 @@ repo, and seeds `host_vars/localhost.yml`.
   OS variables are loaded with `include_vars: "{{ item }}"` looping over
   `query('ansible.builtin.first_found', ansible_facts.os_family | lower ~ '.yml', skip=true)` (no `skip` when the file
   must exist), copy that task from a role.
+  When a role differs between distributions of the same family (Ubuntu and Debian), use `ubuntu.yml` next to
+  `debian.yml` and loop over `query('ansible.builtin.first_found', os_vars_files, paths=[role_path ~ '/vars'])` (and
+  `/tasks` for the task files): `os_vars_files` (in [group_vars/all.yml](group_vars/all.yml)) lists the distribution file,
+  then the family one. Packages that exist only in the AUR go in `<role>_aur_packages`, installed by `kewlfft.aur.aur`
+  and turned off by `<role>_aur: false`.
 - Tags: the tags shared by all the tasks of a role are declared once on its entry in the playbooks
   (`- role: "yq"` then `tags: yq`), not on each task, because role tags are also inherited by the tasks it includes.
   Only put `tags:` on a task for a subset of the role (e.g. `clangd`). A role with `meta` dependencies, or used as a

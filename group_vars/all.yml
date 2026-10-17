@@ -3,3 +3,9 @@
 # (amd64, arm64).
 alt_arch: "{{ ansible_facts.machine | replace('x86_64', 'amd64') | replace('aarch64', 'arm64') }}"
 deb_arch: "{{ alt_arch }}"
+
+# Variable files and tasks of the roles that differ between distributions of the same family (Ubuntu and Debian), from
+# the most specific to the family: ubuntu.yml is used on Ubuntu, debian.yml on the others
+os_vars_files:
+  - "{{ ansible_facts.distribution | lower }}.yml"
+  - "{{ ansible_facts.os_family | lower }}.yml"
