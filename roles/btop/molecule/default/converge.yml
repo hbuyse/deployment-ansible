@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: true
+  vars_files:
+    # alt_arch, shared by the playbooks of the repository
+    - ../../../../group_vars/all.yml
+  roles:
+    - role: ../../..  # noqa: role-name[path]
