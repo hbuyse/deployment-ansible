@@ -28,8 +28,6 @@ provisioner:
       all:
         molecule_debian_packages:
           - xz-utils
-        molecule_user_dirs:
-          - .local/bin
         molecule_group_vars: true
 verifier:
   name: testinfra
