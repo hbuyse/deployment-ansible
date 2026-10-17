@@ -10,16 +10,19 @@ SYSTEMCTL = "XDG_RUNTIME_DIR=/run/user/0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run
 
 
 def test_packages(host):
-    """The client and the keyring tools are installed."""
-    for name in ("nextcloud-client", "gnome-keyring", "seahorse"):
+    """The client (nextcloud-desktop on Debian) and the keyring tools are installed."""
+    client = "nextcloud-desktop" if _os_id(host) == "debian" else "nextcloud-client"
+    for name in (client, "gnome-keyring", "seahorse"):
         assert host.package(name).is_installed, name
 
 
 def test_ppa_on_ubuntu(host):
     """Ubuntu uses the Nextcloud PPA."""
-    if _os_id(host) == "arch":
-        return
-    assert "nextcloud-devs/client/ubuntu" in host.file("/etc/apt/sources.list.d/nextcloud-devs.sources").content_string
+    source = host.file("/etc/apt/sources.list.d/nextcloud-devs.sources")
+    if _os_id(host) == "ubuntu":
+        assert "nextcloud-devs/client/ubuntu" in source.content_string
+    else:
+        assert not source.exists
 
 
 def test_service_file(host):

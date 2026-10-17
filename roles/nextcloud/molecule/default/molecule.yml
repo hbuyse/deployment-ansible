@@ -4,7 +4,15 @@ dependency:
 driver:
   name: docker
 platforms:
-  # The Debian family task adds an Ubuntu PPA: Debian 12 has no such suite
+  # Only Ubuntu uses the PPA of the Nextcloud developers, Debian has its own package
+  - name: nextcloud-debian12
+    image: geerlingguy/docker-debian12-ansible:latest
+    pre_build_image: true
+    privileged: true
+    command: ""
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
   - name: nextcloud-ubuntu2404
     image: geerlingguy/docker-ubuntu2404-ansible:latest
     pre_build_image: true
