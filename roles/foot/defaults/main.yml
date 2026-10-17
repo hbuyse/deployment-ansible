@@ -1,3 +1,6 @@
 ---
 foot_config_dir: "{{ ansible_facts.user_dir }}/.config/foot"
 foot_themes_dir: "{{ foot_config_dir }}/themes"
+
+# Shell started by the terminal
+foot_shell: "/usr/bin/zsh"
