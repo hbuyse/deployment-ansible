@@ -1,8 +1,4 @@
 ---
 ghostty_packages:
-  - "ghostty"
+  # Ghostty has no package for Debian: only the configuration is deployed, sassc generates its style sheet
   - "sassc"
-
-ghostty_ppa:
-  repo: "mkasberg/ghostty-ubuntu"
-  fingerprint: "0721FDF5FECB88DC6920361657C8EF455CEAE491"
