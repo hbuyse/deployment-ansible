@@ -12,6 +12,7 @@
     - "{{ themes_gtk_dir }}"
     - "{{ themes_gtk3_config_dir }}"
     - "{{ themes_gtk4_config_dir }}"
+    - "{{ themes_state_dir }}"
 
 - name: "Install dependencies"
   become: true

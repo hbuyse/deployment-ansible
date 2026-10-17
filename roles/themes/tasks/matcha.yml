@@ -4,27 +4,42 @@
     themes_matcha_latest_version: "{{ lookup('github_latest_release', themes_matcha_github_user ~ '/' ~ themes_matcha_github_repo)
       }}"
 
-- name: "Create temporary directory"
-  ansible.builtin.tempfile:
-    state: directory
-    suffix: _matcha_gtk_theme
-  register: themes_matcha_tmpdir
-  notify: "Remove matcha temporary directory"
+- name: "Get the installed version"
+  ansible.builtin.slurp:
+    src: "{{ themes_state_dir }}/matcha"
+  register: themes_matcha_installed
+  failed_when: false
 
-- name: "Decompress archive"
-  ansible.builtin.unarchive:
-    src: "https://github.com/{{ themes_matcha_github_user }}/{{ themes_matcha_github_repo }}/archive/refs/tags/{{ themes_matcha_latest_version
-      }}.tar.gz"
-    dest: "{{ themes_matcha_tmpdir.path }}"
-    owner: "{{ ansible_facts.user_uid }}"
-    group: "{{ ansible_facts.user_gid }}"
-    extra_opts:
-      - "--strip-components=1"
-    remote_src: true
+- name: "Install Matcha"
+  when: (themes_matcha_installed.content | default('') | b64decode) != themes_matcha_latest_version
+  block:
+    - name: "Create temporary directory"
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: _matcha_gtk_theme
+      register: themes_matcha_tmpdir
+      notify: "Remove matcha temporary directory"
 
-- name: "Install theme with all variants"
-  ansible.builtin.command:
-    cmd: "./install.sh --dest '{{ themes_gtk_dir }}'"
-    chdir: "{{ themes_matcha_tmpdir.path }}"
-  register: themes_matcha_cmd_out
-  changed_when: themes_matcha_cmd_out.rc != 0
+    - name: "Decompress archive"
+      ansible.builtin.unarchive:
+        src: "https://github.com/{{ themes_matcha_github_user }}/{{ themes_matcha_github_repo }}/archive/refs/tags/{{ themes_matcha_latest_version
+          }}.tar.gz"
+        dest: "{{ themes_matcha_tmpdir.path }}"
+        owner: "{{ ansible_facts.user_uid }}"
+        group: "{{ ansible_facts.user_gid }}"
+        extra_opts:
+          - "--strip-components=1"
+        remote_src: true
+
+    - name: "Install theme with all variants"
+      ansible.builtin.command:
+        cmd: "./install.sh --dest '{{ themes_gtk_dir }}'"
+        chdir: "{{ themes_matcha_tmpdir.path }}"
+      register: themes_matcha_cmd_out
+      changed_when: true
+
+    - name: "Remember the installed version"
+      ansible.builtin.copy:
+        content: "{{ themes_matcha_latest_version }}"
+        dest: "{{ themes_state_dir }}/matcha"
+        mode: "0644"

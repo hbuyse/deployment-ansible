@@ -31,15 +31,5 @@ provisioner:
     host_vars:
       themes-archlinux:
         themes_aur: false
-scenario:
-  # No idempotence step: the role downloads and unpacks the theme again on every run
-  test_sequence:
-    - destroy
-    - syntax
-    - create
-    - prepare
-    - converge
-    - verify
-    - destroy
 verifier:
   name: testinfra

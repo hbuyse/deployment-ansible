@@ -4,6 +4,13 @@ def test_gtk_directories(host):
         assert host.file(path).is_directory, path
 
 
+def test_installation_is_recorded(host):
+    """What is installed is recorded, so that the next run does not download it again."""
+    state = "/root/.local/state/themes"
+    assert host.file(f"{state}/matcha").content_string.strip()
+    assert host.file(f"{state}/vimix-cursors").is_file
+
+
 def test_vimix_cursors_are_installed(host):
     """The Vimix cursors are installed (in /usr/share/icons when the role runs as root)."""
     found = host.check_output("find /usr/share/icons /root/.local/share/icons -maxdepth 1 -iname 'Vimix*' 2>/dev/null || true")

@@ -1,24 +1,38 @@
 ---
-- name: "Create temporary directory"
-  ansible.builtin.tempfile:
-    state: directory
-    suffix: _vimix_gtk_theme
-  register: themes_vimix_tmpdir
-  notify: "Remove vimix temporary directory"
+- name: "Check if the cursors are installed"
+  ansible.builtin.stat:
+    path: "{{ themes_state_dir }}/vimix-cursors"
+  register: themes_vimix_installed
 
-- name: "Decompress archive"
-  ansible.builtin.unarchive:
-    src: "https://codeload.github.com/{{ themes_vimix_cursors_github_user }}/{{ themes_vimix_cursors_github_repo }}/tar.gz/refs/heads/master"
-    dest: "{{ themes_vimix_tmpdir.path }}"
-    owner: "{{ ansible_facts.user_uid }}"
-    group: "{{ ansible_facts.user_gid }}"
-    extra_opts:
-      - "--strip-components=1"
-    remote_src: true
+- name: "Install Vimix cursors"
+  when: not themes_vimix_installed.stat.exists
+  block:
+    - name: "Create temporary directory"
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: _vimix_gtk_theme
+      register: themes_vimix_tmpdir
+      notify: "Remove vimix temporary directory"
 
-- name: "Install cursors"
-  ansible.builtin.command:
-    cmd: "./install.sh"
-    chdir: "{{ themes_vimix_tmpdir.path }}"
-  register: themes_vimix_cmd_out
-  changed_when: themes_vimix_cmd_out.rc != 0
+    - name: "Decompress archive"
+      ansible.builtin.unarchive:
+        src: "https://codeload.github.com/{{ themes_vimix_cursors_github_user }}/{{ themes_vimix_cursors_github_repo }}/tar.gz/refs/heads/master"
+        dest: "{{ themes_vimix_tmpdir.path }}"
+        owner: "{{ ansible_facts.user_uid }}"
+        group: "{{ ansible_facts.user_gid }}"
+        extra_opts:
+          - "--strip-components=1"
+        remote_src: true
+
+    - name: "Install cursors"
+      ansible.builtin.command:
+        cmd: "./install.sh"
+        chdir: "{{ themes_vimix_tmpdir.path }}"
+      register: themes_vimix_cmd_out
+      changed_when: true
+
+    - name: "Remember that the cursors are installed (remove this file to install them again)"
+      ansible.builtin.copy:
+        content: "installed\n"
+        dest: "{{ themes_state_dir }}/vimix-cursors"
+        mode: "0644"
