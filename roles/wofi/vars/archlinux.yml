@@ -1,3 +1,5 @@
 ---
 wofi_packages:
   - wofi
+  # Generates the style sheet
+  - sassc

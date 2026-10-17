@@ -23,9 +23,20 @@
         dest: "{{ wofi_config_dir }}/config"
         mode: "0644"
 
-    - name: "Generated CSS"
+    - name: "Copy style sheet source"
+      ansible.builtin.copy:
+        src: "style.scss"
+        dest: "{{ wofi_config_dir }}/style.scss"
+        mode: "0644"
+      register: wofi_scss
+
+    - name: "Check if the style sheet is generated"
+      ansible.builtin.stat:
+        path: "{{ wofi_config_dir }}/style.css"
+      register: wofi_css
+
+    - name: "Generate style sheet"  # noqa: no-handler
       ansible.builtin.command:
-        cmd: "sassc -t expanded {{ role_path }}/files/style.scss {{ wofi_config_dir }}/style.css"
-      register: wofi_sassc
-      changed_when: wofi_sassc.rc == 0
-      failed_when: wofi_sassc.rc != 0
+        cmd: "sassc -t expanded {{ wofi_config_dir }}/style.scss {{ wofi_config_dir }}/style.css"
+      when: wofi_scss is changed or not wofi_css.stat.exists
+      changed_when: true
