@@ -1,0 +1,68 @@
+---
+- name: Pre-install Python on Arch Linux
+  hosts: all
+  gather_facts: false
+  vars:
+    ansible_user: root
+  tasks:
+    - name: Install Python and sudo on Arch
+      ansible.builtin.raw: pacman -Syu --noconfirm python sudo
+      when: inventory_hostname == "wireplumber-archlinux"
+      changed_when: true
+
+- name: Prepare
+  hosts: all
+  gather_facts: true
+  vars:
+    # The roles run as a regular user, the preparation needs root
+    ansible_user: root
+  tasks:
+    - name: Refresh the APT cache and install what a desktop session has
+      ansible.builtin.apt:
+        name:
+          - dbus
+          - dbus-user-session
+          - sudo
+        state: present
+        update_cache: true
+      when: ansible_facts.os_family == "Debian"
+
+    - name: Install sudo
+      community.general.pacman:
+        name: sudo
+        state: present
+      when: ansible_facts.os_family == "Archlinux"
+
+    - name: Create the user of the session
+      ansible.builtin.user:
+        name: tester
+        shell: /bin/bash
+        create_home: true
+        uid: 2000
+
+    - name: Allow the user to use sudo without a password
+      ansible.builtin.copy:
+        content: "tester ALL=(ALL) NOPASSWD:ALL\n"
+        dest: /etc/sudoers.d/tester
+        mode: "0440"
+        validate: visudo -cf %s
+
+    - name: Start the systemd user manager of the user
+      ansible.builtin.command: loginctl enable-linger tester
+      changed_when: true
+
+    - name: Wait for the user bus
+      ansible.builtin.wait_for:
+        path: /run/user/2000/bus
+        timeout: 60
+
+    - name: Create the directories created by pre_tasks/main.yml
+      ansible.builtin.file:
+        path: "/home/tester/{{ item }}"
+        state: directory
+        owner: tester
+        group: tester
+        mode: "0755"
+      loop:
+        - .config
+        - .config/systemd/user

@@ -1,0 +1,13 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: true
+  environment:
+    XDG_RUNTIME_DIR: /run/user/2000
+    DBUS_SESSION_BUS_ADDRESS: unix:path=/run/user/2000/bus
+  pre_tasks:
+    # Same fact as pre_tasks/main.yml, which the role relies on
+    - name: Get list of services
+      ansible.builtin.service_facts:
+  roles:
+    - role: ../../..  # noqa: role-name[path]
