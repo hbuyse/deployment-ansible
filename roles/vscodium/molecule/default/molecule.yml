@@ -1,0 +1,20 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  # Arch has vscodium in the AUR only: the pacman installation of the role cannot work there
+  - name: vscodium-debian12
+    image: geerlingguy/docker-debian12-ansible:latest
+    pre_build_image: true
+  - name: vscodium-ubuntu2404
+    image: geerlingguy/docker-ubuntu2404-ansible:latest
+    pre_build_image: true
+provisioner:
+  name: ansible
+  playbooks:
+    prepare: prepare.yml
+    converge: converge.yml
+verifier:
+  name: testinfra
