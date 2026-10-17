@@ -8,16 +8,16 @@
 
 - name: "Install from package manager"
   become: true
-  when: gopls_package is defined
+  when: gopls_packages is defined
   ansible.builtin.package:
-    name: "{{ gopls_package }}"
+    name: "{{ gopls_packages }}"
     state: present
   tags:
     - go
     - gopls
 
 - name: "Install from Golang"
-  when: gopls_package is not defined
+  when: gopls_packages is not defined
   tags:
     - go
     - gopls
