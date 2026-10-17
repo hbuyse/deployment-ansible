@@ -16,6 +16,13 @@
     - greetd
   when: tuigreet_packages is defined
 
+- name: "Ensure the greetd configuration directory exists"
+  become: true
+  ansible.builtin.file:
+    path: "/etc/greetd"
+    state: directory
+    mode: "0755"
+
 - name: "Copy configuration to /etc/greetd"
   become: true
   ansible.builtin.copy:
