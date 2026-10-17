@@ -1,0 +1,21 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  # fuzzel is not packaged in Debian 12
+  - name: fuzzel-ubuntu2404
+    image: geerlingguy/docker-ubuntu2404-ansible:latest
+    pre_build_image: true
+  - name: fuzzel-archlinux
+    image: archlinux:base
+    pre_build_image: false
+    # Minimal Arch image has no systemd and no Python, see prepare.yml
+provisioner:
+  name: ansible
+  playbooks:
+    prepare: prepare.yml
+    converge: converge.yml
+verifier:
+  name: testinfra
