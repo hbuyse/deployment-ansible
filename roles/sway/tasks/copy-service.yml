@@ -1,14 +1,11 @@
 ---
-- name: "Copy sway-session and lxpolkit service files"
+- name: "Copy lxpolkit service file"
   ansible.builtin.copy:
-    src: "service/{{ item }}"
+    src: "service/lxpolkit.service"
     dest: "{{ ansible_facts.user_dir }}/.config/systemd/user"
     mode: "0644"
     owner: "{{ ansible_facts.user_uid }}"
     group: "{{ ansible_facts.user_gid }}"
-  loop:
-    - "lxpolkit.service"
-    - "sway-session.target"
 
 - name: "Enable lxpolkit service"
   become: false
