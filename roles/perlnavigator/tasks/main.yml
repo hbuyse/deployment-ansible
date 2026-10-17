@@ -38,6 +38,7 @@
       ansible.builtin.copy:
         src: "{{ perlnavigator_tmpdir.path }}/perlnavigator-linux-{{ ansible_facts.architecture }}/perlnavigator"
         dest: "{{ perlnavigator_bin_dir }}/perlnavigator"
+        remote_src: true
         owner: "{{ ansible_facts.user_uid }}"
         group: "{{ ansible_facts.user_gid }}"
         mode: "0755"
