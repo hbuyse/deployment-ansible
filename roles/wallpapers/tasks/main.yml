@@ -18,16 +18,11 @@
 - name: "Install SVG files"
   block:
     - name: "Generate SVG file with colors"
-      ansible.builtin.shell:
-        executable: /bin/bash
-        cmd: |
-          set -o pipefail
-          cat {{ role_path }}/files/coding.svg | envsubst > {{ wallpapers_install_dir }}/coding.svg
-        creates: "{{ wallpapers_install_dir }}/coding.svg"
-      environment:
-        OUTLINE: "#f2cdcd"
-        INSIDE: "#dd7878"
-        BACKGROUND: "#1e1e2e"
+      ansible.builtin.template:
+        src: "coding.svg.j2"
+        dest: "{{ wallpapers_install_dir }}/coding.svg"
+        mode: "0644"
+      register: wallpapers_svg
 
     - name: "Create SVG links"
       ansible.builtin.file:
@@ -42,10 +37,16 @@
 
 - name: "Install PNG files"
   block:
-    - name: "Convert SVG to PNG files"
+    - name: "Check if the PNG file is generated"
+      ansible.builtin.stat:
+        path: "{{ wallpapers_install_dir }}/coding.png"
+      register: wallpapers_png
+
+    - name: "Convert SVG to PNG files"  # noqa: no-handler
       ansible.builtin.command:
         cmd: convert {{ wallpapers_install_dir }}/coding.svg {{ wallpapers_install_dir }}/coding.png
-        creates: "{{ wallpapers_install_dir }}/coding.png"
+      when: wallpapers_svg is changed or not wallpapers_png.stat.exists
+      changed_when: true
 
     - name: "Create PNG links"
       ansible.builtin.file:

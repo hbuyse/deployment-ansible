@@ -1,4 +1,3 @@
 ---
 wallpapers_dependencies:
-  - gettext-base
   - imagemagick
