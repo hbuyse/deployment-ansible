@@ -1,0 +1,23 @@
+---
+# Converge shared by the Molecule scenarios of the roles. A scenario selects what it needs with variables in the
+# `inventory.group_vars.all` section of its molecule.yml:
+#   molecule_group_vars: load group_vars/all.yml (alt_arch, deb_arch), shared by the playbooks of the repository
+#   molecule_service_facts: gather the service facts that pre_tasks/main.yml gathers
+#   molecule_environment: environment of the tasks (XDG_RUNTIME_DIR for the systemd user manager, DISPLAY...)
+- name: Converge
+  hosts: all
+  gather_facts: true
+  environment: "{{ molecule_environment | default({}) }}"
+  pre_tasks:
+    - name: Load the variables shared by the playbooks
+      ansible.builtin.include_vars:
+        file: "{{ lookup('ansible.builtin.env', 'MOLECULE_PROJECT_DIRECTORY') }}/../../group_vars/all.yml"
+      when: molecule_group_vars | default(false) | bool
+
+    - name: Get list of services
+      ansible.builtin.service_facts:
+      when: molecule_service_facts | default(false) | bool
+  tasks:
+    - name: Apply the role
+      ansible.builtin.include_role:
+        name: "{{ lookup('ansible.builtin.env', 'MOLECULE_PROJECT_DIRECTORY') }}"

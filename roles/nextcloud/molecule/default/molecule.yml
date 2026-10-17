@@ -25,10 +25,23 @@ platforms:
 provisioner:
   name: ansible
   playbooks:
-    prepare: prepare.yml
-    converge: converge.yml
+    prepare: ../../../../molecule/shared/prepare.yml
+    converge: ../../../../molecule/shared/converge.yml
+  inventory:
+    group_vars:
+      all:
+        molecule_debian_packages:
+          - python3-debian
+        molecule_user_dirs:
+          - .config/systemd/user
+        molecule_user_session: true
+        molecule_group_vars: true
+        molecule_environment:
+          XDG_RUNTIME_DIR: /run/user/0
+          DBUS_SESSION_BUS_ADDRESS: unix:path=/run/user/0/bus
 scenario:
-  # No idempotence step: the PPA task sometimes reports a change: the key served by keyserver.ubuntu.com is not always byte for byte the same
+  # No idempotence step: the PPA task sometimes reports a change: the key served by keyserver.ubuntu.com is not
+  # always byte for byte the same
   test_sequence:
     - destroy
     - syntax

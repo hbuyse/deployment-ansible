@@ -1,0 +1,22 @@
+---
+# swaync --version, run by the role, starts GTK and needs a display
+- name: Run a virtual X server
+  ansible.builtin.copy:
+    content: |
+      [Unit]
+      Description=Virtual X server
+
+      [Service]
+      ExecStart=/usr/bin/Xvfb :99
+
+      [Install]
+      WantedBy=multi-user.target
+    dest: /etc/systemd/system/xvfb.service
+    mode: "0644"
+
+- name: Start the virtual X server
+  ansible.builtin.systemd:
+    name: xvfb
+    enabled: true
+    state: started
+    daemon_reload: true

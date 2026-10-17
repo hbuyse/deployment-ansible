@@ -1,0 +1,3 @@
+# Python packages to run the Molecule scenarios of the roles (see "Testing" in README.md)
+molecule[docker]
+pytest-testinfra

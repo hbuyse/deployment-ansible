@@ -25,7 +25,18 @@ platforms:
 provisioner:
   name: ansible
   playbooks:
-    prepare: prepare.yml
-    converge: converge.yml
+    prepare: ../../../../molecule/shared/prepare.yml
+    converge: ../../../../molecule/shared/converge.yml
+  inventory:
+    group_vars:
+      all:
+        molecule_arch_packages:
+          - python-packaging
+        molecule_user_dirs:
+          - .config/systemd/user
+        molecule_user_session: true
+        molecule_environment:
+          XDG_RUNTIME_DIR: /run/user/0
+          DBUS_SESSION_BUS_ADDRESS: unix:path=/run/user/0/bus
 verifier:
   name: testinfra

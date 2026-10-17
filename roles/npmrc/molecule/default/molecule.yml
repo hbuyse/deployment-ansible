@@ -14,7 +14,7 @@ platforms:
 provisioner:
   name: ansible
   playbooks:
-    prepare: prepare.yml
-    converge: converge.yml
+    prepare: ../../../../molecule/shared/prepare.yml
+    converge: ../../../../molecule/shared/converge.yml
 verifier:
   name: testinfra

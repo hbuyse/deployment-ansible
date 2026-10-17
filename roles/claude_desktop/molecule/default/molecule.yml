@@ -5,21 +5,20 @@ driver:
   name: docker
 platforms:
   # Anthropic only publishes a Debian package
-  - name: claude-desktop-debian12
+  - name: claude_desktop-debian12
     image: geerlingguy/docker-debian12-ansible:latest
     pre_build_image: true
-  - name: claude-desktop-ubuntu2404
+  - name: claude_desktop-ubuntu2404
     image: geerlingguy/docker-ubuntu2404-ansible:latest
     pre_build_image: true
 provisioner:
   name: ansible
   playbooks:
-    prepare: prepare.yml
-    converge: converge.yml
+    prepare: ../../../../molecule/shared/prepare.yml
+    converge: ../../../../molecule/shared/converge.yml
   inventory:
     group_vars:
       all:
-        # QEMU and the UEFI firmware are only useful for the Cowork tab, keep the containers small
         claude_desktop_install_recommends: false
 verifier:
   name: testinfra

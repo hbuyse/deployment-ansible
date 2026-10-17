@@ -1,0 +1,7 @@
+---
+# The image has no manual directory, which the update-alternatives call of the Java packages needs
+- name: Create the manual directory
+  ansible.builtin.file:
+    path: /usr/share/man/man1
+    state: directory
+    mode: "0755"

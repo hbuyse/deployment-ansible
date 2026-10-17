@@ -1,6 +1,5 @@
 ---
-# The role has no galaxy_info in meta/main.yml, so Molecule cannot install it as a Galaxy role: use it from the
-# repository and look for its dependencies (direnv, fastfetch, tmux, fzf) in the sibling directories.
+# Molecule cannot install the role as a Galaxy role: its meta/main.yml has no galaxy_info
 prerun: false
 dependency:
   name: galaxy
@@ -21,23 +20,22 @@ provisioner:
   name: ansible
   env:
     ANSIBLE_ROLES_PATH: "${MOLECULE_PROJECT_DIRECTORY}/.."
-    # github_latest_release lookup plugin, used by the direnv and fastfetch dependencies
-    ANSIBLE_LOOKUP_PLUGINS: "${MOLECULE_PROJECT_DIRECTORY}/../../lookup_plugins"
-    # The fzf dependency needs community.general.golang_package, only available in the collections vendored here
     ANSIBLE_COLLECTIONS_PATH: "${MOLECULE_PROJECT_DIRECTORY}/../../collections:${HOME}/.ansible/collections"
+    # github_latest_release lookup plugin
+    ANSIBLE_LOOKUP_PLUGINS: "${MOLECULE_PROJECT_DIRECTORY}/../../lookup_plugins"
   playbooks:
-    prepare: prepare.yml
-    converge: converge.yml
-scenario:
-  # No idempotence step: the direnv dependency is not idempotent on Debian family ("Ensure Man pages directory exists"
-  # recursively sets 0755 on the man pages that the next task unpacks as 0644), which is unrelated to the zsh role.
-  test_sequence:
-    - destroy
-    - syntax
-    - create
-    - prepare
-    - converge
-    - verify
-    - destroy
+    prepare: ../../../../molecule/shared/prepare.yml
+    converge: ../../../../molecule/shared/converge.yml
+  inventory:
+    group_vars:
+      all:
+        molecule_packages:
+          - git
+          - tar
+          - gzip
+          - ca-certificates
+        molecule_user_dirs:
+          - .local/bin
+        molecule_group_vars: true
 verifier:
   name: testinfra

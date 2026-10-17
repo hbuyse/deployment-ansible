@@ -21,9 +21,13 @@ provisioner:
   env:
     ANSIBLE_COLLECTIONS_PATH: "${MOLECULE_PROJECT_DIRECTORY}/../../collections:${HOME}/.ansible/collections"
   playbooks:
-    prepare: prepare.yml
-    converge: converge.yml
+    prepare: ../../../../molecule/shared/prepare.yml
+    converge: ../../../../molecule/shared/converge.yml
   inventory:
+    group_vars:
+      all:
+        molecule_arch_packages:
+          - python-packaging
     host_vars:
       python-archlinux:
         python_aur: false

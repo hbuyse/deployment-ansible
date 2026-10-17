@@ -20,8 +20,12 @@ provisioner:
     # github_latest_release lookup plugin
     ANSIBLE_LOOKUP_PLUGINS: "${MOLECULE_PROJECT_DIRECTORY}/../../lookup_plugins"
   playbooks:
-    prepare: prepare.yml
-    converge: converge.yml
+    prepare: ../../../../molecule/shared/prepare.yml
+    converge: ../../../../molecule/shared/converge.yml
+  inventory:
+    group_vars:
+      all:
+        molecule_group_vars: true
 scenario:
   # No idempotence step: the role downloads and unpacks the theme again on every run
   test_sequence:

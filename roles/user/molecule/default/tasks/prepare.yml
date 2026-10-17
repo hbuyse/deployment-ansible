@@ -1,0 +1,7 @@
+---
+# Created by AccountsService, installed with every desktop environment
+- name: Create the AccountsService icons directory
+  ansible.builtin.file:
+    path: /var/lib/AccountsService/icons
+    state: directory
+    mode: "0775"

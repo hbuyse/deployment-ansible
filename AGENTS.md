@@ -65,8 +65,11 @@ repo, and seeds `host_vars/localhost.yml`.
   (see [.yamlfmt.yaml](.yamlfmt.yaml)) happy — both run in pre-commit and CI-equivalent checks.
 - Indentation: 2 spaces for YAML, 4 spaces otherwise, LF line endings, 120 max line length — see
   [.editorconfig](.editorconfig).
-- If a role needs a Molecule scenario, copy the layout from `roles/nvim/molecule/default/` or
-  `roles/opencode/molecule/default/` (`molecule.yml`, `prepare.yml`, `converge.yml`, `tests/test_default.py`).
+- If a role needs a Molecule scenario, copy the `molecule.yml` and `tests/test_default.py` of a similar role (for
+  instance `roles/jq/molecule/default/`). The scenarios use the playbooks of [molecule/shared/](molecule/shared/) and
+  select what to prepare with `molecule_*` variables (documented at the top of `prepare.yml` and `converge.yml`); extra
+  preparation goes in `tasks/prepare.yml` next to `molecule.yml`. Install the tools with
+  `pip install -r requirements-molecule.txt`.
 
 ## Validating changes
 

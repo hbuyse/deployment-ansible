@@ -5,21 +5,26 @@ driver:
   name: docker
 platforms:
   # Debian family: apt repository of Anthropic
-  - name: claude-code-debian12
+  # Arch: no package, native installer
+  - name: claude_code-debian12
     image: geerlingguy/docker-debian12-ansible:latest
     pre_build_image: true
-  - name: claude-code-ubuntu2404
+  - name: claude_code-ubuntu2404
     image: geerlingguy/docker-ubuntu2404-ansible:latest
     pre_build_image: true
-  # Anthropic has no package for Arch: native installer
-  - name: claude-code-archlinux
+  - name: claude_code-archlinux
     image: archlinux:base
     pre_build_image: false
     # Minimal Arch image has no systemd and no Python, see prepare.yml
 provisioner:
   name: ansible
   playbooks:
-    prepare: prepare.yml
-    converge: converge.yml
+    prepare: ../../../../molecule/shared/prepare.yml
+    converge: ../../../../molecule/shared/converge.yml
+  inventory:
+    group_vars:
+      all:
+        molecule_debian_packages:
+          - python3-debian
 verifier:
   name: testinfra
