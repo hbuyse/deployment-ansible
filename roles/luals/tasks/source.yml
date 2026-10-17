@@ -10,7 +10,7 @@
       ansible.builtin.file:
         path: "{{ luals_install_dir }}"
         state: directory
-        mode: "0777"
+        mode: "0755"
 
     - name: "Install executable"
       ansible.builtin.unarchive:
@@ -20,4 +20,4 @@
         remote_src: true
         owner: "{{ ansible_facts.user_uid }}"
         group: "{{ ansible_facts.user_gid }}"
-        mode: "u=rwX,g=rwX,o=rwX"
+        mode: "u=rwX,go=rX"
