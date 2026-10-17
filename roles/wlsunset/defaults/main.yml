@@ -6,3 +6,5 @@ wlsunset_config:
   temp_low: 4000
   temp_high: 6500
   duration: 900
+
+wlsunset_binary: "/usr/bin/wlsunset"

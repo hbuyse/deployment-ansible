@@ -6,7 +6,7 @@ After=sway-session.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/wlsunset -l {{ wlsunset_config.latitude }} -L {{ wlsunset_config.longitude }}
+ExecStart={{ wlsunset_binary }} -l {{ wlsunset_config.latitude }} -L {{ wlsunset_config.longitude }}
 {%- if wlsunset_config.temp_low %}
   -t {{ wlsunset_config.temp_low }}
 {%- endif %}
