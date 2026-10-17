@@ -39,8 +39,11 @@ repo, and seeds `host_vars/localhost.yml`.
   `┌─ <role>` header, it prints dedicated `pre-tasks`, `post-tasks` and `<role> › handlers` sections, handlers
   having their own colors. Test changes with a throwaway playbook using `debug` tasks, not the real playbooks.
 - `lookup_plugins/github_latest_release.py` — lookup returning the tag of the latest release of a GitHub repository
-  (`lookup('github_latest_release', 'owner/repo')`, uses `GITHUB_TOKEN` when set). Its unit tests are in `tests/`
-  (`python3 -m pytest tests`). Roles installing a tool from its GitHub releases use it instead of calling the API.
+  (`lookup('github_latest_release', 'owner/repo')`, uses `GITHUB_TOKEN` when set). Answers are cached for 15 minutes in
+  `~/.cache/deployment-ansible/github_latest_release.json` (`GITHUB_LATEST_RELEASE_CACHE_TTL` and
+  `GITHUB_LATEST_RELEASE_CACHE_DIR` change it), and a stale answer is used when GitHub is unreachable or rate limited.
+  Its unit tests are in `tests/` (`python3 -m pytest tests`). Roles installing a tool from its GitHub releases use it
+  instead of calling the API.
 - `scripts/` — helper scripts invoked by pre-commit hooks (see below).
 
 ## Making changes

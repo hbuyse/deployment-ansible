@@ -10,6 +10,9 @@ short_description: Tag name of the latest release of a GitHub repository
 description:
   - Ask the GitHub API for the latest release of each repository and return its tag name.
   - The lookup runs on the controller.
+  - The answers are kept in a cache file shared by all the runs, because unauthenticated requests are limited to 60 per
+    hour and each host of a play would otherwise ask again. A stale answer is still used, with a warning, when GitHub
+    cannot be reached or refuses the request (rate limit).
 options:
   _terms:
     description: Repositories, written as C(owner/name).
@@ -25,6 +28,20 @@ options:
     description: Timeout of the request, in seconds.
     type: int
     default: 30
+  cache_ttl:
+    description:
+      - Number of seconds during which an answer is reused without asking GitHub again, C(0) turns the cache off.
+    type: int
+    default: 900
+    env:
+      - name: GITHUB_LATEST_RELEASE_CACHE_TTL
+  cache_dir:
+    description:
+      - Directory of the cache file.
+      - Defaults to C(deployment-ansible) in C($XDG_CACHE_HOME), or in C(~/.cache).
+    type: str
+    env:
+      - name: GITHUB_LATEST_RELEASE_CACHE_DIR
 """
 
 EXAMPLES = r"""
@@ -45,13 +62,33 @@ _raw:
 """
 
 import json
+import os
+import tempfile
+import time
+from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 from ansible.errors import AnsibleLookupError
 from ansible.plugins.lookup import LookupBase
+from ansible.utils.display import Display
 
 API_URL = "https://api.github.com/repos/{repository}/releases/latest"
+CACHE_FILE = "github_latest_release.json"
+# Answers after which a stale cached tag is better than a failure
+RETRY_LATER = (403, 429, 500, 502, 503, 504)
+
+display = Display()
+
+
+def _now():
+    return time.time()
+
+
+def _valid(entry):
+    if not isinstance(entry, dict):
+        return False
+    return isinstance(entry.get("tag"), str) and isinstance(entry.get("fetched"), (int, float))
 
 
 class LookupModule(LookupBase):
@@ -62,21 +99,77 @@ class LookupModule(LookupBase):
         if token:
             headers["Authorization"] = f"Bearer {token}"
 
+        ttl = self.get_option("cache_ttl")
+        cache_path = self._cache_path() if ttl > 0 else None
+
         tags = []
         for repository in terms:
-            request = Request(API_URL.format(repository=repository), headers=headers)
-            try:
-                with urlopen(request, timeout=self.get_option("timeout")) as response:
-                    release = json.load(response)
-            except HTTPError as error:
-                raise AnsibleLookupError(
-                    f"GitHub answered {error.code} {error.reason} for the latest release of {repository}"
-                ) from error
-            except (URLError, TimeoutError, json.JSONDecodeError) as error:
-                raise AnsibleLookupError(f"Cannot get the latest release of {repository}: {error}") from error
+            cached = self._read_cache(cache_path).get(repository) if cache_path else None
+            if cached and _now() - cached["fetched"] < ttl:
+                tags.append(cached["tag"])
+                continue
 
             try:
-                tags.append(release["tag_name"])
-            except (KeyError, TypeError) as error:
-                raise AnsibleLookupError(f"The latest release of {repository} has no tag_name") from error
+                tag = self._fetch(repository, headers)
+            except AnsibleLookupError as error:
+                if cached and getattr(error, "retry_later", False):
+                    display.warning(f"{error}: using the cached release {cached['tag']} of {repository}")
+                    tags.append(cached["tag"])
+                    continue
+                raise
+            if cache_path:
+                self._store(cache_path, repository, tag)
+            tags.append(tag)
         return tags
+
+    def _fetch(self, repository, headers):
+        request = Request(API_URL.format(repository=repository), headers=headers)
+        try:
+            with urlopen(request, timeout=self.get_option("timeout")) as response:
+                release = json.load(response)
+        except HTTPError as error:
+            failure = AnsibleLookupError(
+                f"GitHub answered {error.code} {error.reason} for the latest release of {repository}"
+            )
+            failure.retry_later = error.code in RETRY_LATER
+            raise failure from error
+        except (URLError, TimeoutError) as error:
+            failure = AnsibleLookupError(f"Cannot get the latest release of {repository}: {error}")
+            failure.retry_later = True
+            raise failure from error
+        except json.JSONDecodeError as error:
+            raise AnsibleLookupError(f"Cannot get the latest release of {repository}: {error}") from error
+
+        try:
+            return release["tag_name"]
+        except (KeyError, TypeError) as error:
+            raise AnsibleLookupError(f"The latest release of {repository} has no tag_name") from error
+
+    def _cache_path(self):
+        directory = self.get_option("cache_dir")
+        if not directory:
+            base = os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache"
+            directory = Path(base) / "deployment-ansible"
+        return Path(directory).expanduser() / CACHE_FILE
+
+    @staticmethod
+    def _read_cache(path):
+        try:
+            content = json.loads(path.read_text())
+        except (OSError, ValueError):
+            return {}
+        if not isinstance(content, dict):
+            return {}
+        return {repository: entry for repository, entry in content.items() if _valid(entry)}
+
+    def _store(self, path, repository, tag):
+        """Add the answer to the cache file, which other runs may be updating: write it in one atomic step."""
+        content = self._read_cache(path)
+        content[repository] = {"tag": tag, "fetched": _now()}
+        try:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            with tempfile.NamedTemporaryFile("w", dir=path.parent, delete=False) as temporary:
+                json.dump(content, temporary)
+            os.replace(temporary.name, path)
+        except OSError as error:
+            display.vvv(f"Cannot write the cache of github_latest_release in {path}: {error}")
