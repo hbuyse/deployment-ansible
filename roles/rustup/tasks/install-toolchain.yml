@@ -3,7 +3,7 @@
   environment:
     RUSTUP_HOME: "{{ ansible_facts.user_dir }}/.rustup"
     CARGO_HOME: "{{ ansible_facts.user_dir }}/.cargo"
-    PATH: "{{ ansible_env.PATH }}:{{ ansible_facts.user_dir }}/.cargo/bin"
+    PATH: "{{ ansible_facts.env.PATH }}:{{ ansible_facts.user_dir }}/.cargo/bin"
   block:
     - name: "Get active toolchain version"
       ansible.builtin.shell:
