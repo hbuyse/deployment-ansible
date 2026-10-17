@@ -1,0 +1,31 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  # The Ubuntu host forces the installation from GitHub, the others use the package
+  - name: shfmt-debian12
+    image: geerlingguy/docker-debian12-ansible:latest
+    pre_build_image: true
+  - name: shfmt-ubuntu2404
+    image: geerlingguy/docker-ubuntu2404-ansible:latest
+    pre_build_image: true
+  - name: shfmt-archlinux
+    image: archlinux:base
+    pre_build_image: false
+    # Minimal Arch image has no systemd and no Python, see prepare.yml
+provisioner:
+  name: ansible
+  env:
+    # github_latest_release lookup plugin
+    ANSIBLE_LOOKUP_PLUGINS: "${MOLECULE_PROJECT_DIRECTORY}/../../lookup_plugins"
+  playbooks:
+    prepare: prepare.yml
+    converge: converge.yml
+  inventory:
+    host_vars:
+      shfmt-ubuntu2404:
+        shfmt_force_source_install: true
+verifier:
+  name: testinfra
