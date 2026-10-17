@@ -8,23 +8,23 @@
 
 - name: "Install from package manager"
   become: true
-  when: termshark_package is defined
+  when: termshark_packages is defined
   ansible.builtin.package:
-    name: "{{ termshark_package }}"
+    name: "{{ termshark_packages }}"
     state: present
   tags:
     - go
     - termshark
 
 - name: "Install from Golang"
-  when: termshark_package is not defined
+  when: termshark_packages is not defined
   tags:
     - go
     - termshark
   block:
     - name: "Get latest version number"
       ansible.builtin.set_fact:
-        termshark_latest_version: "{{ lookup('github_latest_release', termshark_github_user ~ '/' ~ termshark_github_repo)[6:]
+        termshark_latest_version: "{{ lookup('github_latest_release', termshark_github_user ~ '/' ~ termshark_github_repo)
           }}"
 
     - name: "Install from Golang"
