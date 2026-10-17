@@ -4,6 +4,12 @@ def test_gtk_directories(host):
         assert host.file(path).is_directory, path
 
 
+def test_vimix_cursors_are_installed(host):
+    """The Vimix cursors are installed (in /usr/share/icons when the role runs as root)."""
+    found = host.check_output("find /usr/share/icons /root/.local/share/icons -maxdepth 1 -iname 'Vimix*' 2>/dev/null || true")
+    assert found, "no Vimix cursor theme found"
+
+
 def test_dependencies(host):
     """The icon theme that the role depends on is installed."""
     assert host.package("papirus-icon-theme").is_installed

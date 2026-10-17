@@ -42,4 +42,4 @@
 - name: "Install Vimix Cursors"
   ansible.builtin.include_tasks:
     file: "vimix_cursors.yml"
-  when: themes_catppuccin_enable
+  when: themes_vimix_cursors_enable
