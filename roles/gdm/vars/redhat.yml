@@ -1,2 +1,4 @@
 ---
 gdm_packages:
+  - gdm
+  - xorg-x11-server-Xwayland
