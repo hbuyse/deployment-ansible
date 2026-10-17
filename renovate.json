@@ -1,0 +1,59 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "enabledManagers": ["pre-commit", "ansible-galaxy", "pip_requirements", "custom.regex"],
+  "timezone": "Europe/Paris",
+  "schedule": ["before 6am on monday"],
+  "labels": ["dependencies"],
+  "packageRules": [
+    {
+      "description": "One pull request for all the pre-commit hooks",
+      "matchManagers": ["pre-commit"],
+      "groupName": "pre-commit hooks"
+    },
+    {
+      "description": "One pull request for the Python packages used to run the tests",
+      "matchManagers": ["pip_requirements"],
+      "groupName": "test tools"
+    },
+    {
+      "description": "One pull request for the container images of the Molecule scenarios, pinned by digest",
+      "matchDatasources": ["docker"],
+      "matchFileNames": ["roles/*/molecule/**"],
+      "groupName": "Molecule images",
+      "pinDigests": true
+    },
+    {
+      "description": "Only the even major versions of Node.js are long term support releases",
+      "matchDepNames": ["node"],
+      "allowedVersions": "/^\\d*[02468]$/"
+    }
+  ],
+  "customManagers": [
+    {
+      "description": "Images of the Molecule scenarios",
+      "customType": "regex",
+      "fileMatch": ["^roles/[^/]+/molecule/[^/]+/molecule\\.yml$"],
+      "matchStrings": ["image: (?<depName>[^:\\s]+):(?<currentValue>[^\\s@]+)(@(?<currentDigest>sha256:[a-f0-9]+))?"],
+      "datasourceTemplate": "docker"
+    },
+    {
+      "description": "Plugins of tmux, pinned by tag in the tmux role",
+      "customType": "regex",
+      "fileMatch": ["^roles/tmux/tasks/main\\.yml$"],
+      "matchStrings": [
+        "repo: \"https://github\\.com/(?<depName>[^\"]+)\"\\s+plugin_dir: \"[^\"]+\"\\s+version: \"(?<currentValue>v[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-tags"
+    },
+    {
+      "description": "Major version of Node.js installed on Debian family",
+      "customType": "regex",
+      "fileMatch": ["^roles/nodejs/vars/debian\\.yml$"],
+      "matchStrings": ["nodejs_version: (?<currentValue>\\d+)"],
+      "depNameTemplate": "node",
+      "datasourceTemplate": "node-version",
+      "versioningTemplate": "node"
+    }
+  ]
+}

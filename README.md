@@ -120,6 +120,14 @@ The `github_latest_release` lookup plugin has unit tests:
 python3 -m pytest tests
 ```
 
+## Dependencies
+
+[Renovate](https://docs.renovatebot.com/) keeps the versions up to date ([renovate.json](renovate.json)): the pre-commit
+hooks, the Ansible collections of `requirements.yml`, the Python tools of `requirements-molecule.txt`, the images of
+the Molecule scenarios (pinned by digest), the plugins of tmux and the major version of Node.js. The Renovate GitHub
+application has to be installed on the repository. The collections of `collections/` are vendored: refresh them with
+`ansible-galaxy collection install -r requirements.yml -p collections --force` after merging an update.
+
 ## Troubleshooting
 
 ```sh
