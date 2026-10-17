@@ -15,6 +15,15 @@
     bitwarden_desktop_latest_version: "{{ (bitwarden_releases_json.json | selectattr('tag_name', 'search', '^desktop') | first).tag_name[9:]
       }}"
 
+- name: "Ensure the binary and applications directories exist"
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+  loop:
+    - "{{ ansible_facts.user_dir }}/.local/bin"
+    - "{{ ansible_facts.user_dir }}/.local/share/applications"
+
 - name: "Install man pages"
   ansible.builtin.get_url:
     url: "https://github.com/{{ bitwarden_owner }}/{{ bitwarden_repo }}/releases/download/{{ bitwarden_desktop_latest_tag
