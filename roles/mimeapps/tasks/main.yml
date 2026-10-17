@@ -5,6 +5,12 @@
     dest: "{{ ansible_facts.user_dir }}/.config"
     mode: "0644"
 
+- name: "Ensure the applications directory exists"
+  ansible.builtin.file:
+    path: "{{ ansible_facts.user_dir }}/.local/share/applications"
+    state: directory
+    mode: "0755"
+
 - name: "Link mimeapps.list in deprecated location"
   ansible.builtin.file:
     src: "{{ ansible_facts.user_dir }}/.config/mimeapps.list"
