@@ -4,7 +4,15 @@ dependency:
 driver:
   name: docker
 platforms:
-  # The repository URL contains ansible_facts.distribution_version: it exists for Ubuntu 24.04 but not for 12.x of Debian
+  # The repository of Debian is published under its major version, the one of Ubuntu under its full version
+  - name: owncloud_client-debian12
+    image: geerlingguy/docker-debian12-ansible:latest
+    pre_build_image: true
+    privileged: true
+    command: ""
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
   - name: owncloud_client-ubuntu2404
     image: geerlingguy/docker-ubuntu2404-ansible:latest
     pre_build_image: true

@@ -6,9 +6,11 @@ SYSTEMCTL = "XDG_RUNTIME_DIR=/run/user/0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run
 
 def test_repository(host):
     """The ownCloud apt repository of the client is configured for the distribution."""
+    release = host.check_output(". /etc/os-release && echo ${ID}_${VERSION_ID}")
+    expected = {"debian_12": "Debian_12", "ubuntu_24.04": "Ubuntu_24.04"}[release]
     source = host.file("/etc/apt/sources.list.d/owncloud-client.sources")
     assert source.is_file
-    assert "download.owncloud.com/desktop/ownCloud/stable/6.0/linux/Ubuntu_24.04/" in source.content_string
+    assert f"download.owncloud.com/desktop/ownCloud/stable/6.0/linux/{expected}/" in source.content_string
 
 
 def test_package(host):

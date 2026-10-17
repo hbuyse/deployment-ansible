@@ -1,0 +1,6 @@
+---
+owncloud_client_packages:
+  - owncloud-client
+
+owncloud_client_debian_version: "6.0"
+owncloud_client_release: "{{ ansible_facts.distribution_version }}"

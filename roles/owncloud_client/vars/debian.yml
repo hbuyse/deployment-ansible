@@ -3,3 +3,5 @@ owncloud_client_packages:
   - owncloud-client
 
 owncloud_client_debian_version: "6.0"
+# Debian publishes the repository under its major version (Debian_12), Ubuntu under its full version (Ubuntu_24.04)
+owncloud_client_release: "{{ ansible_facts.distribution_major_version }}"

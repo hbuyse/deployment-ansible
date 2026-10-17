@@ -1,2 +1,7 @@
 ---
 owncloud_client_service_dir: "{{ ansible_facts.user_dir }}/.config/systemd/user"
+
+# Repository of the client for the distribution
+owncloud_client_repository: >-
+  https://download.owncloud.com/desktop/ownCloud/stable/{{ owncloud_client_debian_version }}/linux/{{ ansible_facts.distribution
+  }}_{{ owncloud_client_release }}
