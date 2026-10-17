@@ -3,7 +3,6 @@
   become: true
   ansible.builtin.file:
     path: "{{ nerdfonts_font_dir_prefix }}/{{ item }}"
-    recurse: true
     mode: "0755"
     state: directory
 
@@ -12,7 +11,7 @@
   ansible.builtin.unarchive:
     src: "https://github.com/ryanoasis/nerd-fonts/releases/download/v{{ nerdfonts_latest_version }}/{{ item }}.tar.xz"
     dest: "{{ nerdfonts_font_dir_prefix }}/{{ item }}"
-    mode: "0644"
+    mode: "u=rwX,go=rX"
     remote_src: true
     owner: "{{ ansible_facts.user_uid }}"
     group: "{{ ansible_facts.user_gid }}"
