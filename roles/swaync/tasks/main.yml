@@ -64,9 +64,21 @@
         owner: "{{ ansible_facts.user_uid }}"
         group: "{{ ansible_facts.user_gid }}"
 
-    - name: "Generated CSS"
+    - name: "Copy style sheet sources"
+      ansible.builtin.copy:
+        src: "style/"
+        dest: "{{ swaync_config_dir }}/scss"
+        mode: "0644"
+        directory_mode: "0755"
+      register: swaync_scss
+
+    - name: "Check if the style sheet is generated"
+      ansible.builtin.stat:
+        path: "{{ swaync_config_dir }}/style.css"
+      register: swaync_css
+
+    - name: "Generate style sheet"  # noqa: no-handler
       ansible.builtin.command:
-        cmd: "sassc -t expanded {{ role_path }}/files/style/style.scss {{ swaync_config_dir }}/style.css"
-      register: swaync_sassc
-      changed_when: swaync_sassc.rc == 0
-      failed_when: swaync_sassc.rc != 0
+        cmd: "sassc -t expanded {{ swaync_config_dir }}/scss/style.scss {{ swaync_config_dir }}/style.css"
+      when: swaync_scss is changed or not swaync_css.stat.exists
+      changed_when: true
