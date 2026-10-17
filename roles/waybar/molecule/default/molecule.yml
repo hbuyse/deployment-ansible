@@ -1,4 +1,6 @@
 ---
+# Molecule cannot install the role as a Galaxy role: its meta/main.yml has no galaxy_info
+prerun: false
 dependency:
   name: galaxy
 driver:
@@ -24,6 +26,8 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
 provisioner:
   name: ansible
+  env:
+    ANSIBLE_ROLES_PATH: "${MOLECULE_PROJECT_DIRECTORY}/.."
   playbooks:
     prepare: ../../../../molecule/shared/prepare.yml
     converge: ../../../../molecule/shared/converge.yml
