@@ -1,0 +1,7 @@
+---
+# Needed by the ansible.builtin.deb822_repository module, which many roles use to add a repository
+- name: "Install python3-debian"
+  become: true
+  ansible.builtin.apt:
+    name: python3-debian
+    state: present
