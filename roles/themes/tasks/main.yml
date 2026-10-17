@@ -1,4 +1,8 @@
 ---
+- name: "Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  loop: "{{ query('ansible.builtin.first_found', ansible_facts.os_family | lower ~ '.yml', skip=true) }}"
+
 - name: "Ensure directory exist"
   ansible.builtin.file:
     path: "{{ item }}"
@@ -14,7 +18,16 @@
   ansible.builtin.package:
     state: present
     name: "{{ themes_packages }}"
-  when: themes_packages_dependencies is defined
+  when: themes_packages is defined
+
+- name: "Install dependencies from AUR"
+  kewlfft.aur.aur:
+    name: "{{ themes_aur_packages }}"
+    use: yay
+    state: present
+  when:
+    - themes_aur | bool
+    - themes_aur_packages is defined
 
 - name: "Install Matcha themes"
   ansible.builtin.include_tasks:

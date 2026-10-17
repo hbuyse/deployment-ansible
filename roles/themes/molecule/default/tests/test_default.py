@@ -4,6 +4,11 @@ def test_gtk_directories(host):
         assert host.file(path).is_directory, path
 
 
+def test_dependencies(host):
+    """The icon theme that the role depends on is installed."""
+    assert host.package("papirus-icon-theme").is_installed
+
+
 def test_matcha_theme_is_installed(host):
     """The Matcha theme of the latest release is installed in ~/.local/share/themes."""
     themes = host.file("/root/.local/share/themes").listdir()

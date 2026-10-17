@@ -1,8 +1,11 @@
 ---
-themes_gtk_dir: "{{ ansible_user_dir }}/.local/share/themes"
+# Install the packages that are only in the AUR (Arch Linux) with yay
+themes_aur: true
 
-themes_gtk3_config_dir: "{{ ansible_user_dir }}/.config/gtk-3.0"
-themes_gtk4_config_dir: "{{ ansible_user_dir }}/.config/gtk-4.0"
+themes_gtk_dir: "{{ ansible_facts.user_dir }}/.local/share/themes"
+
+themes_gtk3_config_dir: "{{ ansible_facts.user_dir }}/.config/gtk-3.0"
+themes_gtk4_config_dir: "{{ ansible_facts.user_dir }}/.config/gtk-4.0"
 
 themes_matcha_enable: true
 themes_matcha_github_user: "vinceliuice"

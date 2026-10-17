@@ -1,5 +1,8 @@
 ---
 themes_packages:
+  - "papirus-icon-theme"
+
+# Not in the official repositories
+themes_aur_packages:
   - "gtk-engine-murrine"
   - "gtk-engines"
-  - "papirus-icon-theme"
