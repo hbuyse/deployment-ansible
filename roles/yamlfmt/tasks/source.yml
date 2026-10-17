@@ -1,4 +1,10 @@
 ---
+- name: "Ensure the binary directory exists"
+  ansible.builtin.file:
+    path: "{{ ansible_facts.user_dir }}/.local/bin"
+    state: directory
+    mode: "0755"
+
 - name: "Get latest version number"
   ansible.builtin.set_fact:
     yamlfmt_latest_version: "{{ lookup('github_latest_release', yamlfmt_github_user ~ '/' ~ yamlfmt_github_repo)[1:] }}"
