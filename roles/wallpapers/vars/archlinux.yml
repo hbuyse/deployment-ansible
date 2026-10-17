@@ -2,3 +2,5 @@
 wallpapers_dependencies:
   - gettext
   - imagemagick
+  # ImageMagick renders SVG files through rsvg-convert
+  - librsvg
