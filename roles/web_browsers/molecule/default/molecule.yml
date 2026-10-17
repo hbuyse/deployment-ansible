@@ -1,0 +1,18 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  # The Debian family package list is for Ubuntu, where both browsers are snaps
+  - name: web_browsers-archlinux
+    image: archlinux:base
+    pre_build_image: false
+    # Minimal Arch image has no systemd and no Python, see prepare.yml
+provisioner:
+  name: ansible
+  playbooks:
+    prepare: prepare.yml
+    converge: converge.yml
+verifier:
+  name: testinfra
