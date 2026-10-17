@@ -36,6 +36,6 @@
 - name: "Copy direnv.toml template file"
   ansible.builtin.template:
     src: "direnv.toml.j2"
-    dest: "{{ direnv_config_dir }}"
+    dest: "{{ direnv_config_dir }}/direnv.toml"
     mode: "0644"
   tags: direnv
