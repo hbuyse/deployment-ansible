@@ -13,24 +13,33 @@
 - name: "Install self-managed Pipx"
   when: pipx_packages is not defined
   block:
-    - name: "Create temporary directory"
-      ansible.builtin.tempfile:
-        state: "directory"
-        suffix: "pipx"
-      register: pipx_tmpdir
+    - name: "Check if Pipx is installed in user space"
+      ansible.builtin.stat:
+        path: "{{ ansible_facts.user_dir }}/.local/bin/pipx"
+      register: pipx_stat
 
-    - name: "Install in temporary venv"  # noqa: package-latest
-      ansible.builtin.pip:
-        name: "pipx"
-        state: "latest"
-        virtualenv: "{{ pipx_tmpdir.path }}"
-      notify: "Remove pipx temporary venv"
+    - name: "Bootstrap Pipx"
+      when: not pipx_stat.stat.exists
+      block:
+        - name: "Create temporary directory"
+          ansible.builtin.tempfile:
+            state: "directory"
+            suffix: "pipx"
+          register: pipx_tmpdir
 
-    - name: "Install in user space"
-      community.general.pipx:
-        name: "pipx"
-        state: "latest"
-        executable: "{{ pipx_tmpdir.path }}/bin/pipx"
+        - name: "Install in temporary venv"  # noqa: package-latest
+          ansible.builtin.pip:
+            name: "pipx"
+            state: "latest"
+            virtualenv: "{{ pipx_tmpdir.path }}"
+            virtualenv_command: "python3 -m venv"
+          notify: "Remove pipx temporary venv"
+
+        - name: "Install in user space"
+          community.general.pipx:
+            name: "pipx"
+            state: "latest"
+            executable: "{{ pipx_tmpdir.path }}/bin/pipx"
 
     - name: "Upgrade"
       community.general.pipx:
