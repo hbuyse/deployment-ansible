@@ -1,6 +1,5 @@
 ---
 web_browsers_packages:
-  - chromium-browser
-  - chromium-browser-l10n
-  - firefox
-  - firefox-l10n-fr
+  - chromium
+  - firefox-esr
+  - firefox-esr-l10n-fr

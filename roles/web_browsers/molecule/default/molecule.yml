@@ -4,7 +4,10 @@ dependency:
 driver:
   name: docker
 platforms:
-  # The Debian family package list is for Ubuntu, where both browsers are snaps
+  # Ubuntu installs both browsers as snaps, which cannot run in a container
+  - name: web_browsers-debian12
+    image: geerlingguy/docker-debian12-ansible:latest
+    pre_build_image: true
   - name: web_browsers-archlinux
     image: archlinux:base
     pre_build_image: false
@@ -14,5 +17,9 @@ provisioner:
   playbooks:
     prepare: ../../../../molecule/shared/prepare.yml
     converge: ../../../../molecule/shared/converge.yml
+  inventory:
+    group_vars:
+      all:
+        molecule_group_vars: true
 verifier:
   name: testinfra
