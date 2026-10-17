@@ -12,6 +12,15 @@
 - name: "Install from source"
   when: yq_packages is not defined
   block:
+    - name: "Ensure the binary and manual directories exist"
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: "0755"
+      loop:
+        - "{{ yq_install_bin_dir }}"
+        - "{{ yq_install_man_dir }}"
+
     - name: "Get latest version number"
       ansible.builtin.set_fact:
         yq_latest_version: "{{ lookup('github_latest_release', yq_github_user ~ '/' ~ yq_github_repo) }}"
