@@ -16,7 +16,6 @@
   ansible.builtin.file:
     path: "{{ direnv_man_install_dir }}/man1"
     state: directory
-    recurse: true
     mode: "0755"
 
 - name: "Install man pages"
@@ -27,7 +26,7 @@
     keep_newer: true
     owner: "{{ ansible_facts.user_uid }}"
     group: "{{ ansible_facts.user_uid }}"
-    mode: "0644"
+    mode: "u=rwX,go=rX"
     include:
       - "direnv-{{ direnv_latest_version }}/man/direnv.1"
       - "direnv-{{ direnv_latest_version }}/man/direnv.toml.1"
