@@ -6,8 +6,9 @@ def _os_id(host):
 
 
 def test_ppa_on_ubuntu(host):
-    """Ubuntu uses the LibreOffice PPA."""
-    if _os_id(host) == "arch":
+    """Ubuntu uses the LibreOffice PPA, the other distributions their own package."""
+    if _os_id(host) != "ubuntu":
+        assert not host.file("/etc/apt/sources.list.d/libreoffice.sources").exists
         return
     source = host.file("/etc/apt/sources.list.d/libreoffice.sources")
     assert source.is_file

@@ -1,7 +1,7 @@
 ---
 - name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
-  loop: "{{ query('ansible.builtin.first_found', ansible_facts.os_family | lower ~ '.yml', skip=true) }}"
+  loop: "{{ query('ansible.builtin.first_found', os_vars_files, paths=[role_path ~ '/vars'], skip=true) }}"
   tags: libreoffice
 
 - name: "Include OS specific tasks"
@@ -9,10 +9,7 @@
     file: "{{ item }}"
     apply:
       tags: libreoffice
-  with_first_found:
-    - files:
-        - "{{ ansible_facts.os_family | lower }}.yml"
-      skip: true
+  loop: "{{ query('ansible.builtin.first_found', os_vars_files, paths=[role_path ~ '/tasks'], skip=true) }}"
   tags: libreoffice
 
 - name: "Install from package manager"
