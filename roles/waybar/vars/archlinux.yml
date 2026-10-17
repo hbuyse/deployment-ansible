@@ -1,5 +1,13 @@
 ---
 waybar_packages:
   - waybar
+  # Generates the style sheet
+  - sassc
   - wlsunset
   - noto-fonts-emoji
+  # Virtualenv of the Python scripts, and what PyGObject needs to build
+  - python-virtualenv
+  - gcc
+  - pkgconf
+  - cairo
+  - gobject-introspection
