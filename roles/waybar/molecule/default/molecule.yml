@@ -1,0 +1,45 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  # The Debian family package list needs libgirepository-2.0-dev, which only Debian 13 and later have
+  - name: waybar-debian13
+    image: geerlingguy/docker-debian13-ansible:latest
+    pre_build_image: true
+    privileged: true
+    command: ""
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+      # Some roles use role_path in a command that runs on the target: the target is the controller on a real run
+      - "${MOLECULE_PROJECT_DIRECTORY}:${MOLECULE_PROJECT_DIRECTORY}:ro"
+  - name: waybar-archlinux
+    image: archlinux:base
+    pre_build_image: false
+    # The image has systemd but no Python, see prepare.yml
+    privileged: true
+    command: /usr/lib/systemd/systemd
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+      # Some roles use role_path in a command that runs on the target: the target is the controller on a real run
+      - "${MOLECULE_PROJECT_DIRECTORY}:${MOLECULE_PROJECT_DIRECTORY}:ro"
+provisioner:
+  name: ansible
+  playbooks:
+    prepare: prepare.yml
+    converge: converge.yml
+scenario:
+  # No idempotence step: the role compiles the style sheet again on every run, and its virtualenv task reports a change
+  test_sequence:
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    - verify
+    - destroy
+verifier:
+  name: testinfra
