@@ -1,0 +1,20 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  # spotify-client needs libc6 2.39 or later (not in Debian 12), and Arch installs from the AUR, which needs yay
+  - name: spotify-debian13
+    image: geerlingguy/docker-debian13-ansible:latest
+    pre_build_image: true
+  - name: spotify-ubuntu2404
+    image: geerlingguy/docker-ubuntu2404-ansible:latest
+    pre_build_image: true
+provisioner:
+  name: ansible
+  playbooks:
+    prepare: prepare.yml
+    converge: converge.yml
+verifier:
+  name: testinfra
