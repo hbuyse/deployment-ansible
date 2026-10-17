@@ -1,4 +1,11 @@
 ---
+- name: "Ensure the AccountsService icons directory exists"
+  become: true
+  ansible.builtin.file:
+    path: "/var/lib/AccountsService/icons"
+    state: directory
+    mode: "0775"
+
 - name: "Copy the face image in /var/lib/AccountsService/icons"
   become: true
   ansible.builtin.copy:
