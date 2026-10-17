@@ -1,3 +1,6 @@
 ---
 zsh_omz_dir: "{{ ansible_facts.user_dir }}/.oh-my-zsh"
 zsh_omz_custom_dir: "{{ zsh_omz_dir }}/custom"
+
+# Login shell of the user (/usr/local/bin/zsh on FreeBSD)
+zsh_shell: "/usr/bin/zsh"
