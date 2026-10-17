@@ -17,6 +17,7 @@ platforms:
 provisioner:
   name: ansible
   env:
+    ANSIBLE_INJECT_FACTS_AS_VARS: "False"
     # github_latest_release lookup plugin
     ANSIBLE_LOOKUP_PLUGINS: "${MOLECULE_PROJECT_DIRECTORY}/../../lookup_plugins"
   playbooks:

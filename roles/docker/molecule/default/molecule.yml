@@ -27,6 +27,8 @@ platforms:
       - /var/lib/containerd
 provisioner:
   name: ansible
+  env:
+    ANSIBLE_INJECT_FACTS_AS_VARS: "False"
   playbooks:
     prepare: ../../../../molecule/shared/prepare.yml
     converge: ../../../../molecule/shared/converge.yml

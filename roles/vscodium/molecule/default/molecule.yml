@@ -14,6 +14,7 @@ platforms:
 provisioner:
   name: ansible
   env:
+    ANSIBLE_INJECT_FACTS_AS_VARS: "False"
     ANSIBLE_COLLECTIONS_PATH: "${MOLECULE_PROJECT_DIRECTORY}/../../collections:${HOME}/.ansible/collections"
   playbooks:
     prepare: ../../../../molecule/shared/prepare.yml

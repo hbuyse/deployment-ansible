@@ -28,7 +28,11 @@ repo, and seeds `host_vars/localhost.yml`.
   `ansible_facts.os_family` / `ansible_facts.distribution`.
 - `roles/<name>/molecule/default/` — Molecule test scenario, present only for roles that have one (currently
   `nvim`, `opencode`). Not every role is expected to have tests.
-- `group_vars/all.yml` — variables shared by every playbook and by the Molecule scenarios (`alt_arch`, `deb_arch`).
+- `group_vars/all.yml` — variables shared by every playbook and by the Molecule scenarios (`alt_arch`, `deb_arch`,
+  `os_vars_files`). Facts are not injected as variables (`inject_facts_as_vars = False` in
+  [ansible.cfg](ansible.cfg)): use `ansible_facts.os_family`, never `ansible_os_family`.
+- `molecule/shared/` — preparation and converge playbooks shared by the Molecule scenarios of the roles.
+- `renovate.json` — [Renovate](https://docs.renovatebot.com/) configuration (pinned versions).
 - `host_vars/localhost.yml` — machine-local secrets/config (e.g. `ssh_pubkey_email`), gitignored, must be
   created before running any playbook.
 - `collections/` — vendored Ansible collections declared in [requirements.yml](requirements.yml)
@@ -58,8 +62,8 @@ repo, and seeds `host_vars/localhost.yml`.
   must exist), copy that task from a role.
   When a role differs between distributions of the same family (Ubuntu and Debian), use `ubuntu.yml` next to
   `debian.yml` and loop over `query('ansible.builtin.first_found', os_vars_files, paths=[role_path ~ '/vars'])` (and
-  `/tasks` for the task files): `os_vars_files` (in [group_vars/all.yml](group_vars/all.yml)) lists the distribution file,
-  then the family one. Packages that exist only in the AUR go in `<role>_aur_packages`, installed by `kewlfft.aur.aur`
+  `/tasks` for the task files): `os_vars_files` (in [group_vars/all.yml](group_vars/all.yml)) lists the distribution
+  file, then the family one. Packages that exist only in the AUR go in `<role>_aur_packages`, installed by `kewlfft.aur.aur`
   and turned off by `<role>_aur: false`.
 - Tags: the tags shared by all the tasks of a role are declared once on its entry in the playbooks
   (`- role: "yq"` then `tags: yq`), not on each task, because role tags are also inherited by the tasks it includes.

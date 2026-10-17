@@ -13,6 +13,8 @@ platforms:
     pre_build_image: true
 provisioner:
   name: ansible
+  env:
+    ANSIBLE_INJECT_FACTS_AS_VARS: "False"
   playbooks:
     prepare: ../../../../molecule/shared/prepare.yml
     converge: converge.yml

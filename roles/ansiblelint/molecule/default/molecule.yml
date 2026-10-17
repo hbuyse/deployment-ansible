@@ -17,6 +17,8 @@ platforms:
     # Minimal Arch image has no systemd and no Python, see prepare.yml
 provisioner:
   name: ansible
+  env:
+    ANSIBLE_INJECT_FACTS_AS_VARS: "False"
   playbooks:
     prepare: ../../../../molecule/shared/prepare.yml
     converge: ../../../../molecule/shared/converge.yml
