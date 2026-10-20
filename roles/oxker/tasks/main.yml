@@ -1,0 +1,18 @@
+---
+- name: "Include OS specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  loop: "{{ query('ansible.builtin.first_found', ansible_facts.os_family | lower ~ '.yml', skip=true) }}"
+
+- name: "Install from package manager"
+  become: true
+  ansible.builtin.package:
+    name: "{{ oxker_packages }}"
+    state: present
+  when: oxker_packages is defined
+
+- name: "Install Rust package with locked dependencies"
+  community.general.cargo:
+    name: oxker
+    state: latest
+    locked: true
+  when: oxker_packages is not defined

@@ -50,6 +50,10 @@
     - role: "direnv"
     - role: "docker"
     - role: "podman"
+    - role: "oxker"
+      tags:
+        - docker
+        - oxker
     - role: "pre_commit"
       tags: pre-commit
     - role: "opencode"
