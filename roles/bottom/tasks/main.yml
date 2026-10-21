@@ -7,7 +7,9 @@
 - name: "Install Rust package with locked dependencies"
   community.general.cargo:
     name: bottom
-    state: latest
+    # renovate: datasource=crate depName=bottom
+    version: "0.14.9"
+    state: present
     locked: true
   when: bottom_packages is not defined
   tags: bottom

@@ -1,9 +1,21 @@
 ---
 prettier_force_source_install: false
 prettier_npm_packages:
-  - prettier
-  - prettier-plugin-go-template
-  - prettier-plugin-toml
-  - prettier-plugin-nginx
-  - prettier-plugin-jinja-template
-  - prettier-plugin-sql
+  - name: prettier
+    # renovate: datasource=npm depName=prettier
+    version: "3.9.10"
+  - name: prettier-plugin-go-template
+    # renovate: datasource=npm depName=prettier-plugin-go-template
+    version: "0.0.15"
+  - name: prettier-plugin-toml
+    # renovate: datasource=npm depName=prettier-plugin-toml
+    version: "4.1.0"
+  - name: prettier-plugin-nginx
+    # renovate: datasource=npm depName=prettier-plugin-nginx
+    version: "2.0.0"
+  - name: prettier-plugin-jinja-template
+    # renovate: datasource=npm depName=prettier-plugin-jinja-template
+    version: "2.2.0"
+  - name: prettier-plugin-sql
+    # renovate: datasource=npm depName=prettier-plugin-sql
+    version: "0.20.0"

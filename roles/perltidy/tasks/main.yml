@@ -20,6 +20,8 @@
   become: true
   community.general.cpanm:
     name: "Perl::Tidy"
+    # renovate: datasource=cpan depName=Perl::Tidy
+    version: "20260826"
     notest: true
   tags:
     - perltidy

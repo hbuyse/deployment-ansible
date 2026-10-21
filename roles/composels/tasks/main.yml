@@ -14,7 +14,9 @@
   when: composels_package is not defined
   community.general.npm:
     name: "{{ composels_npm_package }}"
+    # renovate: datasource=npm depName=@microsoft/compose-language-service
+    version: "1.0.0"
     global: true
-    state: latest
+    state: present
     production: true
     no_optional: true

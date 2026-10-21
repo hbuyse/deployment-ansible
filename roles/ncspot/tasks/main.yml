@@ -8,7 +8,9 @@
 - name: "Install Rust package with locked dependencies"
   community.general.cargo:
     name: ncspot
-    state: latest
+    # renovate: datasource=crate depName=ncspot
+    version: "1.5.0"
+    state: present
     locked: true
   tags: ncspot
   when: ncspot_packages is not defined

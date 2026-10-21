@@ -12,7 +12,8 @@
 
 - name: "Install using Pipx"
   community.general.pipx:
-    name: "pre-commit"
-    state: "latest"
+    # renovate: datasource=pypi depName=pre-commit
+    name: "pre-commit==4.7.0"
+    state: "present"
     executable: "{{ ansible_facts.user_dir }}/.local/bin/pipx"
   when: pre_commit_packages is not defined

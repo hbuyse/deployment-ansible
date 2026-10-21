@@ -33,6 +33,11 @@ repo, and seeds `host_vars/localhost.yml`.
   [ansible.cfg](ansible.cfg)): use `ansible_facts.os_family`, never `ansible_os_family`.
 - `molecule/shared/` — preparation and converge playbooks shared by the Molecule scenarios of the roles.
 - `renovate.json` — [Renovate](https://docs.renovatebot.com/) configuration (pinned versions).
+  Packages installed with `community.general.cargo`, `community.general.npm`, `community.general.pipx`,
+  `ansible.builtin.pip` or `community.general.cpanm` are pinned (`state: present` + version, never `state: latest`) and
+  followed by one custom regex manager, so Renovate opens one pull request per package. Put the comment
+  `# renovate: datasource=<crate|npm|pypi|cpan> depName=<package>` right above the version line: `version: "1.2.3"`,
+  `<role>_version: "1.2.3"`, or `name: "package==1.2.3"` for pip and pipx.
 - `host_vars/localhost.yml` — machine-local secrets/config (e.g. `ssh_pubkey_email`), gitignored, must be
   created before running any playbook.
 - `collections/` — vendored Ansible collections declared in [requirements.yml](requirements.yml)

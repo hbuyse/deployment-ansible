@@ -14,7 +14,9 @@
   when: ansiblels_package is not defined
   community.general.npm:
     name: "{{ ansiblels_npm_package }}"
+    # renovate: datasource=npm depName=@ansible/ansible-language-server
+    version: "26.6.0"
     global: true
-    state: latest
+    state: present
     production: true
     no_optional: true

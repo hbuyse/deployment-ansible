@@ -18,8 +18,9 @@
 
 - name: "Install from source"
   community.general.pipx:
-    name: "isort"
-    state: "latest"
+    # renovate: datasource=pypi depName=isort
+    name: "isort==9.0.2"
+    state: "present"
     executable: "{{ ansible_facts.user_dir }}/.local/bin/pipx"
   tags:
     - isort

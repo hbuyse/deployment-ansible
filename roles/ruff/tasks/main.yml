@@ -13,6 +13,7 @@
 - name: "Install from PIP"
   when: ruff_package is not defined
   community.general.pipx:
-    name: "ruff"
-    state: "latest"
+    # renovate: datasource=pypi depName=ruff
+    name: "ruff==0.17.1"
+    state: "present"
     executable: "{{ ansible_facts.user_dir }}/.local/bin/pipx"

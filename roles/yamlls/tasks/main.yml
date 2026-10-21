@@ -14,7 +14,9 @@
   when: yamlls_package is not defined
   community.general.npm:
     name: "{{ yamlls_npm_package }}"
+    # renovate: datasource=npm depName=yaml-language-server
+    version: "2.0.0"
     global: true
-    state: latest
+    state: present
     production: true
     no_optional: true

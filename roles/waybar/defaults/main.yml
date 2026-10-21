@@ -3,6 +3,9 @@ waybar_config_dir: "{{ ansible_facts.user_dir }}/.config/waybar"
 waybar_systemd_dir: "{{ ansible_facts.user_dir }}/.config/systemd/user"
 
 waybar_pip_packages:
-  - requests
-  - PyGObject
-  - tabulate
+  # renovate: datasource=pypi depName=requests
+  - "requests==2.34.2"
+  # renovate: datasource=pypi depName=PyGObject
+  - "PyGObject==3.58.1"
+  # renovate: datasource=pypi depName=tabulate
+  - "tabulate==0.10.0"

@@ -54,6 +54,15 @@
       "depNameTemplate": "node",
       "datasourceTemplate": "node-version",
       "versioningTemplate": "node"
+    },
+    {
+      "description": "Packages of cargo, npm, pipx, pip and cpanm pinned in the roles, with a `# renovate: datasource=... depName=...` comment above the version",
+      "customType": "regex",
+      "fileMatch": ["^roles/[^/]+/(tasks|defaults)/[^/]+\\.ya?ml$"],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>[a-z-]+) depName=(?<depName>\\S+)\\n\\s*(?:\\w+_)?version: \"(?<currentValue>[^\"\\s]+)\"",
+        "# renovate: datasource=(?<datasource>[a-z-]+) depName=(?<depName>\\S+)\\n\\s*(?:- |name: )\"[^\"=\\s]+==(?<currentValue>[^\"\\s]+)\""
+      ]
     }
   ]
 }

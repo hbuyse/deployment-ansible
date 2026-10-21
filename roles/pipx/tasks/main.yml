@@ -27,22 +27,22 @@
             suffix: "pipx"
           register: pipx_tmpdir
 
-        - name: "Install in temporary venv"  # noqa: package-latest
+        - name: "Install in temporary venv"
           ansible.builtin.pip:
-            name: "pipx"
-            state: "latest"
+            name: "pipx=={{ pipx_version }}"
+            state: "present"
             virtualenv: "{{ pipx_tmpdir.path }}"
             virtualenv_command: "python3 -m venv"
           notify: "Remove pipx temporary venv"
 
         - name: "Install in user space"
           community.general.pipx:
-            name: "pipx"
-            state: "latest"
+            name: "pipx=={{ pipx_version }}"
+            state: "present"
             executable: "{{ pipx_tmpdir.path }}/bin/pipx"
 
     - name: "Upgrade"
       community.general.pipx:
-        name: "pipx"
-        state: "latest"
+        name: "pipx=={{ pipx_version }}"
+        state: "present"
         executable: "{{ ansible_facts.user_dir }}/.local/bin/pipx"

@@ -14,8 +14,10 @@
   when: opencode_packages is not defined
   community.general.npm:
     name: "{{ opencode_npm_package }}"
+    # renovate: datasource=npm depName=@opencode/cli
+    version: "2.1.2"
     global: true
-    state: latest
+    state: present
     production: true
     no_optional: true
   notify:

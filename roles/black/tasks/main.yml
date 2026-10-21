@@ -18,8 +18,9 @@
 
 - name: "Install from source"
   community.general.pipx:
-    name: "black"
-    state: "latest"
+    # renovate: datasource=pypi depName=black
+    name: "black==26.10.1"
+    state: "present"
     executable: "{{ ansible_facts.user_dir }}/.local/bin/pipx"
   tags:
     - black

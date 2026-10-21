@@ -7,7 +7,9 @@
 - name: "Install Rust package with locked dependencies"
   community.general.cargo:
     name: eza
-    state: latest
+    # renovate: datasource=crate depName=eza
+    version: "0.23.5"
+    state: present
     locked: true
   notify: "Install eza completions and manpage"
   when: eza_packages is not defined

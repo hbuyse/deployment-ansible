@@ -18,9 +18,10 @@
 
 - name: "Install from Node Package Manager"
   community.general.npm:
-    name: "{{ item }}"
+    name: "{{ item.name }}"
+    version: "{{ item.version }}"
     global: true
-    state: latest
+    state: present
     production: true
     no_optional: true
   tags:

@@ -20,7 +20,9 @@
   when: git_delta_packages is not defined
   community.general.cargo:
     name: "{{ git_delta_cargo_package }}"
-    state: latest
+    # renovate: datasource=crate depName=git-delta
+    version: "0.20.1"
+    state: present
     locked: true
   tags:
     - git

@@ -18,8 +18,9 @@
 
 - name: "Install from source"
   community.general.pipx:
-    name: "codespell"
-    state: "latest"
+    # renovate: datasource=pypi depName=codespell
+    name: "codespell==2.4.3"
+    state: "present"
     executable: "{{ ansible_facts.user_dir }}/.local/bin/pipx"
   tags:
     - codespell

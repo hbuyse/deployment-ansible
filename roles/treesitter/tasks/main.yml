@@ -2,6 +2,8 @@
 - name: "Install Rust package with locked dependencies"
   community.general.cargo:
     name: "{{ treesitter_cargo_package }}"
-    state: latest
+    # renovate: datasource=crate depName=tree-sitter-cli
+    version: "0.27.1"
+    state: present
     locked: true
   when: treesitter_packages is not defined

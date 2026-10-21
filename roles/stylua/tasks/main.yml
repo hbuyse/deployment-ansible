@@ -19,7 +19,9 @@
 - name: "Install Rust package with locked dependencies"
   community.general.cargo:
     name: stylua
-    state: latest
+    # renovate: datasource=crate depName=stylua
+    version: "2.6.0"
+    state: present
     locked: true
   tags:
     - stylua

@@ -19,8 +19,9 @@
 - name: "Install from PIP"
   when: ansiblelint_packages is not defined
   community.general.pipx:
-    name: "ansible-lint"
-    state: "latest"
+    # renovate: datasource=pypi depName=ansible-lint
+    name: "ansible-lint==26.10.1"
+    state: "present"
     executable: "{{ ansible_facts.user_dir }}/.local/bin/pipx"
   tags:
     - ansiblelint

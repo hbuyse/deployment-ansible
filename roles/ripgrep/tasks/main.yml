@@ -8,7 +8,9 @@
 - name: "Install Rust package with locked dependencies"
   community.general.cargo:
     name: ripgrep
-    state: latest
+    # renovate: datasource=crate depName=ripgrep
+    version: "15.2.0"
+    state: present
     locked: true
   notify: "Install ripgrep completions"
   tags: ripgrep

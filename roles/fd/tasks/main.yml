@@ -13,6 +13,8 @@
 - name: "Install Rust package with locked dependencies"
   community.general.cargo:
     name: fd-find
-    state: latest
+    # renovate: datasource=crate depName=fd-find
+    version: "10.5.0"
+    state: present
     locked: true
   when: fd_packages is not defined

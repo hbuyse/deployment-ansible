@@ -7,7 +7,9 @@
 - name: "Install Rust package with locked dependencies"
   community.general.cargo:
     name: zellij
-    state: latest
+    # renovate: datasource=crate depName=zellij
+    version: "0.45.1"
+    state: present
     locked: true
   when: zellij_packages is not defined
   tags: zellij
