@@ -22,14 +22,10 @@
     - lazygit
     - git
   block:
-    - name: "Get latest version number"
-      ansible.builtin.set_fact:
-        lazygit_latest_version: "{{ lookup('github_latest_release', lazygit_github_user ~ '/' ~ lazygit_github_repo) }}"
-
     - name: "Install from Golang"
       community.general.golang_package:
-        name: "github.com/{{ lazygit_github_user }}/{{ lazygit_github_repo }}"
-        version: "{{ lazygit_latest_version }}"
+        name: "{{ lazygit_golang_name }}"
+        version: "{{ lazygit_version }}"
       environment:
         GOBIN: "{{ lazygit_install_dir }}"
 

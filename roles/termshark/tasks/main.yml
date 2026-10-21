@@ -22,14 +22,9 @@
     - go
     - termshark
   block:
-    - name: "Get latest version number"
-      ansible.builtin.set_fact:
-        termshark_latest_version: "{{ lookup('github_latest_release', termshark_github_user ~ '/' ~ termshark_github_repo)
-          }}"
-
     - name: "Install from Golang"
       community.general.golang_package:
         name: "{{ termshark_golang_name }}"
-        version: "{{ termshark_latest_version }}"
+        version: "{{ termshark_version }}"
       environment:
         GOBIN: "{{ termshark_install_dir }}"

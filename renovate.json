@@ -56,7 +56,7 @@
       "versioningTemplate": "node"
     },
     {
-      "description": "Packages of cargo, npm, pipx, pip and cpanm pinned in the roles, with a `# renovate: datasource=... depName=...` comment above the version",
+      "description": "Packages of cargo, npm, pipx, pip, cpanm and go pinned in the roles, with a `# renovate: datasource=... depName=...` comment above the version",
       "customType": "regex",
       "fileMatch": ["^roles/[^/]+/(tasks|defaults)/[^/]+\\.ya?ml$"],
       "matchStrings": [

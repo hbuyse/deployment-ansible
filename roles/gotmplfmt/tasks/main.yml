@@ -1,11 +1,7 @@
 ---
-- name: "Get latest version number"
-  ansible.builtin.set_fact:
-    gotmplfmt_latest_version: "{{ lookup('github_latest_release', gotmplfmt_github_user ~ '/' ~ gotmplfmt_github_repo) }}"
-
 - name: "Install from Golang"
   community.general.golang_package:
-    name: "github.com/{{ gotmplfmt_github_user }}/{{ gotmplfmt_github_repo }}"
-    version: "{{ gotmplfmt_latest_version }}"
+    name: "{{ gotmplfmt_golang_name }}"
+    version: "{{ gotmplfmt_version }}"
   environment:
     GOBIN: "{{ gotmplfmt_install_dir }}"

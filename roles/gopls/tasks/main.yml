@@ -22,13 +22,9 @@
     - go
     - gopls
   block:
-    - name: "Get latest version number"
-      ansible.builtin.set_fact:
-        gopls_latest_version: "{{ lookup('github_latest_release', gopls_github_user ~ '/' ~ gopls_github_repo)[6:] }}"
-
     - name: "Install from Golang"
       community.general.golang_package:
         name: "{{ gopls_golang_name }}"
-        version: "{{ gopls_latest_version }}"
+        version: "{{ gopls_version }}"
       environment:
         GOBIN: "{{ gopls_install_dir }}"

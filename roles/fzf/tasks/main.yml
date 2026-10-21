@@ -15,13 +15,9 @@
   when: fzf_packages is not defined
   tags: fzf
   block:
-    - name: "Get latest version number"
-      ansible.builtin.set_fact:
-        fzf_latest_version: "{{ lookup('github_latest_release', fzf_github_user ~ '/' ~ fzf_github_repo) }}"
-
     - name: "Install from Golang"
       community.general.golang_package:
-        name: "github.com/{{ fzf_github_user }}/{{ fzf_github_repo }}"
-        version: "{{ fzf_latest_version }}"
+        name: "{{ fzf_golang_name }}"
+        version: "{{ fzf_version }}"
       environment:
         GOBIN: "{{ fzf_install_dir }}"

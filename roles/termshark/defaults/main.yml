@@ -1,5 +1,5 @@
 ---
-termshark_github_user: "gcla"
-termshark_github_repo: "termshark"
+# renovate: datasource=go depName=github.com/gcla/termshark/v2
+termshark_version: "v2.4.0"
 termshark_golang_name: "github.com/gcla/termshark/v2/cmd/termshark"
 termshark_install_dir: "{{ ansible_facts.user_dir }}/.local/bin"
