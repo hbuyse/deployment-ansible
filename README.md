@@ -103,16 +103,21 @@ Some roles have tests. Here is the list:
 - zoom
 - zsh
 
-To run the tests, install the tools (`pip install -r requirements-molecule.txt`), change your directory to the role you
-want to test and run the following:
+To run the tests, install the tools (`pip install -r requirements-molecule.txt`) and make sure Ansible comes from the
+[PPA](https://launchpad.net/~ansible/+archive/ubuntu/ansible) (`add-apt-repository ppa:ansible/ansible`): the control
+node's Ansible runs the scenario playbooks and the roles need the `first_found` lookup behavior of ansible-core >=
+2.17, absent from the distributions' older packages. Then change your directory to the role you want to test and run
+the following:
 
 ```sh
 molecule test
 ```
 
-The scenarios share their preparation and converge playbooks, in [molecule/shared/](molecule/shared/): a scenario is a
-`molecule.yml` (platforms, and the `molecule_*` variables that tell the shared playbooks what to prepare) and a
-`tests/test_default.py`. Copy the `molecule.yml` of a similar role to add one.
+The scenarios share their preparation, converge, create and destroy playbooks, in [molecule/shared/](molecule/shared/):
+the `create`/`destroy` ones are vendored from molecule-docker 2.1.0 (the last released version, incompatible with the
+recent ansible-core) and corrected for it. A scenario is a `molecule.yml` (platforms, and the `molecule_*` variables
+that tell the shared playbooks what to prepare) and a `tests/test_default.py`. Copy the `molecule.yml` of a similar role
+to add one.
 
 The `github_latest_release` lookup plugin has unit tests:
 

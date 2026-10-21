@@ -9,9 +9,13 @@ platforms:
 
 provisioner:
   name: ansible
+  env:
+    ANSIBLE_FILTER_PLUGINS: "${MOLECULE_PROJECT_DIRECTORY}/../../filter_plugins"
   playbooks:
+    create: ../../../../molecule/shared/create.yml
     prepare: prepare.yml
     converge: converge.yml
+    destroy: ../../../../molecule/shared/destroy.yml
   inventory:
     host_vars:
       opencode-debian:

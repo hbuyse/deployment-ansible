@@ -20,9 +20,12 @@ provisioner:
     ANSIBLE_INJECT_FACTS_AS_VARS: "False"
     # github_latest_release lookup plugin
     ANSIBLE_LOOKUP_PLUGINS: "${MOLECULE_PROJECT_DIRECTORY}/../../lookup_plugins"
+    ANSIBLE_FILTER_PLUGINS: "${MOLECULE_PROJECT_DIRECTORY}/../../filter_plugins"
   playbooks:
+    create: ../../../../molecule/shared/create.yml
     prepare: ../../../../molecule/shared/prepare.yml
     converge: ../../../../molecule/shared/converge.yml
+    destroy: ../../../../molecule/shared/destroy.yml
   inventory:
     group_vars:
       all:

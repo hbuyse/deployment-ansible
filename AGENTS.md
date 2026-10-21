@@ -79,8 +79,12 @@ repo, and seeds `host_vars/localhost.yml`.
 - If a role needs a Molecule scenario, copy the `molecule.yml` and `tests/test_default.py` of a similar role (for
   instance `roles/jq/molecule/default/`). The scenarios use the playbooks of [molecule/shared/](molecule/shared/) and
   select what to prepare with `molecule_*` variables (documented at the top of `prepare.yml` and `converge.yml`); extra
-  preparation goes in `tasks/prepare.yml` next to `molecule.yml`. Install the tools with
-  `pip install -r requirements-molecule.txt`.
+  preparation goes in `tasks/prepare.yml` next to `molecule.yml`. The `create`/`destroy` playbooks there are vendored
+  from molecule-docker 2.1.0 (the last released version, incompatible with the recent ansible-core) and corrected for
+  it; a scenario's `provisioner` section wires them and exposes `filter_plugins/` with
+  `ANSIBLE_FILTER_PLUGINS` — keep those lines when copying a scenario. Install the tools with
+  `pip install -r requirements-molecule.txt`, and make sure the control node's Ansible comes from the
+  [PPA](https://launchpad.net/~ansible/+archive/ubuntu/ansible) (ansible-core >= 2.17, see the README).
 
 ## Validating changes
 

@@ -28,9 +28,12 @@ provisioner:
   env:
     # github_latest_release lookup plugin, used to get the latest neovim release
     ANSIBLE_LOOKUP_PLUGINS: "${MOLECULE_PROJECT_DIRECTORY}/../../lookup_plugins"
+    ANSIBLE_FILTER_PLUGINS: "${MOLECULE_PROJECT_DIRECTORY}/../../filter_plugins"
   playbooks:
+    create: ../../../../molecule/shared/create.yml
     converge: converge.yml
     prepare: prepare.yml
+    destroy: ../../../../molecule/shared/destroy.yml
   inventory:
     host_vars:
       localhost: {}

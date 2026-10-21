@@ -29,9 +29,12 @@ provisioner:
   name: ansible
   env:
     ANSIBLE_INJECT_FACTS_AS_VARS: "False"
+    ANSIBLE_FILTER_PLUGINS: "${MOLECULE_PROJECT_DIRECTORY}/../../filter_plugins"
   playbooks:
+    create: ../../../../molecule/shared/create.yml
     prepare: ../../../../molecule/shared/prepare.yml
     converge: ../../../../molecule/shared/converge.yml
+    destroy: ../../../../molecule/shared/destroy.yml
   inventory:
     group_vars:
       all:
