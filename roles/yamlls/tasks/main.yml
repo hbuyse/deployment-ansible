@@ -14,7 +14,8 @@
   when: yamlls_package is not defined
   community.general.npm:
     name: "{{ yamlls_npm_package }}"
+    version: "{{ yamlls_npm_package_version }}"
     global: true
-    state: latest
+    state: present
     production: true
     no_optional: true

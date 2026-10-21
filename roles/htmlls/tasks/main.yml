@@ -14,7 +14,8 @@
   when: htmlls_package is not defined
   community.general.npm:
     name: "{{ htmlls_npm_package }}"
+    version: "{{ htmlls_npm_package_version }}"
     global: true
-    state: latest
+    state: present
     production: true
     no_optional: true

@@ -13,6 +13,7 @@
 - name: "Install Rust package with locked dependencies"
   community.general.cargo:
     name: oxker
-    state: latest
+    version: "0.13.4"
+    state: present
     locked: true
   when: oxker_packages is not defined

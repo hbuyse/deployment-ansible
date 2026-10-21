@@ -14,7 +14,8 @@
   when: markdownls_package is not defined
   community.general.npm:
     name: "{{ markdownls_npm_package }}"
+    version: "{{ markdownls_npm_package_version }}"
     global: true
-    state: latest
+    state: present
     production: true
     no_optional: true

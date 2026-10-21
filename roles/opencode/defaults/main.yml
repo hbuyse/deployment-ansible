@@ -6,6 +6,7 @@ opencode_mcps: {}
 opencode_code_review_model: null
 
 opencode_npm_package: "@opencode/cli"
+opencode_npm_package_version: "2.1.2"
 
 # Completion file paths
 opencode_zsh_completion_file: "{{ ansible_facts.user_dir }}/.local/share/zsh/site-functions/_opencode"

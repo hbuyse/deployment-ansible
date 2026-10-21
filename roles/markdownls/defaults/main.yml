@@ -1,2 +1,3 @@
 ---
 markdownls_npm_package: "vscode-markdown-languageserver"
+markdownls_npm_package_version: "0.5.0"

@@ -15,7 +15,8 @@
 - name: "Install Rust package with locked dependencies"
   community.general.cargo:
     name: yazi-build
-    state: latest
+    version: "26.9.1"
+    state: present
     locked: true
   when: yazi_packages is not defined
 

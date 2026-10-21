@@ -1,2 +1,3 @@
 ---
 htmlls_npm_package: "vscode-langservers-extracted"
+htmlls_npm_package_version: "4.10.0"

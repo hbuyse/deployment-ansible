@@ -14,7 +14,8 @@
   when: tailwindcss_lsp_package is not defined
   community.general.npm:
     name: "{{ tailwindcss_lsp_npm_package }}"
+    version: "{{ tailwindcss_lsp_npm_package_version }}"
     global: true
-    state: latest
+    state: present
     production: true
     no_optional: true

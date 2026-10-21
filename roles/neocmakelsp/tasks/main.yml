@@ -2,5 +2,6 @@
 - name: "Install Rust package with locked dependencies"
   community.general.cargo:
     name: "{{ neocmakelsp_cargo_package }}"
-    state: latest
+    version: "{{ neocmakelsp_cargo_package_version }}"
+    state: present
     locked: true

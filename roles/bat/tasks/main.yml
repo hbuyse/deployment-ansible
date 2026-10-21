@@ -7,7 +7,8 @@
 - name: "Install Rust package with locked dependencies"
   community.general.cargo:
     name: bat
-    state: latest
+    version: "0.26.1"
+    state: present
     locked: true
   notify:
     - "Install bat assets"

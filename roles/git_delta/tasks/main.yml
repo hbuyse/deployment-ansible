@@ -20,7 +20,8 @@
   when: git_delta_packages is not defined
   community.general.cargo:
     name: "{{ git_delta_cargo_package }}"
-    state: latest
+    version: "{{ git_delta_cargo_package_version }}"
+    state: present
     locked: true
   tags:
     - git

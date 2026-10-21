@@ -1,2 +1,3 @@
 ---
 ansiblels_npm_package: "@ansible/ansible-language-server"
+ansiblels_npm_package_version: "26.6.0"

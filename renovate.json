@@ -54,6 +54,33 @@
       "depNameTemplate": "node",
       "datasourceTemplate": "node-version",
       "versioningTemplate": "node"
+    },
+    {
+      "description": "Versions of the Rust tools installed from crates.io, pinned in the task files",
+      "customType": "regex",
+      "fileMatch": ["^roles/[^/]+/tasks/[^/]+\\.yml$"],
+      "matchStrings": [
+        "\\n\\s*community\\.general\\.cargo:\\s+name: (?<depName>[\\w-]+)\\s+version: \"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "crates.io"
+    },
+    {
+      "description": "Versions of the Rust tools installed from crates.io, pinned in the role defaults",
+      "customType": "regex",
+      "fileMatch": ["^roles/[^/]+/defaults/main\\.yml$"],
+      "matchStrings": [
+        "_cargo_package: \"(?<depName>[^\"]+)\"\\s*\\n\\s*\\w+_cargo_package_version: \"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "crates.io"
+    },
+    {
+      "description": "Versions of the Node tools installed from npm, pinned in the role defaults",
+      "customType": "regex",
+      "fileMatch": ["^roles/[^/]+/defaults/main\\.yml$"],
+      "matchStrings": [
+        "_npm_package: \"(?<depName>[^\"]+)\"\\s*\\n\\s*\\w+_npm_package_version: \"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "npm"
     }
   ]
 }

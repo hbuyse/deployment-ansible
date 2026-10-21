@@ -1,2 +1,3 @@
 ---
 neocmakelsp_cargo_package: "neocmakelsp"
+neocmakelsp_cargo_package_version: "0.11.2"

@@ -2,6 +2,7 @@
 - name: "Install Rust package with locked dependencies"
   community.general.cargo:
     name: "{{ treesitter_cargo_package }}"
-    state: latest
+    version: "{{ treesitter_cargo_package_version }}"
+    state: present
     locked: true
   when: treesitter_packages is not defined

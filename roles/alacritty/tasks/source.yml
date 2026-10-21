@@ -15,6 +15,7 @@
 - name: "Install Rust package with locked dependencies"
   community.general.cargo:
     name: alacritty
-    state: latest
+    version: "0.17.0"
+    state: present
     locked: true
   notify: "Install alacritty extras"

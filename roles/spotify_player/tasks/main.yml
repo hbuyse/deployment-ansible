@@ -27,8 +27,9 @@
 
     - name: "Install Rust package with locked dependencies"
       community.general.cargo:
-        name: "spotify_player"
-        state: "latest"
+        name: spotify_player
+        version: "0.25.1"
+        state: present
         locked: true
         features: "{{ spotify_player_features }}"
       notify:
