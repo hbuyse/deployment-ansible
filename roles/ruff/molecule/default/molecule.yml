@@ -22,5 +22,9 @@ provisioner:
   playbooks:
     prepare: ../../../../molecule/shared/prepare.yml
     converge: ../../../../molecule/shared/converge.yml
+  inventory:
+    group_vars:
+      all:
+        molecule_pipx: true
 verifier:
   name: testinfra

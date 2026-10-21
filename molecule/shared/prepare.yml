@@ -4,6 +4,8 @@
 #   molecule_packages / molecule_debian_packages / molecule_arch_packages: packages that a regular install has
 #   molecule_user_dirs: directories of the home directory that the role expects to exist
 #   molecule_user_session: start a systemd user manager for root, like the session of a desktop user
+#   molecule_pipx: install pipx like a regular desktop would (the package on Arch, the pipx role on the Debian family
+#     where the distribution one is too old for the pipx module), in ~/.local/bin where the roles look for it
 # Anything more specific goes in a tasks/prepare.yml file next to molecule.yml.
 - name: Pre-install Python on Arch Linux
   hosts: all
@@ -48,6 +50,34 @@
       when:
         - ansible_facts.os_family == "Archlinux"
         - molecule_arch_packages | default([]) | length > 0
+
+    - name: Install pipx
+      when: molecule_pipx | default(false) | bool
+      block:
+        - name: Install what the pipx role needs on the Debian family
+          ansible.builtin.apt:
+            name:
+              - python3-venv
+              - python3-pip
+            state: present
+          when: ansible_facts.os_family == "Debian"
+
+        - name: Apply the pipx role
+          ansible.builtin.include_role:
+            name: "{{ [playbook_dir, '..', '..', 'roles', 'pipx'] | path_join }}"
+
+        - name: Create the directory of the user binaries
+          ansible.builtin.file:
+            path: "{{ ansible_facts.user_dir }}/.local/bin"
+            state: directory
+            mode: "0755"
+
+        - name: Link the pipx package in ~/.local/bin
+          ansible.builtin.file:
+            src: /usr/bin/pipx
+            dest: "{{ ansible_facts.user_dir }}/.local/bin/pipx"
+            state: link
+          when: ansible_facts.os_family == "Archlinux"
 
     - name: Create the directories that pre_tasks/main.yml creates
       ansible.builtin.file:
