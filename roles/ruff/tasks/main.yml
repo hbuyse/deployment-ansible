@@ -14,6 +14,6 @@
   when: ruff_package is not defined
   community.general.pipx:
     # renovate: datasource=pypi depName=ruff
-    name: "ruff==0.17.1"
+    name: "ruff==0.17.2"
     state: "present"
     executable: "{{ ansible_facts.user_dir }}/.local/bin/pipx"
