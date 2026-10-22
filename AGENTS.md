@@ -54,7 +54,12 @@ repo, and seeds `host_vars/localhost.yml`.
   `GITHUB_LATEST_RELEASE_CACHE_DIR` change it), and a stale answer is used when GitHub is unreachable or rate limited.
   Its unit tests are in `tests/` (`python3 -m pytest tests`). Roles installing a tool from its GitHub releases use it
   instead of calling the API.
-- `scripts/` — helper scripts invoked by pre-commit hooks (see below).
+- `scripts/` — helper scripts invoked by pre-commit hooks (see below) and by CI.
+- `.github/workflows/molecule.yml` — runs `molecule test` for the roles that changed (and the roles that depend on them,
+  through `meta/main.yml`) on pull requests and on `main`, one job per role.
+  [scripts/molecule-roles.sh](scripts/molecule-roles.sh) lists them from the changed files
+  (`git diff --name-only <base> <head> | scripts/molecule-roles.sh`); a change to a file shared by the scenarios
+  (`molecule/shared/`, `group_vars/`, `requirements*`...) tests all of them.
 
 ## Making changes
 
