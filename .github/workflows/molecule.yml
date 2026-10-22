@@ -43,7 +43,7 @@ permissions:
 jobs:
   changes:
     name: Changed roles
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     outputs:
       roles: ${{ steps.roles.outputs.roles }}
     steps:
@@ -78,7 +78,7 @@ jobs:
     name: ${{ matrix.role }}
     needs: changes
     if: needs.changes.outputs.roles != '[]'
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 45
     strategy:
       fail-fast: false
