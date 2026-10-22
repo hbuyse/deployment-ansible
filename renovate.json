@@ -35,6 +35,11 @@
       "maxMajorIncrement": 0
     },
     {
+      "description": "Merge the pull requests by themselves, except the major updates which may break a role",
+      "matchUpdateTypes": ["minor", "patch", "pin", "pinDigest", "digest"],
+      "automerge": true
+    },
+    {
       "description": "Only the even major versions of Node.js are long term support releases",
       "matchDepNames": ["node"],
       "allowedVersions": "/^\\d*[02468]$/"
