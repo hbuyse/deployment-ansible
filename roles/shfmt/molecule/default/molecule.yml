@@ -1,10 +1,12 @@
 ---
+# Molecule cannot install the role as a Galaxy role: its meta/main.yml has no galaxy_info
+prerun: false
 dependency:
   name: galaxy
 driver:
   name: docker
 platforms:
-  # The Ubuntu host forces the installation from GitHub, the others use the package
+  # The Ubuntu host forces the installation with Go, the others use the package
   - name: shfmt-fedora
     image: fedora:latest
     pre_build_image: false
@@ -19,15 +21,11 @@ provisioner:
   name: ansible
   env:
     ANSIBLE_INJECT_FACTS_AS_VARS: "False"
-    # github_latest_release lookup plugin
-    ANSIBLE_LOOKUP_PLUGINS: "${MOLECULE_PROJECT_DIRECTORY}/../../lookup_plugins"
+    ANSIBLE_ROLES_PATH: "${MOLECULE_PROJECT_DIRECTORY}/.."
   playbooks:
     prepare: ../../../../molecule/shared/prepare.yml
     converge: ../../../../molecule/shared/converge.yml
   inventory:
-    group_vars:
-      all:
-        molecule_group_vars: true
     host_vars:
       shfmt-ubuntu2404:
         shfmt_force_source_install: true

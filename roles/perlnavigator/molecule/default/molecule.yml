@@ -19,8 +19,6 @@ provisioner:
   name: ansible
   env:
     ANSIBLE_INJECT_FACTS_AS_VARS: "False"
-    # github_latest_release lookup plugin
-    ANSIBLE_LOOKUP_PLUGINS: "${MOLECULE_PROJECT_DIRECTORY}/../../lookup_plugins"
   playbooks:
     prepare: ../../../../molecule/shared/prepare.yml
     converge: ../../../../molecule/shared/converge.yml
@@ -28,7 +26,7 @@ provisioner:
     group_vars:
       all:
         molecule_packages:
-          - unzip
-        molecule_group_vars: true
+          - nodejs
+          - npm
 verifier:
   name: testinfra

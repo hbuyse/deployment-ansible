@@ -2,5 +2,8 @@
 yq_install_bin_dir: "{{ ansible_facts.user_dir }}/.local/bin"
 yq_install_man_dir: "{{ ansible_facts.user_dir }}/.local/share/man/man1"
 
+# renovate: datasource=go depName=github.com/mikefarah/yq/v4
+yq_version: "v4.54.1"
+yq_golang_name: "github.com/mikefarah/yq/v4"
 yq_github_user: "mikefarah"
 yq_github_repo: "yq"

@@ -22,7 +22,7 @@ def test_shfmt_formats_shell(host):
 
 
 def test_installation_method(host):
-    """The package is installed everywhere, Ubuntu also downloads the binary because it forces the source install."""
+    """The package is installed everywhere, Ubuntu also installs the binary with Go because it forces the source install."""
     assert host.package("shfmt").is_installed
     if _os_id(host) == "ubuntu":
         binary = host.file("/root/.local/bin/shfmt")

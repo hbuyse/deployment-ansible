@@ -70,7 +70,6 @@
         - lsp
     - role: "jq"
     - role: "yq"
-      tags: yq
     - role: "bashls"
       tags:
         - bashls

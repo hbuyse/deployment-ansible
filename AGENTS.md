@@ -34,7 +34,8 @@ repo, and seeds `host_vars/localhost.yml`.
 - `molecule/shared/` — preparation and converge playbooks shared by the Molecule scenarios of the roles.
 - `renovate.json` — [Renovate](https://docs.renovatebot.com/) configuration (pinned versions).
   Packages installed with `community.general.cargo`, `community.general.npm`, `community.general.pipx`,
-  `ansible.builtin.pip`, `community.general.cpanm` or `community.general.golang_package` are pinned
+  `ansible.builtin.pip`, `community.general.cpanm`, `community.general.golang_package` or `go install` (module path
+  ending in `/vN`: `golang_package` does not find its binary, compare `go version -m`, see `roles/yq`) are pinned
   (`state: present` + version, never `state: latest`) and followed by one custom regex manager, so Renovate opens one
   pull request per package. Put the comment `# renovate: datasource=<crate|npm|pypi|cpan|go> depName=<package>`
   (the Go module path for `go`) right above the version line: `version: "1.2.3"`, `<role>_version: "1.2.3"`, or

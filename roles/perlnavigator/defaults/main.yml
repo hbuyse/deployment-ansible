@@ -1,5 +1,2 @@
 ---
-perlnavigator_github_user: "bscan"
-perlnavigator_github_repo: "PerlNavigator"
-perlnavigator_bin_dir: "{{ ansible_facts.user_dir }}/.local/bin"
-perlnavigator_install_dir: "{{ ansible_facts.user_dir }}/.local/share/perlnavigator"
+perlnavigator_npm_package: "perlnavigator-server"

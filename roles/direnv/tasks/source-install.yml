@@ -1,22 +1,23 @@
 ---
-- name: "Get latest version number"
-  ansible.builtin.set_fact:
-    direnv_latest_version: "{{ lookup('github_latest_release', 'direnv/direnv')[1:] }}"
-
 - name: "Ensure the binary directory exists"
   ansible.builtin.file:
     path: "{{ direnv_bin_install_dir }}"
     state: directory
     mode: "0755"
 
-- name: "Install binary [v{{ direnv_latest_version }}]"
-  ansible.builtin.get_url:
-    url: "https://github.com/direnv/direnv/releases/download/v{{ direnv_latest_version }}/direnv.{{ ansible_facts.system |
-      lower }}-{{ alt_arch }}"
-    dest: "{{ direnv_bin_install_dir }}/direnv"
-    owner: "{{ ansible_facts.user_uid }}"
-    group: "{{ ansible_facts.user_uid }}"
-    mode: "0755"
+# golang_package looks for a binary named after the last element of the path (v2), so ask go for the version
+- name: "Get the installed version"
+  ansible.builtin.command: "go version -m {{ direnv_bin_install_dir }}/direnv"
+  register: direnv_installed
+  changed_when: false
+  failed_when: false
+
+- name: "Install binary [{{ direnv_version }}]"
+  ansible.builtin.command: "go install {{ direnv_golang_name }}@{{ direnv_version }}"
+  environment:
+    GOBIN: "{{ direnv_bin_install_dir }}"
+  when: direnv_installed.stdout is not search(direnv_golang_name ~ '\\s+' ~ direnv_version ~ '\\s')
+  changed_when: true
 
 - name: "Ensure Man pages directory exists"
   ansible.builtin.file:
@@ -26,17 +27,17 @@
 
 - name: "Install man pages"
   ansible.builtin.unarchive:
-    src: "https://github.com/direnv/direnv/archive/refs/tags/v{{ direnv_latest_version }}.tar.gz"
+    src: "https://github.com/direnv/direnv/archive/refs/tags/{{ direnv_version }}.tar.gz"
     dest: "{{ direnv_man_install_dir }}/man1"
     remote_src: true
     keep_newer: true
     owner: "{{ ansible_facts.user_uid }}"
-    group: "{{ ansible_facts.user_uid }}"
+    group: "{{ ansible_facts.user_gid }}"
     mode: "u=rwX,go=rX"
     include:
-      - "direnv-{{ direnv_latest_version }}/man/direnv.1"
-      - "direnv-{{ direnv_latest_version }}/man/direnv.toml.1"
-      - "direnv-{{ direnv_latest_version }}/man/direnv-fetchurl.1"
-      - "direnv-{{ direnv_latest_version }}/man/direnv-stdlib.1"
+      - "direnv-{{ direnv_version[1:] }}/man/direnv.1"
+      - "direnv-{{ direnv_version[1:] }}/man/direnv.toml.1"
+      - "direnv-{{ direnv_version[1:] }}/man/direnv-fetchurl.1"
+      - "direnv-{{ direnv_version[1:] }}/man/direnv-stdlib.1"
     extra_opts:
       - "--strip-components=2"

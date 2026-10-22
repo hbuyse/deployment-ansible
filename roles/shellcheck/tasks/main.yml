@@ -10,31 +10,10 @@
     name: "{{ shellcheck_packages }}"
     state: present
 
-- name: "Install from GitHub"
+- name: "Install from PyPI"
   when: shellcheck_packages is not defined
-  block:
-    - name: "Ensure the binary directory exists"
-      ansible.builtin.file:
-        path: "{{ ansible_facts.user_dir }}/.local/bin"
-        state: directory
-        mode: "0755"
-
-    - name: "Get latest version number"
-      ansible.builtin.set_fact:
-        shellcheck_latest_version: "{{ lookup('github_latest_release', shellcheck_github_user ~ '/' ~ shellcheck_github_repo)[1:]
-          }}"
-
-    - name: "Install executable"
-      ansible.builtin.unarchive:
-        src: "https://github.com/{{ shellcheck_github_user }}/{{ shellcheck_github_repo }}/releases/download/v{{ shellcheck_latest_version
-          }}/shellcheck-v{{ shellcheck_latest_version }}.{{ ansible_facts.system | lower }}.{{ ansible_facts.architecture
-          }}.tar.gz"
-        dest: "{{ ansible_facts.user_dir }}/.local/bin"
-        owner: "{{ ansible_facts.user_uid }}"
-        group: "{{ ansible_facts.user_gid }}"
-        mode: "0755"
-        include:
-          - "shellcheck-v{{ shellcheck_latest_version }}/shellcheck"
-        remote_src: true
-        extra_opts:
-          - "--strip-components=1"
+  community.general.pipx:
+    # renovate: datasource=pypi depName=shellcheck-py
+    name: "shellcheck-py==0.11.0.1"
+    state: "present"
+    executable: "{{ ansible_facts.user_dir }}/.local/bin/pipx"
