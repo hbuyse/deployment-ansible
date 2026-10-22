@@ -15,7 +15,7 @@
   community.general.npm:
     name: "{{ opencode_npm_package }}"
     # renovate: datasource=npm depName=@opencode/cli
-    version: "2.1.2"
+    version: "2.1.3"
     global: true
     state: present
     production: true
