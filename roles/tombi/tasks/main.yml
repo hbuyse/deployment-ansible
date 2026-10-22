@@ -15,7 +15,7 @@
   community.general.npm:
     name: "{{ tombi_npm_package }}"
     # renovate: datasource=npm depName=tombi
-    version: "1.8.9"
+    version: "1.8.10"
     global: true
     state: present
     production: true
