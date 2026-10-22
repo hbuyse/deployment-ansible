@@ -7,6 +7,9 @@
     return_content: true
     status_code: 200
     body_format: json
+    # Anonymous requests are limited to 60 per hour and per IP address, which the runners of CI share
+    headers: "{{ {'Authorization': 'Bearer ' ~ lookup('ansible.builtin.env', 'GITHUB_TOKEN')} if lookup('ansible.builtin.env',
+      'GITHUB_TOKEN') else {} }}"
 
 - name: "Set facts"
   ansible.builtin.set_fact:
