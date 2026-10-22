@@ -13,6 +13,8 @@ description:
   - The answers are kept in a cache file shared by all the runs, because unauthenticated requests are limited to 60 per
     hour and each host of a play would otherwise ask again. A stale answer is still used, with a warning, when GitHub
     cannot be reached or refuses the request (rate limit).
+  - A request that fails with an answer that may be transient (not found, rate limit, server error, network error) is
+    sent again after a delay that doubles each time, because GitHub sometimes answers 404 for a repository that exists.
 options:
   _terms:
     description: Repositories, written as C(owner/name).
@@ -28,6 +30,18 @@ options:
     description: Timeout of the request, in seconds.
     type: int
     default: 30
+  retries:
+    description: Number of times a request that failed with a transient looking answer is sent again.
+    type: int
+    default: 2
+    env:
+      - name: GITHUB_LATEST_RELEASE_RETRIES
+  retry_delay:
+    description: Seconds to wait before the first new try, the delay doubles each time.
+    type: float
+    default: 1.0
+    env:
+      - name: GITHUB_LATEST_RELEASE_RETRY_DELAY
   cache_ttl:
     description:
       - Number of seconds during which an answer is reused without asking GitHub again, C(0) turns the cache off.
@@ -77,12 +91,18 @@ API_URL = "https://api.github.com/repos/{repository}/releases/latest"
 CACHE_FILE = "github_latest_release.json"
 # Answers after which a stale cached tag is better than a failure
 RETRY_LATER = (403, 429, 500, 502, 503, 504)
+# Answers worth a new try: GitHub sometimes answers 404 for a repository that exists
+TRANSIENT = (*RETRY_LATER, 404)
 
 display = Display()
 
 
 def _now():
     return time.time()
+
+
+def _sleep(seconds):
+    time.sleep(seconds)
 
 
 def _valid(entry):
@@ -110,7 +130,7 @@ class LookupModule(LookupBase):
                 continue
 
             try:
-                tag = self._fetch(repository, headers)
+                tag = self._fetch_with_retries(repository, headers)
             except AnsibleLookupError as error:
                 if cached and getattr(error, "retry_later", False):
                     display.warning(f"{error}: using the cached release {cached['tag']} of {repository}")
@@ -122,6 +142,19 @@ class LookupModule(LookupBase):
             tags.append(tag)
         return tags
 
+    def _fetch_with_retries(self, repository, headers):
+        retries = self.get_option("retries")
+        delay = self.get_option("retry_delay")
+        for attempt in range(retries + 1):
+            try:
+                return self._fetch(repository, headers)
+            except AnsibleLookupError as error:
+                if attempt == retries or not getattr(error, "transient", False):
+                    raise
+                display.vv(f"{error}: new try in {delay * 2**attempt} s")
+                _sleep(delay * 2**attempt)
+        raise AssertionError("unreachable")  # pragma: no cover
+
     def _fetch(self, repository, headers):
         request = Request(API_URL.format(repository=repository), headers=headers)
         try:
@@ -132,10 +165,12 @@ class LookupModule(LookupBase):
                 f"GitHub answered {error.code} {error.reason} for the latest release of {repository}"
             )
             failure.retry_later = error.code in RETRY_LATER
+            failure.transient = error.code in TRANSIENT
             raise failure from error
         except (URLError, TimeoutError) as error:
             failure = AnsibleLookupError(f"Cannot get the latest release of {repository}: {error}")
             failure.retry_later = True
+            failure.transient = True
             raise failure from error
         except json.JSONDecodeError as error:
             raise AnsibleLookupError(f"Cannot get the latest release of {repository}: {error}") from error

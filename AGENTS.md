@@ -51,7 +51,8 @@ repo, and seeds `host_vars/localhost.yml`.
 - `lookup_plugins/github_latest_release.py` — lookup returning the tag of the latest release of a GitHub repository
   (`lookup('github_latest_release', 'owner/repo')`, uses `GITHUB_TOKEN` when set). Answers are cached for 15 minutes in
   `~/.cache/deployment-ansible/github_latest_release.json` (`GITHUB_LATEST_RELEASE_CACHE_TTL` and
-  `GITHUB_LATEST_RELEASE_CACHE_DIR` change it), and a stale answer is used when GitHub is unreachable or rate limited.
+  `GITHUB_LATEST_RELEASE_CACHE_DIR` change it), a stale answer is used when GitHub is unreachable or rate limited, and a request that fails with a transient looking
+  answer (404 included) is tried again twice (`GITHUB_LATEST_RELEASE_RETRIES`, `GITHUB_LATEST_RELEASE_RETRY_DELAY`).
   Its unit tests are in `tests/` (`python3 -m pytest tests`). Roles installing a tool from its GitHub releases use it
   instead of calling the API.
 - `scripts/` — helper scripts invoked by pre-commit hooks (see below) and by CI.
