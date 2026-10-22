@@ -1,4 +1,5 @@
 ---
-shfmt_github_user: "mvdan"
-shfmt_github_repo: "sh"
+# renovate: datasource=go depName=mvdan.cc/sh/v3
+shfmt_version: "v3.14.1"
+shfmt_golang_name: "mvdan.cc/sh/v3/cmd/shfmt"
 shfmt_force_source_install: false

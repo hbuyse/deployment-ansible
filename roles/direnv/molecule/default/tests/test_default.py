@@ -16,7 +16,7 @@ def test_direnv_runs(host):
 
 
 def test_installation_method(host):
-    """Arch and Fedora install the package, the others download the binary and the man pages in ~/.local."""
+    """Arch and Fedora install the package, the others install the binary with Go and download the man pages in ~/.local."""
     if _os_id(host) in ("arch", "fedora"):
         assert host.package("direnv").is_installed
         return

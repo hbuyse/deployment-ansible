@@ -1,4 +1,5 @@
 ---
-yamlfmt_github_user: "google"
-yamlfmt_github_repo: "yamlfmt"
+# renovate: datasource=go depName=github.com/google/yamlfmt
+yamlfmt_version: "v0.21.0"
+yamlfmt_golang_name: "github.com/google/yamlfmt/cmd/yamlfmt"
 yamlfmt_force_source_install: false

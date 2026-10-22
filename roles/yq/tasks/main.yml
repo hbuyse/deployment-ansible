@@ -2,15 +2,18 @@
 - name: "Include OS specific variables"
   ansible.builtin.include_vars: "{{ item }}"
   loop: "{{ query('ansible.builtin.first_found', ansible_facts.os_family | lower ~ '.yml', skip=true) }}"
+  tags: yq
 
 - name: "Install from package manager"
   become: true
   ansible.builtin.package:
     name: "{{ yq_packages }}"
   when: yq_packages is defined
+  tags: yq
 
-- name: "Install from source"
+- name: "Install from Golang"
   when: yq_packages is not defined
+  tags: yq
   block:
     - name: "Ensure the binary and manual directories exist"
       ansible.builtin.file:
@@ -21,16 +24,17 @@
         - "{{ yq_install_bin_dir }}"
         - "{{ yq_install_man_dir }}"
 
-    - name: "Get latest version number"
-      ansible.builtin.set_fact:
-        yq_latest_version: "{{ lookup('github_latest_release', yq_github_user ~ '/' ~ yq_github_repo) }}"
+    # golang_package looks for a binary named after the last element of the path (v4), so ask go for the version
+    - name: "Get the installed version"
+      ansible.builtin.command: "go version -m {{ yq_install_bin_dir }}/yq"
+      register: yq_installed
+      changed_when: false
+      failed_when: false
 
     - name: "Install executable"
-      ansible.builtin.get_url:
-        url: "https://github.com/{{ yq_github_user }}/{{ yq_github_repo }}/releases/download/{{ yq_latest_version }}/yq_{{
-          ansible_facts.system | lower }}_{{ alt_arch }}"
-        dest: "{{ yq_install_bin_dir }}/yq"
-        owner: "{{ ansible_facts.user_uid }}"
-        group: "{{ ansible_facts.user_gid }}"
-        mode: "0755"
+      ansible.builtin.command: "go install {{ yq_golang_name }}@{{ yq_version }}"
+      environment:
+        GOBIN: "{{ yq_install_bin_dir }}"
+      when: yq_installed.stdout is not search(yq_golang_name ~ '\\s+' ~ yq_version ~ '\\s')
+      changed_when: true
       notify: "Download manpages for yq"

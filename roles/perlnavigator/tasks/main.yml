@@ -10,44 +10,13 @@
     state: present
   when: perlnavigator_package is defined
 
-- name: "Install program from static binary"
+- name: "Install from Node Package Manager"
   when: perlnavigator_package is not defined
-  block:
-    - name: "Get latest version number"
-      ansible.builtin.set_fact:
-        perlnavigator_latest_version: "{{ lookup('github_latest_release', perlnavigator_github_user ~ '/' ~ perlnavigator_github_repo)
-          }}"
-
-    - name: "Set the paths of the release"
-      ansible.builtin.set_fact:
-        perlnavigator_release_dir: "{{ perlnavigator_install_dir }}/{{ perlnavigator_latest_version }}"
-        perlnavigator_binary: "{{ perlnavigator_install_dir }}/{{ perlnavigator_latest_version }}/perlnavigator-linux-{{ ansible_facts.architecture
-          }}/perlnavigator"
-
-    - name: "Ensure the installation directories exist"
-      ansible.builtin.file:
-        path: "{{ item }}"
-        state: directory
-        mode: "0755"
-      loop:
-        - "{{ perlnavigator_bin_dir }}"
-        - "{{ perlnavigator_release_dir }}"
-
-    - name: "Unpack the release [{{ perlnavigator_latest_version }}]"
-      ansible.builtin.unarchive:
-        src: "https://github.com/{{ perlnavigator_github_user }}/{{ perlnavigator_github_repo }}/releases/download/{{ perlnavigator_latest_version
-          }}/perlnavigator-linux-{{ ansible_facts.architecture }}.zip"
-        dest: "{{ perlnavigator_release_dir }}"
-        creates: "{{ perlnavigator_binary }}"
-        remote_src: true
-
-    - name: "Make the binary executable"
-      ansible.builtin.file:
-        path: "{{ perlnavigator_binary }}"
-        mode: "0755"
-
-    - name: "Link the binary"
-      ansible.builtin.file:
-        src: "{{ perlnavigator_binary }}"
-        dest: "{{ perlnavigator_bin_dir }}/perlnavigator"
-        state: link
+  community.general.npm:
+    name: "{{ perlnavigator_npm_package }}"
+    # renovate: datasource=npm depName=perlnavigator-server
+    version: "0.8.20"
+    global: true
+    state: present
+    production: true
+    no_optional: true

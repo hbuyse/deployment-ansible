@@ -5,19 +5,9 @@
     state: directory
     mode: "0755"
 
-- name: "Get latest version number"
-  ansible.builtin.set_fact:
-    yamlfmt_latest_version: "{{ lookup('github_latest_release', yamlfmt_github_user ~ '/' ~ yamlfmt_github_repo)[1:] }}"
-
 - name: "Install executable"
-  become: true
-  ansible.builtin.unarchive:
-    src: "https://github.com/{{ yamlfmt_github_user }}/{{ yamlfmt_github_repo }}/releases/download/v{{ yamlfmt_latest_version
-      }}/yamlfmt_{{ yamlfmt_latest_version }}_{{ ansible_facts.system }}_{{ ansible_facts.architecture }}.tar.gz"
-    dest: "{{ ansible_facts.user_dir }}/.local/bin"
-    mode: "0755"
-    owner: "{{ ansible_facts.user_uid }}"
-    group: "{{ ansible_facts.user_gid }}"
-    include:
-      - "yamlfmt"
-    remote_src: true
+  community.general.golang_package:
+    name: "{{ yamlfmt_golang_name }}"
+    version: "{{ yamlfmt_version }}"
+  environment:
+    GOBIN: "{{ ansible_facts.user_dir }}/.local/bin"

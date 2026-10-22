@@ -19,13 +19,12 @@ def test_shellcheck_reports_unquoted_variable(host):
 
 
 def test_installation_method(host):
-    """Arch and Fedora install the package, the others download the binary in ~/.local/bin."""
+    """Arch and Fedora install the package, the others install shellcheck-py with pipx."""
     os_id = _os_id(host)
     if os_id == "arch":
         assert host.package("shellcheck").is_installed
     elif os_id == "fedora":
         assert host.package("ShellCheck").is_installed
     else:
-        binary = host.file("/root/.local/bin/shellcheck")
-        assert binary.is_file
-        assert oct(binary.mode) == "0o755"
+        assert host.file("/root/.local/bin/shellcheck").exists
+        assert "shellcheck-py" in host.check_output("PATH=/root/.local/bin:$PATH pipx list --short")
