@@ -35,6 +35,12 @@
       "maxMajorIncrement": 0
     },
     {
+      "description": "Wait three days after the release of a version before updating to it (not for the digests of the images, which have no release date)",
+      "matchUpdateTypes": ["major", "minor", "patch"],
+      "minimumReleaseAge": "3 days",
+      "internalChecksFilter": "strict"
+    },
+    {
       "description": "Merge the pull requests by themselves, except the major updates which may break a role",
       "matchUpdateTypes": ["minor", "patch", "pin", "pinDigest", "digest"],
       "automerge": true
