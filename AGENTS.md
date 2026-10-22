@@ -54,7 +54,10 @@ repo, and seeds `host_vars/localhost.yml`.
   `GITHUB_LATEST_RELEASE_CACHE_DIR` change it), a stale answer is used when GitHub is unreachable or rate limited, and a request that fails with a transient looking
   answer (404 included) is tried again twice (`GITHUB_LATEST_RELEASE_RETRIES`, `GITHUB_LATEST_RELEASE_RETRY_DELAY`).
   Its unit tests are in `tests/` (`python3 -m pytest tests`). Roles installing a tool from its GitHub releases use it
-  instead of calling the API.
+  instead of calling the API. A role that has to call `api.github.com` itself (`bitwarden` lists all
+  the releases) must send `GITHUB_TOKEN` in an `Authorization` header when it is set: the runners of CI share their IP
+  addresses and the anonymous limit of 60 requests per hour is quickly reached. The Molecule workflow gives the token of
+  the job to the scenarios.
 - `scripts/` — helper scripts invoked by pre-commit hooks (see below) and by CI.
 - `.github/workflows/molecule.yml` — runs `molecule test` for the roles that changed (and the roles that depend on them,
   through `meta/main.yml`) on pull requests and on `main`, one job per role.
