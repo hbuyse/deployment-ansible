@@ -9,6 +9,7 @@ PACKAGES = {
     "debian": ["pipewire", "wireplumber", "pipewire-audio-client-libraries", "pulseaudio-utils"],
     "ubuntu": ["pipewire", "wireplumber", "pipewire-audio-client-libraries", "pulseaudio-utils"],
     "arch": ["pipewire", "pipewire-pulse", "pipewire-alsa", "pipewire-jack", "wireplumber"],
+    "fedora": ["pipewire", "pipewire-pulseaudio", "pipewire-utils", "pulseaudio-utils", "wireplumber"],
 }
 
 

@@ -4,9 +4,9 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: cava-debian12
-    image: geerlingguy/docker-debian12-ansible:latest
-    pre_build_image: true
+  - name: cava-fedora
+    image: fedora:latest
+    pre_build_image: false
   - name: cava-ubuntu2404
     image: geerlingguy/docker-ubuntu2404-ansible:latest
     pre_build_image: true

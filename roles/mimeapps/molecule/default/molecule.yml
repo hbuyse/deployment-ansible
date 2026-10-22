@@ -5,9 +5,9 @@ driver:
   name: docker
 platforms:
   # The role only writes files: no package, no need for Arch
-  - name: mimeapps-debian12
-    image: geerlingguy/docker-debian12-ansible:latest
-    pre_build_image: true
+  - name: mimeapps-fedora
+    image: fedora:latest
+    pre_build_image: false
   - name: mimeapps-ubuntu2404
     image: geerlingguy/docker-ubuntu2404-ansible:latest
     pre_build_image: true

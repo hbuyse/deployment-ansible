@@ -7,8 +7,11 @@ def _os_id(host):
 
 def test_python_packages(host):
     """Python and virtualenv are installed from the package manager."""
-    if _os_id(host) == "arch":
+    os_id = _os_id(host)
+    if os_id == "arch":
         names = ["python", "python-virtualenv"]
+    elif os_id == "fedora":
+        names = ["python3", "python3-virtualenv", "python3-virtualenvwrapper"]
     else:
         names = ["python3", "python3-venv", "python3-virtualenv", "virtualenvwrapper"]
     for name in names:
@@ -28,8 +31,10 @@ def test_virtualenv_creates_an_environment(host):
     assert host.run("/tmp/venv/bin/python --version").rc == 0
 
 
-def test_virtualenvwrapper_on_debian_family(host):
-    """Debian family installs virtualenvwrapper from its package."""
-    if _os_id(host) == "arch":
+def test_virtualenvwrapper_script(host):
+    """Debian family and Fedora install virtualenvwrapper from their package."""
+    os_id = _os_id(host)
+    if os_id == "arch":
         return
-    assert host.file("/usr/share/virtualenvwrapper/virtualenvwrapper.sh").exists
+    debian_script = "/usr/share/virtualenvwrapper/virtualenvwrapper.sh"
+    assert host.file("/usr/bin/virtualenvwrapper.sh" if os_id == "fedora" else debian_script).exists

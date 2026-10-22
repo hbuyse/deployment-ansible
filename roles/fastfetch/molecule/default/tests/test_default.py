@@ -13,8 +13,8 @@ def test_fastfetch_runs(host):
 
 
 def test_installation_method(host):
-    """Arch installs the package, the others unpack the release in ~/.local."""
-    if _os_id(host) == "arch":
+    """Arch and Fedora install the package, the others unpack the release in ~/.local."""
+    if _os_id(host) in ("arch", "fedora"):
         assert host.package("fastfetch").is_installed
     else:
         assert host.file("/root/.local/bin/fastfetch").is_file

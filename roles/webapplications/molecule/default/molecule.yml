@@ -5,9 +5,9 @@ driver:
   name: docker
 platforms:
   # Ubuntu installs Chromium as a snap, which cannot run in a container
-  - name: webapplications-debian12
-    image: geerlingguy/docker-debian12-ansible:latest
-    pre_build_image: true
+  - name: webapplications-fedora
+    image: fedora:latest
+    pre_build_image: false
   - name: webapplications-archlinux
     image: archlinux:base
     pre_build_image: false

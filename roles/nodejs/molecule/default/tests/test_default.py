@@ -70,8 +70,11 @@ def test_apt_preferences_pin_nodesource(host):
 
 
 def test_nodejs_package_is_installed(host):
-    """The nodejs package is installed from the package manager."""
-    assert host.package("nodejs").is_installed
+    """The nodejs package is installed from the package manager (Fedora names it after the major version)."""
+    if _os_id(host) == "fedora":
+        assert host.run("rpm -q --whatprovides nodejs").rc == 0
+    else:
+        assert host.package("nodejs").is_installed
 
 
 def test_dependencies_are_installed_on_debian(host):

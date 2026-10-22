@@ -4,9 +4,9 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: ssh-debian12
-    image: geerlingguy/docker-debian12-ansible:latest
-    pre_build_image: true
+  - name: ssh-fedora
+    image: fedora:latest
+    pre_build_image: false
   - name: ssh-ubuntu2404
     image: geerlingguy/docker-ubuntu2404-ansible:latest
     pre_build_image: true
@@ -23,6 +23,8 @@ provisioner:
       all:
         molecule_debian_packages:
           - openssh-client
+        molecule_fedora_packages:
+          - openssh-clients
         ssh_pubkey_email: molecule@example.com
 verifier:
   name: testinfra

@@ -15,5 +15,6 @@ def test_packages(host):
 def test_browsers_run(host):
     """Both browsers report their version."""
     firefox = "firefox-esr" if _os_id(host) == "debian" else "firefox"
-    assert re.search(r"Chromium \d+", host.check_output("chromium --version"))
+    chromium = "chromium-browser" if _os_id(host) == "fedora" else "chromium"
+    assert re.search(r"Chromium \d+", host.check_output(f"{chromium} --version"))
     assert re.search(r"Mozilla Firefox \d+", host.check_output(f"{firefox} --version"))

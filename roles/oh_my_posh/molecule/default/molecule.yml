@@ -5,9 +5,9 @@ driver:
   name: docker
 platforms:
   # The binary is downloaded from GitHub on every distribution
-  - name: oh_my_posh-debian12
-    image: geerlingguy/docker-debian12-ansible:latest
-    pre_build_image: true
+  - name: oh_my_posh-fedora
+    image: fedora:latest
+    pre_build_image: false
   - name: oh_my_posh-ubuntu2404
     image: geerlingguy/docker-ubuntu2404-ansible:latest
     pre_build_image: true

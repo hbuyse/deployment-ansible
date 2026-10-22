@@ -5,9 +5,9 @@ driver:
   name: docker
 platforms:
   # The Ubuntu host forces the installation from GitHub, the others use the package
-  - name: shfmt-debian12
-    image: geerlingguy/docker-debian12-ansible:latest
-    pre_build_image: true
+  - name: shfmt-fedora
+    image: fedora:latest
+    pre_build_image: false
   - name: shfmt-ubuntu2404
     image: geerlingguy/docker-ubuntu2404-ansible:latest
     pre_build_image: true

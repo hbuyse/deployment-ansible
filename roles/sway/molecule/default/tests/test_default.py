@@ -11,7 +11,7 @@ def _os_id(host):
 
 def test_packages(host):
     """Sway, the screenshot tools and the file manager are installed."""
-    names = ["sway", "grim", "slurp", "thunar"]
+    names = ["sway", "grim", "slurp", "Thunar" if _os_id(host) == "fedora" else "thunar"]
     if _os_id(host) != "arch":
         names.append("lxsession")  # lxsession-gtk3, in the AUR, on Arch
     for name in names:

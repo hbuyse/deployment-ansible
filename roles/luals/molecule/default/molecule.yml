@@ -5,9 +5,9 @@ driver:
   name: docker
 platforms:
   # Debian family downloads the release in /opt/luals, Arch uses its package
-  - name: luals-debian12
-    image: geerlingguy/docker-debian12-ansible:latest
-    pre_build_image: true
+  - name: luals-fedora
+    image: fedora:latest
+    pre_build_image: false
   - name: luals-ubuntu2404
     image: geerlingguy/docker-ubuntu2404-ansible:latest
     pre_build_image: true

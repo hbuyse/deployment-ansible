@@ -85,7 +85,9 @@ repo, and seeds `host_vars/localhost.yml`.
 - If a role needs a Molecule scenario, copy the `molecule.yml` and `tests/test_default.py` of a similar role (for
   instance `roles/jq/molecule/default/`). The scenarios use the playbooks of [molecule/shared/](molecule/shared/) and
   select what to prepare with `molecule_*` variables (documented at the top of `prepare.yml` and `converge.yml`); extra
-  preparation goes in `tasks/prepare.yml` next to `molecule.yml`. Install the tools with
+  preparation goes in `tasks/prepare.yml` next to `molecule.yml`. The platforms are Ubuntu 24.04, `fedora:latest` and
+  `archlinux:base`; a scenario whose role manages services or the systemd user manager points its Fedora platform to
+  `molecule/shared/Dockerfile.fedora-systemd.j2` (see `roles/kanshi/molecule/default/molecule.yml`). Install the tools with
   `pip install -r requirements-molecule.txt`.
 
 ## Validating changes

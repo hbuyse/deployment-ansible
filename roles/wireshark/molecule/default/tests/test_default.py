@@ -18,7 +18,7 @@ def test_ppa_on_ubuntu(host):
 
 def test_setuid_answer_on_debian_family(host):
     """Debian family lets non-privileged users capture."""
-    if _os_id(host) == "arch":
+    if _os_id(host) not in ("debian", "ubuntu"):
         return
     assert "* wireshark-common/install-setuid: true" in host.check_output("debconf-show wireshark-common")
 

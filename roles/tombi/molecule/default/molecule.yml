@@ -5,9 +5,9 @@ driver:
   name: docker
 platforms:
   # Debian family installs with npm, Arch from its package when there is one
-  - name: tombi-debian12
-    image: geerlingguy/docker-debian12-ansible:latest
-    pre_build_image: true
+  - name: tombi-fedora
+    image: fedora:latest
+    pre_build_image: false
   - name: tombi-ubuntu2404
     image: geerlingguy/docker-ubuntu2404-ansible:latest
     pre_build_image: true

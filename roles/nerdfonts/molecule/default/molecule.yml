@@ -5,9 +5,9 @@ driver:
   name: docker
 platforms:
   # Debian family downloads the font from GitHub, Arch uses its package
-  - name: nerdfonts-debian12
-    image: geerlingguy/docker-debian12-ansible:latest
-    pre_build_image: true
+  - name: nerdfonts-fedora
+    image: fedora:latest
+    pre_build_image: false
   - name: nerdfonts-ubuntu2404
     image: geerlingguy/docker-ubuntu2404-ansible:latest
     pre_build_image: true
@@ -29,6 +29,9 @@ provisioner:
       all:
         molecule_debian_packages:
           - xz-utils
+          - fontconfig
+        molecule_fedora_packages:
+          - xz
           - fontconfig
         molecule_arch_packages:
           - fontconfig

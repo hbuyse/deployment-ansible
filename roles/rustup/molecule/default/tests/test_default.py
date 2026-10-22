@@ -55,7 +55,7 @@ def test_rustc_runs(host):
 
 def test_os_dependencies_are_installed(host):
     """The OS specific build dependencies from vars/<os_family>.yml are installed."""
-    expected = {"debian": "libssl-dev", "ubuntu": "libssl-dev", "arch": "openssl"}
+    expected = {"debian": "libssl-dev", "ubuntu": "libssl-dev", "arch": "openssl", "fedora": "openssl-devel"}
     assert host.package(expected[_os_id(host)]).is_installed
 
 
