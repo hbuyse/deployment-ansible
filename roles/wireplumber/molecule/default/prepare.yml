@@ -60,9 +60,22 @@
       rescue:
         - name: Get the state of the systemd user manager
           ansible.builtin.shell: |
+            set -o pipefail
             systemctl status user@2000.service --no-pager
             journalctl -u user@2000.service -u systemd-logind.service --no-pager -n 40
             ls -la /run/user /run/user/2000
+            echo "--- account"
+            id tester
+            getent passwd tester
+            getent shadow tester
+            ls -ln /etc/passwd /etc/shadow
+            grep -E "^(passwd|shadow):" /etc/nsswitch.conf
+            echo "--- pam"
+            cat /usr/lib/pam.d/systemd-user /etc/pam.d/systemd-user
+            echo "--- denials"
+            dmesg 2>&1 | grep -iE "apparmor|denied|audit" | tail -5
+          args:
+            executable: /bin/bash
           register: wireplumber_user_manager
           changed_when: false
           failed_when: false

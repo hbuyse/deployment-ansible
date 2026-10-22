@@ -106,9 +106,16 @@ jobs:
 
       - name: Install the Ansible collections
         run: |
-          # No cache: the second call fails with a corrupted cache of the first one
-          ansible-galaxy collection install --no-cache -r requirements.yml -p collections
-          ansible-galaxy collection install --no-cache community.docker -p collections
+          # No cache: the second call fails with a corrupted cache of the first one. Galaxy resets connections at times
+          for attempt in 1 2 3; do
+            if ansible-galaxy collection install --no-cache -r requirements.yml -p collections \
+              && ansible-galaxy collection install --no-cache community.docker -p collections; then
+              exit 0
+            fi
+            echo "Attempt ${attempt} failed"
+            sleep $((attempt * 10))
+          done
+          exit 1
 
       - name: Test the role
         working-directory: roles/${{ matrix.role }}
