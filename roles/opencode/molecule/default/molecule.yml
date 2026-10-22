@@ -4,7 +4,7 @@ driver:
 
 platforms:
   - name: opencode-debian
-    image: debian:12
+    image: debian:13
     privileged: true
 
 provisioner:
