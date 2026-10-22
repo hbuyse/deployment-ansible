@@ -1,4 +1,4 @@
-molecule>=6.0,<7.0
+molecule>=26.10,<26.11
 molecule-plugins[docker]
 ansible-lint
 python-ansible-lint
