@@ -8,3 +8,4 @@ waybar_packages:
   - cairo-gobject-devel
   - python3-devel
   - sassc
+  - python3-virtualenv

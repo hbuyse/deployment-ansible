@@ -114,6 +114,12 @@ The scenarios share their preparation and converge playbooks, in [molecule/share
 `molecule.yml` (platforms, and the `molecule_*` variables that tell the shared playbooks what to prepare) and a
 `tests/test_default.py`. Copy the `molecule.yml` of a similar role to add one.
 
+A GitHub Actions workflow ([.github/workflows/molecule.yml](.github/workflows/molecule.yml)) runs them for the roles
+that a pull request changes, and for the roles that depend on them.
+
+The scenarios run on Ubuntu 24.04, the latest Fedora (`fedora:latest`) and Arch Linux, the roles that do not support
+one of them excepted. Debian is not tested any more, apart from the scenarios that need Debian 13.
+
 The `github_latest_release` lookup plugin has unit tests:
 
 ```sh

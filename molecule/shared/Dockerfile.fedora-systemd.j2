@@ -1,0 +1,9 @@
+# Molecule managed
+#
+# Fedora with systemd, for the scenarios whose role manages services or the systemd user manager. The container runs
+# /usr/lib/systemd/systemd as PID 1, see the platforms of these scenarios.
+FROM {{ item.image }}
+
+RUN dnf --assumeyes install systemd dbus-broker python3 python3-libdnf5 sudo bash iproute rsync iptables-nft \
+    && dnf clean all
+STOPSIGNAL SIGRTMIN+3

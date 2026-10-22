@@ -13,9 +13,12 @@ def test_pipx_runs(host):
 
 
 def test_installation_method(host):
-    """Arch installs the package, the others install pipx in the user space."""
-    if _os_id(host) == "arch":
+    """Arch and Fedora install the package, the others install pipx in the user space."""
+    os_id = _os_id(host)
+    if os_id == "arch":
         assert host.package("python-pipx").is_installed
+    elif os_id == "fedora":
+        assert host.package("pipx").is_installed
     else:
         assert host.file("/root/.local/bin/pipx").exists
 

@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
-  "enabledManagers": ["pre-commit", "ansible-galaxy", "pip_requirements", "custom.regex"],
+  "enabledManagers": ["pre-commit", "ansible-galaxy", "pip_requirements", "github-actions", "custom.regex"],
   "timezone": "Europe/Paris",
   "schedule": ["before 6am on monday"],
   "labels": ["dependencies"],
@@ -22,6 +22,28 @@
       "matchFileNames": ["roles/*/molecule/**"],
       "groupName": "Molecule images",
       "pinDigests": true
+    },
+    {
+      "description": "The crates are pinned to an exact version: with the cargo versioning, Renovate reads it as a caret requirement and writes the lowest version of the new range",
+      "matchManagers": ["custom.regex"],
+      "matchDatasources": ["crate"],
+      "versioning": "semver"
+    },
+    {
+      "description": "Perl::Tidy is versioned by date (20260826): do not take the difference between two dates for a huge major increment",
+      "matchDepNames": ["Perl::Tidy"],
+      "maxMajorIncrement": 0
+    },
+    {
+      "description": "Wait three days after the release of a version before updating to it (not for the digests of the images, which have no release date)",
+      "matchUpdateTypes": ["major", "minor", "patch"],
+      "minimumReleaseAge": "3 days",
+      "internalChecksFilter": "strict"
+    },
+    {
+      "description": "Merge the pull requests by themselves, except the major updates which may break a role",
+      "matchUpdateTypes": ["minor", "patch", "pin", "pinDigest", "digest"],
+      "automerge": true
     },
     {
       "description": "Only the even major versions of Node.js are long term support releases",

@@ -5,9 +5,9 @@ driver:
   name: docker
 platforms:
   # Ubuntu installs both browsers as snaps, which cannot run in a container
-  - name: web_browsers-debian12
-    image: geerlingguy/docker-debian12-ansible:latest
-    pre_build_image: true
+  - name: web_browsers-fedora
+    image: fedora:latest
+    pre_build_image: false
   - name: web_browsers-archlinux
     image: archlinux:base
     pre_build_image: false

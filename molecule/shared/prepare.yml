@@ -1,7 +1,8 @@
 ---
 # Preparation shared by the Molecule scenarios of the roles. A scenario selects what it needs with variables in the
 # `inventory.group_vars.all` section of its molecule.yml:
-#   molecule_packages / molecule_debian_packages / molecule_arch_packages: packages that a regular install has
+#   molecule_packages / molecule_debian_packages / molecule_fedora_packages / molecule_arch_packages: packages that a
+#     regular install has
 #   molecule_user_dirs: directories of the home directory that the role expects to exist
 #   molecule_user_session: start a systemd user manager for root, like the session of a desktop user
 #   molecule_pipx: install pipx like a regular desktop would (the package on Arch, the pipx role on the Debian family
@@ -24,6 +25,15 @@
   vars:
     ansible_user: root
   tasks:
+    - name: Do not download the zchunk metadata of the Fedora repositories
+      # The download of primary.xml.zck fails at random on the runners of GitHub (curl error 23)
+      ansible.builtin.lineinfile:
+        path: /etc/dnf/dnf.conf
+        regexp: "^zchunk="
+        line: "zchunk=False"
+        insertafter: '^\[main\]'
+      when: ansible_facts.os_family == "RedHat"
+
     - name: Refresh the APT cache
       ansible.builtin.apt:
         update_cache: true
@@ -42,6 +52,14 @@
       when:
         - ansible_facts.os_family == "Debian"
         - molecule_debian_packages | default([]) | length > 0
+
+    - name: Install the Fedora packages a regular install has
+      ansible.builtin.dnf:
+        name: "{{ molecule_fedora_packages | default([]) }}"
+        state: present
+      when:
+        - ansible_facts.os_family == "RedHat"
+        - molecule_fedora_packages | default([]) | length > 0
 
     - name: Install the Arch packages a regular install has
       community.general.pacman:

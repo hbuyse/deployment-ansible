@@ -5,9 +5,9 @@ driver:
   name: docker
 platforms:
   # Debian family downloads the binary from GitHub, Arch uses its package
-  - name: shellcheck-debian12
-    image: geerlingguy/docker-debian12-ansible:latest
-    pre_build_image: true
+  - name: shellcheck-fedora
+    image: fedora:latest
+    pre_build_image: false
   - name: shellcheck-ubuntu2404
     image: geerlingguy/docker-ubuntu2404-ansible:latest
     pre_build_image: true

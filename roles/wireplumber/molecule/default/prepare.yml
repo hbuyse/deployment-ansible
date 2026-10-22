@@ -47,14 +47,50 @@
         mode: "0440"
         validate: visudo -cf %s
 
+    - name: Let root read the shadow file without capabilities
+      # On the Ubuntu hosts of the GitHub runners, the AppArmor profile of unix_chkpwd denies it dac_override and
+      # dac_read_search, which it needs to read the /etc/shadow of Fedora (mode 0000): the user manager fails in PAM
+      ansible.builtin.file:
+        path: /etc/shadow
+        mode: "0640"
+      when: ansible_facts.os_family == "RedHat"
+
     - name: Start the systemd user manager of the user
       ansible.builtin.command: loginctl enable-linger tester
       changed_when: true
 
     - name: Wait for the user bus
-      ansible.builtin.wait_for:
-        path: /run/user/2000/bus
-        timeout: 60
+      block:
+        - name: Wait for the bus socket
+          ansible.builtin.wait_for:
+            path: /run/user/2000/bus
+            timeout: 60
+      rescue:
+        - name: Get the state of the systemd user manager
+          ansible.builtin.shell: |
+            set -o pipefail
+            systemctl status user@2000.service --no-pager
+            journalctl -u user@2000.service -u systemd-logind.service --no-pager -n 40
+            ls -la /run/user /run/user/2000
+            echo "--- account"
+            id tester
+            getent passwd tester
+            getent shadow tester
+            ls -ln /etc/passwd /etc/shadow
+            grep -E "^(passwd|shadow):" /etc/nsswitch.conf
+            echo "--- pam"
+            cat /usr/lib/pam.d/systemd-user /etc/pam.d/systemd-user
+            echo "--- denials"
+            dmesg 2>&1 | grep -iE "apparmor|denied|audit" | tail -5
+          args:
+            executable: /bin/bash
+          register: wireplumber_user_manager
+          changed_when: false
+          failed_when: false
+
+        - name: Fail with the state of the systemd user manager
+          ansible.builtin.fail:
+            msg: "{{ wireplumber_user_manager.stdout }}"
 
     - name: Create the directories created by pre_tasks/main.yml
       ansible.builtin.file:

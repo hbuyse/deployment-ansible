@@ -5,9 +5,9 @@ driver:
   name: docker
 platforms:
   # The role installs the .deb of the latest Zoom client
-  - name: zoom-debian12
-    image: geerlingguy/docker-debian12-ansible:latest
-    pre_build_image: true
+  - name: zoom-fedora
+    image: fedora:latest
+    pre_build_image: false
 provisioner:
   name: ansible
   env:

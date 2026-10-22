@@ -8,8 +8,15 @@ def _os_id(host):
 
 
 def test_docker_repository(host):
-    """The Docker apt repository matches the distribution, release and architecture."""
+    """The Docker apt repository matches the distribution, release and architecture, the yum one on Fedora."""
     distribution = _os_id(host)
+    if distribution == "fedora":
+        repository = host.file("/etc/yum.repos.d/docker-ce.repo")
+        assert repository.is_file
+        baseurl = "baseurl = https://download.docker.com/linux/fedora/$releasever/$basearch/stable"
+        assert baseurl in repository.content_string
+        assert "gpgcheck = 1" in repository.content_string
+        return
     release = host.check_output(". /etc/os-release && echo $VERSION_CODENAME")
     arch = host.check_output("dpkg --print-architecture")
 
@@ -33,6 +40,9 @@ def test_packages_are_installed(host, package):
 
 def test_packages_come_from_docker_repository(host):
     """docker-ce is installed from download.docker.com and not from the distribution."""
+    if _os_id(host) == "fedora":
+        assert "docker-ce-stable" in host.check_output("dnf repoquery --installed --qf '%{from_repo}' docker-ce")
+        return
     policy = host.check_output("apt-cache policy docker-ce")
     assert "download.docker.com" in policy
 

@@ -5,9 +5,6 @@ driver:
   name: docker
 platforms:
   # Anthropic only publishes a Debian package
-  - name: claude_desktop-debian12
-    image: geerlingguy/docker-debian12-ansible:latest
-    pre_build_image: true
   - name: claude_desktop-ubuntu2404
     image: geerlingguy/docker-ubuntu2404-ansible:latest
     pre_build_image: true

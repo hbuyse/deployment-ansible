@@ -26,10 +26,12 @@ def test_foot_runs(host):
 
 
 def test_terminal_alternative(host):
-    """On Debian family, foot is a choice of x-terminal-emulator."""
-    if _os_id(host) == "arch":
+    """On Debian family and Fedora, foot is a choice of x-terminal-emulator."""
+    os_id = _os_id(host)
+    if os_id == "arch":
         pytest.skip("Alternatives are only managed on Debian and Red Hat families")
-    query = host.check_output("update-alternatives --query x-terminal-emulator")
+    tool = "alternatives --display" if os_id == "fedora" else "update-alternatives --query"
+    query = host.check_output(f"{tool} x-terminal-emulator")
     assert "/usr/bin/foot" in query
 
 

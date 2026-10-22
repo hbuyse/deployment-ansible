@@ -18,6 +18,8 @@ def lookup(monkeypatch, tmp_path):
     monkeypatch.delenv("GITHUB_TOKEN", raising=False)
     monkeypatch.delenv("GITHUB_LATEST_RELEASE_CACHE_TTL", raising=False)
     monkeypatch.setenv("GITHUB_LATEST_RELEASE_CACHE_DIR", str(tmp_path / "cache"))
+    # One request per failure, the new tries have their own tests
+    monkeypatch.setenv("GITHUB_LATEST_RELEASE_RETRIES", "0")
     requests = []
 
     def install(answer):
@@ -146,6 +148,54 @@ def test_stale_answer_is_used_when_github_refuses(lookup, clock, status):
     clock["value"] += 100_000
     assert module.run(["owner/repo"]) == ["v1"]
     assert len(requests) == 2
+
+
+@pytest.fixture
+def sleeps(monkeypatch, lookup):
+    """Record the delays the plugin waits for, without waiting."""
+    lookup_loader.add_directory(str(PLUGINS_DIR), with_subdir=False)
+    module = sys.modules[type(lookup_loader.get("github_latest_release")).__module__]
+    waited = []
+    monkeypatch.setattr(module, "_sleep", waited.append)
+    monkeypatch.setenv("GITHUB_LATEST_RELEASE_RETRIES", "2")
+    return waited
+
+
+@pytest.mark.parametrize(
+    "failure",
+    [HTTPError("https://api.github.com", 404, "Not Found", {}, None), URLError("reset")],
+)
+def test_transient_failure_is_tried_again(lookup, sleeps, failure):
+    module, requests = lookup([failure, failure, {"tag_name": "v1"}])
+    assert module.run(["owner/repo"]) == ["v1"]
+    assert len(requests) == 3
+    assert sleeps == [1.0, 2.0]
+
+
+def test_failure_is_raised_when_the_tries_are_used(lookup, sleeps):
+    error = HTTPError("https://api.github.com", 404, "Not Found", {}, None)
+    module, requests = lookup(error)
+    with pytest.raises(AnsibleLookupError, match="404"):
+        module.run(["owner/repo"])
+    assert len(requests) == 3
+    assert sleeps == [1.0, 2.0]
+
+
+def test_retry_delay_is_configurable(lookup, sleeps, monkeypatch):
+    monkeypatch.setenv("GITHUB_LATEST_RELEASE_RETRY_DELAY", "0.5")
+    error = HTTPError("https://api.github.com", 503, "Unavailable", {}, None)
+    module, _ = lookup([error, {"tag_name": "v1"}])
+    assert module.run(["owner/repo"]) == ["v1"]
+    assert sleeps == [0.5]
+
+
+def test_refused_token_is_not_tried_again(lookup, sleeps):
+    error = HTTPError("https://api.github.com", 401, "Bad credentials", {}, None)
+    module, requests = lookup(error)
+    with pytest.raises(AnsibleLookupError, match="401"):
+        module.run(["owner/repo"])
+    assert len(requests) == 1
+    assert sleeps == []
 
 
 def test_stale_answer_is_used_when_the_network_is_down(lookup, clock):

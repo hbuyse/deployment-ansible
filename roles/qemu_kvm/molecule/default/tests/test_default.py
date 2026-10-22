@@ -3,6 +3,7 @@ PACKAGES = {
     "debian": ["qemu-system-x86", "virt-manager", "virtinst", "libvirt-clients", "bridge-utils", "libvirt-daemon-system"],
     "ubuntu": ["qemu-system-x86", "virt-manager", "virtinst", "libvirt-clients", "bridge-utils", "libvirt-daemon-system"],
     "arch": ["libvirt", "virt-manager"],
+    "fedora": ["qemu-kvm", "libvirt-daemon", "virt-install"],
 }
 
 

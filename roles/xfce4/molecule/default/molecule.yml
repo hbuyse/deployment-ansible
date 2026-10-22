@@ -5,9 +5,9 @@ driver:
   name: docker
 platforms:
   # The role only writes files: no package, no need for Arch
-  - name: xfce4-debian12
-    image: geerlingguy/docker-debian12-ansible:latest
-    pre_build_image: true
+  - name: xfce4-fedora
+    image: fedora:latest
+    pre_build_image: false
   - name: xfce4-ubuntu2404
     image: geerlingguy/docker-ubuntu2404-ansible:latest
     pre_build_image: true

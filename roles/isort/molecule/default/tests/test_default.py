@@ -1,7 +1,7 @@
 
 def _package(host):
     os_id = host.check_output(". /etc/os-release && echo $ID").strip()
-    return "python-isort" if os_id == "arch" else "isort"
+    return {"arch": "python-isort", "fedora": "python3-isort"}.get(os_id, "isort")
 
 
 def test_isort_package(host):

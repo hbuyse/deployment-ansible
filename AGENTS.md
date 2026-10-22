@@ -51,10 +51,19 @@ repo, and seeds `host_vars/localhost.yml`.
 - `lookup_plugins/github_latest_release.py` — lookup returning the tag of the latest release of a GitHub repository
   (`lookup('github_latest_release', 'owner/repo')`, uses `GITHUB_TOKEN` when set). Answers are cached for 15 minutes in
   `~/.cache/deployment-ansible/github_latest_release.json` (`GITHUB_LATEST_RELEASE_CACHE_TTL` and
-  `GITHUB_LATEST_RELEASE_CACHE_DIR` change it), and a stale answer is used when GitHub is unreachable or rate limited.
+  `GITHUB_LATEST_RELEASE_CACHE_DIR` change it), a stale answer is used when GitHub is unreachable or rate limited, and a request that fails with a transient looking
+  answer (404 included) is tried again twice (`GITHUB_LATEST_RELEASE_RETRIES`, `GITHUB_LATEST_RELEASE_RETRY_DELAY`).
   Its unit tests are in `tests/` (`python3 -m pytest tests`). Roles installing a tool from its GitHub releases use it
-  instead of calling the API.
-- `scripts/` — helper scripts invoked by pre-commit hooks (see below).
+  instead of calling the API. A role that has to call `api.github.com` itself (`bitwarden` lists all
+  the releases) must send `GITHUB_TOKEN` in an `Authorization` header when it is set: the runners of CI share their IP
+  addresses and the anonymous limit of 60 requests per hour is quickly reached. The Molecule workflow gives the token of
+  the job to the scenarios.
+- `scripts/` — helper scripts invoked by pre-commit hooks (see below) and by CI.
+- `.github/workflows/molecule.yml` — runs `molecule test` for the roles that changed (and the roles that depend on them,
+  through `meta/main.yml`) on pull requests and on `main`, one job per role.
+  [scripts/molecule-roles.sh](scripts/molecule-roles.sh) lists them from the changed files
+  (`git diff --name-only <base> <head> | scripts/molecule-roles.sh`); a change to a file shared by the scenarios
+  (`molecule/shared/`, `group_vars/`, `requirements*`...) tests all of them.
 
 ## Making changes
 
@@ -85,7 +94,9 @@ repo, and seeds `host_vars/localhost.yml`.
 - If a role needs a Molecule scenario, copy the `molecule.yml` and `tests/test_default.py` of a similar role (for
   instance `roles/jq/molecule/default/`). The scenarios use the playbooks of [molecule/shared/](molecule/shared/) and
   select what to prepare with `molecule_*` variables (documented at the top of `prepare.yml` and `converge.yml`); extra
-  preparation goes in `tasks/prepare.yml` next to `molecule.yml`. Install the tools with
+  preparation goes in `tasks/prepare.yml` next to `molecule.yml`. The platforms are Ubuntu 24.04, `fedora:latest` and
+  `archlinux:base`; a scenario whose role manages services or the systemd user manager points its Fedora platform to
+  `molecule/shared/Dockerfile.fedora-systemd.j2` (see `roles/kanshi/molecule/default/molecule.yml`). Install the tools with
   `pip install -r requirements-molecule.txt`.
 
 ## Validating changes

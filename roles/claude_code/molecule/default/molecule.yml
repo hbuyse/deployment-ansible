@@ -6,9 +6,9 @@ driver:
 platforms:
   # Debian family: apt repository of Anthropic
   # Arch: no package, native installer
-  - name: claude_code-debian12
-    image: geerlingguy/docker-debian12-ansible:latest
-    pre_build_image: true
+  - name: claude_code-fedora
+    image: fedora:latest
+    pre_build_image: false
   - name: claude_code-ubuntu2404
     image: geerlingguy/docker-ubuntu2404-ansible:latest
     pre_build_image: true

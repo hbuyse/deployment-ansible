@@ -19,6 +19,8 @@ def test_tuned_service(host):
 
 def test_tuned_ppd_service_on_arch(host):
     """The power-profiles-daemon compatibility service is enabled where the package exists."""
+    if _os_id(host) == "fedora":
+        return  # the Fedora package of tuned pulls tuned-ppd, which replaces power-profiles-daemon
     if _os_id(host) != "arch":
         assert not host.package("tuned-ppd").is_installed
         return

@@ -9,6 +9,8 @@ def test_shfmt_runs(host):
     """shfmt reports its version."""
     cmd = host.run("PATH=/root/.local/bin:$PATH shfmt --version")
     assert cmd.rc == 0, cmd.stderr
+    if _os_id(host) == "fedora":
+        return  # the Fedora package is built without a version number
     assert re.fullmatch(r"v?\d+\.\d+\.\d+", cmd.stdout.strip())
 
 

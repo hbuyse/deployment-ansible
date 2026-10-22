@@ -19,9 +19,12 @@ def test_shellcheck_reports_unquoted_variable(host):
 
 
 def test_installation_method(host):
-    """Arch installs the package, the others download the binary in ~/.local/bin."""
-    if _os_id(host) == "arch":
+    """Arch and Fedora install the package, the others download the binary in ~/.local/bin."""
+    os_id = _os_id(host)
+    if os_id == "arch":
         assert host.package("shellcheck").is_installed
+    elif os_id == "fedora":
+        assert host.package("ShellCheck").is_installed
     else:
         binary = host.file("/root/.local/bin/shellcheck")
         assert binary.is_file

@@ -1,3 +1,5 @@
 # Python packages to run the Molecule scenarios of the roles (see "Testing" in README.md)
-molecule[docker]
+molecule
+# The docker driver is not part of Molecule any more
+molecule-plugins[docker]
 pytest-testinfra

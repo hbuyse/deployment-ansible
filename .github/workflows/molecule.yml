@@ -1,0 +1,122 @@
+---
+# Run "molecule test" for the roles that changed (and the roles that depend on them), on Ubuntu 24.04, the latest Fedora
+# and Arch Linux. All the roles are tested when a file shared by the scenarios changes, see scripts/molecule-roles.sh.
+name: Molecule
+
+on:
+  pull_request:
+    paths:
+      - "roles/**"
+      - "molecule/**"
+      - "group_vars/**"
+      - "lookup_plugins/**"
+      - "requirements*"
+      - "ansible.cfg"
+      - "scripts/molecule-roles.sh"
+      - ".github/workflows/molecule.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "roles/**"
+      - "molecule/**"
+      - "group_vars/**"
+      - "lookup_plugins/**"
+      - "requirements*"
+      - "ansible.cfg"
+      - "scripts/molecule-roles.sh"
+      - ".github/workflows/molecule.yml"
+  workflow_dispatch:
+    inputs:
+      roles:
+        description: "Roles to test, separated by spaces (the roles of the last commit when empty)"
+        type: string
+        required: false
+
+concurrency:
+  group: molecule-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  changes:
+    name: Changed roles
+    runs-on: ubuntu-24.04
+    outputs:
+      roles: ${{ steps.roles.outputs.roles }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: List the roles to test
+        id: roles
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+          BEFORE: ${{ github.event.before }}
+          INPUT_ROLES: ${{ inputs.roles }}
+        run: |
+          if [ -n "${INPUT_ROLES}" ]; then
+            read -ra requested <<< "${INPUT_ROLES}"
+            files="$(printf 'roles/%s/\n' "${requested[@]}")"
+          elif [ "${EVENT}" = "pull_request" ]; then
+            files="$(git diff --name-only "${BASE}...HEAD")"
+          elif [ "${EVENT}" = "push" ] && ! [[ "${BEFORE}" =~ ^0+$ ]]; then
+            files="$(git diff --name-only "${BEFORE}" HEAD)"
+          else
+            files="$(git diff --name-only HEAD~1 HEAD)"
+          fi
+          roles="$(printf '%s\n' "${files}" | scripts/molecule-roles.sh)"
+          echo "roles=${roles}" >> "${GITHUB_OUTPUT}"
+          echo "Roles to test: ${roles}"
+
+  molecule:
+    name: ${{ matrix.role }}
+    needs: changes
+    if: needs.changes.outputs.roles != '[]'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        role: ${{ fromJSON(needs.changes.outputs.roles) }}
+    env:
+      ANSIBLE_COLLECTIONS_PATH: ${{ github.workspace }}/collections
+      # The github_latest_release lookup uses it: the API rate limit of an anonymous runner is quickly reached
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      PY_COLORS: "1"
+      ANSIBLE_FORCE_COLOR: "1"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: requirements-molecule.txt
+
+      - name: Install Molecule
+        run: pip install -r requirements-molecule.txt
+
+      - name: Install the Ansible collections
+        run: |
+          # No cache: the second call fails with a corrupted cache of the first one. Galaxy resets connections at times
+          for attempt in 1 2 3; do
+            if ansible-galaxy collection install --no-cache -r requirements.yml -p collections \
+              && ansible-galaxy collection install --no-cache community.docker -p collections; then
+              exit 0
+            fi
+            echo "Attempt ${attempt} failed"
+            sleep $((attempt * 10))
+          done
+          exit 1
+
+      - name: Test the role
+        working-directory: roles/${{ matrix.role }}
+        run: molecule test

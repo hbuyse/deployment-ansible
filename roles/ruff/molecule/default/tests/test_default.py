@@ -6,7 +6,7 @@ def _os_id(host):
 
 
 def test_ruff_runs(host):
-    """ruff reports its version, from the package (Arch) or from pipx (Debian family)."""
+    """ruff reports its version, from the package (Arch, Fedora) or from pipx (Debian family)."""
     cmd = host.run("PATH=/root/.local/bin:$PATH ruff --version")
     assert cmd.rc == 0, cmd.stderr
     assert re.fullmatch(r"ruff \d+\.\d+\.\d+", cmd.stdout.strip())
@@ -21,8 +21,8 @@ def test_ruff_finds_an_unused_import(host):
 
 
 def test_installation_method(host):
-    """Arch uses the package, the others pipx."""
-    if _os_id(host) == "arch":
+    """Arch and Fedora use the package, the others pipx."""
+    if _os_id(host) in ("arch", "fedora"):
         assert host.package("ruff").is_installed
     else:
         assert host.file("/root/.local/bin/ruff").exists

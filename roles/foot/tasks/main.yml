@@ -24,7 +24,7 @@
     link: /usr/bin/x-terminal-emulator
     priority: 100
     state: present
-  when: ansible_facts.os_family in ["Debian", "Redhat"]
+  when: ansible_facts.os_family in ["Debian", "RedHat"]
 
 - name: "Get version"
   ansible.builtin.command:

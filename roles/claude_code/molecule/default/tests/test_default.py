@@ -9,6 +9,10 @@ def _is_debian_family(host):
     return host.check_output(". /etc/os-release && echo $ID").strip() in ("debian", "ubuntu")
 
 
+def _is_fedora(host):
+    return host.check_output(". /etc/os-release && echo $ID").strip() == "fedora"
+
+
 def _claude(host):
     return host.run(f"PATH={HOME}/.local/bin:$PATH claude --version")
 
@@ -40,9 +44,20 @@ def test_package_comes_from_the_repository(host):
     assert host.file("/usr/bin/claude").exists
 
 
+def test_yum_repository(host):
+    """On Fedora, the Anthropic rpm repository of the requested channel is configured and provides the package."""
+    if not _is_fedora(host):
+        pytest.skip("Only Fedora uses the rpm repository")
+    repository = host.file("/etc/yum.repos.d/claude-code.repo")
+    assert repository.is_file
+    assert "baseurl = https://downloads.claude.ai/claude-code/rpm/stable" in repository.content_string
+    assert host.package("claude-code").is_installed
+    assert host.file("/usr/bin/claude").exists
+
+
 def test_native_installation(host):
     """Elsewhere, the native installer links claude in ~/.local/bin and does not leave its script behind."""
-    if _is_debian_family(host):
-        pytest.skip("Debian family uses the package")
+    if _is_debian_family(host) or _is_fedora(host):
+        pytest.skip("Debian family and Fedora use the package")
     assert host.file(f"{HOME}/.local/bin/claude").exists
     assert not host.file("/tmp/claude-code-install.sh").exists
