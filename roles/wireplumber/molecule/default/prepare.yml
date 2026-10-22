@@ -52,9 +52,24 @@
       changed_when: true
 
     - name: Wait for the user bus
-      ansible.builtin.wait_for:
-        path: /run/user/2000/bus
-        timeout: 60
+      block:
+        - name: Wait for the bus socket
+          ansible.builtin.wait_for:
+            path: /run/user/2000/bus
+            timeout: 60
+      rescue:
+        - name: Get the state of the systemd user manager
+          ansible.builtin.shell: |
+            systemctl status user@2000.service --no-pager
+            journalctl -u user@2000.service -u systemd-logind.service --no-pager -n 40
+            ls -la /run/user /run/user/2000
+          register: wireplumber_user_manager
+          changed_when: false
+          failed_when: false
+
+        - name: Fail with the state of the systemd user manager
+          ansible.builtin.fail:
+            msg: "{{ wireplumber_user_manager.stdout }}"
 
     - name: Create the directories created by pre_tasks/main.yml
       ansible.builtin.file:

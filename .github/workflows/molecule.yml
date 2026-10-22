@@ -86,6 +86,8 @@ jobs:
         role: ${{ fromJSON(needs.changes.outputs.roles) }}
     env:
       ANSIBLE_COLLECTIONS_PATH: ${{ github.workspace }}/collections
+      # The github_latest_release lookup uses it: the API rate limit of an anonymous runner is quickly reached
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       PY_COLORS: "1"
       ANSIBLE_FORCE_COLOR: "1"
     steps:

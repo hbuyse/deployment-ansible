@@ -5,6 +5,12 @@
 - name: "Install from URI using package manager"
   become: true
   block:
+    - name: "Import the signing key of the package"
+      ansible.builtin.rpm_key:
+        key: "{{ zoom_gpg_key_url }}"
+        state: present
+      when: ansible_facts.os_family == 'RedHat'
+
     - name: "Install from URI using APT"
       ansible.builtin.apt:
         deb: "{{ zoom_latest_package_url }}"
