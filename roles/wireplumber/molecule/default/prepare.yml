@@ -47,6 +47,14 @@
         mode: "0440"
         validate: visudo -cf %s
 
+    - name: Let root read the shadow file without capabilities
+      # On the Ubuntu hosts of the GitHub runners, the AppArmor profile of unix_chkpwd denies it dac_override and
+      # dac_read_search, which it needs to read the /etc/shadow of Fedora (mode 0000): the user manager fails in PAM
+      ansible.builtin.file:
+        path: /etc/shadow
+        mode: "0640"
+      when: ansible_facts.os_family == "RedHat"
+
     - name: Start the systemd user manager of the user
       ansible.builtin.command: loginctl enable-linger tester
       changed_when: true
