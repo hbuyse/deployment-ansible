@@ -24,6 +24,17 @@
       "pinDigests": true
     },
     {
+      "description": "The crates are pinned to an exact version: with the cargo versioning, Renovate reads it as a caret requirement and writes the lowest version of the new range",
+      "matchManagers": ["custom.regex"],
+      "matchDatasources": ["crate"],
+      "versioning": "semver"
+    },
+    {
+      "description": "Perl::Tidy is versioned by date (20260826): do not take the difference between two dates for a huge major increment",
+      "matchDepNames": ["Perl::Tidy"],
+      "maxMajorIncrement": 0
+    },
+    {
       "description": "Only the even major versions of Node.js are long term support releases",
       "matchDepNames": ["node"],
       "allowedVersions": "/^\\d*[02468]$/"
