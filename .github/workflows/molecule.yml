@@ -106,8 +106,9 @@ jobs:
 
       - name: Install the Ansible collections
         run: |
-          ansible-galaxy collection install -r requirements.yml -p collections
-          ansible-galaxy collection install community.docker -p collections
+          # No cache: the second call fails with a corrupted cache of the first one
+          ansible-galaxy collection install --no-cache -r requirements.yml -p collections
+          ansible-galaxy collection install --no-cache community.docker -p collections
 
       - name: Test the role
         working-directory: roles/${{ matrix.role }}
