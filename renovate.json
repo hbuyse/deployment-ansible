@@ -46,6 +46,11 @@
       "automerge": true
     },
     {
+      "description": "ansible-core 2.21 does not start on Python 3.15 (dataclasses._is_type is gone): stay on 3.13 and 3.14",
+      "matchDepNames": ["python"],
+      "allowedVersions": "<3.15"
+    },
+    {
       "description": "Only the even major versions of Node.js are long term support releases",
       "matchDepNames": ["node"],
       "allowedVersions": "/^\\d*[02468]$/"
@@ -66,6 +71,13 @@
       "matchStrings": [
         "repo: \"https://github\\.com/(?<depName>[^\"]+)\"\\s+plugin_dir: \"[^\"]+\"\\s+version: \"(?<currentValue>v[^\"]+)\""
       ],
+      "datasourceTemplate": "github-tags"
+    },
+    {
+      "description": "Version of the Catppuccin theme written in tmux.conf, like in the tmux role (the same pull request updates both)",
+      "customType": "regex",
+      "fileMatch": ["^roles/tmux/files/tmux\\.conf$"],
+      "matchStrings": ["@plugin '(?<depName>catppuccin/tmux)#(?<currentValue>v[^']+)'"],
       "datasourceTemplate": "github-tags"
     },
     {

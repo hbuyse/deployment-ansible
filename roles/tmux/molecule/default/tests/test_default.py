@@ -1,7 +1,16 @@
 from pathlib import Path
 
+import yaml
+
 ROLE_DIR = Path(__file__).resolve().parents[3]
 PLUGINS = "/root/.config/tmux/plugins"
+
+
+def _versions():
+    """Version of each plugin, as written in the task that clones them (Renovate updates it)."""
+    tasks = yaml.safe_load((ROLE_DIR / "tasks" / "main.yml").read_text())
+    task = next(task for task in tasks if task.get("name") == "Download TMux plugins manager")
+    return {item["plugin_dir"]: item["version"] for item in task["loop"]}
 
 
 def test_tmux_runs(host):
@@ -26,9 +35,21 @@ def test_plugins_are_cloned(host):
 
 
 def test_plugins_are_pinned(host):
-    """tpm and the Catppuccin theme are checked out at the version of the role."""
-    assert host.check_output(f"git -C {PLUGINS}/tpm describe --tags") == "v3.1.0"
-    assert host.check_output(f"git -C {PLUGINS}/tmux describe --tags") == "v1.0.2"
+    """tpm and the Catppuccin theme are checked out at the version of the role.
+
+    All the tags of the commit are looked at: a floating tag such as v1 points to the same commit as v1.0.3, and
+    `git describe` may answer with it.
+    """
+    versions = _versions()
+    for plugin in ("tpm", "tmux"):
+        tags = host.check_output(f"git -C {PLUGINS}/{plugin} tag --points-at HEAD").split()
+        assert versions[plugin] in tags, f"{plugin}: {versions[plugin]} is not in {tags}"
+
+
+def test_theme_version_of_tmux_conf_is_the_one_of_the_role():
+    """The plugin line of tmux.conf asks for the version that the role clones."""
+    line = f"set -g @plugin 'catppuccin/tmux#{_versions()['tmux']}'"
+    assert line in (ROLE_DIR / "files" / "tmux.conf").read_text()
 
 
 def test_tmux_loads_the_configuration(host):
